@@ -14,4 +14,4 @@
 
 - 本需求包取代 001 作为验证场当前业务基线；001、历史切片和 Gate 证据继续只读保留。
 - Business Gate 已由 Rick 在 `REQSRC-009` 中批准。
-- 当前允许创建切片 002 的 Spec、验收与测试设计；索引技术方案、Plan、实现和检查器仍须等待后续 Gate。
+- 切片 002 的 Business、Specification、Architecture Gate 已批准，103 项纠正由 `REQSRC-012` 授权；实现与评审已完成，当前等待 Release Gate。

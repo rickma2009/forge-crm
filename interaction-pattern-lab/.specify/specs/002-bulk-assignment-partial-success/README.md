@@ -1,6 +1,6 @@
 # 002 批量分配与部分成功验证
 
-> 状态：implementation-in-progress
+> 状态：review-complete-awaiting-release-gate
 > Business Gate：approved（`REQSRC-009`）
 > Specification Gate：approved（`REQSRC-010`）
 > Architecture Gate：approved（`REQSRC-011`），目录数量由 `REQSRC-012` 纠正为 103 项
@@ -19,8 +19,9 @@
 - `architecture-gate-review.md`：已批准的 Architecture Gate 评审记录；
 - `scope-discrepancy.md`：99/103 历史计数差异及 `REQSRC-012` 纠正记录；
 - `tasks.md`：当前实现任务与执行证据；
+- `review.md`：三视角评审、整改闭环和 Release Gate 前置；
 - `pipeline-state.json`：当前阶段和 Gate 状态。
 
 ## 当前允许与禁止
 
-当前允许按 Tasks 和 TDD 实施 103 项目录及 VAL-002；仍不授权资产晋升、部署或 Release。
+当前允许评审本地验证结果并形成 Release Gate 决定；仍不授权资产晋升、部署或自动发布。

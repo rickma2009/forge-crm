@@ -7,7 +7,7 @@
 - `_methodology/`：唯一方法论、模板、门禁和金标准案例来源。
 - `_ref/`：只读参考素材，不是规范源。
 - `mcrm/`：独立项目、独立 Git 仓库。
-- `interaction-pattern-lab/`：根仓库跟踪的企业交互模式验证场；因定位重定义已重新打开 Business Gate。
+- `interaction-pattern-lab/`：根仓库跟踪的企业交互模式验证场；Business、切片 002 Specification/Architecture 已批准，当前等待 Release Gate。
 
 ## 绝对约束
 

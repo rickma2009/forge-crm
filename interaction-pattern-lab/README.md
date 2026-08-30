@@ -1,7 +1,7 @@
 # Interaction Pattern Lab
 
 > 中文名：企业交互模式验证场
-> 项目状态：`implementation-in-progress`
+> 项目状态：`review-complete-awaiting-release-gate`
 > 当前 Gate：Business、Specification、Architecture Gate 已批准；目录范围由 `REQSRC-012` 纠正为 103 项
 
 本项目用于探索、实现和验证企业管理系统中重复出现的页面、操作、展示状态和特殊交互。它是验证场，不是通用模板的权威来源，也不代表真实业务系统。
@@ -10,7 +10,7 @@
 
 ## 当前阶段
 
-首个可运行切片已有实现、自动化和本地浏览器证据，这些历史证据继续保留。`REQSRC-009/010/011` 已批准 Business、Specification 与 Architecture Gate；首个资产契约红测发现的 99/103 计数差异已由 `REQSRC-012` 纠正，当前按 103 项范围实施切片 002。
+首个可运行切片已有实现、自动化和本地浏览器证据，这些历史证据继续保留。`REQSRC-009/010/011` 已批准 Business、Specification 与 Architecture Gate；99/103 计数差异已由 `REQSRC-012` 纠正。103 项目录与切片 002 已完成本地验证和三视角评审，当前等待 Release Gate。
 
 ## 权威入口
 
@@ -26,6 +26,6 @@
 
 ## 当前允许与禁止
 
-允许：按已批准 Tasks 和 TDD 实施 103 项目录、资产投影及 VAL-002。
+允许：评审 `review.md`、补 BUS-003 观察任务或形成 Release Gate 决定。
 
 禁止：未经新 Gate 扩大真实后端、资产晋升、部署或 Release；禁止把历史 Demo 授权称为新定位下的发布批准。

@@ -1,7 +1,7 @@
 {
   "featureId": "002-bulk-assignment-partial-success",
-  "status": "review-in-progress",
-  "currentStage": "review",
+  "status": "review-complete-awaiting-release-gate",
+  "currentStage": "release-gate",
   "gates": {
     "business": "approved-2026-08-31-REQSRC-009-corrected-by-REQSRC-012",
     "specification": "approved-2026-08-31-REQSRC-010-corrected-by-REQSRC-012",
@@ -15,7 +15,7 @@
     "testDesign": "executed-28-tests-with-TC-317-cross-renderer-deferred",
     "implementation": "verified-local",
     "browser": "passed-desktop-narrow-keyboard-network-storage",
-    "review": "second-remediation-in-progress"
+    "review": "passed-three-view-review-after-remediation"
   },
-  "updatedAt": "2026-08-31T02:46:00+08:00"
+  "updatedAt": "2026-08-31T02:53:00+08:00"
 }

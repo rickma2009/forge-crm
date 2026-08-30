@@ -1,7 +1,7 @@
 {
   "project": "Interaction Pattern Lab / 企业交互模式验证场",
-  "status": "implementation-in-progress",
-  "currentStage": "implementation",
+  "status": "review-complete-awaiting-release-gate",
+  "currentStage": "release-gate",
   "gates": {
     "business": {
       "status": "approved-corrected-to-103-by-REQSRC-012",
@@ -15,8 +15,8 @@
   "technologyProfile": null,
   "featureStates": {
     "001-pattern-catalog-preview": "historical-slice-preserved-business-gate-reopened",
-    "002-bulk-assignment-partial-success": "implementation-in-progress"
+    "002-bulk-assignment-partial-success": "review-complete-awaiting-release-gate"
   },
-  "reviewCandidate": ".specify/specs/002-bulk-assignment-partial-success/tasks.md",
-  "updatedAt": "2026-08-31T01:51:06+08:00"
+  "reviewCandidate": ".specify/specs/002-bulk-assignment-partial-success/review.md",
+  "updatedAt": "2026-08-31T02:53:00+08:00"
 }

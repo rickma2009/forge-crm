@@ -94,7 +94,9 @@ describe('VAL-002 Bulk Assignment Module', () => {
     expect(scenarioContract.failureCodes).toEqual(expect.arrayContaining(['RECORD_LOCKED', 'STATE_INCOMPATIBLE', 'CONCURRENT_CHANGE', 'SYSTEM_UNAVAILABLE']));
     expect(scenarioContract.keyboardPath).toEqual(expect.arrayContaining(['Tab', 'Space', 'Enter', 'Escape']));
     for (const scenario of scenarioContract.scenarios) {
-      const state = scenario.actions.reduce((current, action) => bulkAssignmentReducer(current, action as BulkAssignmentAction), createBulkAssignmentState(scenario.id));
+      const initialState = createBulkAssignmentState(scenario.id);
+      expect(initialState.query, `${scenario.id} initialQuery`).toBe(scenario.initialQuery);
+      const state = scenario.actions.reduce((current, action) => bulkAssignmentReducer(current, action as BulkAssignmentAction), initialState);
       expect(observe(state), scenario.id).toEqual(scenario.expectedObservation);
     }
   });

@@ -1,6 +1,6 @@
 # 企业交互验证场工作台账
 
-> 状态：implementation-in-progress
+> 状态：review-complete-awaiting-release-gate
 > 当前业务基线：`.specify/requirements/002-validation-field-baseline/`
 > 用途：分别管理 Lab 验证、方法论资产成熟度和外部项目采用；本文件不直接改变任何 Gate 或成熟度。
 
@@ -22,7 +22,7 @@
 | 顺序 | 切片 | 验证问题 | 当前状态 | 允许的下一步 |
 |---|---|---|---|---|
 | 历史 001 | `001-pattern-catalog-preview` | 两个种子案例能否在统一目录中体验和说明 | historical-implementation-evidence | 保留证据，不扩大旧 Gate |
-| P0 | `002-bulk-assignment-partial-success` | 当前页/全查询结果选择、预检查和部分成功能否被准确理解 | implementation-in-progress | 完成浏览器验收、三视角评审和 Release Gate 交接 |
+| P0 | `002-bulk-assignment-partial-success` | 当前页/全查询结果选择、预检查和部分成功能否被准确理解 | review-complete-awaiting-release-gate | 用户评审本地证据并形成 Release Gate 决定 |
 | P1 | 导入—校验—执行 | 异步任务、映射、部分成功和失败下载 | idea | 完成 002 后再形成候选卡 |
 | P2 | 提交—审批—生效 | 状态机、意见、代理和审计反馈 | idea | 独立业务规则与来源 |
 | P3 | 规则—模拟—发布 | 冲突、版本、生效范围和回滚 | idea | 独立业务规则与来源 |

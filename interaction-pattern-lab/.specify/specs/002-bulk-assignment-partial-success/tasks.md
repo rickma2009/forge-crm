@@ -1,7 +1,7 @@
 # 实现任务：批量分配与部分成功验证
 
 > 功能编号：002-bulk-assignment-partial-success  
-> 状态：in-progress
+> 状态：completed-awaiting-release-gate
 > Architecture Gate：approved（`REQSRC-011`）
 
 ## 已确认测试 seam
@@ -91,8 +91,8 @@
 - 实施边界：不自动晋升资产，不批准 Release
 - 验收：发现项修复或显式留存，追溯和状态与证据一致
 - 验证命令/入口：固定提交基线双轴 review + 安全/集成核对
-- 状态：in-progress
-- 实际证据：实现提交 `0f12ec7` 已进入固定基线双轴评审；安全/隔离扫描已补入 `pnpm verify`
+- 状态：completed
+- 实际证据：固定基线双轴评审经两轮整改后无剩余 P1/P2；安全/隔离主线程复核通过；总结见 `review.md`
 
 ## Checkpoints
 

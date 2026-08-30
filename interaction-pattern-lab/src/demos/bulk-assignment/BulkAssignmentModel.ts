@@ -1,5 +1,3 @@
-import scenarioContract from './bulk-assignment.scenarios.json';
-
 export type FailureCode = 'RECORD_LOCKED' | 'STATE_INCOMPATIBLE' | 'OWNER_UNAVAILABLE' | 'CONCURRENT_CHANGE' | 'SYSTEM_UNAVAILABLE';
 export type ScenarioId = 'partial-success' | 'all-success' | 'system-failure-first' | 'loading' | 'empty';
 
@@ -87,12 +85,11 @@ function freshItems(scenarioId: ScenarioId): WorkItem[] {
 }
 
 export function createBulkAssignmentState(scenarioId: string = 'partial-success'): BulkAssignmentState {
-  const contractScenario = scenarioContract.scenarios.find((scenario) => scenario.id === scenarioId) ?? scenarioContract.scenarios[0];
-  const safeScenario = contractScenario.id as ScenarioId;
+  const safeScenario = (['partial-success', 'all-success', 'system-failure-first', 'loading', 'empty'].includes(scenarioId) ? scenarioId : 'partial-success') as ScenarioId;
   return {
     scenarioId: safeScenario,
     loading: safeScenario === 'loading',
-    query: contractScenario.initialQuery,
+    query: safeScenario === 'empty' ? '无匹配工作项' : '',
     page: 1,
     pageSize: 5,
     items: safeScenario === 'loading' ? [] : freshItems(safeScenario),
