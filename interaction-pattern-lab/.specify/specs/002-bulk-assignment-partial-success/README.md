@@ -1,9 +1,9 @@
 # 002 批量分配与部分成功验证
 
-> 状态：architecture-proposed-awaiting-architecture-gate
+> 状态：paused-awaiting-scope-correction
 > Business Gate：approved（`REQSRC-009`）
 > Specification Gate：approved（`REQSRC-010`）
-> Architecture Gate：pending-human-decision
+> Architecture Gate：approved（`REQSRC-011`），等待 103/99 计数纠正确认
 
 本切片交付一个从分类目录发现批量操作候选、理解证据边界、体验批量选择与部分成功、再形成采用判断的最小验证闭环。
 
@@ -17,10 +17,10 @@
 - `specification-gate-review.md`：已批准的 Specification Gate 评审记录；
 - `plan.md`：待批准的技术方案；
 - `architecture-gate-review.md`：当前人工 Architecture Gate 评审入口；
+- `scope-discrepancy.md`：权威分类 103 项与已批准 99 项的范围差异；
+- `tasks.md`：已生成但暂停的实现任务；
 - `pipeline-state.json`：当前阶段和 Gate 状态。
 
 ## 当前允许与禁止
 
-允许评审技术 Plan、ADR、风险、测试实现策略和回滚边界。
-
-Architecture Gate 批准前不得创建 Tasks、建立资产索引文件、修改 Demo 注册机制或编写实现代码；本切片也不授权资产晋升或 Release。
+当前只允许评审并纠正 103/99 范围计数。确认前暂停 Tasks、资产索引、Demo 注册和实现；本切片仍不授权资产晋升或 Release。

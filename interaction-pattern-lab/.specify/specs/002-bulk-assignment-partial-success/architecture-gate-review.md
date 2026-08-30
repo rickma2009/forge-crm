@@ -1,7 +1,7 @@
 # Architecture Gate 评审：批量分配与部分成功验证
 
 > 评审对象：`plan.md`、`docs/adr/ADR-002-资产索引与验证切片扩展架构.md`  
-> 状态：pending-human-decision  
+> 状态：approved
 > 决策人：Rick  
 > Specification Gate：approved（`REQSRC-010`）
 
@@ -59,8 +59,8 @@ Architecture Gate 通过仍不等于资产晋升或 Release 批准。
 
 ## 7. 人工决定
 
-- 结论：`pending`
-- 批准人：待人工填写
-- 时间：待人工填写
-- 备注：待人工填写
-- 批准来源：批准后新增独立 `REQSRC-*`
+- 结论：`approved`
+- 批准人：Rick
+- 时间：2026-08-31T01:44:02+08:00
+- 备注：批准 Plan 和 ADR-002；不包含资产晋升、部署或 Release。
+- 批准来源：`REQSRC-011`

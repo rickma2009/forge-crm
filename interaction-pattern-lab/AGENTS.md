@@ -4,11 +4,11 @@
 
 ## 项目状态
 
-- 当前阶段：`architecture-proposed-awaiting-architecture-gate`。
+- 当前阶段：`paused-awaiting-scope-correction`。
 - 重新定义证据：`REQSRC-007`。本目录是交互模式验证场，不是模板规范源或真实业务项目。
 - 既有 `REQSRC-002`—`REQSRC-006` 及实现证据作为历史切片证据保留，不改写、不冒充新边界的批准。
-- 新定位 Business Gate 已由 `REQSRC-009` 批准；切片 002 Specification Gate 已由 `REQSRC-010` 批准；Architecture 与 Release Gate 仍须按切片推进。
-- 当前评审对象：`.specify/specs/002-bulk-assignment-partial-success/architecture-gate-review.md`。
+- 新定位 Business Gate 已由 `REQSRC-009` 批准；切片 002 Specification/Architecture Gate 已由 `REQSRC-010/011` 批准，但 99/103 计数差异要求范围纠正后才能实现。
+- 当前评审对象：`.specify/specs/002-bulk-assignment-partial-success/scope-discrepancy.md`。
 
 ## 开始工作前
 

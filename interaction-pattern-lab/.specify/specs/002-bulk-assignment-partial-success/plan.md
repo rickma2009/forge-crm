@@ -1,9 +1,9 @@
 # 技术计划：批量分配与部分成功验证
 
 > 功能编号：002-bulk-assignment-partial-success  
-> 状态：proposed-awaiting-architecture-gate  
+> 状态：approved-for-implementation
 > Specification Gate：approved（`REQSRC-010`）  
-> Architecture Gate：pending-human-decision
+> Architecture Gate：approved（`REQSRC-011`）
 
 ## 1. 输入与约束
 
@@ -185,8 +185,9 @@ Architecture Gate 通过后才允许转换为稳定 `TASK-*`：
 
 ## 14. Architecture Gate
 
-- 结论：pending-human-decision
-- 批准人：Rick（按已确认治理责任，除非另行委派技术负责人）
-- 时间：待人工决定
-- 备注：待人工决定
+- 结论：approved
+- 批准人：Rick
+- 时间：2026-08-31T01:44:02+08:00
+- 备注：批准本 Plan 和 ADR-002；不包含资产晋升、部署或 Release。
+- 批准来源：`REQSRC-011`
 - 批准后允许：将方案转换为 Tasks 并按 TDD 实现；不自动批准资产晋升或 Release。

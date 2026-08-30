@@ -1,8 +1,8 @@
 # Interaction Pattern Lab
 
 > 中文名：企业交互模式验证场
-> 项目状态：`architecture-proposed-awaiting-architecture-gate`
-> 当前 Gate：切片 002 Specification Gate 已批准；等待 Architecture Gate
+> 项目状态：`paused-awaiting-scope-correction`
+> 当前 Gate：切片 002 Architecture Gate 已批准；等待 103/99 范围计数纠正确认
 
 本项目用于探索、实现和验证企业管理系统中重复出现的页面、操作、展示状态和特殊交互。它是验证场，不是通用模板的权威来源，也不代表真实业务系统。
 
@@ -10,7 +10,7 @@
 
 ## 当前阶段
 
-首个可运行切片已有实现、自动化和本地浏览器证据，这些历史证据继续保留。用户于 2026-08-30 将本目录重新定义为“验证场”，原产品化 Demo 的批准不再代表新边界；`REQSRC-009` 批准新的 Business Gate，`REQSRC-010` 批准切片 002 的可观察行为与测试设计。当前技术方案和 ADR-002 正等待 Architecture Gate。
+首个可运行切片已有实现、自动化和本地浏览器证据，这些历史证据继续保留。`REQSRC-009` 批准新的 Business Gate，`REQSRC-010/011` 分别批准切片 002 的 Specification 与 Architecture Gate。实现首个资产契约红测时发现权威分类实际为 103 项而非批准基线中的 99 项，当前按 `scope-discrepancy.md` 暂停并等待范围事实纠正。
 
 ## 权威入口
 
@@ -26,6 +26,6 @@
 
 ## 当前允许与禁止
 
-允许：评审切片 002 的技术 Plan、ADR、风险、测试实现策略和回滚边界。
+允许：评审 103/99 分类数量差异并确认是否按 103 项纠正既有 Gate 文档。
 
-禁止：Architecture Gate 前创建 Tasks、建立索引实现、修改 Demo 注册或编码；禁止把历史 Demo 授权称为新定位下的发布批准，也禁止提前晋升资产成熟度。
+禁止：纠正确认前继续 Tasks、建立资产索引、修改 Demo 注册或编码；禁止把历史 Demo 授权称为新定位下的发布批准，也禁止提前晋升资产成熟度。
