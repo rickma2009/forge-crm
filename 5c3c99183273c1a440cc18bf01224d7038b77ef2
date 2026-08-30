@@ -1,0 +1,46 @@
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/plan.md
+  e528476cbc97de75 4,6,188-192
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/README.md
+  e528476cbc97de75 3,6,20-21,26
+interaction-pattern-lab/AGENTS.md
+  e528476cbc97de75 7,10-11
+interaction-pattern-lab/.specify/project-state.json
+  e528476cbc97de75 3-4,7,12,18,20-21
+interaction-pattern-lab/README.md
+  e528476cbc97de75 4-5,13,29,31
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/scope-discrepancy.md
+  e528476cbc97de75 1-37
+interaction-pattern-lab/docs/adr/ADR-002-资产索引与验证切片扩展架构.md
+  e528476cbc97de75 3,77-81
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/pipeline-state.json
+  e528476cbc97de75 3-4,6-8,12,18
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/architecture-gate-review.md
+  e528476cbc97de75 4,62-66
+interaction-pattern-lab/.specify/README.md
+  e528476cbc97de75 13
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/tasks.md
+  e528476cbc97de75 1-3,5-27,30-101,103-104
+interaction-pattern-lab/.specify/sources/REGISTRY.md
+  e528476cbc97de75 15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "5c3c99183273c1a440cc18bf01224d7038b77ef2",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2239,
+      "total_deletions": 53,
+      "accepted_lines": 212,
+      "overriden_lines": 4,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/6e916324212c4510c92a0cd94ade41545c9d741c8f2974fe7e43a782481cb6f5"
+    }
+  }
+}
