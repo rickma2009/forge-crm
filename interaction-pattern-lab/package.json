@@ -14,8 +14,10 @@
     "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json",
     "test": "vitest run",
     "build": "pnpm typecheck && vite build",
+    "generate:patterns": "node scripts/generate-pattern-projection.mjs",
     "validate:patterns": "node scripts/validate-pattern-projection.mjs",
-    "verify": "pnpm validate:patterns && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+    "validate:scenarios": "node scripts/validate-scenario-contracts.mjs",
+    "verify": "pnpm validate:patterns && pnpm validate:scenarios && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
   },
   "dependencies": {
     "react": "19.1.1",

@@ -1,0 +1,1846 @@
+{
+  "version": 1,
+  "taxonomyRef": "_methodology/08-企业管理系统交互模式分类方法.md",
+  "generatedBy": "_methodology/scripts/sync-enterprise-interaction-index.mjs",
+  "assets": [
+    {
+      "assetId": "EPM-PAGE-001",
+      "kind": "PAGE",
+      "group": "系统与任务入口类",
+      "name": "应用壳层",
+      "maturity": "interaction-verified",
+      "definition": [
+        "多模块企业系统",
+        "导航、顶栏、内容区、账户区",
+        "菜单可见性不能代替授权"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "系统与任务入口类"
+      },
+      "artifacts": [
+        "_methodology/patterns/enterprise-two-level-navigation-shell.md",
+        "_methodology/templates/ui/enterprise-navigation-shell/README.md",
+        "_methodology/examples/002-golden-interaction-enterprise-navigation-shell/README.md"
+      ],
+      "evidence": [
+        "interaction-pattern-lab:001-pattern-catalog-preview",
+        "mcrm:003-enterprise-navigation-shell"
+      ],
+      "nextEvidence": "在第二个独立真实项目采用并复核边界"
+    },
+    {
+      "assetId": "EPM-PAGE-002",
+      "kind": "PAGE",
+      "group": "系统与任务入口类",
+      "name": "工作台",
+      "maturity": "idea",
+      "definition": [
+        "待办、提醒、快捷入口",
+        "任务卡片、指标、消息、快捷操作",
+        "不展示无法解释或无数据来源的指标"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "系统与任务入口类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-003",
+      "kind": "PAGE",
+      "group": "系统与任务入口类",
+      "name": "任务中心",
+      "maturity": "idea",
+      "definition": [
+        "导入、导出、计算、通知任务",
+        "进度、结果、失败原因、重试",
+        "异步状态必须来自真实任务状态"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "系统与任务入口类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-004",
+      "kind": "PAGE",
+      "group": "系统与任务入口类",
+      "name": "审批中心",
+      "maturity": "idea",
+      "definition": [
+        "待办、已办、抄送",
+        "队列、摘要、审批动作、意见",
+        "权限、代理、会签规则来自业务 Spec"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "系统与任务入口类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-010",
+      "kind": "PAGE",
+      "group": "记录管理类",
+      "name": "查询列表页",
+      "maturity": "idea",
+      "definition": [
+        "客户、订单、员工、合同",
+        "查询区、命令栏、表格、分页",
+        "查询条件必须对应真实查询能力"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录管理类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-011",
+      "kind": "PAGE",
+      "group": "记录管理类",
+      "name": "对象详情页",
+      "maturity": "idea",
+      "definition": [
+        "浏览单条记录全貌",
+        "对象头、摘要、分组、关联、历史",
+        "无权与不存在应有一致且安全的反馈"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录管理类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-012",
+      "kind": "PAGE",
+      "group": "记录管理类",
+      "name": "新建/编辑页",
+      "maturity": "idea",
+      "definition": [
+        "录入或修改对象",
+        "分组表单、校验、草稿、提交",
+        "系统字段、只读字段和可编辑范围明确"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录管理类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-013",
+      "kind": "PAGE",
+      "group": "记录管理类",
+      "name": "主从明细页",
+      "maturity": "idea",
+      "definition": [
+        "订单与行、合同与条款",
+        "主表单、明细表、汇总、校验",
+        "明细联动、金额精度和保存原子性明确"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录管理类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-014",
+      "kind": "PAGE",
+      "group": "记录管理类",
+      "name": "树形管理页",
+      "maturity": "idea",
+      "definition": [
+        "组织、分类、区域、菜单",
+        "树、节点详情、移动、排序",
+        "循环引用、继承和级联影响需治理"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录管理类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-015",
+      "kind": "PAGE",
+      "group": "记录管理类",
+      "name": "关系管理页",
+      "maturity": "idea",
+      "definition": [
+        "成员、角色、对象关联",
+        "候选区、已选区、关系属性",
+        "关联与对象复制、删除必须区分"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录管理类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-020",
+      "kind": "PAGE",
+      "group": "流程与计划类",
+      "name": "分步向导页",
+      "maturity": "idea",
+      "definition": [
+        "复杂建档、申请、配置",
+        "步骤、阶段校验、暂存、预览",
+        "返回上一步是否丢失数据必须明确"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "流程与计划类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-021",
+      "kind": "PAGE",
+      "group": "流程与计划类",
+      "name": "看板/阶段页",
+      "maturity": "idea",
+      "definition": [
+        "商机、工单、任务流转",
+        "状态列、卡片、筛选、拖动",
+        "拖动必须遵守状态机和权限规则"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "流程与计划类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-022",
+      "kind": "PAGE",
+      "group": "流程与计划类",
+      "name": "日历/排期页",
+      "maturity": "idea",
+      "definition": [
+        "会议、排班、生产计划",
+        "日周月视图、资源、冲突提示",
+        "时区、资源冲突、跨日规则明确"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "流程与计划类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-023",
+      "kind": "PAGE",
+      "group": "流程与计划类",
+      "name": "流程实例页",
+      "maturity": "idea",
+      "definition": [
+        "查看审批或业务流进度",
+        "当前节点、参与人、时间线、动作",
+        "流程图展示不能替代真实流程状态"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "流程与计划类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-030",
+      "kind": "PAGE",
+      "group": "配置与规则类",
+      "name": "参数配置页",
+      "maturity": "idea",
+      "definition": [
+        "系统参数、业务开关",
+        "参数分组、值、生效范围、说明",
+        "默认值、继承、生效时间和回滚明确"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "配置与规则类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-031",
+      "kind": "PAGE",
+      "group": "配置与规则类",
+      "name": "规则设计页",
+      "maturity": "idea",
+      "definition": [
+        "审批、价格、分配、自动化",
+        "条件、动作、优先级、模拟",
+        "必须能发现冲突、空覆盖和循环"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "配置与规则类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-032",
+      "kind": "PAGE",
+      "group": "配置与规则类",
+      "name": "权限配置页",
+      "maturity": "idea",
+      "definition": [
+        "角色、功能、数据权限",
+        "主体、资源、动作、范围",
+        "UI 配置必须映射服务端授权模型"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "配置与规则类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-033",
+      "kind": "PAGE",
+      "group": "配置与规则类",
+      "name": "模板设计页",
+      "maturity": "idea",
+      "definition": [
+        "打印、消息、表单模板",
+        "编辑器、变量、预览、版本",
+        "变量来源、注入安全、发布版本明确"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "配置与规则类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-040",
+      "kind": "PAGE",
+      "group": "分析与追溯类",
+      "name": "指标看板页",
+      "maturity": "idea",
+      "definition": [
+        "经营概览、监控",
+        "指标、趋势、筛选、钻取",
+        "指标口径、时间范围和数据时效明确"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "分析与追溯类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-041",
+      "kind": "PAGE",
+      "group": "分析与追溯类",
+      "name": "分析报表页",
+      "maturity": "idea",
+      "definition": [
+        "多维分析、明细核对",
+        "维度、指标、表格、图表、导出",
+        "聚合与明细权限保持一致"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "分析与追溯类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-042",
+      "kind": "PAGE",
+      "group": "分析与追溯类",
+      "name": "审计日志页",
+      "maturity": "idea",
+      "definition": [
+        "操作追踪、合规",
+        "操作人、时间、对象、前后值",
+        "敏感字段不得在日志中泄露"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "分析与追溯类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-043",
+      "kind": "PAGE",
+      "group": "分析与追溯类",
+      "name": "版本对比页",
+      "maturity": "idea",
+      "definition": [
+        "配置、文档、记录版本",
+        "双栏或差异视图、版本选择、恢复",
+        "恢复是新版本还是覆盖必须明确"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "分析与追溯类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-050",
+      "kind": "PAGE",
+      "group": "数据交换类",
+      "name": "导入向导页",
+      "maturity": "idea",
+      "definition": [
+        "批量建档、数据迁移",
+        "模板、上传、映射、校验、提交",
+        "预检查与正式写入分离"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "数据交换类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-051",
+      "kind": "PAGE",
+      "group": "数据交换类",
+      "name": "导入结果页",
+      "maturity": "idea",
+      "definition": [
+        "查看批量处理结果",
+        "成功数、失败数、错误明细、下载",
+        "部分成功、幂等和重试范围明确"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "数据交换类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-PAGE-052",
+      "kind": "PAGE",
+      "group": "数据交换类",
+      "name": "导出配置页",
+      "maturity": "idea",
+      "definition": [
+        "大批量或敏感数据导出",
+        "字段、范围、格式、任务通知",
+        "权限、水印、脱敏和有效期明确"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "数据交换类"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-001",
+      "kind": "ACT",
+      "group": "导航与发现",
+      "name": "搜索",
+      "maturity": "idea",
+      "definition": [
+        "全局搜索、模块内搜索、菜单搜索"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "导航与发现"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-002",
+      "kind": "ACT",
+      "group": "导航与发现",
+      "name": "筛选",
+      "maturity": "idea",
+      "definition": [
+        "快捷筛选、高级筛选、清除条件"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "导航与发现"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-003",
+      "kind": "ACT",
+      "group": "导航与发现",
+      "name": "结果组织",
+      "maturity": "idea",
+      "definition": [
+        "排序、分组、分页、列设置"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "导航与发现"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-004",
+      "kind": "ACT",
+      "group": "导航与发现",
+      "name": "视图管理",
+      "maturity": "idea",
+      "definition": [
+        "保存视图、分享视图、恢复默认视图"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "导航与发现"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-005",
+      "kind": "ACT",
+      "group": "导航与发现",
+      "name": "上下文导航",
+      "maturity": "idea",
+      "definition": [
+        "钻取、返回、面包屑、页签切换"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "导航与发现"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-006",
+      "kind": "ACT",
+      "group": "导航与发现",
+      "name": "数据刷新",
+      "maturity": "idea",
+      "definition": [
+        "手动刷新、自动刷新、定位当前对象"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "导航与发现"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-010",
+      "kind": "ACT",
+      "group": "记录生命周期",
+      "name": "创建",
+      "maturity": "idea",
+      "definition": [
+        "新建对象、从模板新建"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录生命周期"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-011",
+      "kind": "ACT",
+      "group": "记录生命周期",
+      "name": "修改",
+      "maturity": "idea",
+      "definition": [
+        "编辑、行内编辑、快速编辑"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录生命周期"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-012",
+      "kind": "ACT",
+      "group": "记录生命周期",
+      "name": "复制",
+      "maturity": "idea",
+      "definition": [
+        "复制对象、复制为新版本"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录生命周期"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-013",
+      "kind": "ACT",
+      "group": "记录生命周期",
+      "name": "草稿与提交",
+      "maturity": "idea",
+      "definition": [
+        "保存草稿、提交、撤回、重新提交"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录生命周期"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-014",
+      "kind": "ACT",
+      "group": "记录生命周期",
+      "name": "启停",
+      "maturity": "idea",
+      "definition": [
+        "启用、停用"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录生命周期"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-015",
+      "kind": "ACT",
+      "group": "记录生命周期",
+      "name": "发布生命周期",
+      "maturity": "idea",
+      "definition": [
+        "发布、下线、重新发布"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录生命周期"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-016",
+      "kind": "ACT",
+      "group": "记录生命周期",
+      "name": "归档生命周期",
+      "maturity": "idea",
+      "definition": [
+        "归档、恢复"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录生命周期"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-017",
+      "kind": "ACT",
+      "group": "记录生命周期",
+      "name": "失效与移除",
+      "maturity": "idea",
+      "definition": [
+        "作废、逻辑删除、物理删除"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录生命周期"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-018",
+      "kind": "ACT",
+      "group": "记录生命周期",
+      "name": "重组",
+      "maturity": "idea",
+      "definition": [
+        "合并、拆分"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录生命周期"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-019",
+      "kind": "ACT",
+      "group": "记录生命周期",
+      "name": "版本管理",
+      "maturity": "idea",
+      "definition": [
+        "创建版本、比较版本、恢复版本"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "记录生命周期"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-020",
+      "kind": "ACT",
+      "group": "流程与协作",
+      "name": "审批决策",
+      "maturity": "idea",
+      "definition": [
+        "同意、驳回"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "流程与协作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-021",
+      "kind": "ACT",
+      "group": "流程与协作",
+      "name": "退回处理",
+      "maturity": "idea",
+      "definition": [
+        "退回修改、重新提交"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "流程与协作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-022",
+      "kind": "ACT",
+      "group": "流程与协作",
+      "name": "经办转移",
+      "maturity": "idea",
+      "definition": [
+        "转交、委派、代理"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "流程与协作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-023",
+      "kind": "ACT",
+      "group": "流程与协作",
+      "name": "参与人调整",
+      "maturity": "idea",
+      "definition": [
+        "加签、会签、抄送"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "流程与协作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-024",
+      "kind": "ACT",
+      "group": "流程与协作",
+      "name": "协作沟通",
+      "maturity": "idea",
+      "definition": [
+        "评论、回复、@成员、上传附件、催办"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "流程与协作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-025",
+      "kind": "ACT",
+      "group": "流程与协作",
+      "name": "工作认领",
+      "maturity": "idea",
+      "definition": [
+        "认领、释放、重新分配"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "流程与协作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-026",
+      "kind": "ACT",
+      "group": "流程与协作",
+      "name": "流程控制",
+      "maturity": "idea",
+      "definition": [
+        "关闭、重开、升级、降级、暂停、恢复、终止"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "流程与协作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-030",
+      "kind": "ACT",
+      "group": "关系与组织",
+      "name": "对象关联",
+      "maturity": "idea",
+      "definition": [
+        "关联、解除关联"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "关系与组织"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-031",
+      "kind": "ACT",
+      "group": "关系与组织",
+      "name": "责任分配",
+      "maturity": "idea",
+      "definition": [
+        "分配、取消分配、重新分配"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "关系与组织"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-032",
+      "kind": "ACT",
+      "group": "关系与组织",
+      "name": "成员管理",
+      "maturity": "idea",
+      "definition": [
+        "添加成员、移除成员、变更角色"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "关系与组织"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-033",
+      "kind": "ACT",
+      "group": "关系与组织",
+      "name": "层级调整",
+      "maturity": "idea",
+      "definition": [
+        "移动节点、复制节点、调整排序"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "关系与组织"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-034",
+      "kind": "ACT",
+      "group": "关系与组织",
+      "name": "重复治理",
+      "maturity": "idea",
+      "definition": [
+        "设置主记录、合并重复记录"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "关系与组织"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-040",
+      "kind": "ACT",
+      "group": "数据交换与批处理",
+      "name": "文件交换",
+      "maturity": "idea",
+      "definition": [
+        "上传、下载、预览"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "数据交换与批处理"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-041",
+      "kind": "ACT",
+      "group": "数据交换与批处理",
+      "name": "数据交换",
+      "maturity": "idea",
+      "definition": [
+        "导入、导出、同步"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "数据交换与批处理"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-042",
+      "kind": "ACT",
+      "group": "数据交换与批处理",
+      "name": "批量变更",
+      "maturity": "idea",
+      "definition": [
+        "批量编辑、批量分配、批量变更状态"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "数据交换与批处理"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-043",
+      "kind": "ACT",
+      "group": "数据交换与批处理",
+      "name": "批量选择",
+      "maturity": "idea",
+      "definition": [
+        "全选当前页、全选查询结果、清除选择"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "数据交换与批处理"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-ACT-044",
+      "kind": "ACT",
+      "group": "数据交换与批处理",
+      "name": "执行控制",
+      "maturity": "idea",
+      "definition": [
+        "校验、模拟执行、正式执行、失败重试"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "数据交换与批处理"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-001",
+      "kind": "VIEW",
+      "group": "页面级容器",
+      "name": "应用壳层",
+      "maturity": "idea",
+      "definition": [
+        "侧栏、顶栏和内容滚动区构成系统框架"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "页面级容器"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-002",
+      "kind": "VIEW",
+      "group": "页面级容器",
+      "name": "工作区页签",
+      "maturity": "idea",
+      "definition": [
+        "保留多个可切换的业务上下文"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "页面级容器"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-003",
+      "kind": "VIEW",
+      "group": "页面级容器",
+      "name": "独立页面",
+      "maturity": "idea",
+      "definition": [
+        "复杂、持续或需要独立链接的任务"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "页面级容器"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-004",
+      "kind": "VIEW",
+      "group": "页面级容器",
+      "name": "抽屉",
+      "maturity": "idea",
+      "definition": [
+        "保留当前上下文的查看或轻编辑"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "页面级容器"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-005",
+      "kind": "VIEW",
+      "group": "页面级容器",
+      "name": "对话框",
+      "maturity": "idea",
+      "definition": [
+        "短时、聚焦、字段较少的确认或操作"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "页面级容器"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-006",
+      "kind": "VIEW",
+      "group": "页面级容器",
+      "name": "气泡卡片",
+      "maturity": "idea",
+      "definition": [
+        "预览和低风险快捷操作"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "页面级容器"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-007",
+      "kind": "VIEW",
+      "group": "页面级容器",
+      "name": "行内编辑",
+      "maturity": "idea",
+      "definition": [
+        "高频、低风险且字段简单的修改"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "页面级容器"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-010",
+      "kind": "VIEW",
+      "group": "信息展示",
+      "name": "表格",
+      "maturity": "idea",
+      "definition": [
+        "结构一致、需要比较和批量操作的数据"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "信息展示"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-011",
+      "kind": "VIEW",
+      "group": "信息展示",
+      "name": "描述列表",
+      "maturity": "idea",
+      "definition": [
+        "单对象的标签—值信息"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "信息展示"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-012",
+      "kind": "VIEW",
+      "group": "信息展示",
+      "name": "卡片",
+      "maturity": "idea",
+      "definition": [
+        "结构相近但字段不完全一致的对象"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "信息展示"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-013",
+      "kind": "VIEW",
+      "group": "信息展示",
+      "name": "树",
+      "maturity": "idea",
+      "definition": [
+        "层级、继承和父子关系"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "信息展示"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-014",
+      "kind": "VIEW",
+      "group": "信息展示",
+      "name": "看板",
+      "maturity": "idea",
+      "definition": [
+        "按阶段分组并关注流转"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "信息展示"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-015",
+      "kind": "VIEW",
+      "group": "信息展示",
+      "name": "时间线",
+      "maturity": "idea",
+      "definition": [
+        "按时间追踪事件、审批和变更"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "信息展示"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-016",
+      "kind": "VIEW",
+      "group": "信息展示",
+      "name": "日历/甘特",
+      "maturity": "idea",
+      "definition": [
+        "时间、资源和依赖关系"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "信息展示"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-017",
+      "kind": "VIEW",
+      "group": "信息展示",
+      "name": "指标与图表",
+      "maturity": "idea",
+      "definition": [
+        "聚合信息、趋势、分布与异常发现"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "信息展示"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-VIEW-018",
+      "kind": "VIEW",
+      "group": "信息展示",
+      "name": "差异视图",
+      "maturity": "idea",
+      "definition": [
+        "版本或修改前后的比较"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "信息展示"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-STATE-001",
+      "kind": "STATE",
+      "group": "状态与反馈",
+      "name": "初始",
+      "maturity": "idea",
+      "definition": [
+        "告知用户从哪里开始或当前默认条件"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "状态与反馈"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-STATE-002",
+      "kind": "STATE",
+      "group": "状态与反馈",
+      "name": "加载",
+      "maturity": "idea",
+      "definition": [
+        "显示加载范围，避免重复提交"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "状态与反馈"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-STATE-003",
+      "kind": "STATE",
+      "group": "状态与反馈",
+      "name": "空数据",
+      "maturity": "idea",
+      "definition": [
+        "区分无数据、无搜索结果和无权限"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "状态与反馈"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-STATE-004",
+      "kind": "STATE",
+      "group": "状态与反馈",
+      "name": "成功",
+      "maturity": "idea",
+      "definition": [
+        "说明完成对象、影响范围和下一步"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "状态与反馈"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-STATE-005",
+      "kind": "STATE",
+      "group": "状态与反馈",
+      "name": "校验失败",
+      "maturity": "idea",
+      "definition": [
+        "定位字段或记录，并保留用户输入"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "状态与反馈"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-STATE-006",
+      "kind": "STATE",
+      "group": "状态与反馈",
+      "name": "业务拒绝",
+      "maturity": "idea",
+      "definition": [
+        "解释不满足的业务前置条件"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "状态与反馈"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-STATE-007",
+      "kind": "STATE",
+      "group": "状态与反馈",
+      "name": "系统失败",
+      "maturity": "idea",
+      "definition": [
+        "提供可理解原因、重试或恢复路径"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "状态与反馈"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-STATE-008",
+      "kind": "STATE",
+      "group": "状态与反馈",
+      "name": "部分成功",
+      "maturity": "idea",
+      "definition": [
+        "明确成功、失败和未处理范围"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "状态与反馈"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-STATE-009",
+      "kind": "STATE",
+      "group": "状态与反馈",
+      "name": "权限不足",
+      "maturity": "idea",
+      "definition": [
+        "不泄露不可见对象的敏感信息"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "状态与反馈"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-STATE-010",
+      "kind": "STATE",
+      "group": "状态与反馈",
+      "name": "对象不存在",
+      "maturity": "idea",
+      "definition": [
+        "区分删除、失效或地址错误的可行动信息"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "状态与反馈"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-STATE-011",
+      "kind": "STATE",
+      "group": "状态与反馈",
+      "name": "并发冲突",
+      "maturity": "idea",
+      "definition": [
+        "展示版本变化，并提供刷新、比较或重新提交"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "状态与反馈"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-STATE-012",
+      "kind": "STATE",
+      "group": "状态与反馈",
+      "name": "异步处理中",
+      "maturity": "idea",
+      "definition": [
+        "提供任务状态、离开页面后的查询入口"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "状态与反馈"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SPECIAL-001",
+      "kind": "SPECIAL",
+      "group": "特殊操作",
+      "name": "不可逆/破坏性",
+      "maturity": "idea",
+      "definition": [
+        "物理删除、终止、覆盖",
+        "影响范围、二次确认、授权、审计"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "特殊操作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SPECIAL-002",
+      "kind": "SPECIAL",
+      "group": "特殊操作",
+      "name": "批量操作",
+      "maturity": "idea",
+      "definition": [
+        "批量删除、分配、改状态",
+        "选择语义、预检查、部分成功、结果下载"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "特殊操作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SPECIAL-003",
+      "kind": "SPECIAL",
+      "group": "特殊操作",
+      "name": "异步长任务",
+      "maturity": "idea",
+      "definition": [
+        "大批量导入、导出、计算",
+        "任务 ID、进度、通知、取消、重试"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "特殊操作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SPECIAL-004",
+      "kind": "SPECIAL",
+      "group": "特殊操作",
+      "name": "敏感操作",
+      "maturity": "idea",
+      "definition": [
+        "导出隐私数据、重置凭据",
+        "二次认证、脱敏、水印、有效期、审计"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "特殊操作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SPECIAL-005",
+      "kind": "SPECIAL",
+      "group": "特殊操作",
+      "name": "并发编辑",
+      "maturity": "idea",
+      "definition": [
+        "多人编辑同一记录",
+        "版本号、冲突检测、对比、覆盖规则"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "特殊操作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SPECIAL-006",
+      "kind": "SPECIAL",
+      "group": "特殊操作",
+      "name": "跨对象级联",
+      "maturity": "idea",
+      "definition": [
+        "删除组织、停用规则",
+        "依赖检查、影响预览、事务与补偿"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "特殊操作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SPECIAL-007",
+      "kind": "SPECIAL",
+      "group": "特殊操作",
+      "name": "状态机约束",
+      "maturity": "idea",
+      "definition": [
+        "审批、工单、发布",
+        "允许迁移、守卫条件、失败原因、回退"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "特殊操作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SPECIAL-008",
+      "kind": "SPECIAL",
+      "group": "特殊操作",
+      "name": "模拟后执行",
+      "maturity": "idea",
+      "definition": [
+        "规则发布、批量更新",
+        "预演结果、确认快照、正式执行一致性"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "特殊操作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SPECIAL-009",
+      "kind": "SPECIAL",
+      "group": "特殊操作",
+      "name": "外部系统调用",
+      "maturity": "idea",
+      "definition": [
+        "同步 ERP、发送消息",
+        "幂等、超时、重试、补偿、外部状态"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "特殊操作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SPECIAL-010",
+      "kind": "SPECIAL",
+      "group": "特殊操作",
+      "name": "锁定与占用",
+      "maturity": "idea",
+      "definition": [
+        "结账、编辑锁、资源预占",
+        "锁所有者、过期、释放、管理员处理"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "特殊操作"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SCENE-001",
+      "kind": "SCENE",
+      "group": "组合场景",
+      "name": "查询—新增—详情",
+      "maturity": "implementation-verified",
+      "definition": [
+        "列表 + 新建 + 详情",
+        "查询、重置、新增、打开详情",
+        "URL、权限、保存失败、返回上下文"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "组合场景"
+      },
+      "artifacts": [
+        "_methodology/patterns/record-management-workspace.md",
+        "_methodology/templates/ui/record-management-workspace/README.md",
+        "_methodology/examples/003-golden-interaction-record-management-workspace/README.md"
+      ],
+      "evidence": [
+        "interaction-pattern-lab:001-pattern-catalog-preview",
+        "mcrm:004-customer-record-workspace"
+      ],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界"
+    },
+    {
+      "assetId": "EPM-SCENE-002",
+      "kind": "SCENE",
+      "group": "组合场景",
+      "name": "查询—编辑—归档",
+      "maturity": "idea",
+      "definition": [
+        "列表 + 编辑/抽屉 + 详情",
+        "编辑、保存、归档、恢复",
+        "并发、字段权限、历史记录"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "组合场景"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SCENE-003",
+      "kind": "SCENE",
+      "group": "组合场景",
+      "name": "提交—审批—生效",
+      "maturity": "idea",
+      "definition": [
+        "编辑 + 流程实例 + 审批中心",
+        "提交、撤回、同意、驳回",
+        "状态机、会签、代理、审计"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "组合场景"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SCENE-004",
+      "kind": "SCENE",
+      "group": "组合场景",
+      "name": "导入—校验—执行",
+      "maturity": "idea",
+      "definition": [
+        "导入向导 + 任务中心 + 结果页",
+        "上传、映射、预检、执行、重试",
+        "幂等、部分成功、错误定位"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "组合场景"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SCENE-005",
+      "kind": "SCENE",
+      "group": "组合场景",
+      "name": "规则—模拟—发布",
+      "maturity": "idea",
+      "definition": [
+        "规则设计 + 差异视图 + 审计",
+        "编辑、模拟、发布、回滚",
+        "冲突、版本、生效范围"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "组合场景"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SCENE-006",
+      "kind": "SCENE",
+      "group": "组合场景",
+      "name": "看板—流转—追踪",
+      "maturity": "idea",
+      "definition": [
+        "看板 + 详情 + 时间线",
+        "拖动、分配、评论、关闭",
+        "状态守卫、权限、并发"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "组合场景"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    },
+    {
+      "assetId": "EPM-SCENE-007",
+      "kind": "SCENE",
+      "group": "组合场景",
+      "name": "报表—钻取—导出",
+      "maturity": "idea",
+      "definition": [
+        "指标看板 + 分析报表 + 导出任务",
+        "筛选、钻取、导出",
+        "指标口径、明细权限、数据时效"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "组合场景"
+      },
+      "artifacts": [],
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+    }
+  ]
+}

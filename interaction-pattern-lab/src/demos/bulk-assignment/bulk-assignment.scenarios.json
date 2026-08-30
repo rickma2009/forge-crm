@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "validationId": "VAL-002",
+  "failureCodes": ["RECORD_LOCKED", "STATE_INCOMPATIBLE", "OWNER_UNAVAILABLE", "CONCURRENT_CHANGE", "SYSTEM_UNAVAILABLE"],
+  "keyboardPath": ["Tab", "Space", "Enter", "Escape"],
+  "scenarios": [
+    {
+      "id": "partial-success",
+      "label": "部分成功",
+      "initialQuery": "",
+      "actions": ["select-page", "set-owner", "precheck", "open-confirmation", "execute"],
+      "expectedOutcome": "partial-success"
+    },
+    {
+      "id": "all-success",
+      "label": "全部成功",
+      "initialQuery": "",
+      "actions": ["select-page", "set-owner", "precheck", "open-confirmation", "execute"],
+      "expectedOutcome": "all-success"
+    },
+    {
+      "id": "system-failure-first",
+      "label": "系统失败后重试",
+      "initialQuery": "",
+      "actions": ["select-page", "set-owner", "precheck", "open-confirmation", "execute", "retry"],
+      "expectedOutcome": "partial-success"
+    },
+    {
+      "id": "empty",
+      "label": "空结果",
+      "initialQuery": "无匹配工作项",
+      "actions": ["change-query"],
+      "expectedOutcome": "empty"
+    }
+  ]
+}

@@ -19,6 +19,8 @@ bash _methodology/scripts/check-sdd.sh _methodology/examples/001-golden-slice-le
 node _methodology/scripts/check-ui-patterns.mjs
 node _methodology/scripts/check-record-workspace.mjs
 node _methodology/scripts/check-enterprise-interaction-catalog.mjs
+node _methodology/scripts/check-enterprise-interaction-index.mjs
+node --test _methodology/scripts/enterprise-interaction-index.test.mjs
 
 node _methodology/scripts/check-markdown-links.mjs .
 

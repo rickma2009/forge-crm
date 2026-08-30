@@ -1,22 +1,22 @@
 {
   "project": "Interaction Pattern Lab / 企业交互模式验证场",
-  "status": "paused-awaiting-scope-correction",
-  "currentStage": "business-scope-reconfirmation",
+  "status": "implementation-in-progress",
+  "currentStage": "implementation",
   "gates": {
     "business": {
-      "status": "reconfirmation-required-103-vs-99",
+      "status": "approved-corrected-to-103-by-REQSRC-012",
       "evidence": { "sourceId": "REQSRC-009", "approvedBy": "Rick", "approvedAt": "2026-08-31T01:19:59+08:00", "conclusion": "approved" },
       "supersedes": { "status": "reopened", "sourceId": "REQSRC-007" }
     },
-    "specification": { "status": "approved-for-slice-002", "evidence": { "sourceId": "REQSRC-010", "approvedBy": "Rick", "approvedAt": "2026-08-31T01:30:45+08:00", "conclusion": "approved" } },
-    "architecture": { "status": "approved-for-slice-002-pending-count-correction", "evidence": { "sourceId": "REQSRC-011", "approvedBy": "Rick", "approvedAt": "2026-08-31T01:44:02+08:00", "conclusion": "approved" }, "historicalBoundary": "REQSRC-004 applies only to slice 001" },
+    "specification": { "status": "approved-for-slice-002-corrected-by-REQSRC-012", "evidence": { "sourceId": "REQSRC-010", "approvedBy": "Rick", "approvedAt": "2026-08-31T01:30:45+08:00", "conclusion": "approved" } },
+    "architecture": { "status": "approved-for-slice-002-corrected-by-REQSRC-012", "evidence": { "sourceId": "REQSRC-011", "approvedBy": "Rick", "approvedAt": "2026-08-31T01:44:02+08:00", "conclusion": "approved" }, "historicalBoundary": "REQSRC-004 applies only to slice 001" },
     "release": { "status": "not-applicable-under-redefined-scope", "evidence": null }
   },
   "technologyProfile": null,
   "featureStates": {
     "001-pattern-catalog-preview": "historical-slice-preserved-business-gate-reopened",
-    "002-bulk-assignment-partial-success": "paused-awaiting-scope-correction"
+    "002-bulk-assignment-partial-success": "implementation-in-progress"
   },
-  "reviewCandidate": ".specify/specs/002-bulk-assignment-partial-success/scope-discrepancy.md",
-  "updatedAt": "2026-08-31T01:46:00+08:00"
+  "reviewCandidate": ".specify/specs/002-bulk-assignment-partial-success/tasks.md",
+  "updatedAt": "2026-08-31T01:51:06+08:00"
 }

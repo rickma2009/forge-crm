@@ -1,0 +1,26 @@
+[
+  {
+    "validationId": "VAL-002",
+    "label": "批量分配与部分成功",
+    "primaryAssetId": "EPM-SPECIAL-002",
+    "coveredAssetIds": ["EPM-PAGE-010", "EPM-ACT-002", "EPM-ACT-003", "EPM-ACT-031", "EPM-ACT-042", "EPM-ACT-043", "EPM-ACT-044", "EPM-VIEW-005", "EPM-VIEW-010", "EPM-STATE-001", "EPM-STATE-002", "EPM-STATE-003", "EPM-STATE-004", "EPM-STATE-005", "EPM-STATE-006", "EPM-STATE-007", "EPM-STATE-008", "EPM-SPECIAL-002", "EPM-SPECIAL-008", "EPM-SPECIAL-010"],
+    "demoId": "bulk-assignment-partial-success",
+    "specRef": ".specify/specs/002-bulk-assignment-partial-success/spec.md"
+  },
+  {
+    "validationId": "VAL-001-NAV",
+    "label": "企业双层导航壳层",
+    "primaryAssetId": "EPM-PAGE-001",
+    "coveredAssetIds": ["EPM-PAGE-001", "EPM-VIEW-001", "EPM-ACT-001"],
+    "demoId": "navigation-shell",
+    "specRef": ".specify/specs/001-pattern-catalog-preview/spec.md"
+  },
+  {
+    "validationId": "VAL-001-RECORD",
+    "label": "记录管理工作区",
+    "primaryAssetId": "EPM-SCENE-001",
+    "coveredAssetIds": ["EPM-SCENE-001", "EPM-PAGE-010", "EPM-PAGE-011", "EPM-PAGE-012", "EPM-VIEW-002", "EPM-VIEW-010"],
+    "demoId": "record-workspace",
+    "specRef": ".specify/specs/001-pattern-catalog-preview/spec.md"
+  }
+]

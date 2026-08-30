@@ -1,19 +1,19 @@
 {
   "featureId": "002-bulk-assignment-partial-success",
-  "status": "paused-awaiting-scope-correction",
-  "currentStage": "business-scope-reconfirmation",
+  "status": "implementation-in-progress",
+  "currentStage": "implementation",
   "gates": {
-    "business": "reconfirmation-required-103-vs-99-REQSRC-009",
-    "specification": "approved-2026-08-31-REQSRC-010-pending-count-correction",
-    "architecture": "approved-2026-08-31-REQSRC-011-pending-count-correction",
+    "business": "approved-2026-08-31-REQSRC-009-corrected-by-REQSRC-012",
+    "specification": "approved-2026-08-31-REQSRC-010-corrected-by-REQSRC-012",
+    "architecture": "approved-2026-08-31-REQSRC-011-corrected-by-REQSRC-012",
     "release": "not-started"
   },
   "checks": {
-    "sources": "pending-rerun-11-of-11",
+    "sources": "pending-rerun-12-of-12",
     "structure": "passed-spec-stage",
     "traceability": "passed-spec-stage",
     "testDesign": "designed-not-run",
     "implementation": "not-started"
   },
-  "updatedAt": "2026-08-31T01:46:00+08:00"
+  "updatedAt": "2026-08-31T01:51:06+08:00"
 }

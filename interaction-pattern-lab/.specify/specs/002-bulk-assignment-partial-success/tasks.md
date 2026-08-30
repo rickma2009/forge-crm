@@ -1,7 +1,7 @@
 # 实现任务：批量分配与部分成功验证
 
 > 功能编号：002-bulk-assignment-partial-success  
-> 状态：paused-awaiting-scope-correction  
+> 状态：in-progress
 > Architecture Gate：approved（`REQSRC-011`）
 
 ## 已确认测试 seam
@@ -17,16 +17,16 @@
 
 ## 任务列表
 
-### TASK-201 建立 99 项机器资产登记册
+### TASK-201 建立 103 项机器资产登记册
 
 - 来源：`REQ-301`、`REQ-304`、`NFR-304`、`AC-301`、`AC-304`、`TC-301`、`TC-305`、`TC-EDGE-303`
 - 依赖：无
 - 产出：`_methodology/patterns/index.json`、Schema、同步/检查脚本、方法论校验入口
 - 实施边界：只登记分类项与现有证据，不晋升成熟度
-- 验收：99 个唯一编号、六类计数准确、引用与成熟度证据合法
+- 验收：103 个唯一编号、六类计数准确、引用与成熟度证据合法
 - 验证命令/入口：`node _methodology/scripts/check-enterprise-interaction-index.mjs`
-- 状态：paused
-- 实际证据：首个红测发现权威分类为 103 项而非已批准的 99 项；见 `scope-discrepancy.md`
+- 状态：in-progress
+- 实际证据：首个红测发现并由 `REQSRC-012` 纠正 99/103 范围；重新进入红—绿循环
 
 ### TASK-202 建立生成式 Lab 投影与目录 Module
 
@@ -45,7 +45,7 @@
 - 依赖：`TASK-202`
 - 产出：六类/子分组目录、成熟度/Demo 筛选、无 Demo 说明、开放式显式 Adapter 注册
 - 实施边界：不建设动态插件或通用 UI 渲染器
-- 验收：99 项可浏览，无 Demo 不报错，Demo 数量不再固定为两个
+- 验收：103 项可浏览，无 Demo 不报错，Demo 数量不再固定为两个
 - 验证命令/入口：App 集成测试
 - 状态：pending
 - 实际证据：not-run
@@ -99,6 +99,6 @@
 | Checkpoint | 条件 | 状态 |
 |---|---|---|
 | Ready | Business、Specification、Architecture Gate 均获人工批准，测试 seam 明确 | completed |
-| Implemented | 范围内任务完成 | paused-awaiting-scope-correction |
+| Implemented | 范围内任务完成 | pending |
 | Verified | 相关测试、浏览器验收和质量门禁通过 | pending |
 | Accepted | Release Gate 通过 | pending |

@@ -45,6 +45,7 @@
 - [x] 每个 AC 都有 TC；
 - [x] Business Gate 证据定位到 `REQSRC-009`；
 - [x] Specification Gate 已由 `REQSRC-010` 批准；
-- [x] Architecture Gate 保持 pending-human-decision；
-- [x] TASK 留待 Architecture Gate 后生成；
-- [x] 测试执行结果保持 not-run。
+- [x] Architecture Gate 已由 `REQSRC-011` 批准；
+- [x] TASK 已按批准的 Plan 生成并进入实施；
+- [x] 自动化测试已真实执行通过，浏览器验收仍待执行；
+- [x] 目录计数已由 `REQSRC-012` 纠正为 103 项。

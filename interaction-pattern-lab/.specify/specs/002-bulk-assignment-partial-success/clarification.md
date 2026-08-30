@@ -23,7 +23,7 @@
 
 | ID | 问题 | 所属阶段 |
 |---|---|---|
-| `Q-ARCH-201` | 99 项索引 Schema、权威文件和投影生成方向 | Architecture Gate |
+| `Q-ARCH-201` | 103 项索引 Schema、权威文件和投影生成方向 | Architecture Gate |
 | `Q-ARCH-202` | `VAL-002` 与多个分类项关联时的 manifest/loader 结构 | Architecture Gate |
 | `Q-ARCH-203` | 场景契约格式和 HTML/React runner | Architecture Gate |
 | `Q-ARCH-204` | 是否沿用 React/Vite、如何复审历史 ADR-001 | Architecture Gate |

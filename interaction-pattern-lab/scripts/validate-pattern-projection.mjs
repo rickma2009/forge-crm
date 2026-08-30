@@ -1,49 +1,29 @@
-import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { buildPatternProjection, projectRoot, projectionPath, serializePatternProjection } from './pattern-projection.mjs';
 
-const projectRoot = resolve(fileURLToPath(new URL('..', import.meta.url)));
-const catalogPath = resolve(projectRoot, 'src/catalog/patterns.data.json');
-const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
-const allowedStatuses = new Set([
-  'idea',
-  'candidate',
-  'implementation-verified',
-  'interaction-verified',
-  'project-adopted',
-  'business-validated',
-  'released',
-  'deprecated'
-]);
-const ids = new Set();
-const errors = [];
+const expected = serializePatternProjection(buildPatternProjection());
+const actual = fs.readFileSync(projectionPath, 'utf8');
+assert.equal(actual, expected, 'Lab 资产投影必须由方法论登记册与 validation-slices manifest 确定性生成');
 
-for (const pattern of catalog) {
-  if (ids.has(pattern.id)) errors.push(`${pattern.id}: 编号重复`);
-  ids.add(pattern.id);
-  if (!allowedStatuses.has(pattern.validationStatus)) errors.push(`${pattern.id}: 验证状态非法`);
-  for (const key of ['problem', 'appliesWhen', 'avoidWhen', 'behaviors', 'states', 'risks']) {
-    const value = pattern.summary?.[key];
-    if (!value || (Array.isArray(value) && value.length === 0)) errors.push(`${pattern.id}: summary.${key} 缺失`);
-  }
-  for (const source of pattern.sources ?? []) {
-    try { await readFile(resolve(projectRoot, source)); }
-    catch { errors.push(`${pattern.id}: 来源不存在 ${source}`); }
-  }
-  try {
-    const bytes = await readFile(resolve(projectRoot, pattern.sourceFingerprint.path));
-    const actual = createHash('sha256').update(bytes).digest('hex');
-    if (actual !== pattern.sourceFingerprint.sha256) errors.push(`${pattern.id}: 来源指纹不匹配`);
-  } catch {
-    errors.push(`${pattern.id}: 指纹来源不可读取`);
-  }
+const projection = JSON.parse(actual);
+assert.equal(projection.patterns.length, 103, 'Lab 必须投影全部 103 个分类项');
+assert.equal(new Set(projection.patterns.map((pattern) => pattern.id)).size, 103, '投影编号必须唯一');
+
+const assetIds = new Set(projection.patterns.map((pattern) => pattern.id));
+const validationIds = new Set();
+for (const validation of projection.validations) {
+  assert.ok(!validationIds.has(validation.validationId), `${validation.validationId} 重复`);
+  validationIds.add(validation.validationId);
+  assert.ok(assetIds.has(validation.primaryAssetId), `${validation.validationId} 主资产不存在`);
+  assert.ok(fs.existsSync(path.join(projectRoot, validation.specRef)), `${validation.validationId} Spec 不存在`);
+  for (const assetId of validation.coveredAssetIds) assert.ok(assetIds.has(assetId), `${validation.validationId} 覆盖不存在的 ${assetId}`);
 }
 
-if (catalog.length !== 2) errors.push(`首片应有 2 个模式，实际 ${catalog.length}`);
-if (errors.length) {
-  console.error(errors.join('\n'));
-  process.exit(1);
+for (const pattern of projection.patterns) {
+  assert.ok(pattern.maturity && pattern.nextEvidence, `${pattern.id} 缺少成熟度或下一证据`);
+  for (const source of pattern.sources) assert.ok(fs.existsSync(path.resolve(projectRoot, '..', source)), `${pattern.id} 来源不存在: ${source}`);
 }
 
-console.log(`PASS  模式投影 ${catalog.length} 项，来源存在且指纹一致`);
+console.log(`PASS  Lab 投影 ${projection.patterns.length} 项、${projection.validations.length} 个验证切片，来源与覆盖关系有效`);

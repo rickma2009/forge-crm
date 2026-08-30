@@ -5,7 +5,7 @@
 | 来源 | 作用 |
 |---|---|
 | `REQSRC-007` | 将项目重新定义为企业交互模式验证场 |
-| `REQSRC-008` | 确认 99 项目录、首个新增切片、批量语义、状态覆盖、样式和证据边界 |
+| `REQSRC-008` | 确认 103 项目录、首个新增切片、批量语义、状态覆盖、样式和证据边界 |
 | `REQSRC-009` | 批准新业务基线通过 Business Gate，并授权形成切片 002 Spec |
 | `.specify/requirements/002-validation-field-baseline/requirement.md` | 当前批准的业务需求与切片范围 |
 | `_methodology/08-企业管理系统交互模式分类方法.md` | PAGE、ACT、VIEW、STATE、SPECIAL、SCENE 分类语言 |

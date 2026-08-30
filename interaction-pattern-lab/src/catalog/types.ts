@@ -1,4 +1,4 @@
-export type ValidationStatus =
+export type MaturityStatus =
   | 'idea'
   | 'candidate'
   | 'implementation-verified'
@@ -7,6 +7,9 @@ export type ValidationStatus =
   | 'business-validated'
   | 'released'
   | 'deprecated';
+
+export type AssetKind = 'PAGE' | 'ACT' | 'VIEW' | 'STATE' | 'SPECIAL' | 'SCENE';
+export type DemoAvailability = 'all' | 'available' | 'none';
 
 export interface PatternSummary {
   problem: string;
@@ -17,17 +20,45 @@ export interface PatternSummary {
   risks: string[];
 }
 
+export interface DemoReference {
+  validationId: string;
+  label: string;
+  demoId: string;
+}
+
 export interface PatternDefinition {
   id: string;
+  kind: AssetKind;
   name: string;
   category: string;
-  validationStatus: ValidationStatus;
+  maturity: MaturityStatus;
   keywords: string[];
   summary: PatternSummary;
   sources: string[];
-  sourceFingerprint: {
-    path: string;
-    sha256: string;
-  };
-  demoId: 'navigation-shell' | 'record-workspace';
+  evidence: string[];
+  nextEvidence: string;
+  coveredBy: string[];
+  demos: DemoReference[];
+}
+
+export interface ValidationSliceDefinition {
+  validationId: string;
+  label: string;
+  primaryAssetId: string;
+  coveredAssetIds: string[];
+  demoId: string;
+  specRef: string;
+}
+
+export interface PatternProjection {
+  version: number;
+  registryVersion: number;
+  patterns: PatternDefinition[];
+  validations: ValidationSliceDefinition[];
+}
+
+export interface PatternFilters {
+  query?: string;
+  maturity?: MaturityStatus | 'all';
+  demoAvailability?: DemoAvailability;
 }

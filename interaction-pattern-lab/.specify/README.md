@@ -10,4 +10,4 @@
 - `requirements/`：业务可评审需求与转换记录；
 - `specs/`：仅在 Business Gate 通过后创建功能切片。
 
-当前状态：`paused-awaiting-scope-correction`。`REQSRC-010/011` 已分别批准切片 002 的 Specification 与 Architecture Gate，但首个 TDD 红测发现方法论 08 实际为 103 项，而 `REQSRC-008/009` 批准的是 99 项。当前评审入口是 `specs/002-bulk-assignment-partial-success/scope-discrepancy.md`；计数纠正确认前不得实现，资产晋升和 Release 仍未获授权。
+当前状态：`implementation-in-progress`。`REQSRC-009/010/011` 已批准 Business、Specification 与 Architecture Gate，`REQSRC-012` 已把目录范围纠正为 103 项。当前执行入口是 `specs/002-bulk-assignment-partial-success/tasks.md`；资产晋升、部署和 Release 仍未获授权。
