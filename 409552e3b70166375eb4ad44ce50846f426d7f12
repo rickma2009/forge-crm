@@ -1,0 +1,58 @@
+interaction-pattern-lab/src/demos/bulk-assignment/BulkAssignmentModel.ts
+  e528476cbc97de75 2,37,42,57,88,91,95,170-173
+interaction-pattern-lab/src/demos/bulk-assignment/bulk-assignment.scenario.schema.json
+  e528476cbc97de75 5,9,14,17,22-50
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/tasks.md
+  e528476cbc97de75 28-29,39-40,50-51,61-62,72-73,83-84,94-95,102-103
+interaction-pattern-lab/src/demos/bulk-assignment/bulk-assignment.scenarios.json
+  e528476cbc97de75 4,12-13,19-20,26-34,40-41
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/review.md
+  e528476cbc97de75 1-48
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/evidence/README.md
+  e528476cbc97de75 1-27
+interaction-pattern-lab/src/styles/index.css
+  e528476cbc97de75 139,291-295,362-363
+interaction-pattern-lab/.specify/project-state.json
+  e528476cbc97de75 13
+interaction-pattern-lab/src/app/App.test.tsx
+  e528476cbc97de75 61-69
+interaction-pattern-lab/src/demos/bulk-assignment/BulkAssignmentModel.test.ts
+  e528476cbc97de75 2,8-21,47-53,69-70,89,91-92,95-98
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/testcases.md
+  e528476cbc97de75 4,59-65
+interaction-pattern-lab/src/demos/bulk-assignment/BulkAssignmentDemo.tsx
+  e528476cbc97de75 20-21,29-30,32,35-48,51-52,68-71,80,105,107,110,112,116,121
+interaction-pattern-lab/package.json
+  e528476cbc97de75 20-21
+_methodology/scripts/json-schema-subset.mjs
+  e528476cbc97de75 1-42
+_methodology/scripts/check-enterprise-interaction-index.mjs
+  e528476cbc97de75 5,10,15-18
+interaction-pattern-lab/src/demos/bulk-assignment/BulkAssignmentDemo.test.tsx
+  e528476cbc97de75 36-42,53-54,80-88
+interaction-pattern-lab/scripts/validate-scenario-contracts.mjs
+  e528476cbc97de75 5,14-17,21,24
+interaction-pattern-lab/scripts/validate-demo-isolation.mjs
+  e528476cbc97de75 1-33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "409552e3b70166375eb4ad44ce50846f426d7f12",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 350,
+      "total_deletions": 52,
+      "accepted_lines": 663,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/434d41c80d0bcb82eb707f6588ea9ef4e8dd8b4e7c5efdc57077b69cf19af8b8"
+    }
+  }
+}
