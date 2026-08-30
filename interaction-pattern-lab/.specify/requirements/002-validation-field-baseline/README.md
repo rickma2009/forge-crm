@@ -1,6 +1,6 @@
 # 002 企业交互模式验证场业务基线
 
-> 状态：ready-for-business-gate-review
+> 状态：business-gate-approved
 > 来源：`REQSRC-007`、`REQSRC-008`
 
 ## 文件职责
@@ -13,5 +13,5 @@
 ## 当前边界
 
 - 本需求包取代 001 作为验证场当前业务基线；001、历史切片和 Gate 证据继续只读保留。
-- 本包已完成业务问题收敛，可以提交人工 Business Gate。
-- Business Gate 未批准前，不创建切片 002 的 Spec，不准备索引技术方案，不修改验证场功能代码；索引文件与检查器还须等待 Architecture Gate。
+- Business Gate 已由 Rick 在 `REQSRC-009` 中批准。
+- 当前允许创建切片 002 的 Spec、验收与测试设计；索引技术方案、Plan、实现和检查器仍须等待后续 Gate。

@@ -1,7 +1,7 @@
 # Business Gate 评审：企业交互模式验证场业务基线
 
 > 评审对象：`requirement.md` v1.0-rc1
-> 状态：pending-human-decision
+> 状态：approved
 > 决策人：Rick
 > 来源：`REQSRC-007`、`REQSRC-008`
 
@@ -48,8 +48,8 @@
 
 ## 5. 人工决定
 
-- 结论：`pending`
-- 批准人：待人工填写
-- 时间：待人工填写
-- 备注：待人工填写
-- 批准来源：批准后新增独立 `REQSRC-*`，不得回写本文件冒充原始来源
+- 结论：`approved`
+- 批准人：Rick
+- 时间：2026-08-31T01:19:59+08:00
+- 备注：批准范围不包含 Specification、Architecture、实现、资产晋升或 Release
+- 批准来源：`REQSRC-009`

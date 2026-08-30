@@ -1,6 +1,6 @@
 # 业务上下文：企业交互模式验证场
 
-> 状态：`REQSRC-007` 重新打开，`REQSRC-008` 已完成业务澄清；当前 ready-for-business-gate-review。
+> 状态：`REQSRC-009` 已批准新定位 Business Gate；当前进入切片 002 Specification 准备。
 
 ## 1. 事实、判断、假设与待确认
 
@@ -105,4 +105,4 @@
 
 ## 9. 未决问题
 
-当前业务问题见 `.specify/requirements/002-validation-field-baseline/clarification.md`，均已解决并等待人工 Business Gate。索引 Schema、Demo loader、场景契约 runner 和样例文案分别留给 Architecture/Specification Gate，不阻断 Business Gate。
+当前业务问题见 `.specify/requirements/002-validation-field-baseline/clarification.md`，均已解决并通过 Business Gate。索引 Schema、Demo loader、场景契约 runner 和样例文案分别留给 Architecture/Specification Gate。

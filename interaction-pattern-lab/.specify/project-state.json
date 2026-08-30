@@ -1,12 +1,12 @@
 {
   "project": "Interaction Pattern Lab / 企业交互模式验证场",
-  "status": "business-gate-review-ready",
-  "currentStage": "business-gate-review",
+  "status": "business-approved-specification-preparation",
+  "currentStage": "specification",
   "gates": {
     "business": {
-      "status": "reopened",
-      "evidence": { "sourceId": "REQSRC-007", "decidedBy": "Rick", "decidedAt": "2026-08-30", "conclusion": "reopened-after-scope-redefinition" },
-      "reviewReadiness": { "status": "ready", "sourceId": "REQSRC-008", "preparedAt": "2026-08-31T01:07:08+08:00" }
+      "status": "approved",
+      "evidence": { "sourceId": "REQSRC-009", "approvedBy": "Rick", "approvedAt": "2026-08-31T01:19:59+08:00", "conclusion": "approved" },
+      "supersedes": { "status": "reopened", "sourceId": "REQSRC-007" }
     },
     "specification": { "status": "not-applicable-until-new-slice", "evidence": null },
     "architecture": { "status": "historical-feature-specific-only", "evidence": null },
@@ -15,8 +15,8 @@
   "technologyProfile": null,
   "featureStates": {
     "001-pattern-catalog-preview": "historical-slice-preserved-business-gate-reopened",
-    "002-bulk-assignment-partial-success": "candidate-awaiting-business-gate-no-spec-created"
+    "002-bulk-assignment-partial-success": "specified-awaiting-specification-gate"
   },
-  "reviewCandidate": ".specify/requirements/002-validation-field-baseline/business-gate-review.md",
-  "updatedAt": "2026-08-31T01:07:08+08:00"
+  "reviewCandidate": ".specify/specs/002-bulk-assignment-partial-success/",
+  "updatedAt": "2026-08-31T01:19:59+08:00"
 }

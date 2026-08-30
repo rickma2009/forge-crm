@@ -1,0 +1,19 @@
+{
+  "sourceId": "REQSRC-009",
+  "title": "企业交互模式验证场 Business Gate 批准",
+  "sourceType": "user-provided-gate-approval",
+  "sourceDate": "2026-08-31",
+  "importedAt": "2026-08-31T01:19:59+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "a27a9844406b87da5d09a8bfc971d1be5a2189ff4d211d34b84f085d59ab5912",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved",
+  "gate": "business-validation-field-v1",
+  "approval": {
+    "approvedBy": "Rick",
+    "approvedAt": "2026-08-31T01:19:59+08:00",
+    "conclusion": "approved"
+  }
+}

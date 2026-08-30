@@ -1,0 +1,19 @@
+{
+  "featureId": "002-bulk-assignment-partial-success",
+  "status": "specified-awaiting-specification-gate",
+  "currentStage": "specification-gate",
+  "gates": {
+    "business": "approved-2026-08-31-REQSRC-009",
+    "specification": "pending-human-decision",
+    "architecture": "not-started",
+    "release": "not-started"
+  },
+  "checks": {
+    "sources": "passed-9-of-9",
+    "structure": "passed-spec-stage",
+    "traceability": "passed-spec-stage",
+    "testDesign": "designed-not-run",
+    "implementation": "not-started"
+  },
+  "updatedAt": "2026-08-31T01:19:59+08:00"
+}

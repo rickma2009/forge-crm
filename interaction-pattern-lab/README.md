@@ -1,8 +1,8 @@
 # Interaction Pattern Lab
 
 > 中文名：企业交互模式验证场
-> 项目状态：`business-gate-review-ready`
-> 当前 Gate：Business Gate 仍为 reopened，评审材料已准备，等待人工结论
+> 项目状态：`specified-awaiting-specification-gate`
+> 当前 Gate：新定位 Business Gate 已批准；切片 002 等待 Specification Gate
 
 本项目用于探索、实现和验证企业管理系统中重复出现的页面、操作、展示状态和特殊交互。它是验证场，不是通用模板的权威来源，也不代表真实业务系统。
 
@@ -10,7 +10,7 @@
 
 ## 当前阶段
 
-首个可运行切片已有实现、自动化和本地浏览器证据，这些历史证据继续保留。用户于 2026-08-30 将本目录重新定义为“验证场”，因此原产品化 Demo 的批准不再代表新边界，Business Gate 已按 `REQSRC-007` 重新打开。`REQSRC-008` 已完成目录、首个新增切片、证据和责任澄清，当前等待人工评审新的业务基线。
+首个可运行切片已有实现、自动化和本地浏览器证据，这些历史证据继续保留。用户于 2026-08-30 将本目录重新定义为“验证场”，原产品化 Demo 的批准不再代表新边界；`REQSRC-008` 完成业务澄清，Rick 已在 `REQSRC-009` 批准新的 Business Gate。
 
 ## 权威入口
 
@@ -26,6 +26,6 @@
 
 ## 当前允许与禁止
 
-允许：评审 Business Gate 材料、修正文档事实和历史边界；Gate 批准后才可建立权威索引候选和切片 002 Spec。
+允许：评审切片 002 的 Spec、验收和测试设计；准备 99 项内容清单与索引技术需求。
 
-禁止：在 Business Gate 重新批准前扩展实现或创建切片 Spec；禁止把原型或历史 Demo 授权称为新定位下的发布批准；禁止在没有真实证据时宣称模式已验证。
+禁止：Specification Gate 前创建技术 Plan；Architecture Gate 前建立索引实现、修改 Demo 注册或编码；禁止把历史 Demo 授权称为新定位下的发布批准。

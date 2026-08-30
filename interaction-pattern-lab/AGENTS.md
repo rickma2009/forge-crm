@@ -4,11 +4,11 @@
 
 ## 项目状态
 
-- 当前阶段：`business-gate-review-ready`，Gate 结论仍是 `reopened/pending-human-decision`。
+- 当前阶段：`specified-awaiting-specification-gate`。
 - 重新定义证据：`REQSRC-007`。本目录是交互模式验证场，不是模板规范源或真实业务项目。
 - 既有 `REQSRC-002`—`REQSRC-006` 及实现证据作为历史切片证据保留，不改写、不冒充新边界的批准。
-- 新定位下的 Specification、Architecture、Release Gate 均须在 Business Gate 重新批准后按切片推进。
-- 当前评审对象：`.specify/requirements/002-validation-field-baseline/business-gate-review.md`。
+- 新定位 Business Gate 已由 `REQSRC-009` 批准；Specification、Architecture、Release Gate 仍须按切片推进。
+- 当前评审对象：`.specify/specs/002-bulk-assignment-partial-success/`。
 
 ## 开始工作前
 

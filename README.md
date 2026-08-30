@@ -130,7 +130,7 @@ bash _methodology/scripts/verify-all.sh
 | 项目 | 状态 | 说明 |
 |---|---|---|
 | `mcrm` | 002 implementation-verified、Release pending；003/004 Spec 待重确认 | 独立实践项目；尚无生产发布、业务指标改善和 Release Gate 证据 |
-| `interaction-pattern-lab` | Business Gate review ready（仍 pending） | 企业交互模式验证场；`REQSRC-008` 已完成业务澄清，等待人工 Gate 结论 |
+| `interaction-pattern-lab` | Business approved；切片 002 Spec Gate pending | 企业交互模式验证场；`REQSRC-009` 已批准新定位业务基线，尚未授权架构或实现 |
 
 ## 7. 资产模型
 

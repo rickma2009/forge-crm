@@ -1,6 +1,6 @@
 # 项目章程：企业交互模式验证场
 
-> 状态：ready-for-business-gate-review
+> 状态：business-gate-approved
 > 项目代号：Interaction Pattern Lab  
 > 业务负责人：Rick
 > 产品负责人：Rick
@@ -73,10 +73,13 @@
 
 ## 7. Business Gate
 
-- 结论：reopened，材料已达到 `ready-for-business-gate-review`
+- 结论：approved
 - 重新打开时间：2026-08-30
 - 证据：`REQSRC-007`
 - 历史批准：`REQSRC-002` 批准的是原“产品化 Demo 工作台”基线，记录保留但不覆盖重新定义后的目标和边界。
 - 新评审对象：`requirements/002-validation-field-baseline/requirement.md`。
 - 已解决：验证场成功标准、首个新验证切片、资产管理边界和人工责任。
-- 待人工动作：Rick 对新的 Business Gate 评审包给出独立批准或退回结论；本章程不自我批准。
+- 批准人：Rick
+- 批准时间：2026-08-31T01:19:59+08:00
+- 批准证据：`REQSRC-009`
+- 批准边界：不包含 Specification、Architecture、实现、资产晋升或 Release。

@@ -1,7 +1,7 @@
 # 企业交互模式验证场业务需求
 
 > 版本：1.0-rc1
-> 状态：ready-for-business-gate-review
+> 状态：business-gate-approved
 > 权威来源：`REQSRC-007`、`REQSRC-008`
 
 ## 1. 定位与业务成果
@@ -138,5 +138,4 @@
 - MCRM：独立管理项目采用、Specification、Architecture、Release 和业务验证；
 - AI：不得代填人工 Gate，不得把工程通过写成业务验证。
 
-本需求包已准备好提交 Business Gate，但当前结论仍是 `pending-human-decision`。
-
+本需求包已由 Rick 通过 Business Gate，批准证据为 `REQSRC-009`。批准不包含 Specification、Architecture、实现、资产晋升或 Release。
