@@ -10,4 +10,4 @@
 - `requirements/`：业务可评审需求与转换记录；
 - `specs/`：仅在 Business Gate 通过后创建功能切片。
 
-当前状态：`specified-awaiting-specification-gate`。`REQSRC-009` 已批准新定位 Business Gate；当前评审对象是 `specs/002-bulk-assignment-partial-success/`。既有 Gate 记录只保留为历史切片证据，Architecture、实现和 Release 均未获新授权。
+当前状态：`architecture-proposed-awaiting-architecture-gate`。`REQSRC-009` 已批准新定位 Business Gate，`REQSRC-010` 已批准切片 002 Specification Gate；当前评审入口是 `specs/002-bulk-assignment-partial-success/architecture-gate-review.md`。历史 Architecture Gate 只适用于切片 001，切片 002 的实现、资产晋升和 Release 均未获授权。

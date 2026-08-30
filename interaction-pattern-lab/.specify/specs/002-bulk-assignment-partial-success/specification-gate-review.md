@@ -1,7 +1,7 @@
 # Specification Gate 评审：批量分配与部分成功验证
 
 > 评审对象：`spec.md`、`testcases.md`、`traceability.md`
-> 状态：pending-human-decision
+> 状态：approved
 > 决策人：Rick
 > Business Gate：approved（`REQSRC-009`）
 
@@ -51,8 +51,8 @@
 
 ## 6. 人工决定
 
-- 结论：`pending`
-- 批准人：待人工填写
-- 时间：待人工填写
-- 备注：待人工填写
-- 批准来源：批准后新增独立 `REQSRC-*`
+- 结论：`approved`
+- 批准人：Rick
+- 时间：2026-08-31T01:30:45+08:00
+- 备注：仅批准可观察行为和测试设计；Architecture、Plan、Tasks、实现、资产晋升和 Release 均未批准。
+- 批准来源：`REQSRC-010`

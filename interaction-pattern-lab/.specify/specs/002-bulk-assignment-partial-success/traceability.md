@@ -44,6 +44,7 @@
 - [x] 每个本切片 REQ/NFR 都有 AC；
 - [x] 每个 AC 都有 TC；
 - [x] Business Gate 证据定位到 `REQSRC-009`；
-- [x] Specification Gate 保持 pending；
-- [x] TASK 留待 Specification/Architecture Gate 后生成；
+- [x] Specification Gate 已由 `REQSRC-010` 批准；
+- [x] Architecture Gate 保持 pending-human-decision；
+- [x] TASK 留待 Architecture Gate 后生成；
 - [x] 测试执行结果保持 not-run。

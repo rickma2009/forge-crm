@@ -1,8 +1,8 @@
 # 功能规格：批量分配与部分成功验证
 
 > 功能编号：002
-> 状态：specified-awaiting-specification-gate
-> Spec Gate：pending
+> 状态：specification-approved-awaiting-architecture-gate
+> Spec Gate：approved（`REQSRC-010`）
 
 ## 1. 目标与范围
 
@@ -120,8 +120,8 @@
 
 ## 8. Spec Gate
 
-- 结论：pending
-- 批准人：
-- 时间：
-- 备注：
-
+- 结论：approved
+- 批准人：Rick
+- 时间：2026-08-31T01:30:45+08:00
+- 备注：仅批准可观察行为和测试设计；不包含 Architecture、Plan、Tasks、实现、资产晋升或 Release。
+- 批准来源：`REQSRC-010`

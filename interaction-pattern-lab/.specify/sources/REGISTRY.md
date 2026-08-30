@@ -11,5 +11,6 @@
 | `REQSRC-007` | 工作台整改与验证场重新定义 | 用户确认与共同理解 | 2026-08-30 | `REQSRC-007-workbench-restructure-and-validation-field-redefinition-20260830/source.md` | active |
 | `REQSRC-008` | UI 分类目录与首个新增验证切片决策 | 用户确认与共同理解 | 2026-08-31 | `REQSRC-008-ui-catalog-and-validation-slice-decisions-20260831/source.md` | active |
 | `REQSRC-009` | 企业交互模式验证场 Business Gate 批准 | 用户批准消息 | 2026-08-31 | `REQSRC-009-validation-field-business-gate-approval-20260831/source.md` | approved |
+| `REQSRC-010` | 切片 002 Specification Gate 批准 | 用户批准消息 | 2026-08-31 | `REQSRC-010-bulk-assignment-specification-gate-approval-20260831/source.md` | approved |
 
 所有来源副本按不可改写策略管理。后续用户提供的系统源码、截图、Open Design 案例链接或补充场景必须分配新的来源 ID，不覆盖现有副本。
