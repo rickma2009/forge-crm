@@ -1,0 +1,56 @@
+interaction-pattern-lab/docs/pattern-backlog.md
+  e528476cbc97de75 1,3-5,7,9,11,13-16,18,20-32,34-39,41-45,47-52,56-67
+interaction-pattern-lab/CONTEXT.md
+  e528476cbc97de75 23-46
+interaction-pattern-lab/.specify/project-state.json
+  e528476cbc97de75 3-4,8-9,17-18,20-21
+interaction-pattern-lab/.specify/sources/REGISTRY.md
+  e528476cbc97de75 12
+interaction-pattern-lab/.specify/requirements/001-product-baseline/clarification.md
+  e528476cbc97de75 1,3,5
+interaction-pattern-lab/AGENTS.md
+  e528476cbc97de75 7,11,34-36
+interaction-pattern-lab/docs/adr/ADR-001-交互模式工作台前端架构.md
+  e528476cbc97de75 3,8
+interaction-pattern-lab/docs/product/企业管理系统交互模式工作台总体规划.md
+  e528476cbc97de75 9
+interaction-pattern-lab/.specify/memory/project-charter.md
+  e528476cbc97de75 3,5-7,19-22,31,39,44,62,70,76,80-82
+README.md
+  e528476cbc97de75 133
+interaction-pattern-lab/.specify/memory/business-context.md
+  e528476cbc97de75 3,15-19,28,48-49,66-69,81-84,103,108
+interaction-pattern-lab/.specify/requirements/001-product-baseline/transformation.md
+  e528476cbc97de75 1-4,49,51
+interaction-pattern-lab/.specify/requirements/001-product-baseline/README.md
+  e528476cbc97de75 1,3,5,13,20-21
+interaction-pattern-lab/.specify/requirements/001-product-baseline/requirement.md
+  e528476cbc97de75 1,4,7
+interaction-pattern-lab/docs/design-system.md
+  e528476cbc97de75 3,7
+interaction-pattern-lab/README.md
+  e528476cbc97de75 4-5,13,21-22,29,31
+interaction-pattern-lab/.specify/README.md
+  e528476cbc97de75 13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "d67e9726c534b2245583b94bc4c2d2901e0b0304",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 178,
+      "total_deletions": 98,
+      "accepted_lines": 193,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/5c0895a11a04591c81c0477b5761b4770c29003e081392859bf6433cfb988b27"
+    }
+  }
+}
