@@ -1,0 +1,64 @@
+AGENTS.md
+  941ca59fe9f5d01d 1-68,70-77
+sdd-forge.code-workspace
+  941ca59fe9f5d01d 1-4,8-11
+  efdb267105edc13f 5-7
+_methodology/scripts/check-record-workspace.mjs
+  941ca59fe9f5d01d 1-30
+CLAUDE.md
+  941ca59fe9f5d01d 1
+.gitignore
+  941ca59fe9f5d01d 1-2,7-15
+  1fc9621a9997eb61 3-6
+README.md
+  941ca59fe9f5d01d 1-66,68-92,94-113,116-129
+  1fc9621a9997eb61 67,93,115
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "56f7938e9207da1d195ee7079434402211e51a8a",
+  "prompts": {
+    "1fc9621a9997eb61": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a051dd-e130-7b83-b241-251b7be86950",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 77,
+      "total_deletions": 17,
+      "accepted_lines": 46,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/e7355cce113688175a6c8b6812d61859c0f0297565055cd72a6681d376411a2c"
+    },
+    "941ca59fe9f5d01d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04914-d740-78d2-a82f-a29d3776343c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 360,
+      "total_deletions": 15,
+      "accepted_lines": 337,
+      "overriden_lines": 3,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/294cd2df3ac0b29243320d0705f0dd860c7db0df1a213d177aa6b61d4c23576b"
+    },
+    "efdb267105edc13f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04ac2-baec-7df0-8450-2d2cc51716ad",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 0,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}
