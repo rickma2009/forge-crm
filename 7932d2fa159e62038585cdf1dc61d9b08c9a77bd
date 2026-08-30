@@ -1,0 +1,46 @@
+README.md
+  e528476cbc97de75 133
+interaction-pattern-lab/.specify/requirements/002-validation-field-baseline/business-gate-review.md
+  e528476cbc97de75 4,51-55
+interaction-pattern-lab/.specify/requirements/002-validation-field-baseline/clarification.md
+  e528476cbc97de75 3,41
+interaction-pattern-lab/.specify/sources/REGISTRY.md
+  e528476cbc97de75 13
+interaction-pattern-lab/.specify/README.md
+  e528476cbc97de75 13
+interaction-pattern-lab/.specify/memory/business-context.md
+  e528476cbc97de75 3,108
+interaction-pattern-lab/.specify/memory/project-charter.md
+  e528476cbc97de75 3,76,82-85
+interaction-pattern-lab/AGENTS.md
+  e528476cbc97de75 7,10-11
+interaction-pattern-lab/.specify/project-state.json
+  e528476cbc97de75 3-4,7-9,18,20-21
+interaction-pattern-lab/README.md
+  e528476cbc97de75 4-5,13,29,31
+interaction-pattern-lab/.specify/requirements/002-validation-field-baseline/README.md
+  e528476cbc97de75 3,16-17
+interaction-pattern-lab/.specify/requirements/002-validation-field-baseline/requirement.md
+  e528476cbc97de75 4,141
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "7932d2fa159e62038585cdf1dc61d9b08c9a77bd",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 43,
+      "total_deletions": 41,
+      "accepted_lines": 67,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/8e9281ab590d3e2f0ad602916b20746d3774608837d15c4bc3a4188741984fb4"
+    }
+  }
+}
