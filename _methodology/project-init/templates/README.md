@@ -2,7 +2,7 @@
 
 > 状态：治理骨架已初始化；Business Gate pending。
 
-本项目使用技术栈中立的 SDD 治理骨架。先把原始材料追加归档到 `.specify/sources/`，完成业务发现和人工 Gate，再选择架构与技术 Profile。
+本项目使用技术栈中立的 SDD 治理骨架和独立 Git 历史。先把原始材料追加归档到 `.specify/sources/`，完成业务发现和人工 Gate，再选择架构与技术 Profile。
 
 ## 权威入口
 

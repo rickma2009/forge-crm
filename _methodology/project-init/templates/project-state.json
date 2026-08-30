@@ -3,10 +3,10 @@
   "status": "governance-initialized-business-gate-pending",
   "currentStage": "business-discovery",
   "gates": {
-    "business": "pending",
-    "specification": "not-applicable-before-feature",
-    "architecture": "pending",
-    "release": "not-applicable-before-feature"
+    "business": { "status": "pending", "evidence": null },
+    "specification": { "status": "not-applicable-before-feature", "evidence": null },
+    "architecture": { "status": "pending", "evidence": null },
+    "release": { "status": "not-applicable-before-feature", "evidence": null }
   },
   "technologyProfile": null,
   "updatedAt": "{{generated_datetime}}"

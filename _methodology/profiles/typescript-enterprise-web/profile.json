@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "typescript-enterprise-web",
-  "version": "0.1.0",
-  "status": "candidate-contract-only",
-  "summary": "TypeScript 企业 Web 模块化单体工程契约",
+  "version": "0.2.0",
+  "status": "implementation-verified",
+  "summary": "TypeScript 企业 Web 模块化单体可运行起步包",
   "choices": {
     "workspace": "pnpm workspace",
     "web": "React",
@@ -12,8 +12,65 @@
     "architecture": "modular monolith"
   },
   "requiredQualityCommands": ["lint", "typecheck", "test", "build", "verify"],
+  "qualityCommandContracts": {
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck --concurrency=1",
+    "test": "turbo test --concurrency=1",
+    "build": "turbo build --concurrency=1",
+    "verify:engineering": "pnpm prisma:generate && pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "verify": "node scripts/verify-profile.mjs"
+  },
+  "qualityDecisions": {
+    "format": "v0.2 does not prescribe a formatter; each project must approve one before its first business slice"
+  },
+  "requiredFiles": [
+    "package.json",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml",
+    "packages/server/package.json",
+    "packages/server/src/main.ts",
+    "packages/server/prisma/schema.prisma",
+    "packages/web/package.json",
+    "packages/web/src/App.tsx",
+    "packages/tsconfig/base.json",
+    "scripts/verify-profile.mjs",
+    "scripts/profile-fingerprint.mjs"
+  ],
+  "files": [
+    { "source": "templates/package.json", "target": "package.json" },
+    { "source": "templates/pnpm-lock.yaml", "target": "pnpm-lock.yaml" },
+    { "source": "templates/pnpm-workspace.yaml", "target": "pnpm-workspace.yaml" },
+    { "source": "templates/turbo.json", "target": "turbo.json" },
+    { "source": "templates/eslint.config.mjs", "target": "eslint.config.mjs" },
+    { "source": "templates/env.example", "target": ".env.example" },
+    { "source": "templates/compose.yaml", "target": "compose.yaml" },
+    { "source": "templates/ENGINEERING.md", "target": "ENGINEERING.md" },
+    { "source": "templates/scripts/verify-profile.mjs", "target": "scripts/verify-profile.mjs" },
+    { "source": "templates/scripts/profile-fingerprint.mjs", "target": "scripts/profile-fingerprint.mjs" },
+    { "source": "templates/tsconfig/package.json", "target": "packages/tsconfig/package.json" },
+    { "source": "templates/tsconfig/base.json", "target": "packages/tsconfig/base.json" },
+    { "source": "templates/tsconfig/nestjs.json", "target": "packages/tsconfig/nestjs.json" },
+    { "source": "templates/tsconfig/react.json", "target": "packages/tsconfig/react.json" },
+    { "source": "templates/server/package.json", "target": "packages/server/package.json" },
+    { "source": "templates/server/tsconfig.json", "target": "packages/server/tsconfig.json" },
+    { "source": "templates/server/nest-cli.json", "target": "packages/server/nest-cli.json" },
+    { "source": "templates/server/prisma.config.ts", "target": "packages/server/prisma.config.ts" },
+    { "source": "templates/server/prisma/schema.prisma", "target": "packages/server/prisma/schema.prisma" },
+    { "source": "templates/server/src/main.ts", "target": "packages/server/src/main.ts" },
+    { "source": "templates/server/src/app.module.ts", "target": "packages/server/src/app.module.ts" },
+    { "source": "templates/server/src/health.controller.ts", "target": "packages/server/src/health.controller.ts" },
+    { "source": "templates/server/src/health.controller.spec.ts", "target": "packages/server/src/health.controller.spec.ts" },
+    { "source": "templates/web/package.json", "target": "packages/web/package.json" },
+    { "source": "templates/web/tsconfig.json", "target": "packages/web/tsconfig.json" },
+    { "source": "templates/web/tsconfig.node.json", "target": "packages/web/tsconfig.node.json" },
+    { "source": "templates/web/vite.config.ts", "target": "packages/web/vite.config.ts" },
+    { "source": "templates/web/index.html", "target": "packages/web/index.html" },
+    { "source": "templates/web/src/main.tsx", "target": "packages/web/src/main.tsx" },
+    { "source": "templates/web/src/App.tsx", "target": "packages/web/src/App.tsx" },
+    { "source": "templates/web/src/App.spec.tsx", "target": "packages/web/src/App.spec.tsx" },
+    { "source": "templates/web/src/styles.css", "target": "packages/web/src/styles.css" }
+  ],
   "limitations": [
-    "v0.1 does not generate runnable application code",
     "deployment, authentication, tenancy and observability remain project decisions"
   ]
 }

@@ -1,0 +1,19 @@
+{
+  "project": "Interaction Pattern Lab / 企业交互模式验证场",
+  "status": "business-gate-reopened",
+  "currentStage": "business-gate",
+  "gates": {
+    "business": {
+      "status": "reopened",
+      "evidence": { "sourceId": "REQSRC-007", "decidedBy": "Rick", "decidedAt": "2026-08-30", "conclusion": "reopened-after-scope-redefinition" }
+    },
+    "specification": { "status": "not-applicable-until-new-slice", "evidence": null },
+    "architecture": { "status": "historical-feature-specific-only", "evidence": null },
+    "release": { "status": "not-applicable-under-redefined-scope", "evidence": null }
+  },
+  "technologyProfile": null,
+  "featureStates": {
+    "001-pattern-catalog-preview": "historical-slice-preserved-business-gate-reopened"
+  },
+  "updatedAt": "2026-08-31T00:15:00+08:00"
+}

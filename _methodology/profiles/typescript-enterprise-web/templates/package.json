@@ -1,0 +1,29 @@
+{
+  "name": "{{project_slug}}",
+  "private": true,
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=22.12.0",
+    "pnpm": ">=9.15.0"
+  },
+  "scripts": {
+    "dev": "turbo dev",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "prisma:generate": "pnpm --filter @{{project_slug}}/server prisma:generate",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck --concurrency=1",
+    "test": "turbo test --concurrency=1",
+    "build": "turbo build --concurrency=1",
+    "verify:engineering": "pnpm prisma:generate && pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "verify": "node scripts/verify-profile.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.9.1",
+    "globals": "^17.11.0",
+    "turbo": "^2.10.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.68.0"
+  }
+}

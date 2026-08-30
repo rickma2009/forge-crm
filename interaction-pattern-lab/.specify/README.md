@@ -4,6 +4,7 @@
 
 ## 目录
 
+- `project-state.json`：验证场项目级状态入口；历史切片状态仍保留在其 `pipeline-state.json`。
 - `memory/`：项目章程、业务上下文和项目宪法；
 - `sources/`：不可改写的用户原文和后续参考资料；
 - `requirements/`：业务可评审需求与转换记录；

@@ -22,3 +22,17 @@
 - 不虚构测试、批准、部署或外部状态。
 - 未经明确授权，不部署、不写生产数据、不执行破坏性操作。
 - 只有项目独有、重复、可测试且无敏感配置的能力才成为项目本地 Skill。
+
+## Agent skills
+
+### Issue tracker
+
+协作票据使用适配后的本地 `.scratch/`；`.specify/` 是批准规格唯一事实源。见 `docs/agents/issue-tracker.md`。
+
+### Triage labels
+
+使用 Matt 默认五状态词汇；`ready-for-agent` 仍受 SDD Gate 和 Definition of Ready 约束。见 `docs/agents/triage-labels.md`。
+
+### Domain docs
+
+采用单上下文薄词汇索引；完整业务事实位于 `.specify/memory/business-context.md`。见 `docs/agents/domain.md`。

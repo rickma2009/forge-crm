@@ -7,6 +7,7 @@ root_dir="$(cd "$script_dir/../.." && pwd)"
 cd "$root_dir"
 
 node _methodology/scripts/init-skills.mjs --check
+node _methodology/scripts/check-matt-setup.mjs . --require-git
 node _methodology/scripts/test-forge-init.mjs
 
 node --test _methodology/examples/000-golden-slice-customer-lead/implementation/customer-lead.test.mjs

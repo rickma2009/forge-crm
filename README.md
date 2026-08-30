@@ -107,7 +107,13 @@ sdd-forge/
 项目骨架还应运行：
 
 ```bash
+node _methodology/scripts/forge.mjs init ./new-project --name "New Project"
+# 记录来源支持的 Business 与 Architecture Gate 后：
+node _methodology/scripts/forge.mjs apply-profile ./new-project typescript-enterprise-web
+cd ./new-project && pnpm install --frozen-lockfile && pnpm verify
 bash _methodology/scripts/check-project.sh <项目目录>
+node _methodology/scripts/check-matt-setup.mjs <项目目录>
+node _methodology/scripts/check-project-profile.mjs <项目目录>
 ```
 
 方法论核心验证与跨项目验证已拆分：
@@ -139,7 +145,7 @@ idea → candidate → implementation-verified → interaction-verified
 
 ## 8. 方法论版本
 
-当前版本：**v0.3-draft**（2026-08-30）
+当前版本：**v0.3-draft**（2026-08-31）
 
 本版本完成：
 
@@ -150,3 +156,5 @@ idea → candidate → implementation-verified → interaction-verified
 - 建立技术栈中立模板与独立金标准切片。
 - 建立工作台级 Skills 清单、初始化入口、阶段路由和自动检查。
 - 建立“参考源码萃取 → 真实项目验证 → UI 模式/模板/交互案例”的交互资产回流路径。
+- 完成 SDD 适配的 Matt per-repo Setup、默认 triage 词汇及自动检查。
+- 建立两阶段 `forge init` / `apply-profile`，并验证 `typescript-enterprise-web` v0.2 可安装、测试和构建。

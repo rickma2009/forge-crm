@@ -51,9 +51,11 @@ SDD 是治理主流程：决定事实源、阶段、Gate、追溯和验收。Mat
 | `_methodology/` | 否 | 不是独立 Git 仓库 |
 | `interaction-pattern-lab/` | 否 | 继承根仓库配置；若将来拆成独立仓库再 Setup |
 | `mcrm/` | 是，采用项目内适配配置 | 独立 Git 仓库和独立任务边界 |
-| 未来独立项目 | 按需 | 只有确实使用 Matt 协作流时才 Setup |
+| 未来独立项目 | 是，由 `forge init` 预置 | 默认生成 local tracker、triage 词汇和单上下文领域文档；切换 tracker/上下文时重跑 Setup |
 
 通用 Skills 保持用户级或工作台发现链接，不复制到每个项目。只有项目独有、重复、可测试且无敏感配置的能力才成为项目本地 Skill。
+
+根仓库、MCRM 和未来生成项目使用 `check-matt-setup.mjs` 自动核对上述配置；`interaction-pattern-lab/` 因继承根仓库而不重复检查为独立 repo。
 
 ## 6. 研究和评审证据
 

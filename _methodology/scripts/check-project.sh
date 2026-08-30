@@ -22,6 +22,7 @@ required_files=(
   "README.md"
   "AGENTS.md"
   ".specify/README.md"
+  ".specify/project-state.json"
   ".specify/sources/REGISTRY.md"
   ".specify/memory/project-charter.md"
   ".specify/memory/business-context.md"
@@ -58,7 +59,7 @@ if [[ -d "$project_dir/.specify/sources" ]]; then
 fi
 
 if [[ -f "$project_dir/.specify/project-state.json" ]]; then
-  business_gate="$(node -e 'const s=require(process.argv[1]); process.stdout.write(String(s.gates?.business ?? "missing"))' "$project_dir/.specify/project-state.json")"
+  business_gate="$(node -e 'const fs=require("fs"); const s=JSON.parse(fs.readFileSync(process.argv[1], "utf8")); const g=s.gates?.business; process.stdout.write(String(typeof g === "object" ? g?.status : g ?? "missing"))' "$project_dir/.specify/project-state.json")"
   pass "项目级 Business Gate 状态已记录: $business_gate"
 elif grep -Eq '结论[：:] *(pending|reopened)|Business Gate[：: ]+(pending|reopened)' \
   "$project_dir/.specify/memory/project-charter.md"; then

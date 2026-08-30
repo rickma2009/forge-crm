@@ -30,6 +30,10 @@
 
 方法论与验证场事项使用适配后的本地 `.scratch/`，MCRM 独立管理；`.specify/` 仍是批准规格唯一事实源。见 `docs/agents/issue-tracker.md`。
 
+### Triage labels
+
+使用 Matt 默认五状态词汇；`ready-for-agent` 仍受 SDD Gate 和 Definition of Ready 约束。见 `docs/agents/triage-labels.md`。
+
 ### Domain docs
 
 采用 `methodology` 与 `interaction validation` 两上下文布局；MCRM 不属于根上下文图。见 `docs/agents/domain.md`。

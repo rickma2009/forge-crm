@@ -6,6 +6,7 @@ root_dir="$(cd "$script_dir/../.." && pwd)"
 cd "$root_dir"
 
 bash _methodology/scripts/check-project.sh mcrm
+node _methodology/scripts/check-matt-setup.mjs mcrm --require-git
 bash _methodology/scripts/check-project.sh interaction-pattern-lab
 node _methodology/scripts/check-sources.mjs mcrm
 node _methodology/scripts/check-sources.mjs interaction-pattern-lab

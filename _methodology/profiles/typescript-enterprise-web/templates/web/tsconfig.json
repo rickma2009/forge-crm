@@ -1,0 +1,6 @@
+{
+  "extends": "@{{project_slug}}/tsconfig/react.json",
+  "compilerOptions": { "baseUrl": "." },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
