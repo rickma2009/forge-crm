@@ -1,0 +1,54 @@
+interaction-pattern-lab/.specify/sources/REQSRC-010-bulk-assignment-specification-gate-approval-20260831/source.md
+  e528476cbc97de75 1-21
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/architecture-gate-review.md
+  e528476cbc97de75 1-66
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/pipeline-state.json
+  e528476cbc97de75 3-4,7-8,12,18
+interaction-pattern-lab/.specify/README.md
+  e528476cbc97de75 13
+interaction-pattern-lab/docs/adr/ADR-002-资产索引与验证切片扩展架构.md
+  e528476cbc97de75 1-80
+interaction-pattern-lab/README.md
+  e528476cbc97de75 4-5,13,29,31
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/plan.md
+  e528476cbc97de75 1-192
+interaction-pattern-lab/AGENTS.md
+  e528476cbc97de75 7,10-11
+interaction-pattern-lab/docs/adr/ADR-001-交互模式工作台前端架构.md
+  e528476cbc97de75 8
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/traceability.md
+  e528476cbc97de75 47-49
+interaction-pattern-lab/.specify/project-state.json
+  e528476cbc97de75 3-4,11-12,18,20-21
+interaction-pattern-lab/.specify/sources/REGISTRY.md
+  e528476cbc97de75 14
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/specification-gate-review.md
+  e528476cbc97de75 4,54-58
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/spec.md
+  e528476cbc97de75 4-5,123-127
+interaction-pattern-lab/.specify/sources/REQSRC-010-bulk-assignment-specification-gate-approval-20260831/metadata.json
+  e528476cbc97de75 1-19
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/README.md
+  e528476cbc97de75 3,5-6,17-19,24,26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "2f8d690d97c82a70910c2299419115843e96719a",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 435,
+      "total_deletions": 53,
+      "accepted_lines": 453,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/9701aca88ab11146cbf5694ac5dec01ca8140127bfe05f716bdfc5eadf51f3bf"
+    }
+  }
+}
