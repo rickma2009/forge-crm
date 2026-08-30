@@ -10,7 +10,7 @@
     },
     "specification": { "status": "approved-for-slice-002-corrected-by-REQSRC-012", "evidence": { "sourceId": "REQSRC-010", "approvedBy": "Rick", "approvedAt": "2026-08-31T01:30:45+08:00", "conclusion": "approved" } },
     "architecture": { "status": "approved-for-slice-002-corrected-by-REQSRC-012", "evidence": { "sourceId": "REQSRC-011", "approvedBy": "Rick", "approvedAt": "2026-08-31T01:44:02+08:00", "conclusion": "approved" }, "historicalBoundary": "REQSRC-004 applies only to slice 001" },
-    "release": { "status": "not-applicable-under-redefined-scope", "evidence": null }
+    "release": { "status": "not-started", "evidence": null }
   },
   "technologyProfile": null,
   "featureStates": {

@@ -2,14 +2,20 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { buildEnterpriseInteractionIndex, indexRelativePath, serializeEnterpriseInteractionIndex } from './enterprise-interaction-index.mjs';
+import { validateJsonSchema } from './json-schema-subset.mjs';
 
 const root = path.resolve(import.meta.dirname, '../..');
 const indexPath = path.join(root, indexRelativePath);
 const registry = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+const schema = JSON.parse(fs.readFileSync(path.join(root, '_methodology/patterns/index.schema.json'), 'utf8'));
 const expected = serializeEnterpriseInteractionIndex(buildEnterpriseInteractionIndex(root));
 const actual = fs.readFileSync(indexPath, 'utf8');
 
 assert.equal(actual, expected, '登记册必须由分类源确定性生成且不含手工漂移');
+assert.deepEqual(validateJsonSchema(schema, registry), [], '登记册必须符合 index.schema.json');
+const invalidProbe = structuredClone(registry);
+delete invalidProbe.assets[0].name;
+assert.ok(validateJsonSchema(schema, invalidProbe).length > 0, 'Schema 负向探针必须拒绝缺失字段');
 assert.equal(registry.assets.length, 103, '登记册必须包含 103 项');
 assert.equal(new Set(registry.assets.map((asset) => asset.assetId)).size, 103, '资产编号必须唯一');
 

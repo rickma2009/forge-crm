@@ -25,8 +25,8 @@
 - 实施边界：只登记分类项与现有证据，不晋升成熟度
 - 验收：103 个唯一编号、六类计数准确、引用与成熟度证据合法
 - 验证命令/入口：`node _methodology/scripts/check-enterprise-interaction-index.mjs`
-- 状态：in-progress
-- 实际证据：首个红测发现并由 `REQSRC-012` 纠正 99/103 范围；重新进入红—绿循环
+- 状态：completed
+- 实际证据：首个红测发现并由 `REQSRC-012` 纠正 99/103 范围；`check-enterprise-interaction-index.mjs` 与 2 个契约测试通过
 
 ### TASK-202 建立生成式 Lab 投影与目录 Module
 
@@ -36,8 +36,8 @@
 - 实施边界：`maturity` 与 `coveredBy` 分离，无 Demo 项合法
 - 验收：投影可复现，搜索/筛选准确，两个历史成熟度真实展示
 - 验证命令/入口：Catalog Module 与投影契约测试
-- 状态：pending
-- 实际证据：not-run
+- 状态：completed
+- 实际证据：`validate-pattern-projection.mjs` 通过；Catalog 9 个测试覆盖 103 项、筛选、成熟度、覆盖关系和 Registry
 
 ### TASK-203 扩展目录与 Demo Registry
 
@@ -47,8 +47,8 @@
 - 实施边界：不建设动态插件或通用 UI 渲染器
 - 验收：103 项可浏览，无 Demo 不报错，Demo 数量不再固定为两个
 - 验证命令/入口：App 集成测试
-- 状态：pending
-- 实际证据：not-run
+- 状态：completed
+- 实际证据：App 5 个测试通过；目录可浏览 103 项，三个显式 Demo Adapter 均有登记
 
 ### TASK-204 建立 VAL-002 场景契约与批量分配 Module
 
@@ -58,8 +58,8 @@
 - 实施边界：纯内存模拟，不实现真实权限、事务或 API
 - 验收：选择范围、预检查、取消、全部/部分成功、系统失败、重试和重置确定可复现
 - 验证命令/入口：批量分配 Module 测试与场景契约检查
-- 状态：pending
-- 实际证据：not-run
+- 状态：completed
+- 实际证据：场景契约检查与 reducer 5 个测试通过，覆盖部分成功、全部成功、系统失败与重试
 
 ### TASK-205 实现 VAL-002 Demo Adapter
 
@@ -69,8 +69,8 @@
 - 实施边界：无生产请求、业务写入或持久化
 - 验收：完整交互路径与所有状态可访问，Escape 取消并恢复焦点
 - 验证命令/入口：Testing Library + 真实浏览器
-- 状态：pending
-- 实际证据：not-run
+- 状态：completed
+- 实际证据：Demo 4 个组件测试与真实浏览器主路径通过；Escape 后焦点返回“确认执行批量分配”
 
 ### TASK-206 完成工程验证与浏览器验收
 
@@ -80,8 +80,8 @@
 - 实施边界：测试结果按真实执行记录，不声明部署或 Release
 - 验收：质量命令通过，浏览器关键任务通过或缺口明确
 - 验证命令/入口：`pnpm verify`、根工作台检查、`agent-browser`
-- 状态：pending
-- 实际证据：not-run
+- 状态：completed
+- 实际证据：`pnpm verify`、`verify-all.sh` 通过；浏览器完成桌面/390px、键盘焦点、网络与存储检查，证据见 `evidence/`
 
 ### TASK-207 完成三视角评审与候选回流总结
 
@@ -91,14 +91,14 @@
 - 实施边界：不自动晋升资产，不批准 Release
 - 验收：发现项修复或显式留存，追溯和状态与证据一致
 - 验证命令/入口：固定提交基线双轴 review + 安全/集成核对
-- 状态：pending
-- 实际证据：not-run
+- 状态：in-progress
+- 实际证据：实现提交 `0f12ec7` 已进入固定基线双轴评审；安全/隔离扫描已补入 `pnpm verify`
 
 ## Checkpoints
 
 | Checkpoint | 条件 | 状态 |
 |---|---|---|
 | Ready | Business、Specification、Architecture Gate 均获人工批准，测试 seam 明确 | completed |
-| Implemented | 范围内任务完成 | pending |
-| Verified | 相关测试、浏览器验收和质量门禁通过 | pending |
+| Implemented | 范围内任务完成 | completed |
+| Verified | 相关测试、浏览器验收和质量门禁通过 | completed |
 | Accepted | Release Gate 通过 | pending |

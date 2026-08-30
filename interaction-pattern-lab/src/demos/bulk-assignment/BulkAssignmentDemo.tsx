@@ -17,6 +17,8 @@ const failureLabels: Record<FailureCode, string> = {
 export function BulkAssignmentDemo() {
   const [state, dispatch] = useReducer(bulkAssignmentReducer, undefined, () => createBulkAssignmentState('partial-success'));
   const confirmTriggerRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const cancelButtonRef = useRef<HTMLButtonElement>(null);
   const filteredItems = getFilteredItems(state);
   const pageItems = getCurrentPageItems(state);
   const executableCount = state.precheck.filter((item) => item.status === 'executable').length;
@@ -24,14 +26,30 @@ export function BulkAssignmentDemo() {
 
   useEffect(() => {
     if (!state.confirmationOpen) return undefined;
-    const cancelOnEscape = (event: KeyboardEvent) => {
+    cancelButtonRef.current?.focus();
+    const containDialogFocus = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
+        event.preventDefault();
         dispatch({ type: 'cancel-confirmation' });
         window.setTimeout(() => confirmTriggerRef.current?.focus(), 0);
+        return;
+      }
+      if (event.key === 'Tab') {
+        const focusable = [...(dialogRef.current?.querySelectorAll<HTMLElement>('button:not([disabled]), select:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])') ?? [])];
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
       }
     };
-    window.addEventListener('keydown', cancelOnEscape);
-    return () => window.removeEventListener('keydown', cancelOnEscape);
+    window.addEventListener('keydown', containDialogFocus);
+    return () => window.removeEventListener('keydown', containDialogFocus);
   }, [state.confirmationOpen]);
 
   const cancelConfirmation = () => {
@@ -47,6 +65,10 @@ export function BulkAssignmentDemo() {
       </select></label>
     </header>
 
+    {state.loading && <section className="demo-bulk-loading" role="status" aria-live="polite"><span className="demo-loading-spinner" aria-hidden="true" /><div><h3>正在加载演示数据</h3><p>这是可确定访问的加载状态；切换场景可继续验证其他结果。</p></div></section>}
+
+    {!state.loading && <>
+
     <section className="demo-bulk-toolbar" aria-label="查询和批量命令">
       <label><span>工作项查询</span><input type="search" aria-label="查询工作项" placeholder="编号、标题、区域或状态" value={state.query} onChange={(event) => dispatch({ type: 'change-query', query: event.target.value })} /></label>
       <div className="demo-bulk-scope-actions">
@@ -55,7 +77,7 @@ export function BulkAssignmentDemo() {
         <button type="button" onClick={() => dispatch({ type: 'clear-selection' })} disabled={state.selection.ids.length === 0}>清除选择</button>
       </div>
       <div className="demo-bulk-selection" role="status" aria-live="polite">
-        <strong>{state.selection.scope === 'query' ? `全部查询结果 ${state.selection.ids.length} 条` : state.selection.scope === 'page' ? `当前页 ${state.selection.ids.length} 条` : '尚未选择'}</strong>
+        <strong>{state.selection.scope === 'query' ? `全部查询结果 ${state.selection.ids.length} 条` : state.selection.scope === 'page' ? `当前页 ${state.selection.ids.length} 条` : state.selection.scope === 'failed' ? `失败项 ${state.selection.ids.length} 条` : '尚未选择'}</strong>
         <span>{state.statusMessage}</span>
       </div>
     </section>
@@ -80,21 +102,23 @@ export function BulkAssignmentDemo() {
       {state.precheck.map((check) => <li key={check.itemId} className={check.status === 'rejected' ? 'is-failed' : 'is-success'}><code>{check.itemId}</code><span>{check.status === 'executable' ? '可执行' : failureLabels[check.reasonCode!]}</span>{check.reasonCode && <code>{check.reasonCode}</code>}</li>)}
     </ul></section>}
 
-    {state.result && <ExecutionResultPanel result={state.result} onRetry={() => dispatch({ type: 'retry' })} />}
+    {state.result && <ExecutionResultPanel result={state.result} onRetry={() => dispatch({ type: 'retry' })} onSelectFailed={() => dispatch({ type: 'select-failed' })} />}
 
-    {state.confirmationOpen && <div className="demo-bulk-dialog-backdrop"><div role="dialog" aria-modal="true" aria-labelledby="confirm-title" className="demo-bulk-dialog">
+    {state.confirmationOpen && <div className="demo-bulk-dialog-backdrop"><div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="confirm-title" className="demo-bulk-dialog">
       <p className="demo-eyebrow">CONFIRM SNAPSHOT</p><h3 id="confirm-title">确认批量分配</h3><p>将预检查快照中的 {state.selection.ids.length} 条工作项分配给 <strong>{ownerNames[state.targetOwnerId]}</strong>。拒绝项不会进入执行。</p>
       <dl><div><dt>选择范围</dt><dd>{state.selection.scope === 'query' ? '当前查询全部结果' : '当前页'}</dd></div><div><dt>可执行 / 拒绝</dt><dd>{executableCount} / {rejectedCount}</dd></div></dl>
-      <div className="demo-bulk-dialog-actions"><button type="button" onClick={cancelConfirmation}>取消</button><button type="button" className="demo-primary-button" onClick={() => dispatch({ type: 'execute' })}>执行分配</button></div>
+      <div className="demo-bulk-dialog-actions"><button ref={cancelButtonRef} type="button" onClick={cancelConfirmation}>取消</button><button type="button" className="demo-primary-button" onClick={() => dispatch({ type: 'execute' })}>执行分配</button></div>
     </div></div>}
+    </>}
   </div>;
 }
 
-function ExecutionResultPanel({ result, onRetry }: { result: NonNullable<ReturnType<typeof createBulkAssignmentState>['result']>; onRetry: () => void }) {
+function ExecutionResultPanel({ result, onRetry, onSelectFailed }: { result: NonNullable<ReturnType<typeof createBulkAssignmentState>['result']>; onRetry: () => void; onSelectFailed: () => void }) {
   const title = result.outcome === 'all-success' ? '全部成功' : result.outcome === 'system-failure' ? '系统失败 · 零变更' : '部分成功';
   return <section className={`demo-bulk-result is-${result.outcome}`} aria-labelledby="execution-result-title"><div className="demo-bulk-result-heading"><div><p className="demo-eyebrow">EXECUTION RESULT</p><h3 id="execution-result-title">{title}</h3></div><div className="demo-bulk-counts"><strong>成功 {result.successCount}</strong><strong>失败 {result.failureCount}</strong><strong>未处理 {result.unprocessedCount}</strong></div></div>
     {result.reasonCode && <p><code>{result.reasonCode}</code>：{failureLabels[result.reasonCode]}。本次没有记录发生变化。</p>}
     <ul>{result.details.map((detail) => <li key={detail.itemId} className={`is-${detail.status}`}><code>{detail.itemId}</code><span>{detail.status === 'success' ? '负责人已更新' : detail.status === 'unprocessed' ? '未处理' : failureLabels[detail.reasonCode!]}</span>{detail.reasonCode && <code>{detail.reasonCode}</code>}</li>)}</ul>
+    {result.outcome === 'partial-success' && result.failureCount > 0 && <button type="button" onClick={onSelectFailed}>仅重选失败 {result.failureCount} 条</button>}
     {result.outcome === 'system-failure' && <button type="button" onClick={onRetry}>重试本次执行</button>}
   </section>;
 }

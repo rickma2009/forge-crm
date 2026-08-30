@@ -1,5 +1,5 @@
 export type FailureCode = 'RECORD_LOCKED' | 'STATE_INCOMPATIBLE' | 'OWNER_UNAVAILABLE' | 'CONCURRENT_CHANGE' | 'SYSTEM_UNAVAILABLE';
-export type ScenarioId = 'partial-success' | 'all-success' | 'system-failure-first' | 'empty';
+export type ScenarioId = 'partial-success' | 'all-success' | 'system-failure-first' | 'loading' | 'empty';
 
 export interface WorkItem {
   id: string;
@@ -34,11 +34,12 @@ export interface ExecutionResult {
 
 export interface BulkAssignmentState {
   scenarioId: ScenarioId;
+  loading: boolean;
   query: string;
   page: number;
   pageSize: number;
   items: WorkItem[];
-  selection: { scope: 'none' | 'page' | 'query'; ids: string[] };
+  selection: { scope: 'none' | 'page' | 'query' | 'failed'; ids: string[] };
   targetOwnerId: string;
   precheck: PrecheckItem[];
   confirmationOpen: boolean;
@@ -53,6 +54,7 @@ export type BulkAssignmentAction =
   | { type: 'select-page' }
   | { type: 'select-all-results' }
   | { type: 'clear-selection' }
+  | { type: 'select-failed' }
   | { type: 'set-owner'; ownerId: string }
   | { type: 'precheck' }
   | { type: 'open-confirmation' }
@@ -83,13 +85,14 @@ function freshItems(scenarioId: ScenarioId): WorkItem[] {
 }
 
 export function createBulkAssignmentState(scenarioId: string = 'partial-success'): BulkAssignmentState {
-  const safeScenario = (['partial-success', 'all-success', 'system-failure-first', 'empty'].includes(scenarioId) ? scenarioId : 'partial-success') as ScenarioId;
+  const safeScenario = (['partial-success', 'all-success', 'system-failure-first', 'loading', 'empty'].includes(scenarioId) ? scenarioId : 'partial-success') as ScenarioId;
   return {
     scenarioId: safeScenario,
+    loading: safeScenario === 'loading',
     query: safeScenario === 'empty' ? '无匹配工作项' : '',
     page: 1,
     pageSize: 5,
-    items: freshItems(safeScenario),
+    items: safeScenario === 'loading' ? [] : freshItems(safeScenario),
     selection: { scope: 'none', ids: [] },
     targetOwnerId: '',
     precheck: [],
@@ -164,6 +167,10 @@ export function bulkAssignmentReducer(state: BulkAssignmentState, action: BulkAs
       return { ...state, selection: { scope: 'query', ids: getFilteredItems(state).map((item) => item.id) }, precheck: [], result: null, statusMessage: `已选择当前查询全部 ${getFilteredItems(state).length} 条。` };
     case 'clear-selection':
       return { ...state, selection: { scope: 'none', ids: [] }, precheck: [], result: null, confirmationOpen: false, statusMessage: '已清除选择。' };
+    case 'select-failed': {
+      const ids = state.result?.details.filter((item) => item.status === 'failed').map((item) => item.itemId) ?? [];
+      return { ...state, selection: { scope: ids.length ? 'failed' : 'none', ids }, precheck: [], confirmationOpen: false, statusMessage: ids.length ? `已重新选择失败项 ${ids.length} 条。` : '当前没有可重新选择的失败项。' };
+    }
     case 'set-owner':
       return { ...state, targetOwnerId: action.ownerId, precheck: [], result: null, confirmationOpen: false };
     case 'precheck':

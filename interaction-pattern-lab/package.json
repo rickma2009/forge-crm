@@ -17,7 +17,8 @@
     "generate:patterns": "node scripts/generate-pattern-projection.mjs",
     "validate:patterns": "node scripts/validate-pattern-projection.mjs",
     "validate:scenarios": "node scripts/validate-scenario-contracts.mjs",
-    "verify": "pnpm validate:patterns && pnpm validate:scenarios && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+    "validate:isolation": "node scripts/validate-demo-isolation.mjs",
+    "verify": "pnpm validate:patterns && pnpm validate:scenarios && pnpm validate:isolation && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
   },
   "dependencies": {
     "react": "19.1.1",

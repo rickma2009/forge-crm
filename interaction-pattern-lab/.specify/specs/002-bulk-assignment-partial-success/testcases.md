@@ -1,7 +1,7 @@
 # 测试用例：批量分配与部分成功验证
 
 > 功能编号：002
-> 状态：automated-passed-browser-pending
+> 状态：automated-and-browser-passed-with-one-deferred-cross-renderer-case
 > 本文描述验证行为，不包含实现代码或虚构结果。
 
 ## 1. 测试策略
@@ -56,5 +56,10 @@
 
 | 执行时间 | 环境/版本 | 命令或入口 | 结果 | 证据位置 |
 |---|---|---|---|---|
-| 2026-08-31 | Node 24 / pnpm / Vitest | `pnpm validate:patterns && pnpm validate:scenarios && pnpm typecheck && pnpm test` | PASS：7 files / 26 tests | 终端执行记录；源测试位于 `src/**/*.test.ts(x)` |
-| 2026-08-31 | Vite production build | `pnpm verify` | PASS：projection、scenario、lint、typecheck、26 tests、build | 本地终端执行记录 |
+| 2026-08-31 | Node 24 / pnpm / Vitest | `pnpm validate:patterns && pnpm validate:scenarios && pnpm typecheck && pnpm test` | PASS：7 files / 28 tests | 终端执行记录；源测试位于 `src/**/*.test.ts(x)` |
+| 2026-08-31 | Vite production build | `pnpm verify` | PASS：projection、5 个场景契约、隔离扫描、lint、typecheck、28 tests、build | 本地终端执行记录 |
+| 2026-08-31 | Chromium / agent-browser / 1440×900、390×844 | 目录→VAL-002→当前页选择→预检查→确认→部分成功；Escape；刷新；窄屏抽屉 | PASS：结果 2/3/0、焦点恢复、刷新复位、窄屏可用 | `evidence/desktop-partial-success.png`、`evidence/keyboard-focus.png`、`evidence/narrow-catalog-drawer.png` |
+| 2026-08-31 | Chromium 网络与存储观察 | `network requests`、`storage local` | PASS：仅本地 Vite 静态模块请求；无 localStorage 条目 | agent-browser 终端执行记录 |
+| 2026-08-31 | 工作台 + MCRM + Lab | `bash _methodology/scripts/verify-all.sh` | PASS；MCRM 数据库套件因无测试库仍按项目既有规则跳过 16 项 | 本地终端执行记录 |
+
+`TC-317` 未声称双渲染器已通过：Architecture Gate 将独立 HTML Example 明确留到资产晋升之后；当前已验证 JSON Schema、五个场景契约和 reducer runner oracle。该跨渲染器用例保持 `deferred-by-architecture-boundary`，不会阻断本切片的本地验证，也不能作为资产晋升证据。

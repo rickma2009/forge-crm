@@ -58,4 +58,13 @@ describe('Interaction Pattern Lab', () => {
     expect(await screen.findByRole('searchbox', { name: '搜索案例菜单' })).toHaveValue('');
     await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('已恢复预置状态'));
   });
+
+  it('桌面折叠导航进入 64px 分类入口状态', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    const catalog = screen.getByRole('complementary', { name: '交互模式平台导航' });
+    await user.click(screen.getByRole('button', { name: '折叠平台导航' }));
+    expect(catalog).toHaveAttribute('data-collapsed', 'true');
+    expect(screen.getByRole('button', { name: '展开平台导航' })).toBeInTheDocument();
+  });
 });

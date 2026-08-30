@@ -2,24 +2,52 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "sdd-forge://interaction-pattern-lab/VAL-002/scenario.schema.json",
   "type": "object",
-  "required": ["version", "validationId", "failureCodes", "keyboardPath", "scenarios"],
+  "required": ["version", "validationId", "fixtureRef", "failureCodes", "keyboardPath", "scenarios"],
   "properties": {
     "version": { "const": 1 },
     "validationId": { "const": "VAL-002" },
+    "fixtureRef": { "type": "string", "minLength": 1 },
     "failureCodes": { "type": "array", "minItems": 4, "items": { "type": "string" } },
     "keyboardPath": { "type": "array", "minItems": 4, "items": { "type": "string" } },
     "scenarios": {
       "type": "array",
-      "minItems": 4,
+      "minItems": 5,
       "items": {
         "type": "object",
-        "required": ["id", "label", "initialQuery", "actions", "expectedOutcome"],
+        "required": ["id", "label", "initialQuery", "actions", "expectedObservation"],
         "properties": {
           "id": { "type": "string" },
           "label": { "type": "string" },
           "initialQuery": { "type": "string" },
-          "actions": { "type": "array", "items": { "type": "string" } },
-          "expectedOutcome": { "type": "string" }
+          "actions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type"],
+              "properties": {
+                "type": { "enum": ["change-query", "select-page", "select-all-results", "set-owner", "precheck", "open-confirmation", "execute", "retry"] },
+                "query": { "type": "string" },
+                "ownerId": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "expectedObservation": {
+            "type": "object",
+            "required": ["loading", "visibleCount", "selectionCount", "precheckExecutable", "precheckRejected", "resultOutcome", "successCount", "failureCount", "unprocessedCount"],
+            "properties": {
+              "loading": { "type": "boolean" },
+              "visibleCount": { "type": "integer" },
+              "selectionCount": { "type": "integer" },
+              "precheckExecutable": { "type": "integer" },
+              "precheckRejected": { "type": "integer" },
+              "resultOutcome": { "type": ["string", "null"] },
+              "successCount": { "type": "integer" },
+              "failureCount": { "type": "integer" },
+              "unprocessedCount": { "type": "integer" }
+            },
+            "additionalProperties": false
+          }
         },
         "additionalProperties": false
       }

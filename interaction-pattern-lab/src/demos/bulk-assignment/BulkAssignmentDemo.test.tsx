@@ -33,6 +33,13 @@ describe('Bulk Assignment Demo', () => {
     await user.click(confirmTrigger);
     const dialog = screen.getByRole('dialog', { name: '确认批量分配' });
     expect(within(dialog).getByText(/5 条工作项/)).toBeInTheDocument();
+    const cancelButton = within(dialog).getByRole('button', { name: '取消' });
+    const executeButton = within(dialog).getByRole('button', { name: '执行分配' });
+    expect(cancelButton).toHaveFocus();
+    await user.tab();
+    expect(executeButton).toHaveFocus();
+    await user.tab();
+    expect(cancelButton).toHaveFocus();
     await user.keyboard('{Escape}');
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     expect(confirmTrigger).toHaveFocus();
@@ -43,6 +50,8 @@ describe('Bulk Assignment Demo', () => {
     expect(screen.getByText('成功 2')).toBeInTheDocument();
     expect(screen.getByText('失败 3')).toBeInTheDocument();
     expect(screen.getByText('未处理 0')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: '仅重选失败 3 条' }));
+    expect(screen.getByRole('status')).toHaveTextContent('失败项 3 条');
   });
 
   it('TC-314: 系统失败显示零变更并保留上下文供重试', async () => {
@@ -67,5 +76,15 @@ describe('Bulk Assignment Demo', () => {
     await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: '执行分配' }));
     expect(screen.getByRole('heading', { name: '全部成功' })).toBeInTheDocument();
     expect(screen.getByText('成功 5')).toBeInTheDocument();
+  });
+
+  it('REQ-312: 加载状态有确定性场景入口并可切换恢复', async () => {
+    const user = userEvent.setup();
+    render(<BulkAssignmentDemo />);
+    await user.selectOptions(screen.getByRole('combobox', { name: '演示场景' }), 'loading');
+    expect(screen.getByRole('status')).toHaveTextContent('正在加载演示数据');
+    expect(screen.queryByRole('button', { name: '选择当前页' })).not.toBeInTheDocument();
+    await user.selectOptions(screen.getByRole('combobox', { name: '演示场景' }), 'empty');
+    expect(screen.getByText('没有匹配的工作项')).toBeInTheDocument();
   });
 });
