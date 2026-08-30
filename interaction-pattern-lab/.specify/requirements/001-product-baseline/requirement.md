@@ -1,9 +1,10 @@
-# 企业管理系统交互模式工作台需求草案
+# 企业管理系统交互模式工作台需求草案（历史）
 
 > 版本：0.2  
-> 状态：approved-business-baseline  
+> 状态：historical-approved-baseline-superseded-by-REQSRC-007
 > Business Gate：approved  
 > 权威来源：`REQSRC-001`、`REQSRC-002`
+> 适用边界：仅用于历史切片 001；当前业务需求见 `../002-validation-field-baseline/requirement.md`。下文的批准状态不得解释为新验证场定位已批准。
 
 ## 1. 产品定位
 

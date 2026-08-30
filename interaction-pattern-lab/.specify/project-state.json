@@ -1,11 +1,12 @@
 {
   "project": "Interaction Pattern Lab / 企业交互模式验证场",
-  "status": "business-gate-reopened",
-  "currentStage": "business-gate",
+  "status": "business-gate-review-ready",
+  "currentStage": "business-gate-review",
   "gates": {
     "business": {
       "status": "reopened",
-      "evidence": { "sourceId": "REQSRC-007", "decidedBy": "Rick", "decidedAt": "2026-08-30", "conclusion": "reopened-after-scope-redefinition" }
+      "evidence": { "sourceId": "REQSRC-007", "decidedBy": "Rick", "decidedAt": "2026-08-30", "conclusion": "reopened-after-scope-redefinition" },
+      "reviewReadiness": { "status": "ready", "sourceId": "REQSRC-008", "preparedAt": "2026-08-31T01:07:08+08:00" }
     },
     "specification": { "status": "not-applicable-until-new-slice", "evidence": null },
     "architecture": { "status": "historical-feature-specific-only", "evidence": null },
@@ -13,7 +14,9 @@
   },
   "technologyProfile": null,
   "featureStates": {
-    "001-pattern-catalog-preview": "historical-slice-preserved-business-gate-reopened"
+    "001-pattern-catalog-preview": "historical-slice-preserved-business-gate-reopened",
+    "002-bulk-assignment-partial-success": "candidate-awaiting-business-gate-no-spec-created"
   },
-  "updatedAt": "2026-08-31T00:15:00+08:00"
+  "reviewCandidate": ".specify/requirements/002-validation-field-baseline/business-gate-review.md",
+  "updatedAt": "2026-08-31T01:07:08+08:00"
 }

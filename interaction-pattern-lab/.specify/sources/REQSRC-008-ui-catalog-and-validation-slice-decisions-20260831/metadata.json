@@ -1,0 +1,14 @@
+{
+  "sourceId": "REQSRC-008",
+  "title": "UI 分类目录与首个新增验证切片决策",
+  "sourceType": "user-confirmation-and-shared-understanding",
+  "sourceDate": "2026-08-31",
+  "importedAt": "2026-08-31T01:07:08+08:00",
+  "originalPath": "current-codex-task:user-messages",
+  "managedCopy": "source.md",
+  "sha256": "d83b5f807091a01bc4c74a234cdcf4eb181735bb3c4945990360d172e8c6854e",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active",
+  "gateImpact": "resolves-reopened-business-gate-questions-ready-for-review"
+}

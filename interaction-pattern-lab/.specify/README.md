@@ -10,4 +10,4 @@
 - `requirements/`：业务可评审需求与转换记录；
 - `specs/`：仅在 Business Gate 通过后创建功能切片。
 
-当前状态：`business-gate-reopened`。首个历史切片已有自动化、构建和本地浏览器证据，但用户在 `REQSRC-007` 中把本目录重新定义为“企业交互模式验证场”，改变了目标和边界。既有 Gate 记录只保留为历史切片证据；新定位须先重新通过 Business Gate。
+当前状态：`business-gate-review-ready`，但 Business Gate 仍为 `reopened/pending-human-decision`。首个历史切片已有自动化、构建和本地浏览器证据，但用户在 `REQSRC-007` 中重新定义目标和边界；`REQSRC-008` 完成业务澄清。当前评审对象是 `requirements/002-validation-field-baseline/business-gate-review.md`，既有 Gate 记录只保留为历史切片证据。

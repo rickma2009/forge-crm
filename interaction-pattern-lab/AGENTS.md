@@ -4,10 +4,11 @@
 
 ## 项目状态
 
-- 当前阶段：`business-gate-reopened`。
+- 当前阶段：`business-gate-review-ready`，Gate 结论仍是 `reopened/pending-human-decision`。
 - 重新定义证据：`REQSRC-007`。本目录是交互模式验证场，不是模板规范源或真实业务项目。
 - 既有 `REQSRC-002`—`REQSRC-006` 及实现证据作为历史切片证据保留，不改写、不冒充新边界的批准。
 - 新定位下的 Specification、Architecture、Release Gate 均须在 Business Gate 重新批准后按切片推进。
+- 当前评审对象：`.specify/requirements/002-validation-field-baseline/business-gate-review.md`。
 
 ## 开始工作前
 
@@ -30,7 +31,8 @@
 ## 上下文路由
 
 - 项目总体规划：`docs/product/企业管理系统交互模式工作台总体规划.md`
-- 业务需求草案：`.specify/requirements/001-product-baseline/requirement.md`
-- 待确认事项：`.specify/requirements/001-product-baseline/clarification.md`
+- 当前业务需求：`.specify/requirements/002-validation-field-baseline/requirement.md`
+- Business Gate 评审：`.specify/requirements/002-validation-field-baseline/business-gate-review.md`
+- 历史产品基线：`.specify/requirements/001-product-baseline/`
 - 场景台账：`docs/pattern-backlog.md`
 - 参考证据：`docs/reference-inventory.md`

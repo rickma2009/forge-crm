@@ -1,7 +1,8 @@
-# 产品基线待确认事项
+# 产品基线待确认事项（历史）
 
-> 状态：Business Gate 阻断项已关闭  
+> 状态：historical-resolved-for-slice-001
 > 批准证据：`REQSRC-002`
+> 适用边界：`REQSRC-007` 已重新打开项目级 Business Gate；当前问题见 `../002-validation-field-baseline/clarification.md`。
 
 ## Business Gate 已解决事项
 

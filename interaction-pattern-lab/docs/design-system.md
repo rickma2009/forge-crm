@@ -1,8 +1,10 @@
 # Interaction Pattern Lab 设计系统
 
-> 状态：实现基线  
+> 状态：historical-implementation-baseline-for-slice-001
 > 决策时间：2026-08-30  
 > 依据：已批准 `prototype.md`、`ADR-001`，以及 MCRM 已验证导航令牌与两个方法论模式。
+
+> 当前边界：已有实现可继续作为历史证据。新基线只确认“中性企业设计系统 + 语义令牌 + 有理由的局部覆盖”原则；具体令牌和技术实现须由新 Architecture Gate 复审。
 
 ## Design Decisions
 

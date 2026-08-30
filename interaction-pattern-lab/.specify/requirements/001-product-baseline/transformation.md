@@ -1,4 +1,7 @@
-# 原始需求转换记录：企业管理系统交互模式工作台
+# 原始需求转换记录：企业管理系统交互模式工作台（历史）
+
+> 状态：historical-transformation-for-slice-001
+> 适用边界：本文件保留 REQSRC-001—005 当时的转换，不包含 `REQSRC-007/008` 新定位。当前增量转换见 `../002-validation-field-baseline/transformation.md`。
 
 ## 来源
 
@@ -43,9 +46,9 @@
 
 Business Gate 阻断项已经关闭。`Q-007` 的具体责任人以及 `Q-008`—`Q-012`、`Q-014` 留待后续治理或架构评审，不阻断首个 Spec 草案。
 
-## 下一 Gate
+## 当时的下一 Gate（历史）
 
-Business、Specification 与 Architecture Gate 均已批准。允许按稳定 Tasks 实现和验证首个切片；完成评审前不得声称可发布，Release Gate 仍未开始。
+当时 Business、Specification 与 Architecture Gate 均已批准，仅允许按稳定 Tasks 实现和验证历史首个切片。该结论已被 `REQSRC-007` 限定为历史边界，不授权新定位下的后续实现。
 
 ## 增量影响与冲突分析
 
