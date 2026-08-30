@@ -1,0 +1,114 @@
+interaction-pattern-lab/src/app/App.tsx
+  e528476cbc97de75 234
+interaction-pattern-lab/.specify/specs/001-pattern-catalog-preview/pipeline-state.json
+  e528476cbc97de75 3-4,6-9,12,17,19
+interaction-pattern-lab/CONTEXT.md
+  e528476cbc97de75 1-25
+_methodology/scripts/verify-workbench.sh
+  e528476cbc97de75 10,34
+_methodology/templates/README.md
+  e528476cbc97de75 33
+interaction-pattern-lab/scripts/validate-pattern-projection.mjs
+  e528476cbc97de75 9-18
+interaction-pattern-lab/AGENTS.md
+  e528476cbc97de75 3,7-10,22
+_methodology/scripts/forge.mjs
+  e528476cbc97de75 1-176
+_methodology/skills/manifest.json
+  e528476cbc97de75 2,40-62
+_methodology/CONTEXT.md
+  e528476cbc97de75 1-33
+README.md
+  e528476cbc97de75 3,9-11,17-19,43-44,72-75,85-86,102,113,117-119,126-138,140,142
+interaction-pattern-lab/.specify/specs/001-pattern-catalog-preview/README.md
+  e528476cbc97de75 3-6,24,26
+_methodology/templates/pipeline-state-template.json
+  e528476cbc97de75 7
+_methodology/scripts/check-sdd.sh
+  e528476cbc97de75 92-121,123
+_methodology/scripts/check-project.sh
+  e528476cbc97de75 25,60-63,65,67,75
+_methodology/07-Skills初始化与使用规范.md
+  e528476cbc97de75 3-4,49-51
+interaction-pattern-lab/.specify/README.md
+  e528476cbc97de75 12
+_methodology/10-SDD与Matt工程流程集成规范.md
+  e528476cbc97de75 1-63
+_methodology/scripts/verify-validation-projects.sh
+  e528476cbc97de75 1-15
+_methodology/scripts/check-project-profile.mjs
+  e528476cbc97de75 1-35
+_methodology/00-搭建指南.md
+  e528476cbc97de75 3,21,24,32-44,57,70,78-85,97,130,164,172,185,203,213
+interaction-pattern-lab/docs/reference-inventory.md
+  e528476cbc97de75 8,10
+AGENTS.md
+  e528476cbc97de75 10,27-36,74,79
+interaction-pattern-lab/.specify/specs/001-pattern-catalog-preview/review.md
+  e528476cbc97de75 5,75,77,79
+interaction-pattern-lab/README.md
+  e528476cbc97de75 3-5,7,13,28,30
+_methodology/patterns/enterprise-two-level-navigation-shell.md
+  e528476cbc97de75 3,78
+interaction-pattern-lab/docs/pattern-backlog.md
+  e528476cbc97de75 10-11
+_methodology/decisions/ADR-003-两阶段项目初始化与可选技术Profile.md
+  e528476cbc97de75 1-26
+_methodology/scripts/verify-all.sh
+  e528476cbc97de75 1-9
+interaction-pattern-lab/src/catalog/patterns.data.json
+  e528476cbc97de75 6,19,27,40
+interaction-pattern-lab/src/catalog/types.ts
+  e528476cbc97de75 1-9
+_methodology/09-资产类型、成熟度与晋升规范.md
+  e528476cbc97de75 1-54
+_methodology/patterns/record-management-workspace.md
+  e528476cbc97de75 3,55-58
+interaction-pattern-lab/.specify/memory/project-charter.md
+  e528476cbc97de75 1,3,13,74-78
+interaction-pattern-lab/src/catalog/patterns.test.ts
+  e528476cbc97de75 7-8
+_methodology/scripts/check-sources.mjs
+  e528476cbc97de75 12,14,17,20,57
+_methodology/scripts/test-forge-init.mjs
+  e528476cbc97de75 1-54
+_methodology/08-企业管理系统交互模式分类方法.md
+  e528476cbc97de75 351
+interaction-pattern-lab/.specify/memory/constitution.md
+  e528476cbc97de75 1,3-4,27
+_methodology/05-v0.2整改闭环.md
+  e528476cbc97de75 1,4
+interaction-pattern-lab/.specify/sources/REGISTRY.md
+  e528476cbc97de75 11
+_methodology/templates/ui/interaction-pattern-candidate-template.md
+  e528476cbc97de75 5,87-88
+interaction-pattern-lab/.specify/memory/business-context.md
+  e528476cbc97de75 1-3,61,96
+interaction-pattern-lab/docs/product/企业管理系统交互模式工作台总体规划.md
+  e528476cbc97de75 1,3,8,40
+CONTEXT-MAP.md
+  e528476cbc97de75 1-14
+_methodology/decisions/ADR-002-SDD治理主流程与唯一规格事实源.md
+  e528476cbc97de75 1-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "383b56ba7ce228feac2cebf5160555b429f971c5",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 823,
+      "total_deletions": 185,
+      "accepted_lines": 808,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/e52bd362a317796f583e3dbd6936f6f7b6a8e1f99f7057198cbf7d80eac6865e"
+    }
+  }
+}
