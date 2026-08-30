@@ -1,0 +1,35 @@
+name: interaction-pattern-lab
+
+on:
+  push:
+    paths:
+      - 'interaction-pattern-lab/**'
+      - '_methodology/**'
+      - '.github/workflows/interaction-pattern-lab.yml'
+  pull_request:
+    paths:
+      - 'interaction-pattern-lab/**'
+      - '_methodology/**'
+      - '.github/workflows/interaction-pattern-lab.yml'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: interaction-pattern-lab
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: corepack enable
+      - run: corepack prepare pnpm@9.15.0 --activate
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm verify
+      - name: Validate SDD evidence
+        working-directory: .
+        run: bash _methodology/scripts/check-sdd.sh interaction-pattern-lab/.specify/specs/001-pattern-catalog-preview full
+      - name: Validate project baseline
+        working-directory: .
+        run: bash _methodology/scripts/check-project.sh interaction-pattern-lab

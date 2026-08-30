@@ -1,0 +1,22 @@
+{
+  "resourceKey": "sample-record",
+  "label": "示例记录",
+  "routes": {
+    "list": "/records",
+    "create": "/records/new",
+    "detail": "/records/:id"
+  },
+  "queryFields": [
+    { "key": "keyword", "label": "记录名称", "type": "text", "apiParameter": "search" }
+  ],
+  "columns": [
+    { "key": "name", "label": "记录名称", "detailLink": true },
+    { "key": "owner", "label": "负责人" },
+    { "key": "createdAt", "label": "创建时间" }
+  ],
+  "formGroups": [
+    { "key": "basic", "label": "基本信息", "fields": ["name", "owner"] },
+    { "key": "notes", "label": "补充信息", "fields": ["notes"] }
+  ],
+  "capabilities": { "create": ["creator-role"], "read": ["authorized-role"] }
+}

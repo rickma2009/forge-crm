@@ -1,0 +1,44 @@
+[
+  {
+    "id": "EPM-PAGE-001",
+    "name": "企业双层导航壳层",
+    "category": "页面结构",
+    "validationStatus": "validated-once",
+    "keywords": ["侧栏", "导航", "菜单", "搜索", "折叠", "应用壳层"],
+    "summary": {
+      "problem": "在桌面企业系统中稳定组织多个业务域和功能入口，同时分离导航与高密度内容滚动区。",
+      "appliesWhen": ["存在 2 个以上业务域或 6 个以上功能入口", "菜单需要按角色裁剪", "内容页面密度较高"],
+      "avoidWhen": ["只有 1—3 个入口的简单工具", "移动端优先", "三层以上信息架构尚未完成治理"],
+      "behaviors": ["一级分组展开与收起", "搜索保留命中项及祖先", "侧栏折叠", "当前项明确反馈"],
+      "states": ["默认闭合", "搜索命中与空结果", "折叠", "当前项", "窄屏抽屉"],
+      "risks": ["菜单可见性不能替代服务端授权", "未接通的全局搜索不能伪装可用", "层级过深会把对象关系错误塞入侧栏"]
+    },
+    "sources": ["../_methodology/patterns/enterprise-two-level-navigation-shell.md", "../_methodology/templates/ui/enterprise-navigation-shell/README.md", "../_methodology/examples/002-golden-interaction-enterprise-navigation-shell/README.md"],
+    "sourceFingerprint": {
+      "path": "../_methodology/patterns/enterprise-two-level-navigation-shell.md",
+      "sha256": "8d6c659aad4edd25dd48ae10f8ed298858360faa0d49a7038c5ef47d65b4667a"
+    },
+    "demoId": "navigation-shell"
+  },
+  {
+    "id": "EPM-SCENE-001",
+    "name": "记录管理工作区",
+    "category": "标准场景",
+    "validationStatus": "validated-once",
+    "keywords": ["列表", "查询", "新增", "详情", "页签", "表格"],
+    "summary": {
+      "problem": "为桌面企业系统中的主数据或业务单据提供查询记录、新增记录和浏览详情的一致工作区。",
+      "appliesWhen": ["存在列表—新增—详情主链路", "页面身份需要通过工作区页签保持", "字段和操作来自明确 Spec"],
+      "avoidWhen": ["只有单个表单", "移动端优先", "强流程向导", "需要同时编辑复杂关系图"],
+      "behaviors": ["条件查询与重置", "打开新增页", "从行进入详情", "页签切换与关闭"],
+      "states": ["列表", "创建", "详情", "加载与空数据", "无权或不存在", "保存失败"],
+      "risks": ["查询条件必须对应真实能力", "前端按钮隐藏不能替代服务端授权", "模板字段不能代替目标项目 Spec"]
+    },
+    "sources": ["../_methodology/patterns/record-management-workspace.md", "../_methodology/templates/ui/record-management-workspace/README.md", "../_methodology/examples/003-golden-interaction-record-management-workspace/README.md"],
+    "sourceFingerprint": {
+      "path": "../_methodology/patterns/record-management-workspace.md",
+      "sha256": "e508e83c0202db25a0bab278ccc8eff26741eab574ed1584a9533ac018734739"
+    },
+    "demoId": "record-workspace"
+  }
+]

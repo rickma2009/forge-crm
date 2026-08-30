@@ -1,0 +1,17 @@
+{
+  "systemName": "示例业务平台",
+  "home": { "key": "workspace", "label": "业务工作台", "path": "/", "icon": "workspace" },
+  "groups": [
+    {
+      "key": "customer",
+      "label": "客户管理",
+      "icon": "customer",
+      "defaultOpen": false,
+      "children": [
+        { "key": "customer-list", "label": "客户列表", "path": "/customers", "icon": "list" },
+        { "key": "customer-new", "label": "新增客户", "path": "/customers/new", "icon": "add", "roles": ["sales"] }
+      ]
+    }
+  ],
+  "globalSearch": { "enabled": true, "placeholder": "搜索客户…", "scope": ["customer"] }
+}

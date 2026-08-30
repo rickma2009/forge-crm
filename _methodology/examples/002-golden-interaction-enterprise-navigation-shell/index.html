@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>企业双层导航壳层 · 交互案例</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <svg class="icon-sprite" aria-hidden="true">
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-4 2.7-6 6-6s6 2 6 6"/><path d="M16 5a3 3 0 010 6M17 14c2.5.3 4 2.2 4 5"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21V3h11v18M15 9h5v12M8 7h3M8 11h3M8 15h3M7 21h11"/></symbol>
+    <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.5 3.4-7 8-7s8 2.5 8 7"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="M15 15l6 6"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  </svg>
+
+  <div class="shell" data-shell>
+    <aside class="rail" data-rail>
+      <div class="brand-row">
+        <span class="brand-mark"><svg><use href="#i-grid" /></svg></span>
+        <strong class="rail-label">示例业务平台</strong>
+        <button class="collapse-button" data-collapse aria-label="折叠侧栏" title="折叠侧栏">◂</button>
+      </div>
+      <div class="menu-search rail-label">
+        <svg><use href="#i-search" /></svg>
+        <input data-menu-search aria-label="搜索菜单" placeholder="搜索菜单…" />
+        <button data-clear hidden aria-label="清除菜单搜索">×</button>
+      </div>
+      <nav class="nav" aria-label="系统导航">
+        <a class="nav-item active" href="#workspace" data-label="业务工作台" title="业务工作台">
+          <svg><use href="#i-grid" /></svg><span class="rail-label">业务工作台</span>
+        </a>
+        <section class="nav-group" data-group data-label="客户管理">
+          <button class="nav-item nav-parent" aria-expanded="false" title="客户管理">
+            <svg><use href="#i-users" /></svg><span class="rail-label">客户管理</span><svg class="chevron rail-label"><use href="#i-chevron" /></svg>
+          </button>
+          <div class="nav-children">
+            <a class="nav-item child" href="#customers" data-label="客户列表"><svg><use href="#i-person" /></svg><span>客户列表</span></a>
+            <a class="nav-item child" href="#new-customer" data-label="新增客户"><svg><use href="#i-plus" /></svg><span>新增客户</span></a>
+          </div>
+        </section>
+        <section class="nav-group" data-group data-label="系统管理">
+          <button class="nav-item nav-parent" aria-expanded="false" title="系统管理">
+            <svg><use href="#i-settings" /></svg><span class="rail-label">系统管理</span><svg class="chevron rail-label"><use href="#i-chevron" /></svg>
+          </button>
+          <div class="nav-children">
+            <a class="nav-item child" href="#departments" data-label="部门管理"><svg><use href="#i-building" /></svg><span>部门管理</span></a>
+            <a class="nav-item child" href="#users" data-label="用户管理"><svg><use href="#i-users" /></svg><span>用户管理</span></a>
+          </div>
+        </section>
+        <p class="empty-state" data-empty hidden>没有匹配的菜单</p>
+      </nav>
+    </aside>
+    <button class="rail-scrim" data-scrim aria-label="关闭菜单遮罩"></button>
+
+    <header class="topbar">
+      <button class="mobile-menu" data-mobile-menu aria-label="打开菜单"><svg><use href="#i-menu" /></svg></button>
+      <label class="global-search">
+        <svg><use href="#i-search" /></svg>
+        <input data-global-search placeholder="搜索客户…" aria-label="全局搜索" />
+        <kbd>/</kbd>
+      </label>
+      <div class="account"><span class="avatar">R</span><span><strong>Rick</strong><small>总监</small></span></div>
+    </header>
+
+    <main class="content" id="workspace">
+      <div class="page-title"><div><h1>业务工作台</h1><p>企业双层导航壳层的可交互金标准案例</p></div><span class="pattern-state">已验证一次</span></div>
+      <div class="metric-grid">
+        <article><span>客户数量</span><strong>128</strong><small>本月新增 12</small></article>
+        <article><span>活跃商机</span><strong>36</strong><small>待跟进 8</small></article>
+        <article><span>团队成员</span><strong>18</strong><small>3 个部门</small></article>
+      </div>
+      <section class="guidance"><h2>交互验证</h2><p data-demo-message>展开一级菜单、搜索“用户”、折叠侧栏，或按下 <kbd>/</kbd> 聚焦顶部搜索。</p></section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

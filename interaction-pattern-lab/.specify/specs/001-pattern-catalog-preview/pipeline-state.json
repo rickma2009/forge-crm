@@ -1,0 +1,20 @@
+{
+  "featureId": "001-pattern-catalog-preview",
+  "status": "release-approved-hosting-pending",
+  "currentStage": "deployment",
+  "gates": {
+    "business": "approved-2026-08-30-REQSRC-002",
+    "specification": "approved-2026-08-30-REQSRC-006-incremental",
+    "architecture": "approved-2026-08-30-REQSRC-004",
+    "release": "approved-2026-08-30-REQSRC-005-revalidated-after-REQSRC-006"
+  },
+  "checks": {
+    "sources": "passed-6-of-6",
+    "structure": "passed-full-stage",
+    "traceability": "passed-full-stage",
+    "architecturePlan": "approved",
+    "implementation": "verify-passed-browser-passed-review-complete-including-REQSRC-006",
+    "deployment": "local-production-preview-available-external-private-hosting-pending"
+  },
+  "updatedAt": "2026-08-30T20:51:00+08:00"
+}

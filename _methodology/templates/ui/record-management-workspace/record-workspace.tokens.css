@@ -1,0 +1,15 @@
+:root {
+  --record-tab-height: 38px;
+  --record-page-title-size: 19px;
+  --record-section-title-size: 13.5px;
+  --record-table-font-size: 12px;
+  --record-table-row-height: 36px;
+  --record-surface: #ffffff;
+  --record-page-bg: #f5f7fa;
+  --record-border: #e3e7ef;
+  --record-border-subtle: #edf0f4;
+  --record-text: #1f2329;
+  --record-muted: #8b93a7;
+  --record-primary: #2f6bff;
+  --record-radius: 8px;
+}

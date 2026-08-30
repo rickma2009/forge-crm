@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-{{id}}",
+  "title": "{{title}}",
+  "sourceType": "{{source_type}}",
+  "sourceDate": "{{source_date}}",
+  "importedAt": "{{iso_datetime}}",
+  "originalPath": "{{original_path_or_url}}",
+  "managedCopy": "{{managed_filename}}",
+  "sha256": "{{sha256}}",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active"
+}

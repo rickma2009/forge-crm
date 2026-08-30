@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-003",
+  "title": "首个纵向切片 Specification Gate 批准",
+  "sourceType": "user-approval",
+  "sourceDate": "2026-08-30",
+  "importedAt": "2026-08-30T19:11:26+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "95e89d0f6badd09ce00dbcf814768de95efde58d4c5ab27fddd4d6d26e14e43c",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active"
+}

@@ -1,0 +1,17 @@
+{
+  "featureId": "001",
+  "status": "verified-example",
+  "currentStage": "review",
+  "gates": {
+    "business": "example-approved",
+    "spec": "example-approved",
+    "architecture": "example-approved",
+    "release": "not-applicable-example"
+  },
+  "checks": {
+    "structure": "passed",
+    "traceability": "passed",
+    "implementation": "passed-5-of-5"
+  },
+  "updatedAt": "2026-08-29T00:00:00+08:00"
+}

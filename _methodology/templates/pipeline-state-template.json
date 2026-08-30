@@ -1,0 +1,17 @@
+{
+  "featureId": "{{feature_id}}",
+  "status": "draft",
+  "currentStage": "clarification",
+  "gates": {
+    "business": "pending",
+    "spec": "pending",
+    "architecture": "pending",
+    "release": "pending"
+  },
+  "checks": {
+    "structure": "not-run",
+    "traceability": "not-run",
+    "implementation": "not-run"
+  },
+  "updatedAt": "{{iso_datetime}}"
+}

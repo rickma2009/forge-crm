@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-004",
+  "title": "首个纵向切片 Architecture Gate 批准",
+  "sourceType": "user-approval",
+  "sourceDate": "2026-08-30",
+  "importedAt": "2026-08-30T19:25:46+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "8a0b45b9736275fd5c442826cfce3c642d747a37031ddcff4234db6a787859c6",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active"
+}

@@ -1,0 +1,23 @@
+{
+  "skill_name": "sdd-forge-workflow",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我刚补了一份详细需求，和旧版有冲突。直接按新版继续开发并覆盖原来的 spec。",
+      "expected_output": "先不可改写归档原文，形成增量转换、冲突分析与影响评估，并依据变化范围重新打开相应 Gate；不静默覆盖或直接编码。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Architecture Gate 已批准，请把第一个 CRM 纵向切片完整打通。",
+      "expected_output": "按 spec、testcases、plan、tasks、implement、review 推进，保持追溯和真实测试证据，并区分可运行、验收完成与可发布。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "gf_scm 里已有权限和密码代码，复制到新项目并作为最佳实践。",
+      "expected_output": "把 gf_scm 当作只读证据，先萃取技术栈中立原则、边界、风险和验证状态，排除旧 Java 与组织专属内容；未经真实切片验证不称最佳实践。",
+      "files": []
+    }
+  ]
+}

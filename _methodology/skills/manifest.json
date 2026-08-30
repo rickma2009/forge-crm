@@ -1,0 +1,53 @@
+{
+  "version": "1.0",
+  "required_local_skills": [
+    {
+      "name": "sdd-forge-workflow",
+      "scope": "workbench",
+      "source": "_methodology/skills/sdd-forge-workflow",
+      "targets": [
+        ".agents/skills/sdd-forge-workflow",
+        ".claude/skills/sdd-forge-workflow"
+      ],
+      "reason": "确保支持项目建设的 AI 使用本工作台的阶段、Gate、追溯、参考萃取与证据规则。"
+    }
+  ],
+  "conditional_skills": [
+    {
+      "name": "requirement-analysis-pro",
+      "stage": "原始需求归档、详细需求整合、冲突分析与验收口径形成",
+      "use_when": "需求来自多份业务材料，或存在旧需求、冲突、遗漏和制造业业务规则",
+      "initialization": "availability-check"
+    },
+    {
+      "name": "product-expert",
+      "stage": "项目章程、业务蓝图和系统边界",
+      "use_when": "需要总体产品规划、能力蓝图或跨系统边界设计",
+      "initialization": "availability-check"
+    },
+    {
+      "name": "documents / pdf / spreadsheets",
+      "stage": "原始材料读取与结构化",
+      "use_when": "输入材料分别为 Word、PDF 或 Excel/CSV",
+      "initialization": "availability-check"
+    },
+    {
+      "name": "agent-browser",
+      "stage": "实现验证与验收证据",
+      "use_when": "Web 切片需要真实浏览器端到端验证",
+      "initialization": "availability-check"
+    },
+    {
+      "name": "professional-diagram",
+      "stage": "业务流程、状态机或架构表达",
+      "use_when": "图形能显著提升复杂关系的评审效率",
+      "initialization": "availability-check"
+    },
+    {
+      "name": "skill-creator",
+      "stage": "方法论能力沉淀",
+      "use_when": "新建、修改或评估可复用 Skill",
+      "initialization": "availability-check"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "sourceId": "REQSRC-002",
+  "title": "MVP 默认决策确认",
+  "sourceType": "user-approval",
+  "sourceDate": "2026-08-30",
+  "importedAt": "2026-08-30T18:59:42+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "2f98c6de2de464ff6e7ceab4b3d2c1ee22608444a1ff8b8f08d0d6d64c4d9c6b",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active"
+}
+
