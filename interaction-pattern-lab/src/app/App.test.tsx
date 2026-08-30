@@ -66,5 +66,8 @@ describe('Interaction Pattern Lab', () => {
     await user.click(screen.getByRole('button', { name: '折叠平台导航' }));
     expect(catalog).toHaveAttribute('data-collapsed', 'true');
     expect(screen.getByRole('button', { name: '展开平台导航' })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: '展开页面模式分类导航' }));
+    expect(catalog).toHaveAttribute('data-collapsed', 'false');
+    expect(screen.getByRole('button', { name: '页面模式 25' })).toHaveAttribute('aria-expanded', 'true');
   });
 });

@@ -10,35 +10,35 @@
       "label": "部分成功",
       "initialQuery": "",
       "actions": [{"type":"select-page"},{"type":"set-owner","ownerId":"owner-lin"},{"type":"precheck"},{"type":"open-confirmation"},{"type":"execute"}],
-      "expectedObservation": {"loading":false,"visibleCount":12,"selectionCount":5,"precheckExecutable":3,"precheckRejected":2,"resultOutcome":"partial-success","successCount":2,"failureCount":3,"unprocessedCount":0}
+      "expectedObservation": {"loading":false,"query":"","visibleCount":12,"selectionCount":5,"precheckExecutable":3,"precheckRejected":2,"resultOutcome":"partial-success","successCount":2,"failureCount":3,"unprocessedCount":0}
     },
     {
       "id": "all-success",
       "label": "全部成功",
       "initialQuery": "",
       "actions": [{"type":"select-page"},{"type":"set-owner","ownerId":"owner-lin"},{"type":"precheck"},{"type":"open-confirmation"},{"type":"execute"}],
-      "expectedObservation": {"loading":false,"visibleCount":12,"selectionCount":5,"precheckExecutable":5,"precheckRejected":0,"resultOutcome":"all-success","successCount":5,"failureCount":0,"unprocessedCount":0}
+      "expectedObservation": {"loading":false,"query":"","visibleCount":12,"selectionCount":5,"precheckExecutable":5,"precheckRejected":0,"resultOutcome":"all-success","successCount":5,"failureCount":0,"unprocessedCount":0}
     },
     {
       "id": "system-failure-first",
       "label": "系统失败后重试",
       "initialQuery": "",
       "actions": [{"type":"select-page"},{"type":"set-owner","ownerId":"owner-lin"},{"type":"precheck"},{"type":"open-confirmation"},{"type":"execute"},{"type":"retry"}],
-      "expectedObservation": {"loading":false,"visibleCount":12,"selectionCount":5,"precheckExecutable":3,"precheckRejected":2,"resultOutcome":"partial-success","successCount":2,"failureCount":3,"unprocessedCount":0}
+      "expectedObservation": {"loading":false,"query":"","visibleCount":12,"selectionCount":5,"precheckExecutable":3,"precheckRejected":2,"resultOutcome":"partial-success","successCount":2,"failureCount":3,"unprocessedCount":0}
     },
     {
       "id": "loading",
       "label": "加载中",
       "initialQuery": "",
       "actions": [],
-      "expectedObservation": {"loading":true,"visibleCount":0,"selectionCount":0,"precheckExecutable":0,"precheckRejected":0,"resultOutcome":null,"successCount":0,"failureCount":0,"unprocessedCount":0}
+      "expectedObservation": {"loading":true,"query":"","visibleCount":0,"selectionCount":0,"precheckExecutable":0,"precheckRejected":0,"resultOutcome":null,"successCount":0,"failureCount":0,"unprocessedCount":0}
     },
     {
       "id": "empty",
       "label": "空结果",
       "initialQuery": "无匹配工作项",
       "actions": [{"type":"change-query","query":"无匹配工作项"}],
-      "expectedObservation": {"loading":false,"visibleCount":0,"selectionCount":0,"precheckExecutable":0,"precheckRejected":0,"resultOutcome":null,"successCount":0,"failureCount":0,"unprocessedCount":0}
+      "expectedObservation": {"loading":false,"query":"无匹配工作项","visibleCount":0,"selectionCount":0,"precheckExecutable":0,"precheckRejected":0,"resultOutcome":null,"successCount":0,"failureCount":0,"unprocessedCount":0}
     }
   ]
 }

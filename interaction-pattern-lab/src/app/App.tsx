@@ -162,7 +162,20 @@ export function App() {
           {[...groupedPatterns.entries()].map(([kind, groups]) => {
             const kindOpen = filtersActive || openKinds.has(kind);
             return <section className="ipl-pattern-group" key={kind}>
-              <button type="button" className="ipl-category-item" aria-expanded={kindOpen} onClick={() => toggle(setOpenKinds, kind)}>
+              <button
+                type="button"
+                className="ipl-category-item"
+                aria-label={railCollapsed ? `展开${kindLabels[kind as keyof typeof kindLabels]}分类导航` : undefined}
+                aria-expanded={!railCollapsed && kindOpen}
+                onClick={() => {
+                  if (railCollapsed) {
+                    setRailCollapsed(false);
+                    setOpenKinds((current) => new Set(current).add(kind));
+                    return;
+                  }
+                  toggle(setOpenKinds, kind);
+                }}
+              >
                 <span className="ipl-category-marker" aria-hidden="true">{kind[0]}</span><strong>{kindLabels[kind as keyof typeof kindLabels]}</strong><span className="ipl-category-count">{[...groups.values()].flat().length}</span><span aria-hidden="true">›</span>
               </button>
               {kindOpen && [...groups.entries()].map(([group, patterns]) => {

@@ -50,8 +50,12 @@ describe('Bulk Assignment Demo', () => {
     expect(screen.getByText('成功 2')).toBeInTheDocument();
     expect(screen.getByText('失败 3')).toBeInTheDocument();
     expect(screen.getByText('未处理 0')).toBeInTheDocument();
+    expect(screen.getAllByText('负责人已更新为 林晓')).toHaveLength(2);
     await user.click(screen.getByRole('button', { name: '仅重选失败 3 条' }));
     expect(screen.getByRole('status')).toHaveTextContent('失败项 3 条');
+    await user.click(screen.getByRole('button', { name: '执行预检查' }));
+    await user.click(screen.getByRole('button', { name: '确认执行批量分配' }));
+    expect(within(screen.getByRole('dialog')).getByText('上次执行失败项')).toBeInTheDocument();
   });
 
   it('TC-314: 系统失败显示零变更并保留上下文供重试', async () => {

@@ -8,6 +8,7 @@ function reduce(scenarioId: string, actions: Parameters<typeof bulkAssignmentRed
 function observe(state: BulkAssignmentState) {
   return {
     loading: state.loading,
+    query: state.query,
     visibleCount: getFilteredItems(state).length,
     selectionCount: state.selection.ids.length,
     precheckExecutable: state.precheck.filter((item) => item.status === 'executable').length,

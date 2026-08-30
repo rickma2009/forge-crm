@@ -16,13 +16,21 @@
         "type": "object",
         "required": ["assetId", "kind", "group", "name", "maturity", "definition", "definitionRef", "artifacts", "evidence", "nextEvidence"],
         "properties": {
-          "assetId": { "pattern": "^EPM-(PAGE|ACT|VIEW|STATE|SPECIAL|SCENE)-[0-9]{3}$" },
+          "assetId": { "type": "string", "pattern": "^EPM-(PAGE|ACT|VIEW|STATE|SPECIAL|SCENE)-[0-9]{3}$" },
           "kind": { "enum": ["PAGE", "ACT", "VIEW", "STATE", "SPECIAL", "SCENE"] },
           "group": { "type": "string", "minLength": 1 },
           "name": { "type": "string", "minLength": 1 },
           "maturity": { "enum": ["idea", "candidate", "implementation-verified", "interaction-verified", "project-adopted", "business-validated", "released", "deprecated"] },
           "definition": { "type": "array", "minItems": 1, "items": { "type": "string" } },
-          "definitionRef": { "type": "object", "required": ["path", "section"] },
+          "definitionRef": {
+            "type": "object",
+            "required": ["path", "section"],
+            "properties": {
+              "path": { "type": "string", "minLength": 1 },
+              "section": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false
+          },
           "artifacts": { "type": "array", "items": { "type": "string" } },
           "evidence": { "type": "array", "items": { "type": "string" } },
           "nextEvidence": { "type": "string", "minLength": 1 }

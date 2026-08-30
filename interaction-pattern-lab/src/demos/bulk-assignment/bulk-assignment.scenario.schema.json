@@ -34,9 +34,10 @@
           },
           "expectedObservation": {
             "type": "object",
-            "required": ["loading", "visibleCount", "selectionCount", "precheckExecutable", "precheckRejected", "resultOutcome", "successCount", "failureCount", "unprocessedCount"],
+            "required": ["loading", "query", "visibleCount", "selectionCount", "precheckExecutable", "precheckRejected", "resultOutcome", "successCount", "failureCount", "unprocessedCount"],
             "properties": {
               "loading": { "type": "boolean" },
+              "query": { "type": "string" },
               "visibleCount": { "type": "integer" },
               "selectionCount": { "type": "integer" },
               "precheckExecutable": { "type": "integer" },

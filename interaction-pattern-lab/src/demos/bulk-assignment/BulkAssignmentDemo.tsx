@@ -102,22 +102,22 @@ export function BulkAssignmentDemo() {
       {state.precheck.map((check) => <li key={check.itemId} className={check.status === 'rejected' ? 'is-failed' : 'is-success'}><code>{check.itemId}</code><span>{check.status === 'executable' ? '可执行' : failureLabels[check.reasonCode!]}</span>{check.reasonCode && <code>{check.reasonCode}</code>}</li>)}
     </ul></section>}
 
-    {state.result && <ExecutionResultPanel result={state.result} onRetry={() => dispatch({ type: 'retry' })} onSelectFailed={() => dispatch({ type: 'select-failed' })} />}
+    {state.result && <ExecutionResultPanel result={state.result} targetOwnerName={ownerNames[state.targetOwnerId]} onRetry={() => dispatch({ type: 'retry' })} onSelectFailed={() => dispatch({ type: 'select-failed' })} />}
 
     {state.confirmationOpen && <div className="demo-bulk-dialog-backdrop"><div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="confirm-title" className="demo-bulk-dialog">
       <p className="demo-eyebrow">CONFIRM SNAPSHOT</p><h3 id="confirm-title">确认批量分配</h3><p>将预检查快照中的 {state.selection.ids.length} 条工作项分配给 <strong>{ownerNames[state.targetOwnerId]}</strong>。拒绝项不会进入执行。</p>
-      <dl><div><dt>选择范围</dt><dd>{state.selection.scope === 'query' ? '当前查询全部结果' : '当前页'}</dd></div><div><dt>可执行 / 拒绝</dt><dd>{executableCount} / {rejectedCount}</dd></div></dl>
+      <dl><div><dt>选择范围</dt><dd>{state.selection.scope === 'query' ? '当前查询全部结果' : state.selection.scope === 'failed' ? '上次执行失败项' : '当前页'}</dd></div><div><dt>可执行 / 拒绝</dt><dd>{executableCount} / {rejectedCount}</dd></div></dl>
       <div className="demo-bulk-dialog-actions"><button ref={cancelButtonRef} type="button" onClick={cancelConfirmation}>取消</button><button type="button" className="demo-primary-button" onClick={() => dispatch({ type: 'execute' })}>执行分配</button></div>
     </div></div>}
     </>}
   </div>;
 }
 
-function ExecutionResultPanel({ result, onRetry, onSelectFailed }: { result: NonNullable<ReturnType<typeof createBulkAssignmentState>['result']>; onRetry: () => void; onSelectFailed: () => void }) {
+function ExecutionResultPanel({ result, targetOwnerName, onRetry, onSelectFailed }: { result: NonNullable<ReturnType<typeof createBulkAssignmentState>['result']>; targetOwnerName: string; onRetry: () => void; onSelectFailed: () => void }) {
   const title = result.outcome === 'all-success' ? '全部成功' : result.outcome === 'system-failure' ? '系统失败 · 零变更' : '部分成功';
   return <section className={`demo-bulk-result is-${result.outcome}`} aria-labelledby="execution-result-title"><div className="demo-bulk-result-heading"><div><p className="demo-eyebrow">EXECUTION RESULT</p><h3 id="execution-result-title">{title}</h3></div><div className="demo-bulk-counts"><strong>成功 {result.successCount}</strong><strong>失败 {result.failureCount}</strong><strong>未处理 {result.unprocessedCount}</strong></div></div>
     {result.reasonCode && <p><code>{result.reasonCode}</code>：{failureLabels[result.reasonCode]}。本次没有记录发生变化。</p>}
-    <ul>{result.details.map((detail) => <li key={detail.itemId} className={`is-${detail.status}`}><code>{detail.itemId}</code><span>{detail.status === 'success' ? '负责人已更新' : detail.status === 'unprocessed' ? '未处理' : failureLabels[detail.reasonCode!]}</span>{detail.reasonCode && <code>{detail.reasonCode}</code>}</li>)}</ul>
+    <ul>{result.details.map((detail) => <li key={detail.itemId} className={`is-${detail.status}`}><code>{detail.itemId}</code><span>{detail.status === 'success' ? `负责人已更新为 ${targetOwnerName}` : detail.status === 'unprocessed' ? '未处理' : failureLabels[detail.reasonCode!]}</span>{detail.reasonCode && <code>{detail.reasonCode}</code>}</li>)}</ul>
     {result.outcome === 'partial-success' && result.failureCount > 0 && <button type="button" onClick={onSelectFailed}>仅重选失败 {result.failureCount} 条</button>}
     {result.outcome === 'system-failure' && <button type="button" onClick={onRetry}>重试本次执行</button>}
   </section>;
