@@ -1,0 +1,86 @@
+_methodology/07-Skills初始化与使用规范.md
+  e528476cbc97de75 53-54
+interaction-pattern-lab/.specify/README.md
+  e528476cbc97de75 7
+_methodology/scripts/check-matt-setup.mjs
+  e528476cbc97de75 1-88
+_methodology/scripts/test-generated-profile.mjs
+  e528476cbc97de75 1-59,70-75,77-85
+_methodology/profiles/typescript-enterprise-web/validation.md
+  e528476cbc97de75 1-37
+_methodology/project-init/templates/CONTEXT.md
+  e528476cbc97de75 1-7
+_methodology/profiles/README.md
+  e528476cbc97de75 9
+_methodology/01-技术规范清单.md
+  e528476cbc97de75 3-4,105
+_methodology/project-init/README.md
+  e528476cbc97de75 3,10
+_methodology/scripts/verify-validation-projects.sh
+  e528476cbc97de75 9
+_methodology/00-搭建指南.md
+  e528476cbc97de75 84
+_methodology/project-init/templates/gitignore
+  e528476cbc97de75 1-9
+_methodology/scripts/verify-workbench.sh
+  e528476cbc97de75 10
+_methodology/project-init/templates/agents-triage-labels.md
+  e528476cbc97de75 1-11
+_methodology/10-SDD与Matt工程流程集成规范.md
+  e528476cbc97de75 54,58
+_methodology/project-init/templates/AGENTS.md
+  e528476cbc97de75 25-38
+_methodology/project-init/templates/README.md
+  e528476cbc97de75 5
+interaction-pattern-lab/.specify/project-state.json
+  e528476cbc97de75 1-19
+README.md
+  e528476cbc97de75 110-113,115-116,148,159-160
+_methodology/project-init/templates/agents-issue-tracker.md
+  e528476cbc97de75 1-17
+_methodology/scripts/verify-all-online.sh
+  e528476cbc97de75 1-11
+docs/agents/triage-labels.md
+  e528476cbc97de75 1-17
+_methodology/project-init/templates/project-state.json
+  e528476cbc97de75 6-9
+_methodology/scripts/forge.mjs
+  e528476cbc97de75 6-7,16,38-49,56-106,114,139,160-162,184,194-215,217,224-236,240,243,268,271,278-280,289
+_methodology/scripts/check-project.sh
+  e528476cbc97de75 25
+_methodology/scripts/test-forge-init.mjs
+  e528476cbc97de75 12,16-41,49-52,65-66,76-89,94,96-119
+AGENTS.md
+  e528476cbc97de75 33-36
+_methodology/project-init/manifest.json
+  e528476cbc97de75 3,14,16-19
+_methodology/project-init/templates/agents-domain.md
+  e528476cbc97de75 1-5
+_methodology/profiles/typescript-enterprise-web/profile.json
+  e528476cbc97de75 4-6,15-35,38-72
+_methodology/scripts/check-project-profile.mjs
+  e528476cbc97de75 32-36,45
+_methodology/profiles/typescript-enterprise-web/technology-profile.md
+  e528476cbc97de75 3-4,12,18,20-28
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "1c90e7aeaae36521c703f56bcd99c91e7144be2b",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 547,
+      "total_deletions": 77,
+      "accepted_lines": 526,
+      "overriden_lines": 13,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/57078f17d27aa5798aa85498a56135914257cde944fae411fd269ef081809a40"
+    }
+  }
+}
