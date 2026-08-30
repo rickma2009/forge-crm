@@ -1,0 +1,52 @@
+interaction-pattern-lab/AGENTS.md
+  e528476cbc97de75 7,11
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/README.md
+  e528476cbc97de75 3,22,27
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/traceability.md
+  e528476cbc97de75 23-40,50
+interaction-pattern-lab/README.md
+  e528476cbc97de75 4,13,29
+README.md
+  e528476cbc97de75 133
+AGENTS.md
+  e528476cbc97de75 10
+interaction-pattern-lab/.specify/project-state.json
+  e528476cbc97de75 3-4,18,20-21
+interaction-pattern-lab/.specify/README.md
+  e528476cbc97de75 13
+interaction-pattern-lab/.specify/requirements/002-validation-field-baseline/README.md
+  e528476cbc97de75 17
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/pipeline-state.json
+  e528476cbc97de75 3-4,18,20
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/review.md
+  e528476cbc97de75 3,7
+interaction-pattern-lab/src/demos/bulk-assignment/BulkAssignmentModel.test.ts
+  e528476cbc97de75 97-99
+interaction-pattern-lab/src/demos/bulk-assignment/BulkAssignmentModel.ts
+  e528476cbc97de75 88,92
+interaction-pattern-lab/docs/pattern-backlog.md
+  e528476cbc97de75 3,25
+interaction-pattern-lab/.specify/specs/002-bulk-assignment-partial-success/tasks.md
+  e528476cbc97de75 4,94-95
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "ae4c8000a05726670bb6ddecbf2c2b485b88c23f",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 63,
+      "total_deletions": 60,
+      "accepted_lines": 368,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/c3fc468567f640edec7af94b56a9ac26028ad7261bcf9eaa346255dd283e2c2d"
+    }
+  }
+}
