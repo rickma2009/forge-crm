@@ -1,6 +1,6 @@
 # 记录管理工作区模式
 
-> 状态：validated-once  
+> 状态：implementation-verified
 > 首次验证项目：MCRM / 004-customer-record-workspace  
 > 来源：`reference-cases/gf-scm-customer-record-workspace-distillation.md`
 
@@ -52,3 +52,7 @@ Workspace Tabs
 - 没有引入参考项目的业务字段和平台依赖。
 
 完整起点见 `templates/ui/record-management-workspace/`，交互案例见 `examples/003-golden-interaction-record-management-workspace/`。
+
+## 晋升与复审
+
+MCRM 004 已有组件和构建证据，因此记录为 `implementation-verified`。真实数据库当时无客户数据，详情路径未完成真实浏览器验证，销售角色也待复核；Specification Gate 仍待明确重新确认。补齐这些证据前不得晋升 `interaction-verified`。

@@ -4,7 +4,8 @@ describe('Pattern Catalog', () => {
   it('提供两个稳定、已验证一次的种子模式', () => {
     const patterns = listPatterns();
     expect(patterns.map((pattern) => pattern.id)).toEqual(['EPM-PAGE-001', 'EPM-SCENE-001']);
-    expect(patterns.every((pattern) => pattern.validationStatus === 'validated-once')).toBe(true);
+    expect(patterns.find((pattern) => pattern.id === 'EPM-PAGE-001')?.validationStatus).toBe('interaction-verified');
+    expect(patterns.find((pattern) => pattern.id === 'EPM-SCENE-001')?.validationStatus).toBe('implementation-verified');
   });
 
   it.each(['导航', 'EPM-PAGE-001', '页面结构', '侧栏'])(

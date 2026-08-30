@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "typescript-enterprise-web",
+  "version": "0.1.0",
+  "status": "candidate-contract-only",
+  "summary": "TypeScript 企业 Web 模块化单体工程契约",
+  "choices": {
+    "workspace": "pnpm workspace",
+    "web": "React",
+    "server": "NestJS",
+    "database": "PostgreSQL",
+    "architecture": "modular monolith"
+  },
+  "requiredQualityCommands": ["lint", "typecheck", "test", "build", "verify"],
+  "limitations": [
+    "v0.1 does not generate runnable application code",
+    "deployment, authentication, tenancy and observability remain project decisions"
+  ]
+}

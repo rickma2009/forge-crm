@@ -1,20 +1,20 @@
 {
   "featureId": "001-pattern-catalog-preview",
-  "status": "release-approved-hosting-pending",
-  "currentStage": "deployment",
+  "status": "historical-slice-preserved-business-gate-reopened",
+  "currentStage": "business-gate",
   "gates": {
-    "business": "approved-2026-08-30-REQSRC-002",
-    "specification": "approved-2026-08-30-REQSRC-006-incremental",
-    "architecture": "approved-2026-08-30-REQSRC-004",
-    "release": "approved-2026-08-30-REQSRC-005-revalidated-after-REQSRC-006"
+    "business": "reopened-2026-08-30-REQSRC-007-scope-redefinition",
+    "specification": "historical-approval-preserved-reconfirmation-required-for-new-scope",
+    "architecture": "historical-approval-preserved-reconfirmation-required-for-new-scope",
+    "release": "historical-demo-authorization-preserved-not-applicable-to-redefined-validation-field"
   },
   "checks": {
-    "sources": "passed-6-of-6",
+    "sources": "pending-recheck-7-of-7",
     "structure": "passed-full-stage",
     "traceability": "passed-full-stage",
     "architecturePlan": "approved",
     "implementation": "verify-passed-browser-passed-review-complete-including-REQSRC-006",
-    "deployment": "local-production-preview-available-external-private-hosting-pending"
+    "deployment": "historical-local-preview-only-not-current-release-evidence"
   },
-  "updatedAt": "2026-08-30T20:51:00+08:00"
+  "updatedAt": "2026-08-30T23:30:00+08:00"
 }

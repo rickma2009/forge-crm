@@ -4,7 +4,7 @@
   "currentStage": "clarification",
   "gates": {
     "business": "pending",
-    "spec": "pending",
+    "specification": "pending",
     "architecture": "pending",
     "release": "pending"
   },

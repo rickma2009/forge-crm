@@ -9,16 +9,18 @@ if (!projectDir || !fs.existsSync(sourcesDir)) {
   process.exit(2);
 }
 
+const failures = [];
 const metadataFiles = [];
+const sourceDirectories = [];
 for (const entry of fs.readdirSync(sourcesDir, { withFileTypes: true })) {
   if (!entry.isDirectory()) continue;
+  sourceDirectories.push(entry.name);
   const metadataPath = path.join(sourcesDir, entry.name, 'metadata.json');
   if (fs.existsSync(metadataPath)) metadataFiles.push(metadataPath);
+  else failures.push(`${entry.name} 缺少 metadata.json`);
 }
 
-const failures = [];
 if (!fs.existsSync(path.join(sourcesDir, 'REGISTRY.md'))) failures.push('缺少 sources/REGISTRY.md');
-if (metadataFiles.length === 0) failures.push('没有来源 metadata.json');
 
 for (const metadataPath of metadataFiles) {
   let metadata;
@@ -52,4 +54,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log(`PASS  原始需求来源完整且哈希一致（${metadataFiles.length} 份）`);
+console.log(`PASS  原始需求来源完整且哈希一致（${metadataFiles.length} 份，${sourceDirectories.length} 个来源目录）`);

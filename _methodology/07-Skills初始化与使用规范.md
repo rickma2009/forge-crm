@@ -1,7 +1,7 @@
 # Skills 初始化与使用规范
 
-> 版本：v1.0  
-> 更新：2026-08-29
+> 版本：v1.1
+> 更新：2026-08-30
 
 ## 1. 目标
 
@@ -45,6 +45,10 @@ node _methodology/scripts/init-skills.mjs --check
 | Web 验收 | `agent-browser` | 需要真实页面交互和端到端证据 | 实现后、验收前按需启用 |
 | 流程或架构表达 | `professional-diagram` | 三个以上分支、状态或依赖难以用短文说明 | 按需启用 |
 | 方法论能力沉淀 | `skill-creator` | 新建、修改或评估 Skill | 仅方法论变更时启用 |
+
+Matt Pocock 工程 Skills 采用“SDD 治理、Matt 执行”的边界：`wayfinder`、`grilling`、`research`、`prototype` 可辅助探索，`tdd`、`codebase-design`、`code-review` 可辅助实现；`to-spec`、`to-tickets` 与 tracker 状态必须按 [`10-SDD与Matt工程流程集成规范.md`](10-SDD与Matt工程流程集成规范.md) 适配，不能创建第二规格源或越过人工 Gate。
+
+`setup-matt-pocock-skills` 是每个 Git 仓库的一次性协作配置，不是 SDD 初始化：根工作台和独立的 MCRM 分别配置；`_methodology/` 与当前仍由根仓库跟踪的 `interaction-pattern-lab/` 不单独配置。
 
 具体清单由 `_methodology/skills/manifest.json` 管理。新增“必需”Skill 时必须同时提供 `SKILL.md`、至少两个测试场景、初始化目标，并更新本规范、模板、金标准说明和自动检查。
 

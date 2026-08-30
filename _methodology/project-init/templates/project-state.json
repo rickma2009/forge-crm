@@ -1,0 +1,13 @@
+{
+  "project": "{{project_name}}",
+  "status": "governance-initialized-business-gate-pending",
+  "currentStage": "business-discovery",
+  "gates": {
+    "business": "pending",
+    "specification": "not-applicable-before-feature",
+    "architecture": "pending",
+    "release": "not-applicable-before-feature"
+  },
+  "technologyProfile": null,
+  "updatedAt": "{{generated_datetime}}"
+}

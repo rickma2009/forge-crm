@@ -231,7 +231,7 @@ function PatternSummaryView({ pattern }: { pattern: PatternDefinition }) {
       </div>
       <section className="ipl-evidence">
         <div><p className="demo-eyebrow">EVIDENCE</p><h2>来源与验证</h2><p>状态为“已验证一次”：已在一个真实项目完成组件、构建和浏览器验证，尚不能晋升为跨项目结论。</p></div>
-        <dl><div><dt>验证状态</dt><dd><span className="ipl-validation-badge"><i />validated-once</span></dd></div><div><dt>主来源指纹</dt><dd><code>{pattern.sourceFingerprint.sha256.slice(0, 16)}…</code></dd></div><div className="is-wide"><dt>来源位置</dt><dd>{pattern.sources.map((source) => <code key={source}>{source}</code>)}</dd></div></dl>
+        <dl><div><dt>验证状态</dt><dd><span className="ipl-validation-badge"><i />{pattern.validationStatus}</span></dd></div><div><dt>主来源指纹</dt><dd><code>{pattern.sourceFingerprint.sha256.slice(0, 16)}…</code></dd></div><div className="is-wide"><dt>来源位置</dt><dd>{pattern.sources.map((source) => <code key={source}>{source}</code>)}</dd></div></dl>
       </section>
     </article>
   );

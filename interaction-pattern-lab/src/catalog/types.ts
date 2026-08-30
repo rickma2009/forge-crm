@@ -1,4 +1,12 @@
-export type ValidationStatus = 'idea' | 'candidate' | 'validated-once' | 'validated-multiple';
+export type ValidationStatus =
+  | 'idea'
+  | 'candidate'
+  | 'implementation-verified'
+  | 'interaction-verified'
+  | 'project-adopted'
+  | 'business-validated'
+  | 'released'
+  | 'deprecated';
 
 export interface PatternSummary {
   problem: string;

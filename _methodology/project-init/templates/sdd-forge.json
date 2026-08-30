@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "initializerVersion": "{{initializer_version}}",
+  "projectName": "{{project_name}}",
+  "initializedAt": "{{generated_datetime}}",
+  "methodologySource": "sdd-forge",
+  "technologyProfile": null
+}

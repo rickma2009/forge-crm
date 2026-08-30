@@ -9,4 +9,4 @@
 - `requirements/`：业务可评审需求与转换记录；
 - `specs/`：仅在 Business Gate 通过后创建功能切片。
 
-当前状态：`implementation-verified-awaiting-release-gate`。Business、Specification、Architecture Gate 已由当前任务用户于 2026-08-30 批准，证据为 `REQSRC-002`—`REQSRC-004`。首个切片已通过自动化、构建、浏览器和 SDD 全量检查；Release Gate 尚未开始。
+当前状态：`business-gate-reopened`。首个历史切片已有自动化、构建和本地浏览器证据，但用户在 `REQSRC-007` 中把本目录重新定义为“企业交互模式验证场”，改变了目标和边界。既有 Gate 记录只保留为历史切片证据；新定位须先重新通过 Business Gate。

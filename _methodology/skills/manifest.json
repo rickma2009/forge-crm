@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "required_local_skills": [
     {
       "name": "sdd-forge-workflow",
@@ -36,6 +36,30 @@
       "stage": "实现验证与验收证据",
       "use_when": "Web 切片需要真实浏览器端到端验证",
       "initialization": "availability-check"
+    },
+    {
+      "name": "setup-matt-pocock-skills",
+      "stage": "Git 仓库协作配置",
+      "use_when": "该独立仓库要使用 Matt issue、领域词汇与工程协作流；必须采用 SDD 适配配置",
+      "initialization": "per-repo-adapted-setup"
+    },
+    {
+      "name": "wayfinder / grilling / domain-modeling / research / prototype",
+      "stage": "业务发现、决策探索与不确定性消减",
+      "use_when": "目标模糊、存在决策依赖、术语不清或需要低成本验证方案",
+      "initialization": "availability-check-sdd-authority-boundary"
+    },
+    {
+      "name": "to-spec / to-tickets",
+      "stage": "规格与任务协作投影",
+      "use_when": "仅在遵守方法论 10 的适配规则时使用，不得创建第二规格源或越 Gate",
+      "initialization": "availability-check-adapter-required"
+    },
+    {
+      "name": "tdd / codebase-design / code-review",
+      "stage": "实现与评审",
+      "use_when": "已批准切片需要测试驱动、模块边界设计或 Standards/Spec 子评审",
+      "initialization": "availability-check-sdd-gates-required"
     },
     {
       "name": "professional-diagram",

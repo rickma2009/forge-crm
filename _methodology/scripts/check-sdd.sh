@@ -89,14 +89,38 @@ for id_prefix in "${id_prefixes[@]}"; do
   fi
 done
 
-if [[ "$stage" == "spec" ]] && grep -q 'Specification Gate\|Spec Gate' "$feature_dir/spec.md"; then
-  pass "Specification Gate 已记录"
-elif [[ "$stage" == "full" ]] && \
-   grep -q 'Spec Gate\|Specification Gate' "$feature_dir/spec.md" && \
-   grep -q 'Architecture Gate' "$feature_dir/plan.md"; then
-  pass "Spec 与 Architecture Gate 已记录"
+if node - "$feature_dir/pipeline-state.json" "$stage" <<'NODE'
+const fs = require('node:fs');
+const [statePath, stage] = process.argv.slice(2);
+const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
+const gates = state.gates ?? {};
+const value = (name) => String(name === 'specification' ? (gates.specification ?? gates.spec ?? '') : (gates[name] ?? ''));
+const approved = (name) => {
+  const status = value(name).toLowerCase();
+  const negative = ['pending', 'reopened', 'reconfirmation-required', 'not-approved', 'not-applicable-before'];
+  return status.includes('approved') && !negative.some((token) => status.includes(token));
+};
+
+const failures = [];
+if (!approved('business')) failures.push(`business=${value('business') || 'missing'}`);
+if (!value('specification')) failures.push('specification=missing');
+if (stage === 'full') {
+  if (!approved('specification')) failures.push(`specification=${value('specification') || 'missing'}`);
+  if (!approved('architecture')) failures.push(`architecture=${value('architecture') || 'missing'}`);
+}
+if (failures.length > 0) {
+  console.error(failures.join(', '));
+  process.exit(1);
+}
+NODE
+then
+  if [[ "$stage" == "spec" ]]; then
+    pass "Business Gate 已批准，Specification Gate 状态已结构化记录"
+  else
+    pass "Business、Specification、Architecture Gate 均有批准状态"
+  fi
 else
-  fail "缺少当前阶段要求的 Gate 记录"
+  fail "pipeline-state 的 Gate 状态不允许当前阶段推进"
 fi
 
 if node "$script_dir/check-traceability.mjs" "$feature_dir" "$stage"; then

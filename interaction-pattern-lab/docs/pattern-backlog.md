@@ -7,8 +7,8 @@
 
 | 优先级 | 分类编号 | 模式 | 当前资产 | 证据状态 | Demo 工作 |
 |---|---|---|---|---|---|
-| P0 | `EPM-PAGE-001` | 企业双层导航壳层 | pattern + template + example + check | `validated-once` | 接入统一目录和预览容器 |
-| P0 | `EPM-SCENE-001` | 查询—新增—详情 | pattern + template + example + check | `validated-once` | 演示列表、查询、新增、详情和页签 |
+| P0 | `EPM-PAGE-001` | 企业双层导航壳层 | pattern + template + example + check | `interaction-verified` | MCRM Spec Gate 重确认后再评估项目采用证据 |
+| P0 | `EPM-SCENE-001` | 查询—新增—详情 | pattern + template + example + check | `implementation-verified` | 补真实数据详情与销售角色交互验证 |
 
 ## 2. 前端操作候选
 
@@ -47,4 +47,3 @@
 ## 5. 新场景准入条件
 
 每个新场景至少具备：来源证据、候选卡、适用/不适用边界、可交互案例、接入步骤、验收清单和自动检查计划。未达到条件时保留为 `idea`。
-

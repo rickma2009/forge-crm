@@ -1,6 +1,6 @@
 # 企业系统双层导航壳层模式
 
-> 状态：validated-once  
+> 状态：interaction-verified
 > 首次验证项目：MCRM / 003-enterprise-navigation-shell  
 > 来源萃取：`reference-cases/gf-scm-enterprise-navigation-shell-distillation.md`
 
@@ -75,4 +75,4 @@ App Shell
 
 ## 晋升与复审
 
-当前已在 MCRM 完成一次组件、构建和真实浏览器交互验证，因此是 `validated-once`，不是跨行业最佳实践。第二个真实项目采用时继续记录差异，稳定后再考虑拆成正式公共 UI 包。
+当前已在 MCRM 完成组件、构建和真实浏览器交互验证，因此记录为 `interaction-verified`；MCRM 003 的 Specification Gate 仍待明确重确认，且没有业务验收或发布证据。第二个独立项目采用时继续记录差异，满足方法论 09 后才晋升 `project-adopted`。

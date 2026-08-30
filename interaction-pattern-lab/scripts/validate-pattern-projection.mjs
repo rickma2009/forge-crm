@@ -6,7 +6,16 @@ import { fileURLToPath } from 'node:url';
 const projectRoot = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const catalogPath = resolve(projectRoot, 'src/catalog/patterns.data.json');
 const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
-const allowedStatuses = new Set(['idea', 'candidate', 'validated-once', 'validated-multiple']);
+const allowedStatuses = new Set([
+  'idea',
+  'candidate',
+  'implementation-verified',
+  'interaction-verified',
+  'project-adopted',
+  'business-validated',
+  'released',
+  'deprecated'
+]);
 const ids = new Set();
 const errors = [];
 

@@ -7,7 +7,7 @@
 - `_methodology/`：唯一方法论、模板、门禁和金标准案例来源。
 - `_ref/`：只读参考素材，不是规范源。
 - `mcrm/`：独立项目、独立 Git 仓库。
-- `interaction-pattern-lab/`：根仓库跟踪的企业管理系统交互模式 Demo 项目；当前停在 Business Gate 前。
+- `interaction-pattern-lab/`：根仓库跟踪的企业交互模式验证场；因定位重定义已重新打开 Business Gate。
 
 ## 绝对约束
 
@@ -23,6 +23,16 @@
 1. 工作台必需 Skills 以 `_methodology/skills/` 为唯一来源，并按 `_methodology/skills/manifest.json` 初始化；不得在每个项目重复复制通用 SDD Skill。
 2. 开始 SDD 项目工作时使用 `sdd-forge-workflow`；其他 Skills 按 `_methodology/07-Skills初始化与使用规范.md` 的阶段和条件调用。
 3. 只有项目独有、重复使用且具备测试场景的能力才初始化到项目本地；外部 Skill 不得覆盖项目 Spec、宪法或人工 Gate。
+
+## Agent skills
+
+### Issue tracker
+
+方法论与验证场事项使用适配后的本地 `.scratch/`，MCRM 独立管理；`.specify/` 仍是批准规格唯一事实源。见 `docs/agents/issue-tracker.md`。
+
+### Domain docs
+
+采用 `methodology` 与 `interaction validation` 两上下文布局；MCRM 不属于根上下文图。见 `docs/agents/domain.md`。
 
 ## 需求优先与暂停规则
 
@@ -61,12 +71,12 @@
 2. 源码可用时优先从源码、路由、样式、配置和测试萃取；截图只用于补充视觉核对，不能替代实现证据。
 3. 沉淀时必须同时提供：适用边界、不可复用项、设计令牌或业务不变量、可交互案例、接入步骤和验收清单。
 4. 新项目进入交互或功能设计阶段时，应检索 `_methodology/patterns/` 与 `_methodology/templates/`，向用户提示已有候选；是否采用仍记录为项目级决策。
-5. 参考项目保持只读；模板必须去业务化、去组织专属、去旧技术遗留，并在至少一个真实项目验证后才能标记 `validated-once`。
+5. 参考项目保持只读；模板必须去业务化、去组织专属、去旧技术遗留，并按方法论 09 分别记录实现、交互、项目采用与业务验证证据。
 
 ## 验证
 
 ```bash
-bash _methodology/scripts/verify-workbench.sh
+bash _methodology/scripts/verify-all.sh
 ```
 
 ## 进一步阅读

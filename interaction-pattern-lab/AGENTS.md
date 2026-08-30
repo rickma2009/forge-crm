@@ -1,14 +1,13 @@
 # AGENTS.md
 
-> 企业管理系统交互模式工作台的 AI 执行入口。
+> 企业交互模式验证场的 AI 执行入口。
 
 ## 项目状态
 
-- 当前阶段：`release-approved-hosting-pending`。
-- Business Gate：用户于 2026-08-30 批准，证据为 `REQSRC-002`。
-- Specification Gate：用户于 2026-08-30 批准，证据为 `REQSRC-003`。
-- Architecture Gate：用户于 2026-08-30 批准，证据为 `REQSRC-004`。
-- Release Gate：用户于 2026-08-30 批准当前静态 Demo 发布，证据为 `REQSRC-005`；不包含新增外部能力或扩大公开范围。
+- 当前阶段：`business-gate-reopened`。
+- 重新定义证据：`REQSRC-007`。本目录是交互模式验证场，不是模板规范源或真实业务项目。
+- 既有 `REQSRC-002`—`REQSRC-006` 及实现证据作为历史切片证据保留，不改写、不冒充新边界的批准。
+- 新定位下的 Specification、Architecture、Release Gate 均须在 Business Gate 重新批准后按切片推进。
 
 ## 开始工作前
 
@@ -20,7 +19,7 @@
 
 ## 稳定约束
 
-- `_methodology/` 是通用模式的唯一规范源；本项目是浏览、组合和验证这些模式的 Demo，不另建一套冲突事实源。
+- `_methodology/` 是通用模式的唯一规范源；本项目负责探索与验证，不另建一套冲突事实源。
 - Demo 交互默认只保留在当前浏览器会话，不写业务数据库。
 - 模式内容需要版本化保存；“不保存”只指 Demo 操作数据，不指方法论资产。
 - 来源项目是证据，不是答案。源码优先于截图，推断必须与事实分开。

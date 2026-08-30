@@ -1,4 +1,6 @@
-# 业务上下文：企业管理系统交互模式工作台
+# 业务上下文：企业交互模式验证场
+
+> 状态：因 `REQSRC-007` 重新打开；下列原工作台基线作为历史输入保留，须按验证场定位增量转换。
 
 ## 1. 事实、判断、假设与待确认
 
@@ -56,7 +58,7 @@
 | 模式资产 | 受版本控制的说明、Schema、令牌、模板、案例和检查 | 方法论维护者 | Demo 临时数据 |
 | Demo 状态 | 用户体验案例时在当前会话产生的临时选择与输入 | Demo 前端 | 业务数据 |
 | 参考证据 | 支持事实或推断的源码、测试、路由、样式、截图或外部案例 | 资料提供者/维护者 | 可直接复制的答案 |
-| 验证状态 | `idea`、`candidate`、`validated-once`、`validated-multiple` 或 `deprecated` | 方法论维护者 | 最佳实践标签 |
+| 成熟度 | `idea` 到 `released` 的证据阶梯，定义见方法论 09 | 方法论维护者 | `validated-once`、最佳实践标签 |
 
 ## 6. 业务规则草案
 
@@ -91,4 +93,4 @@
 
 ## 9. 未决问题
 
-详细问题见 `.specify/requirements/001-product-baseline/clarification.md`。Business Gate 阻断项已经关闭；其余问题按标记进入后续 Specification 或 Architecture Gate。
+详细问题见 `.specify/requirements/001-product-baseline/clarification.md`。原基线的阻断项曾关闭，但 `REQSRC-007` 改变目标和边界，Business Gate 已重新打开；新定位的问题必须先完成增量转换与评审。

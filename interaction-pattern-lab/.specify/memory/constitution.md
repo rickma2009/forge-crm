@@ -1,7 +1,7 @@
-# 项目宪法：企业管理系统交互模式工作台
+# 项目宪法：企业交互模式验证场
 
-> 版本：0.2  
-> 生效状态：随项目立项生效；Business Gate 已于 2026-08-30 通过
+> 版本：0.3-draft
+> 生效状态：稳定治理规则继续生效；项目边界按 `REQSRC-007` 重新打开 Business Gate
 
 ## 1. 权威来源
 
@@ -24,7 +24,7 @@
 
 ## 3. 架构边界
 
-Architecture Gate 已批准 React、TypeScript、Vite 的静态单包方案。首片无后端、数据库、账户、在线编辑、第三方运行时内容或生产接口；保持“规范资产—模式投影—Demo Adapter—项目采用决策”分层，展示代码不是方法论唯一来源。
+React、TypeScript、Vite 静态单包方案只对历史 001 切片有效。新验证切片仍须在 Business/Specification Gate 后判断是否沿用架构，不得把历史 Architecture Gate 扩大为验证场全局批准。
 
 ## 4. 数据与安全
 

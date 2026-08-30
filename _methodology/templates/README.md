@@ -30,4 +30,4 @@
 - `ui/enterprise-navigation-shell/`：企业系统双层导航壳层，包含设计令牌、菜单配置骨架和接入/验收说明。
 - `ui/record-management-workspace/`：列表—新增—详情记录管理工作区，包含路由/字段配置骨架、设计令牌和验收清单。
 
-使用时复制到目标项目并替换 `{{placeholder}}`。未替换占位符时不得通过质量门禁。
+新项目优先使用 `node _methodology/scripts/forge.mjs init ...` 建立治理骨架；这些文件继续作为人工定制和功能切片模板。使用时替换 `{{placeholder}}`，未替换占位符时不得通过交付质量门禁。

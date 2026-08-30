@@ -1,9 +1,9 @@
 # 001 模式目录与交互预览
 
-> 状态：实现中  
-> Business Gate：approved（`REQSRC-002`）  
-> Specification Gate：approved（`REQSRC-003`）  
-> Architecture Gate：approved（`REQSRC-004`）  
+> 状态：历史实现切片保留；新定位下暂停推进
+> Business Gate：reopened（`REQSRC-007`）
+> Specification Gate：历史批准保留，新范围需重新确认
+> Architecture Gate：历史批准保留，新范围需重新确认
 > 主功能：`FR-001`—`FR-005`
 
 本切片交付一个最小可评审闭环：用户从左侧分类目录找到两个种子模式，在右侧体验案例、查看模式说明并重置临时状态。
@@ -21,6 +21,6 @@
 
 ## 当前允许与禁止
 
-允许按已批准范围实现、测试、构建和本地浏览器验收；范围变化仍按影响重新打开对应 Gate。
+允许检查、复现和整理既有实现证据，不得据此扩大范围或晋升资产成熟度。
 
-Release Gate 未开始，禁止部署或宣称可发布。
+在新的 Business Gate 批准前，禁止继续实现、部署或宣称新定位已发布。

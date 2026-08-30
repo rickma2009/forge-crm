@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "initializerVersion": "0.1.0",
+  "directories": [
+    ".specify/memory",
+    ".specify/sources",
+    ".specify/requirements",
+    ".specify/specs",
+    ".specify/templates",
+    "docs/adr"
+  ],
+  "files": [
+    { "source": "templates/README.md", "target": "README.md" },
+    { "source": "templates/AGENTS.md", "target": "AGENTS.md" },
+    { "source": "templates/specify-README.md", "target": ".specify/README.md" },
+    { "source": "templates/project-charter.md", "target": ".specify/memory/project-charter.md" },
+    { "source": "templates/business-context.md", "target": ".specify/memory/business-context.md" },
+    { "source": "templates/constitution.md", "target": ".specify/memory/constitution.md" },
+    { "source": "templates/sources-REGISTRY.md", "target": ".specify/sources/REGISTRY.md" },
+    { "source": "templates/project-state.json", "target": ".specify/project-state.json" },
+    { "source": "templates/sdd-forge.json", "target": ".sdd-forge.json" }
+  ],
+  "symlinks": [
+    { "target": "AGENTS.md", "path": "CLAUDE.md" }
+  ]
+}

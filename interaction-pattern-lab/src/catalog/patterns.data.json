@@ -3,7 +3,7 @@
     "id": "EPM-PAGE-001",
     "name": "企业双层导航壳层",
     "category": "页面结构",
-    "validationStatus": "validated-once",
+    "validationStatus": "interaction-verified",
     "keywords": ["侧栏", "导航", "菜单", "搜索", "折叠", "应用壳层"],
     "summary": {
       "problem": "在桌面企业系统中稳定组织多个业务域和功能入口，同时分离导航与高密度内容滚动区。",
@@ -16,7 +16,7 @@
     "sources": ["../_methodology/patterns/enterprise-two-level-navigation-shell.md", "../_methodology/templates/ui/enterprise-navigation-shell/README.md", "../_methodology/examples/002-golden-interaction-enterprise-navigation-shell/README.md"],
     "sourceFingerprint": {
       "path": "../_methodology/patterns/enterprise-two-level-navigation-shell.md",
-      "sha256": "8d6c659aad4edd25dd48ae10f8ed298858360faa0d49a7038c5ef47d65b4667a"
+      "sha256": "7524657b558a15d413d22064366efbece6c5d26b33970d99ad10af82247de8a5"
     },
     "demoId": "navigation-shell"
   },
@@ -24,7 +24,7 @@
     "id": "EPM-SCENE-001",
     "name": "记录管理工作区",
     "category": "标准场景",
-    "validationStatus": "validated-once",
+    "validationStatus": "implementation-verified",
     "keywords": ["列表", "查询", "新增", "详情", "页签", "表格"],
     "summary": {
       "problem": "为桌面企业系统中的主数据或业务单据提供查询记录、新增记录和浏览详情的一致工作区。",
@@ -37,7 +37,7 @@
     "sources": ["../_methodology/patterns/record-management-workspace.md", "../_methodology/templates/ui/record-management-workspace/README.md", "../_methodology/examples/003-golden-interaction-record-management-workspace/README.md"],
     "sourceFingerprint": {
       "path": "../_methodology/patterns/record-management-workspace.md",
-      "sha256": "e508e83c0202db25a0bab278ccc8eff26741eab574ed1584a9533ac018734739"
+      "sha256": "a1c6558cd20eba54f2bf4727ec3eb90fb0fe4a5a3bab92064cc7eb28c5d3c53e"
     },
     "demoId": "record-workspace"
   }
