@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { evaluateField, resolveHiddenErrors } from './rules';
-import type { FieldError, FieldSchema, FormMode, HiddenErrorPolicy } from './types';
+import { evaluateField, evaluateRule, resolveHiddenErrors } from './rules';
+import type { FieldError, FieldRule, FieldSchema, FormMode, HiddenErrorPolicy } from './types';
 
 interface DocumentValues {
   paymentType: string;
@@ -23,6 +23,16 @@ const fields: Record<string, FieldSchema<DocumentValues>> = {
 
 const values: DocumentValues = { paymentType: 'credit', approvalCode: '', owner: '陈思远', notes: '' };
 describe('TASK-1004 SchemaForm pure rules', () => {
+  it.each([
+    ['uses an explicit always value', { type: 'always', value: true }, 'create', true],
+    ['evaluates nested not and all rules', { type: 'not', rule: { type: 'all', rules: [{ type: 'field-equals', fieldId: 'paymentType', value: 'credit' }, { type: 'mode-is', mode: 'edit' }] } }, 'create', true],
+    ['evaluates nested any rules', { type: 'any', rules: [{ type: 'always', value: false }, { type: 'all', rules: [{ type: 'field-equals', fieldId: 'paymentType', value: 'credit' }, { type: 'not', rule: { type: 'always', value: false } }] }] }, 'edit', true],
+    ['treats an empty all list as true', { type: 'all', rules: [] }, 'create', true],
+    ['treats an empty any list as false', { type: 'any', rules: [] }, 'create', false],
+  ] satisfies Array<[string, FieldRule<DocumentValues>, FormMode, boolean]>)('%s', (_name, rule, mode, expected) => {
+    expect(evaluateRule(rule, values, mode, false)).toBe(expected);
+  });
+
   it.each([
     ['create leaves a visible conditional field editable and required', fields.approvalCode, values, 'create', { fieldId: 'approvalCode', visible: true, required: true, state: 'editable', disabledReason: null }],
     ['view makes a visible field readonly even without a readonly rule', fields.notes, values, 'view', { fieldId: 'notes', visible: true, required: false, state: 'readonly', disabledReason: null }],

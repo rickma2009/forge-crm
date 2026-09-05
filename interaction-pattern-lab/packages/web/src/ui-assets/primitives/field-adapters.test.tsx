@@ -1,5 +1,6 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import userEvent from '@testing-library/user-event';
 import { FieldAdapter } from './field-adapters';
 
 afterEach(cleanup);
@@ -20,13 +21,18 @@ describe('TASK-1004 controlled field adapters', () => {
     expect(onChange).toHaveBeenCalledWith(nextValue);
   });
 
-  it('keeps a readonly select observable but does not emit a change', () => {
+  it('keeps a readonly select copyable and immutable when a user attempts to change it', async () => {
     const onChange = vi.fn();
     render(<FieldAdapter field={{ id: 'currency', kind: 'select', label: '币种', groupId: 'main', options: [{ value: 'CNY', label: '人民币' }, { value: 'USD', label: '美元' }] }} value="CNY" state="readonly" onChange={onChange} />);
+    const user = userEvent.setup();
 
-    const control = screen.getByRole('combobox', { name: '币种' });
+    const control = screen.getByRole('textbox', { name: '币种' });
     expect(control).toHaveAttribute('aria-readonly', 'true');
-    fireEvent.change(control, { target: { value: 'USD' } });
+    expect(control).toHaveDisplayValue('人民币');
+    expect(control).not.toBeDisabled();
+    expect(screen.queryByRole('combobox', { name: '币种' })).not.toBeInTheDocument();
+    await user.type(control, 'USD');
+    expect(control).toHaveDisplayValue('人民币');
     expect(onChange).not.toHaveBeenCalled();
   });
 
@@ -57,6 +63,21 @@ describe('TASK-1004 controlled field adapters', () => {
     expect(screen.getByRole('combobox', { name: '客户' })).toHaveDisplayValue('广州精工设备有限公司');
     fireEvent.change(screen.getByRole('combobox', { name: '客户' }), { target: { value: 'C-002' } });
     expect(onChange).toHaveBeenCalledWith({ id: 'C-002', label: '苏州精密科技有限公司' });
+  });
+
+  it.each([
+    ['resolved', { status: 'resolved', value: { id: 'C-001', label: '广州精工设备有限公司' } }],
+    ['loading', { status: 'loading', id: 'C-001' }],
+    ['failed', { status: 'failed', id: 'C-001', message: '客户名称回显失败，请重试。' }],
+  ] as const)('rejects a stale %s hydration state after the controlled remote ID changes', (_status, remoteState) => {
+    const field = { id: 'customer', kind: 'remote-select', label: '客户', groupId: 'main', options: [{ value: 'C-001', label: '广州精工设备有限公司' }, { value: 'C-002', label: '苏州精密科技有限公司' }] };
+    const { rerender } = render(<FieldAdapter field={field} value="C-001" state="editable" remoteState={remoteState} onChange={() => undefined} />);
+
+    rerender(<FieldAdapter field={field} value="C-002" state="editable" remoteState={remoteState} onChange={() => undefined} />);
+
+    expect(screen.getByRole('alert')).toHaveTextContent('客户 C-002 回显状态与当前值不一致。');
+    expect(screen.queryByRole('combobox', { name: '客户' })).not.toBeInTheDocument();
+    expect(screen.queryByText('广州精工设备有限公司')).not.toBeInTheDocument();
   });
 
   it('announces a supplied remote loading state without performing a request', () => {
