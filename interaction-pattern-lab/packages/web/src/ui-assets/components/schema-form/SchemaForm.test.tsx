@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { ValidationSummary } from '../validation-summary/ValidationSummary';
-import { SchemaForm, errorTargetId } from './SchemaForm';
+import { SchemaForm, errorTargetId, type SchemaFormProps } from './SchemaForm';
 import { resolveHiddenErrors } from './rules';
 import type { FieldError, FieldSchema } from './types';
 
@@ -42,6 +42,7 @@ describe('TASK-1005 SchemaForm rendering', () => {
     expect(screen.getByRole('alert')).toHaveTextContent('请填写单据标题。');
 
     const title = screen.getByRole('textbox', { name: /单据标题/ });
+    expect(title).toHaveAttribute('aria-required', 'true');
     expect(title).toHaveAttribute('aria-invalid', 'true');
     expect(title).toHaveAttribute('aria-describedby', expect.stringContaining('schema-form-help-title'));
     expect(title).toHaveAttribute('aria-describedby', expect.stringContaining('schema-form-error-ERR-title'));
@@ -78,11 +79,28 @@ describe('TASK-1005 SchemaForm rendering', () => {
     );
   });
 
-  it('activates the hidden-field reveal control from the error summary without dropping the error', async () => {
+  it('moves summary keyboard activation into the actual visible SchemaForm field', async () => {
+    const user = userEvent.setup();
+    const errors: FieldError<DocumentValues>[] = [{ id: 'ERR-title', fieldId: 'title', message: '请填写单据标题。' }];
+
+    render(<>
+      <ValidationSummary errors={errors.map((error) => ({ error, targetId: errorTargetId(error) }))} />
+      <SchemaForm groups={groups} schema={fields} values={editableValues} errors={errors} mode="create" onChange={() => undefined} />
+    </>);
+
+    const summaryAction = screen.getByRole('button', { name: '请填写单据标题。' });
+    summaryAction.focus();
+    await user.keyboard('{Enter}');
+
+    expect(screen.getByRole('textbox', { name: /单据标题/ })).toHaveFocus();
+  });
+
+  it('activates the hidden-field reveal control from the error summary by keyboard without dropping the error', async () => {
     const user = userEvent.setup();
     const errors: FieldError<DocumentValues>[] = [{ id: 'ERR-approval', fieldId: 'approvalCode', message: '请填写审批编号。' }];
     const values = { ...editableValues, paymentType: 'prepaid' };
     const resolution = resolveHiddenErrors(errors, fields, values, 'create', 'reveal');
+    if (resolution.action !== 'reveal') throw new Error('test fixture must request reveal');
     const onRevealError = vi.fn();
 
     render(<>
@@ -91,7 +109,8 @@ describe('TASK-1005 SchemaForm rendering', () => {
     </>);
 
     const summaryAction = screen.getByRole('button', { name: '请填写审批编号。' });
-    await user.click(summaryAction);
+    summaryAction.focus();
+    await user.keyboard('{Enter}');
 
     const reveal = screen.getByRole('button', { name: '显示审批编号字段以修复错误' });
     expect(reveal).toHaveFocus();
@@ -99,18 +118,62 @@ describe('TASK-1005 SchemaForm rendering', () => {
     expect(screen.getByRole('alert')).toHaveTextContent('请填写审批编号。');
   });
 
-  it('exposes a clear action for hidden errors when the supplied policy requires clear', async () => {
+  it('activates the clear policy from the error summary with Space', async () => {
     const user = userEvent.setup();
     const errors: FieldError<DocumentValues>[] = [{ id: 'ERR-approval', fieldId: 'approvalCode', message: '请填写审批编号。' }];
     const values = { ...editableValues, paymentType: 'prepaid' };
     const resolution = resolveHiddenErrors(errors, fields, values, 'create', 'clear');
+    if (resolution.action !== 'clear') throw new Error('test fixture must request clear');
     const onClearHiddenErrors = vi.fn();
 
-    render(<SchemaForm groups={groups} schema={fields} values={values} errors={errors} mode="create" onChange={() => undefined} hiddenErrorResolution={resolution} onClearHiddenErrors={onClearHiddenErrors} />);
+    render(<>
+      <ValidationSummary errors={errors.map((error) => ({ error, targetId: errorTargetId(error, resolution) }))} />
+      <SchemaForm groups={groups} schema={fields} values={values} errors={errors} mode="create" onChange={() => undefined} hiddenErrorResolution={resolution} onClearHiddenErrors={onClearHiddenErrors} />
+    </>);
 
-    await user.click(screen.getByRole('button', { name: '清除审批编号的隐藏错误' }));
+    const summaryAction = screen.getByRole('button', { name: '请填写审批编号。' });
+    summaryAction.focus();
+    await user.keyboard(' ');
     expect(onClearHiddenErrors).toHaveBeenCalledWith(['ERR-approval']);
     expect(screen.getByRole('alert')).toHaveTextContent('请填写审批编号。');
+  });
+
+  it('reports a visible configuration failure instead of rendering a reveal button without its required handler', () => {
+    const errors: FieldError<DocumentValues>[] = [{ id: 'ERR-approval', fieldId: 'approvalCode', message: '请填写审批编号。' }];
+    const values = { ...editableValues, paymentType: 'prepaid' };
+    const resolution = resolveHiddenErrors(errors, fields, values, 'create', 'reveal');
+    const incompleteProps = {
+      groups,
+      schema: fields,
+      values,
+      errors,
+      mode: 'create' as const,
+      onChange: () => undefined,
+      hiddenErrorResolution: resolution,
+    } as unknown as SchemaFormProps<DocumentValues>;
+
+    render(<SchemaForm {...incompleteProps} />);
+
+    expect(screen.getByRole('alert')).toHaveTextContent('隐藏错误处理配置错误');
+    expect(screen.queryByRole('button', { name: '显示审批编号字段以修复错误' })).not.toBeInTheDocument();
+  });
+
+  it('routes a disabled field error to a focusable explanation instead of its disabled control', async () => {
+    const user = userEvent.setup();
+    const errors: FieldError<DocumentValues>[] = [{ id: 'ERR-owner', fieldId: 'owner', message: '负责人必须由审批流分配。' }];
+
+    render(<>
+      <ValidationSummary errors={[{ error: errors[0], targetId: errorTargetId(errors[0], undefined, 'disabled') }]} />
+      <SchemaForm groups={groups} schema={fields} values={editableValues} errors={errors} mode="create" onChange={() => undefined} />
+    </>);
+
+    const summaryAction = screen.getByRole('button', { name: '负责人必须由审批流分配。' });
+    summaryAction.focus();
+    await user.keyboard('{Enter}');
+
+    const explanation = screen.getByText('负责人当前不可编辑：创建后由审批流分配负责人。');
+    expect(explanation).toHaveFocus();
+    expect(screen.getByRole('textbox', { name: '负责人' })).not.toHaveFocus();
   });
 });
 

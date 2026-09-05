@@ -22,11 +22,12 @@ export interface FieldAdapterProps {
   controlId?: string;
   describedBy?: string;
   invalid?: boolean;
+  required?: boolean;
   onChange: (value: FieldAdapterValue) => void;
 }
 
-export function FieldAdapter({ field, value, state, remoteState, controlId, describedBy, invalid, onChange }: FieldAdapterProps) {
-  const shared = { id: controlId, 'aria-label': field.label, 'aria-describedby': describedBy, 'aria-invalid': invalid || undefined, disabled: state === 'disabled', readOnly: state === 'readonly', title: state === 'disabled' ? field.disabledReason : undefined };
+export function FieldAdapter({ field, value, state, remoteState, controlId, describedBy, invalid, required, onChange }: FieldAdapterProps) {
+  const shared = { id: controlId, 'aria-label': field.label, 'aria-describedby': describedBy, 'aria-invalid': invalid || undefined, 'aria-required': required || undefined, disabled: state === 'disabled', readOnly: state === 'readonly', title: state === 'disabled' ? field.disabledReason : undefined };
   const emitIfEditable = (nextValue: FieldAdapterValue) => { if (state === 'editable') onChange(nextValue); };
 
   switch (field.kind) {
@@ -37,16 +38,16 @@ export function FieldAdapter({ field, value, state, remoteState, controlId, desc
     case 'date':
       return <input {...shared} type="date" value={asText(value)} onChange={(event) => emitIfEditable(event.target.value)} />;
     case 'select':
-      if (state === 'readonly') return <ReadonlyValue label={field.label} value={optionLabel(field.options ?? [], asText(value))} controlId={controlId} describedBy={describedBy} invalid={invalid} />;
-      return <select id={controlId} aria-label={field.label} aria-describedby={describedBy} aria-invalid={invalid || undefined} disabled={state === 'disabled'} title={state === 'disabled' ? field.disabledReason : undefined} value={asText(value)} onChange={(event) => emitIfEditable(event.target.value)}>{(field.options ?? []).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select>;
+      if (state === 'readonly') return <ReadonlyValue label={field.label} value={optionLabel(field.options ?? [], asText(value))} controlId={controlId} describedBy={describedBy} invalid={invalid} required={required} />;
+      return <select id={controlId} aria-label={field.label} aria-describedby={describedBy} aria-invalid={invalid || undefined} aria-required={required || undefined} disabled={state === 'disabled'} title={state === 'disabled' ? field.disabledReason : undefined} value={asText(value)} onChange={(event) => emitIfEditable(event.target.value)}>{(field.options ?? []).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select>;
     case 'remote-select':
-      return <RemoteSelectAdapter field={field} value={value} state={state} remoteState={remoteState} controlId={controlId} describedBy={describedBy} invalid={invalid} onChange={onChange} />;
+      return <RemoteSelectAdapter field={field} value={value} state={state} remoteState={remoteState} controlId={controlId} describedBy={describedBy} invalid={invalid} required={required} onChange={onChange} />;
     default:
       return <p role="alert">字段 {field.id} 配置错误：未知字段类型 {field.kind}。</p>;
   }
 }
 
-function RemoteSelectAdapter({ field, value, state, remoteState, controlId, describedBy, invalid, onChange }: Pick<FieldAdapterProps, 'field' | 'value' | 'state' | 'remoteState' | 'controlId' | 'describedBy' | 'invalid' | 'onChange'>) {
+function RemoteSelectAdapter({ field, value, state, remoteState, controlId, describedBy, invalid, required, onChange }: Pick<FieldAdapterProps, 'field' | 'value' | 'state' | 'remoteState' | 'controlId' | 'describedBy' | 'invalid' | 'required' | 'onChange'>) {
   const currentId = remoteSelectId(value);
   if (currentId === null) return <p role="alert">{field.label}回显值格式错误。</p>;
   if (!remoteState) return <p role="alert">{field.label}回显状态缺失。</p>;
@@ -55,9 +56,9 @@ function RemoteSelectAdapter({ field, value, state, remoteState, controlId, desc
   if (remoteState.status === 'failed') return <p role="alert">{remoteState.message}</p>;
 
   const options = remoteOptions(field.options ?? [], remoteState.value);
-  if (state === 'readonly') return <ReadonlyValue label={field.label} value={remoteState.value.label} controlId={controlId} describedBy={describedBy} invalid={invalid} />;
+  if (state === 'readonly') return <ReadonlyValue label={field.label} value={remoteState.value.label} controlId={controlId} describedBy={describedBy} invalid={invalid} required={required} />;
   return <>
-    <select id={controlId} aria-label={field.label} aria-describedby={describedBy} aria-invalid={invalid || undefined} disabled={state === 'disabled'} title={state === 'disabled' ? field.disabledReason : undefined} value={currentId} onChange={(event) => {
+    <select id={controlId} aria-label={field.label} aria-describedby={describedBy} aria-invalid={invalid || undefined} aria-required={required || undefined} disabled={state === 'disabled'} title={state === 'disabled' ? field.disabledReason : undefined} value={currentId} onChange={(event) => {
       const option = options.find((candidate) => candidate.value === event.target.value);
       if (option && state === 'editable') onChange({ id: option.value, label: option.label });
     }}>{options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select>
@@ -65,8 +66,8 @@ function RemoteSelectAdapter({ field, value, state, remoteState, controlId, desc
   </>;
 }
 
-function ReadonlyValue({ label, value, controlId, describedBy, invalid }: { label: string; value: string; controlId?: string; describedBy?: string; invalid?: boolean }) {
-  return <input id={controlId} aria-label={label} aria-describedby={describedBy} aria-invalid={invalid || undefined} aria-readonly="true" readOnly type="text" value={value} />;
+function ReadonlyValue({ label, value, controlId, describedBy, invalid, required }: { label: string; value: string; controlId?: string; describedBy?: string; invalid?: boolean; required?: boolean }) {
+  return <input id={controlId} aria-label={label} aria-describedby={describedBy} aria-invalid={invalid || undefined} aria-required={required || undefined} aria-readonly="true" readOnly type="text" value={value} />;
 }
 
 function matchesCurrentRemoteValue(currentId: string, remoteState: RemoteSelectState): boolean {
