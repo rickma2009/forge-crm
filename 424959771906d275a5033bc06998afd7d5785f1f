@@ -1,0 +1,58 @@
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/architecture-gate-review.md
+  e528476cbc97de75 1-55
+interaction-pattern-lab/.specify/sources/REQSRC-034-master-detail-document-assets-architecture-gate-approval-20260905/metadata.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/pipeline-state.json
+  e528476cbc97de75 1-23
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/plan.md
+  e528476cbc97de75 1-234
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/tasks.md
+  e528476cbc97de75 1-46
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/traceability.md
+  e528476cbc97de75 1-22
+interaction-pattern-lab/AGENTS.md
+  3b33a616c8f4756c 8,12-13,35-37,39-41
+interaction-pattern-lab/.specify/sources/REQSRC-034-master-detail-document-assets-architecture-gate-approval-20260905/source.md
+  e528476cbc97de75 1-14
+interaction-pattern-lab/.specify/project-state.json
+  3b33a616c8f4756c 7-11,13-21,25-33,37,39
+interaction-pattern-lab/docs/adr/ADR-005-主从单据与企业组件资产架构.md
+  e528476cbc97de75 1-2,4,6-41
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/README.md
+  e528476cbc97de75 1-20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "424959771906d275a5033bc06998afd7d5785f1f",
+  "prompts": {
+    "3b33a616c8f4756c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05527-1dbc-7e01-9817-2f478f16d6a2",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 16254,
+      "total_deletions": 7164,
+      "accepted_lines": 15764,
+      "overriden_lines": 23,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/51447d27368486b07911c6556d0a01c237f11f0bad9b154d1179334ad5c2ad0e"
+    },
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 668,
+      "total_deletions": 13,
+      "accepted_lines": 924,
+      "overriden_lines": 27,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/c4c23adb2bcf2419bc2950a656f40538ae39a78ea346c59f8e42f5e64bacb26e"
+    }
+  }
+}
