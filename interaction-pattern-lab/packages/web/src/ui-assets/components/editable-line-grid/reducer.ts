@@ -193,8 +193,10 @@ function allocateFreshId<TLine extends LineRecord>(state: EditableLineState<TLin
 }
 
 function withoutIdentity<TLine extends object>(line: TLine): Omit<TLine, 'rowId' | 'persistedState'> {
-  const { rowId: _rowId, persistedState: _persistedState, ...values } = line as TLine & LineRecord;
-  return values;
+  const values = { ...line } as Partial<TLine & LineRecord>;
+  delete values.rowId;
+  delete values.persistedState;
+  return values as Omit<TLine, 'rowId' | 'persistedState'>;
 }
 
 function applied<TLine extends LineRecord>(state: EditableLineState<TLine>): EditableLineResult<TLine> {
