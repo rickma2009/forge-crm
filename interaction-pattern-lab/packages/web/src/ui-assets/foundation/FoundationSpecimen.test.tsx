@@ -11,6 +11,40 @@ import { foundationManifest } from './foundation-manifest';
 const requiredFoundationRouteIds = ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'];
 const foundationPageIds = new Set(requiredFoundationRouteIds);
 const foundationPages = showcaseRegistry.pages.filter((page) => foundationPageIds.has(page.id));
+const expectedConsumerIdsByRoute: Record<string, Record<string, string[]>> = {
+  'foundation-colors': {
+    'surface.canvas': ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'],
+    'surface.default': ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'],
+    'action.primary': ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'],
+    'status.success': ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'],
+    'status.success.wash': ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'],
+    'status.warning': ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'],
+    'status.warning.wash': ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'],
+    'theme.dark': ['foundation-colors'],
+    'data-viz.palette': ['foundation-colors'],
+  },
+  'foundation-typography': {
+    'type.family.enterprise': ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'],
+    'type.meta.label': ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'],
+    'type.body.compact': ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'],
+    'type.heading.page': ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'],
+    'type.scale.responsive': ['foundation-typography'],
+  },
+  'foundation-spacing': {
+    'density.control.compact': ['foundation-spacing'],
+    'space.inline.default': ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'],
+    'space.section.default': ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'],
+    'focus.visible': ['foundation-spacing'],
+    'grid.virtualization': ['foundation-spacing'],
+  },
+  'foundation-icons': {
+    'icon.size.control': ['foundation-icons'],
+    'icon.meaning.decorative': ['foundation-icons'],
+    'state.async.pending': ['foundation-icons'],
+    'state.async.failure': ['foundation-icons'],
+    'icon.illustration.system': ['foundation-icons'],
+  },
+};
 
 class FoundationGateway implements NavigationGateway {
   async session(): Promise<SessionUser> { return { account: 'admin', displayName: '系统管理员' }; }
@@ -53,9 +87,12 @@ describe('TASK-1003 foundation specimens', () => {
       expect(tokens.length).toBeGreaterThan(0);
       expect(tokens.map((token) => within(token).getByTestId('foundation-token-id').textContent)).toEqual(foundationManifest.find((specimen) => specimen.routeId === page.id)?.tokens.map((token) => token.id));
       for (const token of tokens) {
-        expect(within(token).getByTestId('foundation-token-id')).not.toHaveTextContent(/^\s*$/);
+        const tokenId = within(token).getByTestId('foundation-token-id').textContent ?? '';
+        const consumers = within(token).getByTestId('foundation-token-consumers');
+        expect(tokenId).not.toMatch(/^\s*$/);
         expect(within(token).getByTestId('foundation-token-source')).not.toHaveTextContent(/^\s*$/);
-        expect(within(token).getByTestId('foundation-token-consumers')).toHaveTextContent(page.id);
+        expect(consumers.textContent?.split('；')).toEqual(expectedConsumerIdsByRoute[page.id]?.[tokenId]);
+        expect(consumers).not.toHaveTextContent(/EPM-PAGE-/);
         expect(within(token).getByTestId('foundation-token-coverage')).toHaveTextContent(/已实现|缺口/);
       }
       expect(screen.getByRole('heading', { name: '明确缺口' })).toBeInTheDocument();
