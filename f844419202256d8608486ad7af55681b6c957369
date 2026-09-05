@@ -1,0 +1,40 @@
+interaction-pattern-lab/packages/web/src/showcase/ShowcaseApp.test.tsx
+  e528476cbc97de75 1-176
+interaction-pattern-lab/packages/web/src/showcase/registry/showcase-registry.data.json
+  e528476cbc97de75 1-126
+interaction-pattern-lab/scripts/validate-showcase-registry.mjs
+  e528476cbc97de75 1-24
+interaction-pattern-lab/packages/web/src/showcase/registry/types.ts
+  e528476cbc97de75 1-60
+interaction-pattern-lab/packages/web/src/showcase/ShowcaseApp.tsx
+  e528476cbc97de75 1-225
+interaction-pattern-lab/packages/web/src/showcase/OverviewPage.tsx
+  e528476cbc97de75 1-18
+interaction-pattern-lab/packages/web/src/showcase/registry/registry.test.ts
+  e528476cbc97de75 1-138
+interaction-pattern-lab/scripts/showcase-registry-validation.d.mts
+  e528476cbc97de75 1-11
+interaction-pattern-lab/scripts/showcase-registry-validation.mjs
+  e528476cbc97de75 1-14,16-123
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "f844419202256d8608486ad7af55681b6c957369",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 1785,
+      "total_deletions": 6709,
+      "accepted_lines": 2082,
+      "overriden_lines": 1,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/8d51d58d368e3175373cfbe66cf8f766771857d3f82c0a3ed04131a6ed5d96d5"
+    }
+  }
+}
