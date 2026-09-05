@@ -16,6 +16,8 @@ import { CustomerDirectoryPage, DictionaryAdminPage, ListViewAdminPage } from '.
 import { SalesOrderPrototype } from './SalesOrderPrototype';
 import { EnterpriseWorkbenchPrototype } from './EnterpriseWorkbenchPrototype';
 import { OverviewPage } from './OverviewPage';
+import { FoundationSpecimen } from '../ui-assets/foundation/FoundationSpecimen';
+import { isFoundationRouteId } from '../ui-assets/foundation/foundation-manifest';
 
 const systems = [{ code: 'demo-portal', label: '演示门户' }, { code: 'secondary-demo', label: '隔离演示系统' }];
 
@@ -192,6 +194,7 @@ function ToolPanel({ title, lines }: { title: string; lines: string[] }) { retur
 
 function PageAdapter({ page, user, systemCode, allowedActions, gateway }: { page: ShowcasePage; user: SessionUser; systemCode: string; allowedActions: string[]; gateway: NavigationGateway }) {
   if (page.rendererKey === 'overview') return <OverviewPage user={user} />;
+  if (isFoundationRouteId(page.id)) return <FoundationSpecimen routeId={page.id} />;
   if (page.rendererKey === 'resource-catalog') return <ResourceCatalogPage account={user.account} systemCode={systemCode} allowedActions={allowedActions} gateway={gateway} />;
   if (page.rendererKey === 'customer-directory') return <CustomerDirectoryPage systemCode={systemCode} allowedActions={allowedActions} gateway={gateway as EnterpriseGateway} />;
   if (page.rendererKey === 'dictionary-admin') return <DictionaryAdminPage systemCode={systemCode} canManage={allowedActions.includes('manage')} gateway={gateway as EnterpriseGateway} />;
