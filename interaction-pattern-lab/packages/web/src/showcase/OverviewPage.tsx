@@ -8,7 +8,7 @@ export function OverviewPage({ user }: { user: SessionUser }) {
   return <div>
     <header className="showcase-page-header"><p>PORTAL OVERVIEW</p><h1>概览</h1><span>使用数据库角色授权结果验证导航、工具栏、多页签和页面权限。</span></header>
     <div className="showcase-metric-grid">
-      <article><span>交互页面</span><strong>{interactivePageCount}</strong><small>已接入可交互验证</small></article>
+      <article><span>交互页面</span><strong>{interactivePageCount}</strong><small>已登记可交互切片</small></article>
       <article><span>说明页面</span><strong>{descriptionPageCount}</strong><small>已登记说明入口</small></article>
       <article><span>当前账号</span><strong>{user.account}</strong><small>{user.displayName}</small></article>
       <article><span>授权来源</span><strong>RBAC</strong><small>下一请求实时生效</small></article>

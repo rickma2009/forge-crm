@@ -30,6 +30,7 @@ export function validateShowcaseRegistry(registry, { iconKeys, rendererKeys, tra
   const traceabilityRequiredPageIds = new Set(['template-form', 'template-workbench', 'template-master-detail']);
   for (const page of pages) {
     if (!page.id || !page.path || !page.title || !page.viewCapability || !page.rendererKey || !page.iconKey) errors.push(`PAGE_FIELDS_REQUIRED:${page.id ?? 'unknown'}`);
+    if (page.coverage !== 'interactive-slice' && page.coverage !== 'description-only') errors.push(`INVALID_PAGE_COVERAGE:${page.id}:${page.coverage}`);
     if (!capabilitySet.has(page.viewCapability)) errors.push(`UNKNOWN_PAGE_CAPABILITY:${page.id}:${page.viewCapability}`);
     if (!rendererKeys.has(page.rendererKey)) errors.push(`UNKNOWN_RENDERER:${page.id}:${page.rendererKey}`);
     if (!iconKeys.has(page.iconKey)) errors.push(`UNKNOWN_PAGE_ICON:${page.id}:${page.iconKey}`);

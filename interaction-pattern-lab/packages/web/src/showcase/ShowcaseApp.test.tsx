@@ -69,6 +69,8 @@ describe('database-backed enterprise navigation showcase', () => {
     expect(screen.getByText('交互页面')).toBeInTheDocument();
     expect(screen.getByText('19')).toBeInTheDocument();
     expect(screen.getByText('说明页面')).toBeInTheDocument();
+    expect(screen.getByText('已登记可交互切片')).toBeInTheDocument();
+    expect(screen.queryByText('已接入可交互验证')).not.toBeInTheDocument();
   });
 
   it('loads one authorized navigation tree after account/password login', async () => {

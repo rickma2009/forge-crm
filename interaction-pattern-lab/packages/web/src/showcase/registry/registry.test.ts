@@ -117,6 +117,13 @@ describe('showcase registry contract', () => {
     })).toContain('UNREFERENCED_PAGE:overview');
   });
 
+  it('TC-1002: rejects a page coverage value that would otherwise vanish from both overview counts', () => {
+    expect(mutatedRegistry((draft) => {
+      // @ts-expect-error — mutation test deliberately violates the coverage contract.
+      draft.pages[0].coverage = 'prototype-only';
+    })).toContain('INVALID_PAGE_COVERAGE:overview:prototype-only');
+  });
+
   it.each([
     ['duplicate path', (draft: ShowcaseRegistry) => { draft.pages[1].path = draft.pages[0].path; }, 'DUPLICATE_PAGE_PATH:'],
     ['unknown page capability', (draft: ShowcaseRegistry) => { draft.pages[0].viewCapability = 'showcase.missing.view'; }, 'UNKNOWN_PAGE_CAPABILITY:'],
