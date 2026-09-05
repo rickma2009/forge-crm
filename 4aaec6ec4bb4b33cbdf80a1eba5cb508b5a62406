@@ -1,0 +1,32 @@
+interaction-pattern-lab/packages/web/src/ui-assets/components/schema-form/types.ts
+  e528476cbc97de75 1-63
+interaction-pattern-lab/packages/web/src/ui-assets/components/schema-form/rules.ts
+  e528476cbc97de75 1-56
+interaction-pattern-lab/packages/web/src/ui-assets/primitives/field-adapters.test.tsx
+  e528476cbc97de75 1-67
+interaction-pattern-lab/packages/web/src/ui-assets/primitives/field-adapters.tsx
+  e528476cbc97de75 1-63
+interaction-pattern-lab/packages/web/src/ui-assets/components/schema-form/rules.test.ts
+  e528476cbc97de75 1-56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "4aaec6ec4bb4b33cbdf80a1eba5cb508b5a62406",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2609,
+      "total_deletions": 6705,
+      "accepted_lines": 3045,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/87387ecf20ed9afc4ce2acbac24de092e394984b1e5482683ea582e76c55facb"
+    }
+  }
+}
