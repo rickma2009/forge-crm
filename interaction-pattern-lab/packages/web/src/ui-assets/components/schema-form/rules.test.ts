@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { evaluateField, evaluateRule, resolveHiddenErrors } from './rules';
-import type { FieldError, FieldRule, FieldSchema, FormMode, HiddenErrorPolicy } from './types';
+import type { FieldRule, FieldSchema, FormMode } from './types';
 
 interface DocumentValues {
   paymentType: string;
