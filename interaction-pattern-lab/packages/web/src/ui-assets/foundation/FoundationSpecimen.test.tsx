@@ -1,12 +1,15 @@
 import { cleanup, render, screen, within } from '@testing-library/react';
 import type { NavigationNode, NavigationResponse, SessionUser } from '@interaction-pattern-lab/contracts';
 import { afterEach, describe, expect, it } from 'vitest';
+import userEvent from '@testing-library/user-event';
 import { ShowcaseApp } from '../../showcase/ShowcaseApp';
 import type { NavigationGateway } from '../../showcase/gateway';
 import { showcaseRegistry } from '../../showcase/registry/registry';
 import type { ShowcaseNavigationNode } from '../../showcase/registry/types';
+import { foundationManifest } from './foundation-manifest';
 
-const foundationPageIds = new Set(['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons']);
+const requiredFoundationRouteIds = ['foundation-colors', 'foundation-typography', 'foundation-spacing', 'foundation-icons'];
+const foundationPageIds = new Set(requiredFoundationRouteIds);
 const foundationPages = showcaseRegistry.pages.filter((page) => foundationPageIds.has(page.id));
 
 class FoundationGateway implements NavigationGateway {
@@ -36,7 +39,10 @@ class FoundationGateway implements NavigationGateway {
 afterEach(cleanup);
 
 describe('TASK-1003 foundation specimens', () => {
-  it('TC-1003: renders semantic name, source, consumer, and coverage for every displayed token on all four foundation routes', async () => {
+  it('TC-1003: renders exactly the four manifest-backed routes with route-owned tokens, consumers, and gaps', async () => {
+    expect(foundationManifest.map((specimen) => specimen.routeId)).toEqual(requiredFoundationRouteIds);
+    expect(foundationPages.map((page) => page.id)).toEqual(requiredFoundationRouteIds);
+
     for (const page of foundationPages) {
       cleanup();
       window.location.hash = `#${page.path}`;
@@ -45,21 +51,26 @@ describe('TASK-1003 foundation specimens', () => {
       expect(await screen.findByRole('heading', { name: page.title })).toBeInTheDocument();
       const tokens = screen.getAllByTestId('foundation-token');
       expect(tokens.length).toBeGreaterThan(0);
+      expect(tokens.map((token) => within(token).getByTestId('foundation-token-id').textContent)).toEqual(foundationManifest.find((specimen) => specimen.routeId === page.id)?.tokens.map((token) => token.id));
       for (const token of tokens) {
         expect(within(token).getByTestId('foundation-token-id')).not.toHaveTextContent(/^\s*$/);
         expect(within(token).getByTestId('foundation-token-source')).not.toHaveTextContent(/^\s*$/);
-        expect(within(token).getByTestId('foundation-token-consumers')).not.toHaveTextContent(/^\s*$/);
+        expect(within(token).getByTestId('foundation-token-consumers')).toHaveTextContent(page.id);
         expect(within(token).getByTestId('foundation-token-coverage')).toHaveTextContent(/已实现|缺口/);
       }
+      expect(screen.getByRole('heading', { name: '明确缺口' })).toBeInTheDocument();
+      expect(screen.getAllByTestId('foundation-gap').map((gap) => gap.querySelector('code')?.textContent)).toEqual(foundationManifest.find((specimen) => specimen.routeId === page.id)?.tokens.filter((token) => token.coverage === 'gap').map((token) => token.id));
     }
   });
 
-  it('TC-1003: makes each unimplemented foundation area visible as an explicit gap', async () => {
-    window.location.hash = '#/showcase/foundations/colors';
+  it('TC-1003: reaches the spacing focus specimen by keyboard navigation', async () => {
+    window.location.hash = '#/showcase/foundations/spacing';
     render(<ShowcaseApp gateway={new FoundationGateway()} />);
+    const user = userEvent.setup();
 
-    expect(await screen.findByRole('heading', { name: '颜色与主题' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: '明确缺口' })).toBeInTheDocument();
-    expect(screen.getAllByTestId('foundation-gap').length).toBeGreaterThan(0);
+    expect(await screen.findByRole('heading', { name: '间距与布局' })).toBeInTheDocument();
+    const focusSpecimen = screen.getByRole('button', { name: '焦点样本' });
+    for (let tabCount = 0; tabCount < 64 && document.activeElement !== focusSpecimen; tabCount += 1) await user.tab();
+    expect(focusSpecimen).toHaveFocus();
   });
 });
