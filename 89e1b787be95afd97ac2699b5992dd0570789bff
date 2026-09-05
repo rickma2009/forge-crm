@@ -1,0 +1,30 @@
+interaction-pattern-lab/packages/web/src/showcase/ShowcaseApp.test.tsx
+  e528476cbc97de75 72-73
+interaction-pattern-lab/packages/web/src/showcase/registry/registry.test.ts
+  e528476cbc97de75 120-126
+interaction-pattern-lab/scripts/showcase-registry-validation.mjs
+  e528476cbc97de75 33
+interaction-pattern-lab/packages/web/src/showcase/OverviewPage.tsx
+  e528476cbc97de75 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "89e1b787be95afd97ac2699b5992dd0570789bff",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2364,
+      "total_deletions": 6706,
+      "accepted_lines": 2750,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/540c57ad6af0e56eb5c6ec01731999132e5285bd96b2bc56e4e9685ed29e1b7d"
+    }
+  }
+}
