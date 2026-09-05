@@ -1,6 +1,9 @@
-import type { RemoteSelectState, SelectOption } from '../components/schema-form/types';
+import type { RemoteSelectState, ResolvedRemoteSelectValue, SelectOption } from '../components/schema-form/types';
 
 type AdapterState = 'editable' | 'readonly' | 'disabled';
+
+export type RemoteSelectControlledValue = string | ResolvedRemoteSelectValue;
+export type FieldAdapterValue = number | RemoteSelectControlledValue | null | undefined;
 
 interface AdapterField {
   id: string;
@@ -13,15 +16,15 @@ interface AdapterField {
 
 export interface FieldAdapterProps {
   field: AdapterField;
-  value: unknown;
+  value: FieldAdapterValue;
   state: AdapterState;
   remoteState?: RemoteSelectState;
-  onChange: (value: unknown) => void;
+  onChange: (value: FieldAdapterValue) => void;
 }
 
 export function FieldAdapter({ field, value, state, remoteState, onChange }: FieldAdapterProps) {
   const shared = { 'aria-label': field.label, disabled: state === 'disabled', readOnly: state === 'readonly', title: state === 'disabled' ? field.disabledReason : undefined };
-  const emitIfEditable = (nextValue: unknown) => { if (state === 'editable') onChange(nextValue); };
+  const emitIfEditable = (nextValue: FieldAdapterValue) => { if (state === 'editable') onChange(nextValue); };
 
   switch (field.kind) {
     case 'text':
@@ -41,7 +44,8 @@ export function FieldAdapter({ field, value, state, remoteState, onChange }: Fie
 }
 
 function RemoteSelectAdapter({ field, value, state, remoteState, onChange }: Pick<FieldAdapterProps, 'field' | 'value' | 'state' | 'remoteState' | 'onChange'>) {
-  const currentId = asText(value);
+  const currentId = remoteSelectId(value);
+  if (currentId === null) return <p role="alert">{field.label}回显值格式错误。</p>;
   if (!remoteState) return <p role="alert">{field.label}回显状态缺失。</p>;
   if (!matchesCurrentRemoteValue(currentId, remoteState)) return <p role="alert">{field.label} {currentId} 回显状态与当前值不一致。</p>;
   if (remoteState.status === 'loading') return <p role="status">正在加载{field.label} {remoteState.id}…</p>;
@@ -64,6 +68,16 @@ function ReadonlyValue({ label, value }: { label: string; value: string }) {
 
 function matchesCurrentRemoteValue(currentId: string, remoteState: RemoteSelectState): boolean {
   return remoteState.status === 'resolved' ? remoteState.value.id === currentId : remoteState.id === currentId;
+}
+
+function remoteSelectId(value: FieldAdapterValue): string | null {
+  if (typeof value === 'string') return value;
+  if (isResolvedRemoteSelectValue(value)) return value.id;
+  return null;
+}
+
+function isResolvedRemoteSelectValue(value: FieldAdapterValue): value is ResolvedRemoteSelectValue {
+  return typeof value === 'object' && value !== null && 'id' in value && 'label' in value && typeof value.id === 'string' && typeof value.label === 'string';
 }
 
 function optionLabel(options: SelectOption[], value: string): string {

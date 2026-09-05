@@ -1,6 +1,7 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
+import { useState } from 'react';
 import { FieldAdapter } from './field-adapters';
 
 afterEach(cleanup);
@@ -65,6 +66,16 @@ describe('TASK-1004 controlled field adapters', () => {
     expect(onChange).toHaveBeenCalledWith({ id: 'C-002', label: '苏州精密科技有限公司' });
   });
 
+  it('keeps the selected remote option after a controlled parent writes back the exact normalized value', async () => {
+    const user = userEvent.setup();
+    render(<RemoteSelectHarness />);
+
+    await user.selectOptions(screen.getByRole('combobox', { name: '客户' }), 'C-002');
+
+    expect(screen.getByRole('combobox', { name: '客户' })).toHaveDisplayValue('苏州精密科技有限公司');
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+
   it.each([
     ['resolved', { status: 'resolved', value: { id: 'C-001', label: '广州精工设备有限公司' } }],
     ['loading', { status: 'loading', id: 'C-001' }],
@@ -86,3 +97,16 @@ describe('TASK-1004 controlled field adapters', () => {
     expect(screen.getByRole('status')).toHaveTextContent('正在加载客户 C-001…');
   });
 });
+
+function RemoteSelectHarness() {
+  const [value, setValue] = useState<string | { id: string; label: string }>('C-001');
+  const [remoteState, setRemoteState] = useState<{ status: 'resolved'; value: { id: string; label: string } }>({ status: 'resolved', value: { id: 'C-001', label: '广州精工设备有限公司' } });
+  const field = { id: 'customer', kind: 'remote-select', label: '客户', groupId: 'main', options: [{ value: 'C-001', label: '广州精工设备有限公司' }, { value: 'C-002', label: '苏州精密科技有限公司' }] };
+
+  return <FieldAdapter field={field} value={value} state="editable" remoteState={remoteState} onChange={(nextValue) => {
+    if (typeof nextValue === 'object' && nextValue !== null && 'id' in nextValue && 'label' in nextValue && typeof nextValue.id === 'string' && typeof nextValue.label === 'string') {
+      setValue(nextValue);
+      setRemoteState({ status: 'resolved', value: nextValue });
+    }
+  }} />;
+}
