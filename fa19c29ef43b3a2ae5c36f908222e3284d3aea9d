@@ -1,0 +1,26 @@
+interaction-pattern-lab/packages/web/src/ui-assets/components/editable-line-grid/EditableLineGrid.test.tsx
+  e528476cbc97de75 86-137,140-157
+interaction-pattern-lab/packages/web/src/ui-assets/components/editable-line-grid/EditableLineGrid.tsx
+  e528476cbc97de75 82-91,94,111-116,122-124,153-157,185,200,202,209,214
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "fa19c29ef43b3a2ae5c36f908222e3284d3aea9d",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2405,
+      "total_deletions": 6719,
+      "accepted_lines": 2841,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/f1545a90c2f38d1dd165006767e499651f022537f314530b163f8120c81cf4d1"
+    }
+  }
+}
