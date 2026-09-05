@@ -1,0 +1,176 @@
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import type { NavigationNode, NavigationResponse, SessionUser } from '@interaction-pattern-lab/contracts';
+import { ShowcaseApp } from './ShowcaseApp';
+import { GatewayError, type NavigationGateway } from './gateway';
+import { showcaseRegistry } from './registry/registry';
+import { effectiveCapabilities, resolvePageAccess } from './domain/access';
+import { projectVisibleNavigation } from './domain/navigation';
+import type { ShowcaseNavigationNode, ShowcaseRoleId } from './registry/types';
+
+class MemoryGateway implements NavigationGateway {
+  role: ShowcaseRoleId | null = null;
+  actionCalls: string[] = [];
+  failActions = false;
+  failPageChecks = 0;
+  extraManagementRoot = false;
+  constructor(initialRole: ShowcaseRoleId | null = null) { this.role = initialRole; }
+  async session(): Promise<SessionUser> { if (!this.role) throw new GatewayError(401, 'UNAUTHENTICATED', '请先登录'); return this.user(); }
+  async login(input: { account: string; password: string }): Promise<SessionUser> {
+    const account = input.account.trim().toLowerCase();
+    if ((account !== 'admin' && account !== 'viewer') || !input.password) throw new GatewayError(401, 'UNAUTHENTICATED', '账号或密码错误');
+    this.role = account;
+    return this.user();
+  }
+  async logout(): Promise<void> { this.role = null; }
+  async navigation(systemCode: string): Promise<NavigationResponse> {
+    if (!this.role) throw new GatewayError(401, 'UNAUTHENTICATED', '请先登录');
+    if (systemCode !== 'demo-portal') throw new GatewayError(403, 'FORBIDDEN', '无权访问');
+    const visible = projectVisibleNavigation(this.role, showcaseRegistry);
+    const items = visible.items.map((node) => this.node(node));
+    if (this.extraManagementRoot) items.push({ menuCode: 'audit-root', label: '审计管理', nodeType: 'GROUP', routePath: null, iconKey: 'audit', sortNo: 20, children: [] });
+    return { systemCode, items, permissionVersion: 'a'.repeat(64) };
+  }
+  async assertPage(systemCode: string, routePath: string): Promise<void> {
+    if (this.failPageChecks > 0) { this.failPageChecks -= 1; throw new GatewayError(503, 'SERVICE_UNAVAILABLE', '权限服务暂时不可用'); }
+    if (systemCode !== 'demo-portal' || !this.role) throw new GatewayError(403, 'FORBIDDEN', '无权访问');
+    const access = resolvePageAccess(routePath, this.role, showcaseRegistry);
+    if (access.kind === 'forbidden') throw new GatewayError(403, 'FORBIDDEN', '无权访问');
+    if (access.kind === 'not-found') throw new GatewayError(404, 'NOT_FOUND', '页面不存在');
+  }
+  async performResourceAction(_systemCode: string, actionCode: 'manage' | 'export'): Promise<unknown> {
+    this.actionCalls.push(actionCode);
+    if (this.failActions) throw new GatewayError(503, 'SERVICE_UNAVAILABLE', '服务暂时不可用');
+    return {};
+  }
+  private user(): SessionUser { return { account: this.role!, displayName: this.role === 'admin' ? '系统管理员' : '受限演示用户' }; }
+  private node(node: ShowcaseNavigationNode): NavigationNode {
+    const page = node.pageId ? showcaseRegistry.pages.find((candidate) => candidate.id === node.pageId) : undefined;
+    const capabilities = effectiveCapabilities(this.role, showcaseRegistry);
+    return { menuCode: node.id.replace(/^nav-/, ''), label: node.label, nodeType: page ? 'PAGE' : 'GROUP', routePath: page?.path ?? null, iconKey: node.iconKey, sortNo: 10, ...(page ? { allowedActions: [{ actionCode: 'view', label: '查看', actionType: 'VIEW', sortNo: 10 }, ...(page.operations ?? []).filter((operation) => capabilities.has(operation.capability)).map((operation, index) => ({ actionCode: operation.capability.split('.').at(-1)!, label: operation.label, actionType: 'CUSTOM', sortNo: 20 + index }))] } : {}), children: (node.children ?? []).map((child) => this.node(child)) };
+  }
+}
+
+async function login(role: ShowcaseRoleId, gateway = new MemoryGateway()) {
+  const user = userEvent.setup();
+  render(<ShowcaseApp gateway={gateway} />);
+  await screen.findByRole('heading', { name: '登录演示门户' });
+  await user.type(screen.getByRole('textbox', { name: '账号' }), role);
+  await user.type(screen.getByLabelText('密码'), 'demo-password');
+  await user.click(screen.getByRole('button', { name: '登录并进入' }));
+  return { user, gateway };
+}
+
+describe('database-backed enterprise navigation showcase', () => {
+  it('TC-1002: distinguishes interactive pages from description-only pages on the overview', async () => {
+    window.location.hash = '#/showcase/overview';
+    await login('admin');
+    expect(await screen.findByText('8')).toBeInTheDocument();
+    expect(screen.getByText('交互页面')).toBeInTheDocument();
+    expect(screen.getByText('19')).toBeInTheDocument();
+    expect(screen.getByText('说明页面')).toBeInTheDocument();
+  });
+
+  it('loads one authorized navigation tree after account/password login', async () => {
+    window.location.hash = '#/showcase/overview';
+    await login('admin');
+    expect(await screen.findByRole('heading', { name: '概览' })).toBeInTheDocument();
+    expect(screen.getByRole('navigation', { name: '演示门户菜单' })).toBeInTheDocument();
+  });
+
+  it('opens the personal workbench and filters its explainable task queue', async () => {
+    window.location.hash = '#/showcase/templates/workbench';
+    const { user } = await login('admin');
+    expect(await screen.findByRole('heading', { name: '我的工作台' })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: '只看待审批' }));
+    expect(screen.getByRole('button', { name: /销售订单审批/ })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /库存差异复核/ })).not.toBeInTheDocument();
+  });
+
+  it('keeps the queue visible while synchronizing the selected object detail', async () => {
+    window.location.hash = '#/showcase/templates/master-detail';
+    const { user } = await login('admin');
+    expect(await screen.findByRole('heading', { name: '主从任务工作区' })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: /库存差异复核/ }));
+    expect(screen.getByRole('heading', { name: '华南成品仓库存差异复核' })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: '标记完成' }));
+    expect(screen.getByRole('status')).toHaveTextContent('已完成：华南成品仓库存差异复核');
+  });
+
+  it('preserves every management root returned by the server', async () => {
+    window.location.hash = '#/showcase/overview';
+    const gateway = new MemoryGateway();
+    gateway.extraManagementRoot = true;
+    const { user } = await login('admin', gateway);
+    await user.click(await screen.findByRole('button', { name: '系统管理' }));
+    expect(await screen.findByRole('button', { name: '审计管理' })).toBeInTheDocument();
+  });
+
+  it('offers a retry when page authorization is temporarily unavailable', async () => {
+    window.location.hash = '#/showcase/overview';
+    const gateway = new MemoryGateway();
+    gateway.failPageChecks = 1;
+    const { user } = await login('admin', gateway);
+    await user.click(await screen.findByRole('button', { name: '重试页面权限' }));
+    expect(await screen.findByRole('heading', { name: '概览' })).toBeInTheDocument();
+  });
+
+  it('does not expose viewer-restricted management pages through route or search', async () => {
+    window.location.hash = '#/showcase/system/users';
+    const { user } = await login('viewer');
+    expect(await screen.findByRole('heading', { name: '无权访问' })).toBeInTheDocument();
+    expect(screen.queryByText('用户管理')).not.toBeInTheDocument();
+    await user.type(screen.getByRole('searchbox', { name: '搜索菜单' }), '用户管理');
+    expect(screen.getByText('没有可见菜单匹配当前搜索')).toBeInTheDocument();
+  });
+
+  it('uses allowedActions for buttons and still calls the server gateway for an admin action', async () => {
+    window.location.hash = '#/showcase/system/resources';
+    const admin = await login('admin');
+    const maintain = await screen.findByRole('button', { name: '维护资源' });
+    await admin.user.click(maintain);
+    expect(admin.gateway.actionCalls).toEqual(['manage']);
+    expect(await screen.findByRole('status')).toHaveTextContent('资源维护演示已完成');
+  });
+
+  it('disables resource actions omitted from the viewer authorization response', async () => {
+    window.location.hash = '#/showcase/system/resources';
+    await login('viewer');
+    expect(await screen.findByRole('button', { name: '维护资源' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '导出清单' })).toBeDisabled();
+  });
+
+  it('shows recoverable feedback when a protected operation fails closed', async () => {
+    window.location.hash = '#/showcase/system/resources';
+    const gateway = new MemoryGateway();
+    gateway.failActions = true;
+    const admin = await login('admin', gateway);
+    await admin.user.click(await screen.findByRole('button', { name: '维护资源' }));
+    expect(await screen.findByRole('status')).toHaveTextContent('资源维护演示失败，请重试或重置');
+  });
+
+  it('clears the authorized tree on logout', async () => {
+    window.location.hash = '#/showcase/overview';
+    const { user } = await login('admin');
+    await screen.findByRole('heading', { name: '概览' });
+    await user.click(screen.getByRole('button', { name: '退出登录' }));
+    expect(await screen.findByRole('heading', { name: '登录演示门户' })).toBeInTheDocument();
+    expect(screen.queryByRole('navigation', { name: '演示门户菜单' })).not.toBeInTheDocument();
+  });
+
+  it('restores a valid server session without an account-side shortcut', async () => {
+    window.location.hash = '#/showcase/overview';
+    render(<ShowcaseApp gateway={new MemoryGateway('viewer')} />);
+    expect(await screen.findByRole('heading', { name: '概览' })).toBeInTheDocument();
+    expect(screen.getByTitle('viewer')).toHaveTextContent('viewer');
+  });
+
+  it('clears the old tree and fails closed when switching to an unauthorized system', async () => {
+    window.location.hash = '#/showcase/overview';
+    const { user } = await login('admin');
+    await screen.findByRole('heading', { name: '概览' });
+    await user.selectOptions(screen.getByRole('combobox', { name: '切换系统' }), 'secondary-demo');
+    expect(await screen.findByRole('heading', { name: '无法加载授权导航' })).toBeInTheDocument();
+    expect(screen.queryByRole('navigation', { name: '演示门户菜单' })).not.toBeInTheDocument();
+  });
+});
