@@ -1,0 +1,24 @@
+interaction-pattern-lab/packages/web/src/ui-assets/foundation/FoundationSpecimen.test.tsx
+  e528476cbc97de75 14-47,90-92,94-95
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "de62a2bbca4ca37af66fe8d29edc675b4d69ead0",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2345,
+      "total_deletions": 6709,
+      "accepted_lines": 2779,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/9f24c2f272b989318b7e9fc3661891f4b3f868b16db74db11cff51ded010c041"
+    }
+  }
+}
