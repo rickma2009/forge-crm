@@ -1,0 +1,32 @@
+interaction-pattern-lab/packages/web/src/showcase/ShowcaseApp.tsx
+  e528476cbc97de75 19-20,197
+interaction-pattern-lab/packages/web/src/ui-assets/foundation/FoundationSpecimen.test.tsx
+  e528476cbc97de75 1-65
+interaction-pattern-lab/packages/web/src/ui-assets/foundation/enterprise-tokens.css
+  e528476cbc97de75 1-39
+interaction-pattern-lab/packages/web/src/ui-assets/foundation/foundation-manifest.ts
+  e528476cbc97de75 1-70
+interaction-pattern-lab/packages/web/src/ui-assets/foundation/FoundationSpecimen.tsx
+  e528476cbc97de75 1-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "5905bb2d2e7a8d3b0bcf0a2153728a4461038ef6",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2500,
+      "total_deletions": 6705,
+      "accepted_lines": 2935,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/c354dc832b961fa8d7823ff257b26cf26a5dc25eec097b5fc9ea69de8b94ccd3"
+    }
+  }
+}
