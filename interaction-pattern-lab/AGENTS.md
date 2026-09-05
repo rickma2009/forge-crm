@@ -4,11 +4,13 @@
 
 ## 项目状态
 
-- 当前阶段：`review-complete-awaiting-release-gate`。
+- 新切片 010“主从单据与企业组件资产化”的 Architecture Gate 已由 `REQSRC-034` 批准；当前为 `implementation-authorized-awaiting-task-1002`，须按 `tasks.md` 的既定顺序实施。`TASK-1001` 的工作区基线为 green，但不等于任何切片需求已实现；资产晋升、外部部署和 Release 仍被独立 Gate 阻止。
+- 当前阶段：切片 004 Release Gate 已由 `REQSRC-021` 批准，状态为 `released-in-validation-lab`；未执行外部部署或方法论晋升。原纯前端 `TASK-401`—`TASK-406` 及验证证据保留；既有切片 002 仍为 `review-complete-awaiting-release-gate`。
 - 重新定义证据：`REQSRC-007`。本目录是交互模式验证场，不是模板规范源或真实业务项目。
 - 既有 `REQSRC-002`—`REQSRC-006` 及实现证据作为历史切片证据保留，不改写、不冒充新边界的批准。
 - 新定位 Business Gate 已由 `REQSRC-009` 批准；切片 002 Specification/Architecture Gate 已由 `REQSRC-010/011` 批准；99/103 计数差异已由 `REQSRC-012` 纠正。
-- 当前交接对象：`.specify/specs/002-bulk-assignment-partial-success/review.md`。
+- `REQSRC-013` 新增多来源 UI 萃取、演示门户和模拟权限范围，`REQSRC-014` 已批准该增量 Business Gate，不覆盖旧批准。
+- `REQSRC-015/016` 只批准历史纯前端边界；切片 004 的四个 Gate、`TASK-501`—`TASK-509` 与实现证据已闭环。下一步是积累真实项目采用证据，并在新增页面模式前处理 `REL-RISK-501`；不得扩大为生产 IAM、外部部署或自动晋升方法论模式。切片 002 的 Release 评审入口仍保持原路径。
 
 ## 开始工作前
 
@@ -30,9 +32,13 @@
 
 ## 上下文路由
 
-- 项目总体规划：`docs/product/企业管理系统交互模式工作台总体规划.md`
-- 当前业务需求：`.specify/requirements/002-validation-field-baseline/requirement.md`
-- Business Gate 评审：`.specify/requirements/002-validation-field-baseline/business-gate-review.md`
+- 项目总体规划：`docs/product/多来源交互资产萃取与演示门户规划.md`
+- 多来源业务基线：`.specify/requirements/003-multi-source-ui-distillation-showcase/requirement.md`
+- 当前数据库导航业务基线：`.specify/requirements/004-database-backed-navigation-rbac/`
+- 当前已批准 Architecture：`.specify/specs/004-database-backed-navigation-rbac/architecture-gate-review.md`
+- 当前 Release Gate 评审：`.specify/specs/004-database-backed-navigation-rbac/release-gate-review.md`
+- 历史纯前端导航切片：`.specify/specs/003-authenticated-enterprise-navigation-shell/`
+- 已批准业务基线：`.specify/requirements/002-validation-field-baseline/`
 - 历史产品基线：`.specify/requirements/001-product-baseline/`
 - 场景台账：`docs/pattern-backlog.md`
 - 参考证据：`docs/reference-inventory.md`

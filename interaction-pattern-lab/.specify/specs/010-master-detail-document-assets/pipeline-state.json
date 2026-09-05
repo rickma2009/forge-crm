@@ -1,0 +1,23 @@
+{
+  "featureId": "010-master-detail-document-assets",
+  "status": "implementation-authorized-awaiting-task-1002",
+  "currentStage": "implementation",
+  "gates": {
+    "business": "approved-REQSRC-014-BUS-005-through-BUS-007-scope-confirmed-by-impact-review",
+    "specification": "approved-REQSRC-032",
+    "architecture": "approved-REQSRC-034",
+    "release": "not-started"
+  },
+  "technologyRoute": {
+    "profile": "typescript-enterprise-web",
+    "version": "0.2.0",
+    "status": "approved-for-implementation-REQSRC-034",
+    "assessment": "../../requirements/006-enterprise-ui-asset-system/technology-route-assessment.md"
+  },
+  "continuationDirection": {
+    "status": "active",
+    "evidence": "REQSRC-033",
+    "scope": "continue-after-each-approved-gate-without-reconfirming-recommended-implementation-details"
+  },
+  "updatedAt": "2026-09-05T12:48:13+08:00"
+}

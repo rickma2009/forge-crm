@@ -1,22 +1,41 @@
 {
   "project": "Interaction Pattern Lab / 企业交互模式验证场",
-  "status": "review-complete-awaiting-release-gate",
-  "currentStage": "release-gate",
+  "status": "slices-005-through-009-released-in-validation-lab-slice-010-implementation-authorized",
+  "currentStage": "slice-010-implementation-authorized",
   "gates": {
     "business": {
-      "status": "approved-corrected-to-103-by-REQSRC-012",
-      "evidence": { "sourceId": "REQSRC-009", "approvedBy": "Rick", "approvedAt": "2026-08-31T01:19:59+08:00", "conclusion": "approved" },
-      "supersedes": { "status": "reopened", "sourceId": "REQSRC-007" }
+      "status": "approved-for-requirement-005",
+      "evidence": { "sourceId": "REQSRC-023", "approvedBy": "Rick", "approvedAt": "2026-09-04", "conclusion": "approved", "review": "requirements/005-enterprise-workspace-configurable-customer-directory/business-gate-review.md" },
+      "historicalEvidence": { "sourceId": "REQSRC-018", "approvedBy": "Rick", "approvedAt": "2026-09-03T19:48:30+08:00", "conclusion": "approved", "scope": "requirement-004" },
+      "historicalApprovedBoundary": "requirements/002-validation-field-baseline",
+      "approvedBoundary": "requirements/003-multi-source-ui-distillation-showcase"
     },
-    "specification": { "status": "approved-for-slice-002-corrected-by-REQSRC-012", "evidence": { "sourceId": "REQSRC-010", "approvedBy": "Rick", "approvedAt": "2026-08-31T01:30:45+08:00", "conclusion": "approved" } },
-    "architecture": { "status": "approved-for-slice-002-corrected-by-REQSRC-012", "evidence": { "sourceId": "REQSRC-011", "approvedBy": "Rick", "approvedAt": "2026-08-31T01:44:02+08:00", "conclusion": "approved" }, "historicalBoundary": "REQSRC-004 applies only to slice 001" },
-    "release": { "status": "not-started", "evidence": null }
+    "specification": { "status": "approved-for-slices-005-through-009", "evidence": { "sourceId": "REQSRC-023", "approvedBy": "Rick", "conclusion": "approved-by-default-authorization" }, "historicalEvidence": { "sourceId": "REQSRC-019", "scope": "slice-004", "conclusion": "approved" } },
+    "architecture": { "status": "approved-for-slices-005-through-009", "evidence": { "sourceId": "REQSRC-023", "approvedBy": "Rick", "conclusion": "approved-by-default-authorization" }, "historicalEvidence": { "sourceId": "REQSRC-020", "scope": "slice-004", "conclusion": "approved" } },
+    "release": { "status": "approved-for-slices-005-through-009-released-in-validation-lab", "evidence": { "sourceId": "REQSRC-023", "approvedBy": "Rick", "conclusion": "approved-after-verification", "scope": "validation-lab-release-no-external-deployment" } }
   },
-  "technologyProfile": null,
+  "technologyProfile": {
+    "id": "typescript-enterprise-web",
+    "version": "0.2.0",
+    "status": "applied-to-slice-004-workspace",
+    "evidence": "REQSRC-020"
+  },
   "featureStates": {
     "001-pattern-catalog-preview": "historical-slice-preserved-business-gate-reopened",
-    "002-bulk-assignment-partial-success": "review-complete-awaiting-release-gate"
+    "002-bulk-assignment-partial-success": "review-complete-awaiting-release-gate",
+    "003-multi-source-ui-distillation-showcase": "business-gate-approved",
+    "003-authenticated-enterprise-navigation-shell": "frontend-only-implementation-preserved-gates-reopened",
+    "004-database-backed-navigation-rbac": "released-in-validation-lab-historical-baseline",
+    "005-enterprise-workspace-configurable-customer-directory": "decomposed-and-released-as-slices-005-through-008",
+    "005-unified-navigation-toolbar-tab-workspace": "released-in-validation-lab",
+    "006-database-backed-data-dictionary": "reqsrc-027-increment-released-in-validation-lab",
+    "007-role-scoped-list-views": "released-in-validation-lab",
+    "008-customer-directory-demo": "released-in-validation-lab",
+    "009-project-wide-enterprise-typography": "released-in-validation-lab",
+    "010-master-detail-document-assets": "architecture-approved-REQSRC-034-implementation-authorized"
   },
-  "reviewCandidate": ".specify/specs/002-bulk-assignment-partial-success/review.md",
-  "updatedAt": "2026-08-31T02:53:00+08:00"
+  "releaseEvidence": ".specify/specs/009-project-wide-enterprise-typography/implementation-evidence.md",
+  "nextAction": "Execute slice 010 TASK-1002 onward in approved order; keep asset promotion, external deployment and Release blocked pending independent Gates.",
+  "parallelReviewCandidate": ".specify/specs/002-bulk-assignment-partial-success/review.md",
+  "updatedAt": "2026-09-05T12:48:13+08:00"
 }
