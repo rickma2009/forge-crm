@@ -1,0 +1,28 @@
+interaction-pattern-lab/packages/web/src/ui-assets/primitives/field-adapters.tsx
+  e528476cbc97de75 34-35,37,43-44,46,51,53,61-70
+interaction-pattern-lab/packages/web/src/ui-assets/components/schema-form/rules.test.ts
+  e528476cbc97de75 2-3,26-35
+interaction-pattern-lab/packages/web/src/ui-assets/primitives/field-adapters.test.tsx
+  e528476cbc97de75 3,24,27,29,31-35,68-80
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "711056994d37cb0e684901518a4714c9df40e846",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2359,
+      "total_deletions": 6713,
+      "accepted_lines": 2795,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/011899225a78765722fc71d7760fab1941c4fa47b54fd76e54f160b6c0d8d1a8"
+    }
+  }
+}
