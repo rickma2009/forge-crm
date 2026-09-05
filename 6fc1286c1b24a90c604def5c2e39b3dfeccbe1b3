@@ -1,0 +1,26 @@
+interaction-pattern-lab/.specify/project-state.json
+  e528476cbc97de75 17-32,56
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/README.md
+  e528476cbc97de75 8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "6fc1286c1b24a90c604def5c2e39b3dfeccbe1b3",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 911,
+      "total_deletions": 6707,
+      "accepted_lines": 1214,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/a602969882569275477e3b07aa601c850e1cf8b603389ef10a1186dd9180082f"
+    }
+  }
+}
