@@ -5,7 +5,7 @@
 > Specification Gate：approved（`REQSRC-032`）
 > Architecture Gate：approved（`REQSRC-034`）
 
-本切片把主从单据、SchemaForm、可编辑行表和组件状态矩阵定义为可观察、可测试、可追溯的候选资产。实现、资产晋升、独立发布和 Release 均不在当前状态允许范围。
+本切片把主从单据、SchemaForm、可编辑行表和组件状态矩阵定义为可观察、可测试、可追溯的候选资产。Architecture Gate 已允许按 `tasks.md` 实施；资产晋升、外部部署和 Release 仍不在当前状态允许范围。
 
 ## 文件职责
 

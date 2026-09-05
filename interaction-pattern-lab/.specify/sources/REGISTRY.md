@@ -14,5 +14,6 @@
 | `REQSRC-010` | 切片 002 Specification Gate 批准 | 用户批准消息 | 2026-08-31 | `REQSRC-010-bulk-assignment-specification-gate-approval-20260831/source.md` | approved |
 | `REQSRC-011` | 切片 002 Architecture Gate 批准 | 用户批准消息 | 2026-08-31 | `REQSRC-011-bulk-assignment-architecture-gate-approval-20260831/source.md` | approved |
 | `REQSRC-012` | 企业交互分类目录数量纠正批准 | 用户批准消息 | 2026-08-31 | `REQSRC-012-enterprise-interaction-catalog-count-correction-20260831/source.md` | approved |
+| `REQSRC-034` | 切片 010 主从单据与企业组件资产化 Architecture Gate 批准 | 用户批准消息 | 2026-09-05 | `REQSRC-034-master-detail-document-assets-architecture-gate-approval-20260905/source.md` | approved |
 
 所有来源副本按不可改写策略管理。后续用户提供的系统源码、截图、Open Design 案例链接或补充场景必须分配新的来源 ID，不覆盖现有副本。

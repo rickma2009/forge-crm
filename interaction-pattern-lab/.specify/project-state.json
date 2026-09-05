@@ -14,6 +14,22 @@
     "architecture": { "status": "approved-for-slices-005-through-009", "evidence": { "sourceId": "REQSRC-023", "approvedBy": "Rick", "conclusion": "approved-by-default-authorization" }, "historicalEvidence": { "sourceId": "REQSRC-020", "scope": "slice-004", "conclusion": "approved" } },
     "release": { "status": "approved-for-slices-005-through-009-released-in-validation-lab", "evidence": { "sourceId": "REQSRC-023", "approvedBy": "Rick", "conclusion": "approved-after-verification", "scope": "validation-lab-release-no-external-deployment" } }
   },
+  "sliceGates": {
+    "010-master-detail-document-assets": {
+      "specification": {
+        "status": "approved",
+        "evidence": { "sourceId": "REQSRC-032", "approvedBy": "Rick", "approvedAt": "2026-09-05", "conclusion": "approved-observable-behavior-and-test-design" }
+      },
+      "architecture": {
+        "status": "approved",
+        "evidence": { "sourceId": "REQSRC-034", "approvedBy": "Rick", "approvedAt": "2026-09-05", "conclusion": "approved-plan-and-ADR-005-for-implementation" }
+      },
+      "release": {
+        "status": "not-started",
+        "evidence": null
+      }
+    }
+  },
   "technologyProfile": {
     "id": "typescript-enterprise-web",
     "version": "0.2.0",
@@ -37,5 +53,5 @@
   "releaseEvidence": ".specify/specs/009-project-wide-enterprise-typography/implementation-evidence.md",
   "nextAction": "Execute slice 010 TASK-1002 onward in approved order; keep asset promotion, external deployment and Release blocked pending independent Gates.",
   "parallelReviewCandidate": ".specify/specs/002-bulk-assignment-partial-success/review.md",
-  "updatedAt": "2026-09-05T12:48:13+08:00"
+  "updatedAt": "2026-09-05T13:03:20+08:00"
 }
