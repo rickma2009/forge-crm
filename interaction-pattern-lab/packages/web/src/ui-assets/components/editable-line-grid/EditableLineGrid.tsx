@@ -79,9 +79,19 @@ export function EditableLineGrid<TLine extends LineRecord>({
 
   const rowLabel = (row: TLine) => String(columns[0]?.getValue(row) ?? row.rowId);
   const editControlId = (rowId: string, columnId: string) => `editable-line-grid-edit-${rowId}-${columnId}`;
+  const errorTargetId = (rowId: string, columnId: string) => `editable-line-grid-error-target-${rowId}-${columnId}`;
+  const actionControlId = (rowId: string) => `editable-line-grid-actions-${rowId}`;
+
+  const canEdit = (row: TLine, column: LineColumn<TLine>) => column.editable && mode !== 'view' && row.persistedState !== 'marked-for-deletion';
+  const unavailableReason = (row: TLine, column: LineColumn<TLine>) => {
+    if (row.persistedState === 'marked-for-deletion') return '该行已标记删除。';
+    if (mode === 'view') return '当前为查看模式。';
+    if (!column.editable) return '字段未配置为可编辑。';
+    return '当前不可编辑。';
+  };
 
   const beginEdit = (row: TLine, column: LineColumn<TLine>) => {
-    if (!column.editable || mode === 'view' || row.persistedState === 'marked-for-deletion') return;
+    if (!canEdit(row, column)) return;
     const value = String(column.getValue(row) ?? '');
     setEditing({ rowId: row.rowId, columnId: column.id, value });
     setFocusTarget({ id: editControlId(row.rowId, column.id) });
@@ -98,19 +108,20 @@ export function EditableLineGrid<TLine extends LineRecord>({
   };
 
   const moveToNextCell = (rowId: string, columnId: string) => {
-    const cells = rows
-      .filter((row) => row.persistedState !== 'marked-for-deletion')
-      .flatMap((row) => editableColumns.map((column) => ({ row, column })));
-    const index = cells.findIndex((cell) => cell.row.rowId === rowId && cell.column.id === columnId);
-    const next = cells[index + 1];
-    if (!next) return;
-    beginEdit(next.row, next.column);
+    const row = rows.find((candidate) => candidate.rowId === rowId);
+    if (!row) return;
+    const index = editableColumns.findIndex((column) => column.id === columnId);
+    const next = editableColumns[index + 1];
+    if (next) beginEdit(row, next);
+    else setFocusTarget({ id: actionControlId(rowId) });
   };
 
   const activateError = (error: LineError) => {
     const row = rows.find((candidate) => candidate.rowId === error.rowId);
     const column = columns.find((candidate) => candidate.id === error.fieldId);
-    if (row && column) beginEdit(row, column);
+    if (!row || !column) return;
+    if (canEdit(row, column)) beginEdit(row, column);
+    else setFocusTarget({ id: errorTargetId(row.rowId, column.id) });
   };
 
   const addCandidate = () => {
@@ -139,7 +150,11 @@ export function EditableLineGrid<TLine extends LineRecord>({
       <ul>{errors.map((error) => {
         const row = rows.find((candidate) => candidate.rowId === error.rowId);
         const label = row ? rowLabel(row) : error.rowId;
-        return <li key={error.id}><button className="editable-line-grid-focusable" type="button" aria-controls={row ? editControlId(row.rowId, error.fieldId) : undefined} onClick={() => activateError(error)}>{label}：{error.message}</button></li>;
+        const column = columns.find((candidate) => candidate.id === error.fieldId);
+        const targetId = row && column
+          ? canEdit(row, column) ? editControlId(row.rowId, column.id) : errorTargetId(row.rowId, column.id)
+          : undefined;
+        return <li key={error.id}><button className="editable-line-grid-focusable" type="button" aria-controls={targetId} onClick={() => activateError(error)}>{label}：{error.message}</button></li>;
       })}</ul>
     </section>}
 
@@ -167,6 +182,7 @@ export function EditableLineGrid<TLine extends LineRecord>({
             const value = column.getValue(row);
             const display = column.format ? column.format(value, row) : String(value ?? '');
             const error = errors.find((entry) => entry.rowId === row.rowId && entry.fieldId === column.id);
+            const editable = canEdit(row, column);
             return <td key={column.id}>{isEditing
               ? <input className="editable-line-grid-focusable" id={editControlId(row.rowId, column.id)} aria-label={`${label} ${column.label}`} type={column.inputType ?? 'text'} value={editing.value} aria-invalid={Boolean(error)} onChange={(event) => setEditing({ ...editing, value: event.target.value })} onBlur={() => commitEdit(row, column, editing.value)} onKeyDown={(event) => {
                 if (event.key === 'Escape') {
@@ -181,21 +197,21 @@ export function EditableLineGrid<TLine extends LineRecord>({
                   if (event.key === 'Tab') moveToNextCell(row.rowId, column.id);
                 }
               }} />
-              : column.editable && mode !== 'view' && !marked
+              : editable
                 ? <button className="editable-line-grid-focusable" id={editControlId(row.rowId, column.id)} type="button" aria-label={`编辑${label}的${column.label}`} onClick={() => beginEdit(row, column)}>{display}</button>
-                : <span>{display}</span>}
+                : <span id={error ? errorTargetId(row.rowId, column.id) : undefined} tabIndex={error ? -1 : undefined} role={error ? 'note' : undefined} aria-label={error ? `${label} ${column.label} 当前不可编辑：${unavailableReason(row, column)}` : undefined}>{display}{error && <>（当前不可编辑：{unavailableReason(row, column)}）</>}</span>}
               {error && <p role="alert">{error.message}</p>}
             </td>;
           })}
           <td>{stateLabel(row.persistedState)}</td>
           <td aria-label={`${label} 操作`} data-fixed-actions="true" style={{ position: 'sticky', right: 0, background: 'var(--surface, white)' }}>
             {row.persistedState === 'marked-for-deletion'
-              ? <button className="editable-line-grid-focusable" type="button" onClick={() => {
+              ? <button className="editable-line-grid-focusable" id={actionControlId(row.rowId)} type="button" onClick={() => {
                 const token = undoTokens[row.rowId];
                 if (token) onMutation({ type: 'undo-delete', payload: token });
               }}>撤销删除{label}</button>
               : <>
-                <button className="editable-line-grid-focusable" type="button" disabled={mode === 'view'} onClick={() => onMutation({ type: 'copy', payload: { rowId: row.rowId } })}>复制{label}</button>
+                <button className="editable-line-grid-focusable" id={actionControlId(row.rowId)} type="button" disabled={mode === 'view'} onClick={() => onMutation({ type: 'copy', payload: { rowId: row.rowId } })}>复制{label}</button>
                 <button className="editable-line-grid-focusable" type="button" disabled={mode === 'view'} onClick={() => onMutation({ type: row.persistedState === 'draft' ? 'remove-draft' : 'mark-delete', payload: { rowId: row.rowId } })}>删除{label}</button>
               </>}
           </td>

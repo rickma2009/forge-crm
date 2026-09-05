@@ -83,7 +83,78 @@ describe('TASK-1007 EditableLineGrid', () => {
     await user.keyboard('{Enter}');
     expect(screen.getByRole('spinbutton', { name: '已更新行 数量' })).toHaveFocus();
   });
+
+  it('focuses a stable explanation when a non-editable field error is activated from the keyboard summary', async () => {
+    const user = userEvent.setup();
+    render(<ErrorGrid errors={[{ id: 'amount-error', rowId: 'persisted-a', fieldId: 'amountMinorUnits', message: '金额由价格策略计算。' }]} />);
+
+    const summary = screen.getByRole('button', { name: '已保存行：金额由价格策略计算。' });
+    act(() => summary.focus());
+    await user.keyboard('{Enter}');
+
+    const target = screen.getByRole('note', { name: '已保存行 金额 当前不可编辑：字段未配置为可编辑。' });
+    expect(target).toHaveFocus();
+    expect(summary).toHaveAttribute('aria-controls', target.id);
+  });
+
+  it('focuses a stable explanation for a view-mode error instead of an unavailable edit control', async () => {
+    const user = userEvent.setup();
+    render(<ErrorGrid mode="view" errors={[{ id: 'view-error', rowId: 'persisted-a', fieldId: 'description', message: '查看模式仍需说明错误位置。' }]} />);
+
+    const summary = screen.getByRole('button', { name: '已保存行：查看模式仍需说明错误位置。' });
+    act(() => summary.focus());
+    await user.keyboard('{Enter}');
+
+    expect(screen.getByRole('note', { name: '已保存行 描述 当前不可编辑：当前为查看模式。' })).toHaveFocus();
+  });
+
+  it('focuses a stable explanation for an error on a marked-for-deletion row', async () => {
+    const user = userEvent.setup();
+    const deleted = { ...initialRows[0], rowId: 'deleted-a', persistedState: 'marked-for-deletion' as const, description: '待删除行' };
+    render(<ErrorGrid rows={[deleted]} errors={[{ id: 'deleted-error', rowId: 'deleted-a', fieldId: 'description', message: '删除前仍需核对。' }]} />);
+
+    const summary = screen.getByRole('button', { name: '待删除行：删除前仍需核对。' });
+    act(() => summary.focus());
+    await user.keyboard('{Enter}');
+
+    expect(screen.getByRole('note', { name: '待删除行 描述 当前不可编辑：该行已标记删除。' })).toHaveFocus();
+  });
+
+  it('moves Tab from the final editable cell to the row action instead of swallowing focus', async () => {
+    const user = userEvent.setup();
+    render(<ControlledGrid />);
+
+    const row = screen.getByRole('row', { name: '已保存行 已保存' });
+    act(() => row.focus());
+    await user.keyboard('{Enter}');
+    await user.clear(screen.getByRole('textbox', { name: '已保存行 描述' }));
+    await user.type(screen.getByRole('textbox', { name: '已保存行 描述' }), '末单元格行');
+    await user.keyboard('{Tab}');
+    expect(screen.getByRole('spinbutton', { name: '末单元格行 数量' })).toHaveFocus();
+
+    await user.keyboard('{Tab}');
+    expect(screen.getByRole('button', { name: '复制末单元格行' })).toHaveFocus();
+  });
 });
+
+function ErrorGrid({ rows = initialRows, errors, mode = 'edit' }: {
+  rows?: ExampleLine[];
+  errors: Array<{ id: string; rowId: string; fieldId: string; message: string }>;
+  mode?: 'create' | 'view' | 'edit';
+}) {
+  return <EditableLineGrid
+    ariaLabel="错误行表"
+    rows={rows}
+    columns={columns}
+    selection={new Set()}
+    dirty={false}
+    mode={mode}
+    emptyLine={{ description: '', quantity: 0, amountMinorUnits: 0 }}
+    errors={errors}
+    summary={[]}
+    onMutation={() => undefined}
+  />;
+}
 
 function ControlledGrid() {
   const [state, setState] = useState<EditableLineState<ExampleLine>>(() => createEditableLineState(initialRows, new Set(['draft-a'])));
