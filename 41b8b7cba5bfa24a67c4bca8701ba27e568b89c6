@@ -1,0 +1,28 @@
+interaction-pattern-lab/packages/web/src/ui-assets/primitives/field-adapters.tsx
+  e528476cbc97de75 25,29-30,41-42,44,50,59,61,69-70
+interaction-pattern-lab/packages/web/src/ui-assets/components/schema-form/SchemaForm.tsx
+  e528476cbc97de75 15,25-34,39-46,55,66-75,98,113,116-118,123,127,129-130,136-142,146,152,158-163,186-188
+interaction-pattern-lab/packages/web/src/ui-assets/components/schema-form/SchemaForm.test.tsx
+  e528476cbc97de75 6,45,82-98,103,112-113,121,126,129-132,134-136,140-165,167-176
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "41b8b7cba5bfa24a67c4bca8701ba27e568b89c6",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2433,
+      "total_deletions": 6742,
+      "accepted_lines": 2868,
+      "overriden_lines": 1,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/4c8b6dc205dfe19057b097e5f7f3eff99aed6ba79c31562d1546d01fd70c41ca"
+    }
+  }
+}
