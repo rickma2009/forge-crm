@@ -2,13 +2,13 @@
 
 > 状态：`draft-ready-for-target-project-evaluation`  
 > 当前证据：`REQSRC-035` 仅批准在 `interaction-pattern-lab` 内发布  
-> 本文件不构成 MCRM Specification/Architecture/Release Gate，不构成资产晋升或外部部署批准。
+> 本文件不构成 MCRM Specification/Architecture/Release Gate，不构成资产晋升或外部部署批准。MCRM 已由 `REQSRC-015` 暂停，恢复前本交接包仅供留档。
 
 ## 1. 交接结论
 
 切片 010 已具备进入独立真实项目“采用评估”的条件，但尚不具备 `project-adopted` 证据。首选评估对象是 MCRM 后续“商机 + 产品明细”纵向切片，而不是销售订单：MCRM 当前业务基线包含商机产品明细，同时明确排除订单、报价和合同。
 
-在 MCRM 的详细需求和对应 Gate 完成前，只允许阅读、比较和形成项目级采用建议；不得复制实现、修改 MCRM 代码或把候选资产状态从 `idea` 晋升。
+在 MCRM 明确恢复、详细需求和对应 Gate 完成前，只允许保留本评估结论；不得复制实现、修改 MCRM 代码或把候选资产状态从 `idea` 晋升。
 
 ## 2. 可以评估复用的内容
 
@@ -68,8 +68,9 @@ MCRM 当前 003、004 仍处在 Specification Gate 重新确认状态，不应�
 
 ## 7. 当前允许与禁止
 
-当前允许：在 MCRM 或另一个独立项目中创建需求来源、影响评估和 Specification Gate 草案。  
-当前禁止：修改 MCRM 实现、宣称 MCRM 已采用、晋升 `EPM-PAGE-013`、发布独立包、外部部署或宣称业务验证完成。
+当前允许：在另一个独立项目中按其自身需求和 Gate 创建采用评估；MCRM 方向仅保留本交接包。
+
+当前禁止：为 MCRM 新建开发切片或修改实现、宣称 MCRM 已采用、晋升 `EPM-PAGE-013`、发布独立包、外部部署或宣称业务验证完成。
 
 ## 8. 证据定位
 
