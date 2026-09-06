@@ -5,7 +5,7 @@
 > Specification Gate：approved（`REQSRC-032`）
 > Architecture Gate：approved（`REQSRC-034`）
 
-本切片已完成主从单据、SchemaForm、可编辑行表和组件状态矩阵的实现、自动验证与响应式浏览器 QA，并已准备 Release Gate 评审包。`TC-1013` 全键盘浏览器主路径仍待人工走查或 Gate 显式风险接受；候选资产仍仅在验证场内，资产晋升、外部部署和 Release 均未获得批准。
+本切片已完成主从单据、SchemaForm、可编辑行表和组件状态矩阵的实现、自动验证、响应式浏览器 QA 与全键盘浏览器走查，并已准备 Release Gate 评审包。候选资产仍仅在验证场内，资产晋升、外部部署和 Release 均未获得批准。
 
 ## 文件职责
 

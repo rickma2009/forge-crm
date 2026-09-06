@@ -7,8 +7,8 @@
 | `BUS-006` | `REQ-1006`、`REQ-1007`、`REQ-1008` | `US-1002` | `AC-1004`、`AC-1006` | `TC-1004`、`TC-1005`、`TC-EDGE-1001` | `TASK-1004`、`TASK-1005` | implemented-verified |
 | `BUS-006` | `REQ-1009`、`REQ-1010`、`REQ-1011`、`REQ-1012`、`REQ-1013` | `US-1002` | `AC-1005`、`AC-1006`、`AC-1007` | `TC-1006`、`TC-1007`、`TC-1008`、`TC-1009`、`TC-1010`、`TC-EDGE-1002`、`TC-EDGE-1003`、`TC-EDGE-1004` | `TASK-1006`、`TASK-1007` | implemented-verified |
 | `BUS-006` | `REQ-1014`、`REQ-1015`、`REQ-1016`、`REQ-1017` | `US-1002` | `AC-1007`、`AC-1008` | `TC-1009`、`TC-1010`、`TC-1011`、`TC-1012` | `TASK-1008` | implemented-verified |
-| `BUS-005`、`BUS-006` | `REQ-1018`、`REQ-1019`、`REQ-1020`、`NFR-1003` | `US-1001`、`US-1002`、`US-1003` | `AC-1009`、`AC-1010` | `TC-1013`、`TC-1014`、`TC-1016`、`TC-EDGE-1005` | `TASK-1009`、`TASK-1010` | implemented-TC-1013-partial |
-| `BUS-006`、`BUS-007` | `NFR-1001`、`NFR-1002`、`NFR-1005` | `US-1001`、`US-1002` | `AC-1011`、`AC-1012` | `TC-1013`、`TC-1015`、`TC-1017` | `TASK-1001`、`TASK-1012` | verified-with-TC-1013-partial-release-awaiting-user-approval |
+| `BUS-005`、`BUS-006` | `REQ-1018`、`REQ-1019`、`REQ-1020`、`NFR-1003` | `US-1001`、`US-1002`、`US-1003` | `AC-1009`、`AC-1010` | `TC-1013`、`TC-1014`、`TC-1016`、`TC-EDGE-1005` | `TASK-1009`、`TASK-1010` | implemented-verified |
+| `BUS-006`、`BUS-007` | `NFR-1001`、`NFR-1002`、`NFR-1005` | `US-1001`、`US-1002` | `AC-1011`、`AC-1012` | `TC-1013`、`TC-1015`、`TC-1017` | `TASK-1001`、`TASK-1012` | verified-release-awaiting-user-approval |
 
 ## 完整性
 

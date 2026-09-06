@@ -1,7 +1,7 @@
 # 实施与验证证据：010 主从单据与企业组件资产化
 
 > 证据日期：2026-09-06（Asia/Shanghai）
-> 结论：实现、自动验证与响应式浏览器 QA 已完成；`TC-1013` 全键盘浏览器走查为 `PARTIAL`，Release Gate 仍为 `awaiting-user-approval`。
+> 结论：实现、自动验证、响应式浏览器 QA 与 `TC-1013` 全键盘浏览器走查均已完成；Release Gate 仍为 `awaiting-user-approval`。
 > 边界：本文件不批准资产晋升、外部部署或 Release。
 
 ## 1. 实现结果
@@ -25,7 +25,7 @@
 
 ## 3. 真实浏览器 QA
 
-运行时：Codex In-app Browser，`http://localhost:5174`，通过 `?preview=sales-order` / `?preview=workbench` 使用纯内存 Preview Gateway。检查了最新本地代码的 DOM、截图、焦点、控制台和页面资源。
+运行时：Codex In-app Browser 与已连接的 Chrome，`http://localhost:5174`，通过 `?preview=sales-order` / `?preview=workbench` 使用纯内存 Preview Gateway。检查了最新本地代码的 DOM、截图、焦点、控制台和页面资源。
 
 ### 3.1 销售订单
 
@@ -49,12 +49,12 @@
 | 1440px | 销售订单页面宽 1440、页面 scrollWidth 1440；主区、表格和固定动作完整 |
 | 1024px | 页面 scrollWidth 与 viewport 同为 1024；销售订单表格 776px，保存/离开动作可见 |
 | 390px | 菜单降级为 64px 图标栏；页面本身无横向溢出；销售订单长表通过内容区 92px 可恢复横向滚动展示全部列与操作，BOM 表格直接收敛至 298px |
-| 键盘 | 组件测试覆盖 Tab/Enter/Escape、末单元格到行操作、错误摘要到字段；真实浏览器确认错误摘要激活后焦点抵达客户字段，并用键盘输入修正值 |
+| 键盘 | Chrome 从 `BODY` 初始焦点开始，经 33 次 Tab 到客户字段；仅用 Tab、Control+A、Backspace、文本输入和 Enter 完成有效保存。随后清空客户、经 57 次 Tab 到“保存模拟单据”、Enter 触发 1 项错误；经 44 次 Tab 到“客户不能为空。”摘要项，Enter 后焦点回到客户输入框；输入修复值、经 57 次 Tab 再次保存成功，摘要消失。组件测试另覆盖 Escape 与末单元格到行操作 |
 | 控制台 | 销售订单与 BOM 检查期间无 `warn` / `error` |
 | 页面资源 | Browser page-assets 观察到 54 个资源，全部来自 `http://localhost:5174`；未观察到外部或生产 origin |
 | 存储/网络边界 | `validate:isolation` 检查 36 个源文件：网络与 CSRF Cookie 只允许在批准的 Gateway seam；销售订单/BOM 使用 Preview Gateway 与内存 Adapter，不调用真实 API/数据库/浏览器存储；刷新后恢复预置 4 行 |
 
-浏览器驱动当前无法用全局 Tab 指令迁移焦点，因此 `TC-1013` 使用“组件级完整键盘自动测试 + 真实浏览器错误焦点与键盘输入”组合证据；未虚构全局 Tab 遍历记录。
+Codex In-app Browser 的全局 Tab 指令不能迁移焦点，因此该运行时未用于证明 `TC-1013`。切换到已连接 Chrome 后，全局 Tab 焦点迁移与完整错误修复路径均可观察并完成；没有用程序化点击、填值或直接选取控件替代键盘路径。
 
 ## 4. 测试用例证据矩阵
 
@@ -72,7 +72,7 @@
 | `TC-1010` | PASS | AsyncOutcome + 销售订单部分成功守恒测试和浏览器反馈 |
 | `TC-1011` | PASS | document reducer 创建/查看/编辑状态测试 |
 | `TC-1012` | PASS | 可取消离开测试 + 浏览器继续编辑保留输入 |
-| `TC-1013` | PARTIAL（待人工全键盘走查） | 完整键盘组件测试 + 真实浏览器错误聚焦/键盘修正；尚未完成仅用键盘的浏览器端到端主路径 |
+| `TC-1013` | PASS | Chrome 全键盘有效保存、必填错误触发、摘要定位、字段修复与再次保存；组件测试补充 Escape 和网格末端路径 |
 | `TC-1014` | PASS | BOM 4 tests + boundary validator + 浏览器层级/候选/预算 |
 | `TC-1015` | PASS | 1440/1024/390 DOM 尺寸检查与 5 张截图 |
 | `TC-1016` | PASS | isolation validator + localhost-only page-assets + 刷新复位 |

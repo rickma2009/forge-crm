@@ -1,6 +1,6 @@
 # 测试用例：主从单据与企业组件资产化
 
-> 状态：implemented-and-executed-with-TC-1013-partial；Specification Gate 仍由 `REQSRC-032` 批准，执行证据见 `implementation-evidence.md`，Release Gate 等待人工批准。
+> 状态：implemented-and-executed；Specification Gate 仍由 `REQSRC-032` 批准，执行证据见 `implementation-evidence.md`，Release Gate 等待人工批准。
 
 | ID | 类型 | 关联项 | Given / When | Then | 优先级 |
 |---|---|---|---|---|---|
@@ -32,8 +32,7 @@
 
 ## 执行证据
 
-- `TC-1001`—`TC-1012`、`TC-1014`—`TC-1017`：PASS；逐项证据、命令、浏览器观察与限制见 [`implementation-evidence.md`](implementation-evidence.md)。
-- `TC-1013`：PARTIAL；组件级键盘测试和真实浏览器局部键盘证据已通过，仅用键盘完成浏览器主路径仍待人工走查。
+- `TC-1001`—`TC-1017`：PASS；逐项证据、命令、浏览器观察与限制见 [`implementation-evidence.md`](implementation-evidence.md)。
 - `TC-EDGE-1001`—`TC-EDGE-1005`：PASS；分别由字段安全失败、撤销 revision、不可编辑错误定位、整数金额与 BOM 行预算测试覆盖。
-- `TC-1013` 的组合证据不能替代其原定义的全键盘浏览器主路径，Release Gate 必须看到该缺口。
+- `TC-1013` 已在 Chrome 中从页面初始焦点开始完成全键盘主路径和错误修复；组件测试补充 Escape 与网格末端行为。
 - 以上执行结果不等于 Release、外部部署或资产晋升批准。

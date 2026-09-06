@@ -51,10 +51,10 @@
     "007-role-scoped-list-views": "released-in-validation-lab",
     "008-customer-directory-demo": "released-in-validation-lab",
     "009-project-wide-enterprise-typography": "released-in-validation-lab",
-    "010-master-detail-document-assets": "verified-with-TC-1013-partial-release-review-awaiting-user-approval"
+    "010-master-detail-document-assets": "verified-release-review-awaiting-user-approval"
   },
   "releaseEvidence": ".specify/specs/009-project-wide-enterprise-typography/implementation-evidence.md",
-  "nextAction": "Complete manual keyboard-only browser QA for TC-1013 or obtain explicit Release Gate risk acceptance; keep asset promotion, external deployment and Release blocked.",
+  "nextAction": "Obtain an independent Release Gate decision for slice 010; keep asset promotion, external deployment and Release blocked until explicitly approved.",
   "parallelReviewCandidate": ".specify/specs/002-bulk-assignment-partial-success/review.md",
-  "updatedAt": "2026-09-06T14:10:00+08:00"
+  "updatedAt": "2026-09-06T14:45:00+08:00"
 }
