@@ -1,6 +1,6 @@
 # 主从单据候选模板
 
-状态：`implementation-verified`（仅 interaction-pattern-lab 的销售订单与 BOM 确定性场景）；不是正式模式、真实项目采用、业务验收或 Release。
+状态：`idea`；`VAL-010` 仅登记 interaction-pattern-lab 的销售订单与 BOM 确定性场景为 `in-lab-candidate` 证据，不提升方法论资产成熟度，也不是正式模式、真实项目采用、业务验收或 Release。
 
 ## 问题与不变量
 

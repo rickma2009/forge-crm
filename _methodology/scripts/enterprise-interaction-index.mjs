@@ -6,10 +6,17 @@ export const indexRelativePath = '_methodology/patterns/index.json';
 
 const maturityOverrides = new Map([
   ['EPM-PAGE-001', 'interaction-verified'],
-  ['EPM-PAGE-002', 'interaction-verified'],
-  ['EPM-PAGE-013', 'implementation-verified'],
   ['EPM-SCENE-001', 'implementation-verified'],
 ]);
+
+const masterDetailArtifacts = [
+  '_methodology/templates/ui/master-detail-document/README.md',
+  '_methodology/templates/ui/master-detail-document/schema-form.schema.example.json',
+  '_methodology/templates/ui/master-detail-document/editable-line-grid.schema.example.json',
+  '_methodology/templates/ui/master-detail-document/state-matrix.md',
+  '_methodology/templates/ui/master-detail-document/acceptance-checklist.md',
+  '_methodology/templates/ui/master-detail-document/master-detail-document.tokens.css',
+];
 
 const artifactOverrides = new Map([
   ['EPM-PAGE-001', [
@@ -17,19 +24,7 @@ const artifactOverrides = new Map([
     '_methodology/templates/ui/enterprise-navigation-shell/README.md',
     '_methodology/examples/002-golden-interaction-enterprise-navigation-shell/README.md',
   ]],
-  ['EPM-PAGE-002', [
-    '_methodology/reference-cases/enterprise-workbench-master-detail-candidate.md',
-    '_methodology/templates/ui/enterprise-workbench/README.md',
-    '_methodology/examples/004-golden-interaction-enterprise-workbench/README.md',
-  ]],
-  ['EPM-PAGE-013', [
-    '_methodology/templates/ui/master-detail-document/README.md',
-    '_methodology/templates/ui/master-detail-document/schema-form.schema.example.json',
-    '_methodology/templates/ui/master-detail-document/editable-line-grid.schema.example.json',
-    '_methodology/templates/ui/master-detail-document/state-matrix.md',
-    '_methodology/templates/ui/master-detail-document/acceptance-checklist.md',
-    '_methodology/templates/ui/master-detail-document/master-detail-document.tokens.css',
-  ]],
+  ['EPM-PAGE-013', masterDetailArtifacts],
   ['EPM-SCENE-001', [
     '_methodology/patterns/record-management-workspace.md',
     '_methodology/templates/ui/record-management-workspace/README.md',
@@ -39,9 +34,32 @@ const artifactOverrides = new Map([
 
 const evidenceOverrides = new Map([
   ['EPM-PAGE-001', ['interaction-pattern-lab:001-pattern-catalog-preview', 'mcrm:003-enterprise-navigation-shell']],
-  ['EPM-PAGE-002', ['interaction-pattern-lab:enterprise-workbench-design-prototype-REQSRC-030']],
-  ['EPM-PAGE-013', ['interaction-pattern-lab:010-master-detail-document-assets-dual-scenario']],
   ['EPM-SCENE-001', ['interaction-pattern-lab:001-pattern-catalog-preview', 'mcrm:004-customer-record-workspace']],
+]);
+
+const evidenceCardOverrides = new Map([
+  ['EPM-PAGE-013', [{
+    evidenceId: 'EVID-VAL-010-MASTER-DETAIL',
+    state: 'in-lab-candidate',
+    sourceRefs: [
+      'interaction-pattern-lab/.specify/sources/REQSRC-029-sales-order-bom-template-research-20260905/source.md',
+      'interaction-pattern-lab/.specify/sources/REQSRC-030-enterprise-workbench-master-detail-request-20260905/source.md',
+      'interaction-pattern-lab/.specify/sources/REQSRC-034-master-detail-document-assets-architecture-gate-approval-20260905/source.md',
+    ],
+    implementationRefs: [
+      'interaction-pattern-lab/packages/web/src/ui-assets/scenarios/sales-order/SalesOrderScenario.tsx',
+      'interaction-pattern-lab/packages/web/src/ui-assets/scenarios/bom/BomScenario.tsx',
+    ],
+    artifactRefs: masterDetailArtifacts,
+    validation: {
+      project: 'interaction-pattern-lab',
+      slice: '010-master-detail-document-assets',
+      environment: 'deterministic in-memory interaction validation lab',
+      versionPoint: 'bf68ffd',
+      result: 'VAL-010 records dual-scenario in-lab candidate evidence; maturity remains idea.',
+      unknowns: ['real-project adoption', 'business validation', 'browser QA', 'Release approval'],
+    },
+  }]],
 ]);
 
 function cleanCell(value) {
@@ -79,6 +97,7 @@ export function buildEnterpriseInteractionIndex(root) {
       definitionRef: { path: taxonomyRelativePath, section: group },
       artifacts: artifactOverrides.get(assetId) ?? [],
       evidence: evidenceOverrides.get(assetId) ?? [],
+      evidenceCards: evidenceCardOverrides.get(assetId) ?? [],
       nextEvidence: maturity === 'interaction-verified'
         ? '在第二个独立真实项目采用并复核边界'
         : maturity === 'implementation-verified'

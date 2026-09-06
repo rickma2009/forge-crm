@@ -17,18 +17,20 @@ test('TC-301: 企业交互资产登记册包含六类 103 个唯一分类项', (
   );
 });
 
-test('TC-305: 三个已有证据资产保持各自成熟度，其余分类项不继承成熟度', () => {
+test('TC-305: 两个既有证据资产保持各自成熟度，本任务不得提升或夹带 P002', () => {
   const registry = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
   const byId = new Map(registry.assets.map((asset) => [asset.assetId, asset]));
   assert.equal(byId.get('EPM-PAGE-001').maturity, 'interaction-verified');
-  assert.equal(byId.get('EPM-PAGE-002').maturity, 'interaction-verified');
   assert.equal(byId.get('EPM-SCENE-001').maturity, 'implementation-verified');
+  assert.equal(byId.get('EPM-PAGE-002').maturity, 'idea');
+  assert.deepEqual(byId.get('EPM-PAGE-002').artifacts, []);
+  assert.deepEqual(byId.get('EPM-PAGE-002').evidence, []);
   assert.equal(byId.get('EPM-PAGE-010').maturity, 'idea');
   assert.equal(byId.get('EPM-ACT-042').maturity, 'idea');
   assert.equal(byId.get('EPM-SPECIAL-002').maturity, 'idea');
 });
 
-test('TC-1017: 主从单据候选资产登记完整且不高于验证场工程证据', () => {
+test('TC-1017: 主从单据候选资产保持 idea 且登记可定位的验证场候选证据卡', () => {
   const registry = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
   const byId = new Map(registry.assets.map((asset) => [asset.assetId, asset]));
   const expectedArtifacts = [
@@ -39,7 +41,35 @@ test('TC-1017: 主从单据候选资产登记完整且不高于验证场工程�
     '_methodology/templates/ui/master-detail-document/acceptance-checklist.md',
     '_methodology/templates/ui/master-detail-document/master-detail-document.tokens.css',
   ];
-  assert.equal(byId.get('EPM-PAGE-013').maturity, 'implementation-verified');
+  const masterDetail = byId.get('EPM-PAGE-013');
+  assert.equal(masterDetail.maturity, 'idea');
   for (const artifact of expectedArtifacts) assert.ok(byId.get('EPM-PAGE-013').artifacts.includes(artifact), `缺少候选资产: ${artifact}`);
-  assert.ok(byId.get('EPM-PAGE-013').evidence.includes('interaction-pattern-lab:010-master-detail-document-assets-dual-scenario'));
+  assert.deepEqual(masterDetail.evidence, []);
+  assert.deepEqual(masterDetail.evidenceCards, [{
+    evidenceId: 'EVID-VAL-010-MASTER-DETAIL',
+    state: 'in-lab-candidate',
+    sourceRefs: [
+      'interaction-pattern-lab/.specify/sources/REQSRC-029-sales-order-bom-template-research-20260905/source.md',
+      'interaction-pattern-lab/.specify/sources/REQSRC-030-enterprise-workbench-master-detail-request-20260905/source.md',
+      'interaction-pattern-lab/.specify/sources/REQSRC-034-master-detail-document-assets-architecture-gate-approval-20260905/source.md',
+    ],
+    implementationRefs: [
+      'interaction-pattern-lab/packages/web/src/ui-assets/scenarios/sales-order/SalesOrderScenario.tsx',
+      'interaction-pattern-lab/packages/web/src/ui-assets/scenarios/bom/BomScenario.tsx',
+    ],
+    artifactRefs: expectedArtifacts,
+    validation: {
+      project: 'interaction-pattern-lab',
+      slice: '010-master-detail-document-assets',
+      environment: 'deterministic in-memory interaction validation lab',
+      versionPoint: 'bf68ffd',
+      result: 'VAL-010 records dual-scenario in-lab candidate evidence; maturity remains idea.',
+      unknowns: [
+        'real-project adoption',
+        'business validation',
+        'browser QA',
+        'Release approval',
+      ],
+    },
+  }]);
 });

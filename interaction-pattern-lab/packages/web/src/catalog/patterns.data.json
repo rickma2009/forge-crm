@@ -64,7 +64,7 @@
       "kind": "PAGE",
       "category": "系统与任务入口类",
       "name": "工作台",
-      "maturity": "interaction-verified",
+      "maturity": "idea",
       "keywords": [
         "工作台",
         "系统与任务入口类",
@@ -97,15 +97,10 @@
         ]
       },
       "sources": [
-        "_methodology/08-企业管理系统交互模式分类方法.md",
-        "_methodology/reference-cases/enterprise-workbench-master-detail-candidate.md",
-        "_methodology/templates/ui/enterprise-workbench/README.md",
-        "_methodology/examples/004-golden-interaction-enterprise-workbench/README.md"
+        "_methodology/08-企业管理系统交互模式分类方法.md"
       ],
-      "evidence": [
-        "interaction-pattern-lab:enterprise-workbench-design-prototype-REQSRC-030"
-      ],
-      "nextEvidence": "在第二个独立真实项目采用并复核边界",
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
       "coveredBy": [],
       "demos": []
     },
@@ -373,7 +368,7 @@
       "kind": "PAGE",
       "category": "记录管理类",
       "name": "主从明细页",
-      "maturity": "implementation-verified",
+      "maturity": "idea",
       "keywords": [
         "主从明细页",
         "记录管理类",
@@ -414,10 +409,8 @@
         "_methodology/templates/ui/master-detail-document/acceptance-checklist.md",
         "_methodology/templates/ui/master-detail-document/master-detail-document.tokens.css"
       ],
-      "evidence": [
-        "interaction-pattern-lab:010-master-detail-document-assets-dual-scenario"
-      ],
-      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "evidence": [],
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
       "coveredBy": [
         "VAL-010"
       ],
