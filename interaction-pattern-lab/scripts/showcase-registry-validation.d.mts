@@ -6,6 +6,7 @@ export function validateShowcaseRegistry(
     traceabilityEvidence?: {
       assetIds: ReadonlySet<string>;
       implementationRefExists: (reference: string) => boolean;
+      qaRefExists?: (reference: string) => boolean;
     };
   },
 ): string[];
