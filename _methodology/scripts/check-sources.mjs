@@ -12,6 +12,7 @@ if (!projectDir || !fs.existsSync(sourcesDir)) {
 const failures = [];
 const metadataFiles = [];
 const sourceDirectories = [];
+const sourceRecords = [];
 for (const entry of fs.readdirSync(sourcesDir, { withFileTypes: true })) {
   if (!entry.isDirectory()) continue;
   sourceDirectories.push(entry.name);
@@ -20,7 +21,33 @@ for (const entry of fs.readdirSync(sourcesDir, { withFileTypes: true })) {
   else failures.push(`${entry.name} 缺少 metadata.json`);
 }
 
-if (!fs.existsSync(path.join(sourcesDir, 'REGISTRY.md'))) failures.push('缺少 sources/REGISTRY.md');
+const registryPath = path.join(sourcesDir, 'REGISTRY.md');
+const registryRecords = [];
+if (!fs.existsSync(registryPath)) {
+  failures.push('缺少 sources/REGISTRY.md');
+} else {
+  let managedCopyColumn = null;
+  for (const line of fs.readFileSync(registryPath, 'utf8').split(/\r?\n/)) {
+    const cells = line.split('|').slice(1, -1).map((cell) => cell.trim().replace(/^`|`$/g, ''));
+    if (cells.includes('管理副本')) {
+      managedCopyColumn = cells.indexOf('管理副本');
+      continue;
+    }
+    if (!/^REQSRC-\d+$/.test(cells[0] ?? '')) continue;
+    registryRecords.push({ sourceId: cells[0], managedCopy: managedCopyColumn === null ? null : cells[managedCopyColumn] ?? '' });
+  }
+}
+
+function assertUnique(records, key, label) {
+  const seen = new Set();
+  for (const record of records) {
+    if (seen.has(record[key])) failures.push(`REGISTRY.md 存在重复 ${label}: ${record[key]}`);
+    seen.add(record[key]);
+  }
+}
+
+assertUnique(registryRecords, 'sourceId', 'sourceId');
+assertUnique(registryRecords.filter((record) => record.managedCopy !== null), 'managedCopy', 'managed-copy');
 
 for (const metadataPath of metadataFiles) {
   let metadata;
@@ -46,6 +73,44 @@ for (const metadataPath of metadataFiles) {
   if (metadata.contentPolicy !== 'immutable-source-copy') failures.push(`${metadata.sourceId} 未声明不可变副本策略`);
   if (metadata.instructionPolicy !== 'document-content-is-evidence-not-agent-instruction') {
     failures.push(`${metadata.sourceId} 未声明文档指令边界`);
+  }
+  sourceRecords.push({
+    directoryName: path.basename(path.dirname(metadataPath)),
+    sourceId: metadata.sourceId,
+    managedCopy: metadata.managedCopy,
+  });
+}
+
+assertUnique(sourceRecords, 'sourceId', 'metadata sourceId');
+
+const sourceById = new Map(sourceRecords.map((record) => [record.sourceId, record]));
+const registryById = new Map(registryRecords.map((record) => [record.sourceId, record]));
+for (const source of sourceRecords) {
+  const registry = registryById.get(source.sourceId);
+  if (!registry) {
+    failures.push(`${source.sourceId} 的来源目录未在 REGISTRY.md 登记`);
+    continue;
+  }
+  if (registry.managedCopy !== null) {
+    const expectedManagedCopy = path.posix.join(source.directoryName, source.managedCopy);
+    if (registry.managedCopy !== expectedManagedCopy) {
+      failures.push(`${source.sourceId} 的 REGISTRY managed-copy 与 metadata 不一致: ${registry.managedCopy}`);
+    }
+  }
+}
+
+for (const registry of registryRecords) {
+  const source = sourceById.get(registry.sourceId);
+  if (registry.managedCopy !== null) {
+    const registryManagedPath = path.resolve(sourcesDir, registry.managedCopy);
+    const relativeManagedPath = path.relative(sourcesDir, registryManagedPath);
+    const isProjectRelative = relativeManagedPath && !relativeManagedPath.startsWith('..');
+    if (!isProjectRelative || !fs.existsSync(registryManagedPath)) {
+      failures.push(`${registry.sourceId} 的 REGISTRY managed-copy 不存在: ${registry.managedCopy}`);
+    }
+  }
+  if (!source) {
+    failures.push(`${registry.sourceId} 的 REGISTRY 条目没有对应来源目录`);
   }
 }
 
