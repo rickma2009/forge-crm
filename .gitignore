@@ -4,9 +4,13 @@ node_modules/
 dist/
 coverage/
 *.tsbuildinfo
+.turbo/
+.env
+**/src/generated/
 
 # 独立仓库，不由工作台根仓库直接跟踪
 _ref/gf_scm/
+_ref/gscrm-sdd/
 mcrm/
 
 # 临时与生成物
