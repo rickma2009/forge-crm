@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AsyncOutcome } from '../../components/async-state/AsyncOutcome';
 import { EditableLineGrid } from '../../components/editable-line-grid/EditableLineGrid';
 import type { LineRecord } from '../../components/editable-line-grid/types';
@@ -18,6 +18,10 @@ export function MasterDetailDocument<THeader, TLine extends LineRecord>({ scenar
     businessStatus: scenario.initialState.businessStatus,
   }));
 
+  useEffect(() => {
+    setState((current) => reduceDocument(current, { type: 'set-mode', mode: scenario.mode }).state);
+  }, [scenario.mode]);
+
   const apply = (action: Parameters<typeof reduceDocument<THeader, TLine>>[1]) => {
     const result = reduceDocument(state, action);
     setState(result.state);
@@ -25,23 +29,25 @@ export function MasterDetailDocument<THeader, TLine extends LineRecord>({ scenar
   };
 
   const save = async () => {
-    if (scenario.mode === 'view') return;
+    if (state.mode === 'view') return;
     const start = reduceDocument(state, { type: 'begin-save' });
     if (start.outcome.kind === 'ignored') return;
     setState(start.state);
+    const saveRequestId = start.state.activeSaveRequestId;
+    if (saveRequestId === null) return;
 
     const validation = scenario.validate({ header: state.header, lines: state.lines });
     if (validation.headerErrors.length > 0 || validation.lineErrors.length > 0) {
-      setState(reduceDocument(start.state, { type: 'resolve-save', outcome: { kind: 'validation-failed', ...validation } }).state);
+      setState(reduceDocument(start.state, { type: 'resolve-save', saveRequestId, outcome: { kind: 'validation-failed', ...validation } }).state);
       return;
     }
 
     try {
       const outcome = await scenario.save({ header: state.header, lines: state.lines.rows });
-      setState((current) => reduceDocument(current, { type: 'resolve-save', outcome }).state);
+      setState((current) => reduceDocument(current, { type: 'resolve-save', saveRequestId, outcome }).state);
     } catch {
       setState((current) => reduceDocument(current, {
-        type: 'resolve-save',
+        type: 'resolve-save', saveRequestId,
         outcome: { kind: 'business-rejected', reason: '模拟保存适配器未完成，请保留当前输入后重试。' },
       }).state);
     }
@@ -70,7 +76,7 @@ export function MasterDetailDocument<THeader, TLine extends LineRecord>({ scenar
       schema={scenario.headerSchema}
       values={state.header}
       errors={state.headerErrors}
-      mode={scenario.mode}
+      mode={state.phase === 'saving' ? 'view' : state.mode}
       onChange={(header) => apply({ type: 'change-header', header })}
     />
 
@@ -83,7 +89,7 @@ export function MasterDetailDocument<THeader, TLine extends LineRecord>({ scenar
         selection={state.lines.selection}
         errors={state.lineErrors}
         summary={scenario.summary(state.lines.rows)}
-        mode={scenario.mode}
+        mode={state.phase === 'saving' ? 'view' : state.mode}
         dirty={state.phase === 'dirty' || state.phase === 'confirm-leave'}
         emptyLine={scenario.emptyLine}
         undoTokens={state.lines.pendingDeletions}
@@ -98,7 +104,7 @@ export function MasterDetailDocument<THeader, TLine extends LineRecord>({ scenar
     </section>
 
     <footer data-fixed-document-actions="true" style={{ position: 'sticky', bottom: 0, background: 'var(--surface, white)' }}>
-      {scenario.mode !== 'view' && <button data-fixed-document-actions="true" type="button" disabled={state.phase === 'saving'} onClick={save}>保存模拟单据</button>}
+      {state.mode !== 'view' && <button data-fixed-document-actions="true" type="button" disabled={state.phase === 'saving'} onClick={save}>保存模拟单据</button>}
       <button type="button" disabled={state.phase === 'saving'} onClick={requestLeave}>离开单据</button>
     </footer>
 

@@ -71,7 +71,7 @@ describe('TASK-1008 MasterDetailDocument', () => {
     expect(screen.getByRole('textbox', { name: '单据标题' })).toHaveFocus();
   });
 
-  it('prevents duplicate save calls while saving and presents success feedback without changing business status', async () => {
+  it('freezes the save snapshot while pending, prevents duplicate submit, and presents feedback without changing business status', async () => {
     const user = userEvent.setup();
     let settle: ((outcome: { kind: 'success'; message: string; nextStatus: string }) => void) | undefined;
     const save = vi.fn(() => new Promise<{ kind: 'success'; message: string; nextStatus: string }>((resolve) => { settle = resolve; }));
@@ -79,6 +79,11 @@ describe('TASK-1008 MasterDetailDocument', () => {
 
     const saveButton = screen.getByRole('button', { name: '保存模拟单据' });
     await user.click(saveButton);
+    expect(screen.getByRole('textbox', { name: '单据标题' })).toHaveAttribute('readonly');
+    expect(screen.getByRole('button', { name: '新增空行' })).toBeDisabled();
+    await user.click(screen.getByRole('textbox', { name: '单据标题' }));
+    await user.type(screen.getByRole('textbox', { name: '单据标题' }), '不应进入保存快照');
+    expect(screen.getByRole('textbox', { name: '单据标题' })).toHaveValue('九月模拟单据');
     await user.click(saveButton);
     expect(save).toHaveBeenCalledTimes(1);
     expect(saveButton).toBeDisabled();
@@ -86,6 +91,24 @@ describe('TASK-1008 MasterDetailDocument', () => {
     settle?.({ kind: 'success', message: '模拟保存完成。', nextStatus: '已提交' });
     expect(await screen.findByText('模拟操作已完成：模拟保存完成。')).toBeInTheDocument();
     expect(screen.getByText('业务状态：草稿')).toBeInTheDocument();
+  });
+
+  it('routes a line-only validation error from the composed line summary by keyboard', async () => {
+    const user = userEvent.setup();
+    const fixture = scenario({
+      validate: () => ({
+        headerErrors: [],
+        lineErrors: [{ id: 'line-quantity', rowId: 'line-1', fieldId: 'quantity', message: '数量必须大于零。' }],
+      }),
+    });
+    render(<MasterDetailDocument scenario={fixture} />);
+
+    await user.click(screen.getByRole('button', { name: '保存模拟单据' }));
+    expect(fixture.save).not.toHaveBeenCalled();
+    const lineSummary = screen.getByRole('button', { name: '示例行：数量必须大于零。' });
+    lineSummary.focus();
+    await user.keyboard('{Enter}');
+    expect(screen.getByRole('spinbutton', { name: '示例行 数量' })).toHaveFocus();
   });
 
   it('distinguishes readonly view mode and preserves dirty input when leaving is canceled', async () => {

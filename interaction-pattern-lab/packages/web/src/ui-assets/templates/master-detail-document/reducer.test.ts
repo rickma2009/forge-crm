@@ -12,20 +12,28 @@ interface Line {
   quantity: number;
 }
 
-const initial = (): DocumentState<Header, Line> => createDocumentState({
-  mode: 'edit',
+const initial = (mode: 'create' | 'view' | 'edit' = 'edit'): DocumentState<Header, Line> => createDocumentState({
+  mode,
   header: { title: '初始标题' },
   lines: [{ rowId: 'line-1', persistedState: 'persisted', quantity: 1 }],
   businessStatus: '草稿',
 });
 
 describe('TASK-1008 MasterDetailDocument reducer', () => {
-  it('prevents a duplicate save while preserving the first saving state', () => {
+  it('freezes header and line mutations while saving and prevents duplicate save', () => {
     const saving = reduceDocument(initial(), { type: 'begin-save' }).state;
     const duplicate = reduceDocument(saving, { type: 'begin-save' });
+    const headerChange = reduceDocument(saving, { type: 'change-header', header: { title: '不应进入保存快照' } });
+    const lineChange = reduceDocument(saving, {
+      type: 'mutate-lines',
+      mutation: { type: 'update', payload: { rowId: 'line-1', changes: { quantity: 99 } } },
+      allocateId: () => 'unused',
+    });
 
     expect(duplicate.outcome).toEqual({ kind: 'ignored', reason: 'already-saving' });
     expect(duplicate.state).toBe(saving);
+    expect(headerChange.state).toBe(saving);
+    expect(lineChange.state).toBe(saving);
   });
 
   it('keeps user input and business status after a failed save, while a success feedback does not transition business status', () => {
@@ -74,5 +82,67 @@ describe('TASK-1008 MasterDetailDocument reducer', () => {
 
     const changedStatus = reduceDocument(initial(), { type: 'set-business-status', businessStatus: '已提交' }).state;
     expect(changedStatus.businessStatus).toBe('已提交');
+  });
+
+  it('establishes a clean line baseline after save so a pure selection stays clean', () => {
+    const changedLines = reduceDocument(initial(), {
+      type: 'mutate-lines',
+      mutation: { type: 'update', payload: { rowId: 'line-1', changes: { quantity: 2 } } },
+      allocateId: () => 'unused',
+    }).state;
+    const saved = reduceDocument(reduceDocument(changedLines, { type: 'begin-save' }).state, {
+      type: 'resolve-save',
+      outcome: { kind: 'success', message: '模拟保存完成。' },
+    }).state;
+    const selected = reduceDocument(saved, {
+      type: 'mutate-lines',
+      mutation: { type: 'select', payload: { rowId: 'line-1', selected: true } },
+      allocateId: () => 'unused',
+    }).state;
+
+    expect(saved.lines.dirty).toBe(false);
+    expect(selected.phase).toBe('clean');
+    expect(selected.lines.selection.has('line-1')).toBe(true);
+  });
+
+  it('enforces create, view, and edit modes in the pure reducer', () => {
+    const createChanged = reduceDocument(initial('create'), { type: 'change-header', header: { title: '创建中标题' } });
+    const editChanged = reduceDocument(initial('edit'), { type: 'change-header', header: { title: '编辑中标题' } });
+    const viewHeader = reduceDocument(initial('view'), { type: 'change-header', header: { title: '查看模式不得修改' } });
+    const viewLines = reduceDocument(initial('view'), {
+      type: 'mutate-lines',
+      mutation: { type: 'update', payload: { rowId: 'line-1', changes: { quantity: 9 } } },
+      allocateId: () => 'unused',
+    });
+    const viewSave = reduceDocument(initial('view'), { type: 'begin-save' });
+
+    expect(createChanged.state.header.title).toBe('创建中标题');
+    expect(editChanged.state.header.title).toBe('编辑中标题');
+    expect(viewHeader.state.header.title).toBe('初始标题');
+    expect(viewLines.state.lines.rows[0]?.quantity).toBe(1);
+    expect(viewSave.state.phase).toBe('clean');
+  });
+
+  it('does not let an outcome from a different save request settle the active snapshot', () => {
+    const saving = reduceDocument(initial(), { type: 'begin-save' }).state;
+    const stale = reduceDocument(saving, {
+      type: 'resolve-save',
+      saveRequestId: 99,
+      outcome: { kind: 'success', message: '过期保存不应生效。' },
+    } as never);
+
+    expect(stale.state).toBe(saving);
+    expect(stale.state.phase).toBe('saving');
+  });
+
+  it('changes mode through the reducer before applying the new mode protections', () => {
+    const viewed = reduceDocument(initial('edit'), { type: 'set-mode', mode: 'view' } as never).state;
+    const blocked = reduceDocument(viewed, { type: 'change-header', header: { title: '查看模式不得修改' } });
+    const created = reduceDocument(viewed, { type: 'set-mode', mode: 'create' } as never).state;
+    const editable = reduceDocument(created, { type: 'change-header', header: { title: '创建模式可修改' } }).state;
+
+    expect(viewed.mode).toBe('view');
+    expect(blocked.state).toBe(viewed);
+    expect(editable.header.title).toBe('创建模式可修改');
   });
 });

@@ -14,6 +14,8 @@ export interface DocumentState<THeader, TLine extends LineRecord> {
   headerErrors: FieldError<THeader>[];
   lineErrors: LineError[];
   outcome: AsyncOutcomeValue | null;
+  activeSaveRequestId: number | null;
+  nextSaveRequestId: number;
 }
 
 export type DocumentSaveOutcome<THeader> =
@@ -24,15 +26,16 @@ export type DocumentAction<THeader, TLine extends LineRecord> =
   | { type: 'change-header'; header: THeader }
   | { type: 'mutate-lines'; mutation: LineMutation<TLine>; allocateId: LineIdAllocator }
   | { type: 'begin-save' }
-  | { type: 'resolve-save'; outcome: DocumentSaveOutcome<THeader> }
+  | { type: 'resolve-save'; outcome: DocumentSaveOutcome<THeader>; saveRequestId?: number }
   | { type: 'request-leave' }
   | { type: 'cancel-leave' }
   | { type: 'continue-leave' }
+  | { type: 'set-mode'; mode: FormMode }
   | { type: 'set-business-status'; businessStatus: string };
 
 export type DocumentOutcome =
   | { kind: 'applied' }
-  | { kind: 'ignored'; reason: 'already-saving' }
+  | { kind: 'ignored'; reason: 'already-saving' | 'saving' | 'view-mode' | 'stale-save' }
   | { kind: 'leave-confirmed' };
 
 export interface DocumentResult<THeader, TLine extends LineRecord> {
