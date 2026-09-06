@@ -1,5 +1,5 @@
 import type { AsyncOutcomeValue } from '../../components/async-state/AsyncOutcome';
-import type { LineColumn, LineError, SummaryItem } from '../../components/editable-line-grid/EditableLineGrid';
+import type { LineCandidate, LineColumn, LineError, SummaryItem } from '../../components/editable-line-grid/EditableLineGrid';
 import type { FieldError, FormMode } from '../../components/schema-form/types';
 import type { EditableLineState, LineIdAllocator, LineMutation, LineRecord } from '../../components/editable-line-grid/types';
 import type { FormGroup } from '../../components/schema-form/SchemaForm';
@@ -56,6 +56,7 @@ export interface DocumentScenario<THeader, TLine extends LineRecord> {
   headerSchema: FieldSchema<THeader>[];
   initialState: Pick<DocumentState<THeader, TLine>, 'header' | 'businessStatus'> & { lines: TLine[] };
   lineColumns: LineColumn<TLine>[];
+  candidates?: LineCandidate<TLine>[];
   emptyLine: Omit<TLine, keyof LineRecord>;
   allocateLineId: LineIdAllocator;
   validate: (state: Pick<DocumentState<THeader, TLine>, 'header' | 'lines'>) => { headerErrors: FieldError<THeader>[]; lineErrors: LineError[] };

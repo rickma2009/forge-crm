@@ -89,6 +89,7 @@ export function MasterDetailDocument<THeader, TLine extends LineRecord>({ scenar
         selection={state.lines.selection}
         errors={state.lineErrors}
         summary={scenario.summary(state.lines.rows)}
+        candidates={scenario.candidates}
         mode={state.phase === 'saving' ? 'view' : state.mode}
         dirty={state.phase === 'dirty' || state.phase === 'confirm-leave'}
         emptyLine={scenario.emptyLine}
