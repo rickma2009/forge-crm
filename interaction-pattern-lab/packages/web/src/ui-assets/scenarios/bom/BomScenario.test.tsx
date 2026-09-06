@@ -30,6 +30,31 @@ describe('TASK-1010 BOM scenario', () => {
     expect(screen.getByRole('status', { name: '候选复核结果' })).toHaveTextContent('已复核 MAT-AX-07：可作为替代候选，尚未写入任何业务系统。');
   });
 
+  it('TC-EDGE-1005: enforces the six-active-row demo budget for empty, candidate, and copy mutations', async () => {
+    const user = userEvent.setup();
+    render(<BomScenario />);
+
+    await user.selectOptions(screen.getByRole('combobox', { name: '候选行' }), 'MAT-AX-07');
+    await user.click(screen.getByRole('button', { name: '添加候选行' }));
+    await user.click(screen.getByRole('button', { name: '新增空行' }));
+
+    expect(screen.getByText('当前行数：6 / 6')).toBeInTheDocument();
+    expect(screen.getByRole('status', { name: '行项目操作说明' })).toHaveTextContent('已达到本场景行预算（6 行）；新增空行、添加候选行和复制行已停用。');
+    const appendEmpty = screen.getByRole('button', { name: '新增空行' });
+    const appendCandidate = screen.getByRole('button', { name: '添加候选行' });
+    const copy = screen.getByRole('button', { name: /复制精密传动装配/ });
+    expect(appendEmpty).toBeDisabled();
+    expect(appendCandidate).toBeDisabled();
+    expect(screen.getByRole('combobox', { name: '候选行' })).toBeDisabled();
+    expect(copy).toBeDisabled();
+
+    await user.click(appendEmpty);
+    await user.click(appendCandidate);
+    await user.click(copy);
+    expect(screen.getByText('当前行数：6 / 6')).toBeInTheDocument();
+    expect(screen.queryByText('当前行数：7 / 6')).not.toBeInTheDocument();
+  });
+
   it('registers the BOM route with implementation traceability and an honest unrun QA state', () => {
     expect(showcaseRegistry.pages.find((page) => page.id === 'scenario-bom')).toMatchObject({
       path: '/showcase/scenarios/bom',

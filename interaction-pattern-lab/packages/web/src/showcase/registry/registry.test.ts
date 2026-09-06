@@ -7,7 +7,20 @@ import {
   showcaseRendererKeys,
   validateShowcaseRegistry,
 } from './registry';
-import type { ShowcaseRegistry } from './types';
+import type { PageRendererKey, ShowcaseRegistry } from './types';
+
+const staticRendererKeys = [
+  'overview',
+  'resource-catalog',
+  'customer-directory',
+  'dictionary-admin',
+  'list-view-admin',
+  'sales-order-prototype',
+  'personal-workbench',
+  'master-detail-workbench',
+  'bom-scenario',
+  'description',
+] as const satisfies readonly PageRendererKey[];
 
 const projectRoot = path.resolve(process.cwd(), '../..');
 const methodIndex = JSON.parse(fs.readFileSync(path.resolve(projectRoot, '../_methodology/patterns/index.json'), 'utf8')) as {
@@ -95,6 +108,10 @@ describe('showcase registry contract', () => {
       rendererKeys: showcaseRendererKeys,
       traceabilityEvidence,
     })).toEqual([]);
+  });
+
+  it('keeps the static renderer-key union synchronized with the runtime registry keys', () => {
+    expect([...showcaseRendererKeys].sort()).toEqual([...staticRendererKeys].sort());
   });
 
   it('TC-1002: reports a page that references an EPM asset absent from the method index', () => {

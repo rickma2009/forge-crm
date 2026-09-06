@@ -111,6 +111,22 @@ describe('TASK-1008 MasterDetailDocument', () => {
     expect(screen.getByRole('spinbutton', { name: '示例行 数量' })).toHaveFocus();
   });
 
+  it('applies an optional generic line-mutation policy before the grid can append or copy', async () => {
+    const user = userEvent.setup();
+    const lineMutationPolicy = vi.fn(() => ({ allowed: false as const, reason: '当前场景已达到行预算；新增和复制不可用。' }));
+    render(<MasterDetailDocument scenario={scenario({ lineMutationPolicy })} />);
+
+    expect(screen.getByRole('status', { name: '行项目操作说明' })).toHaveTextContent('当前场景已达到行预算；新增和复制不可用。');
+    const append = screen.getByRole('button', { name: '新增空行' });
+    const copy = screen.getByRole('button', { name: '复制示例行' });
+    expect(append).toBeDisabled();
+    expect(copy).toBeDisabled();
+    await user.click(append);
+    await user.click(copy);
+    expect(screen.queryByRole('row', { name: /草稿/ })).not.toBeInTheDocument();
+    expect(lineMutationPolicy).toHaveBeenCalled();
+  });
+
   it('distinguishes readonly view mode and preserves dirty input when leaving is canceled', async () => {
     const user = userEvent.setup();
     const onLeave = vi.fn();

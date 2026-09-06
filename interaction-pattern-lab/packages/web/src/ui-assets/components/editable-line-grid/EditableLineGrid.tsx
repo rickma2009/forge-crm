@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
-import type { DeletedLineUndoToken, LineMutation, LineRecord, LineValues } from './types';
+import type { DeletedLineUndoToken, LineMutation, LineMutationPermission, LineRecord, LineValues } from './types';
 
 export type EditableLineGridMode = 'create' | 'view' | 'edit';
 
@@ -44,6 +44,7 @@ export interface EditableLineGridProps<TLine extends LineRecord> {
   emptyLine: LineValues<TLine>;
   candidates?: LineCandidate<TLine>[];
   undoTokens?: Record<string, DeletedLineUndoToken<TLine>>;
+  mutationPolicy?: (mutation: LineMutation<TLine>) => LineMutationPermission;
   onMutation: (mutation: LineMutation<TLine>) => void;
 }
 
@@ -65,12 +66,26 @@ export function EditableLineGrid<TLine extends LineRecord>({
   emptyLine,
   candidates = [],
   undoTokens = {},
+  mutationPolicy,
   onMutation,
 }: EditableLineGridProps<TLine>) {
   const [candidateId, setCandidateId] = useState('');
   const [editing, setEditing] = useState<EditingCell | null>(null);
   const [focusTarget, setFocusTarget] = useState<{ id: string } | null>(null);
   const editableColumns = columns.filter((column) => column.editable && mode !== 'view');
+  const permissionFor = (mutation: LineMutation<TLine>): LineMutationPermission => mutationPolicy?.(mutation) ?? { allowed: true };
+  const appendEmptyPermission = permissionFor({ type: 'append-empty', payload: emptyLine });
+  const candidatePermissions = candidates.map((candidate) => ({
+    id: candidate.id,
+    permission: permissionFor({ type: 'append-candidate', payload: candidate.values }),
+  }));
+  const selectedCandidatePermission = candidatePermissions.find((candidate) => candidate.id === candidateId)?.permission ?? { allowed: true as const };
+  const allCandidatesBlocked = candidates.length > 0 && candidatePermissions.every((candidate) => !candidate.permission.allowed);
+  const copyPermissions = rows
+    .filter((row) => row.persistedState !== 'marked-for-deletion')
+    .map((row) => permissionFor({ type: 'copy', payload: { rowId: row.rowId } }));
+  const blockedReason = [appendEmptyPermission, ...candidatePermissions.map((candidate) => candidate.permission), ...copyPermissions]
+    .find((permission) => !permission.allowed)?.reason;
 
   useLayoutEffect(() => {
     if (!focusTarget) return;
@@ -134,14 +149,15 @@ export function EditableLineGrid<TLine extends LineRecord>({
   return <section aria-label={ariaLabel}>
     <style>{`.editable-line-grid-focusable:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }`}</style>
     <div>
-      <button className="editable-line-grid-focusable" type="button" disabled={mode === 'view'} onClick={() => onMutation({ type: 'append-empty', payload: emptyLine })}>新增空行</button>
+      <button className="editable-line-grid-focusable" type="button" disabled={mode === 'view' || !appendEmptyPermission.allowed} onClick={() => onMutation({ type: 'append-empty', payload: emptyLine })}>新增空行</button>
       {candidates.length > 0 && <>
-        <label>候选行 <select className="editable-line-grid-focusable" value={candidateId} onChange={(event) => setCandidateId(event.target.value)}>
+        <label>候选行 <select className="editable-line-grid-focusable" disabled={mode === 'view' || allCandidatesBlocked} value={candidateId} onChange={(event) => setCandidateId(event.target.value)}>
           <option value="">请选择候选项</option>
           {candidates.map((candidate) => <option key={candidate.id} value={candidate.id}>{candidate.label}</option>)}
         </select></label>
-        <button className="editable-line-grid-focusable" type="button" disabled={mode === 'view' || !candidateId} onClick={addCandidate}>添加候选行</button>
+        <button className="editable-line-grid-focusable" type="button" disabled={mode === 'view' || !candidateId || !selectedCandidatePermission.allowed} onClick={addCandidate}>添加候选行</button>
       </>}
+      {blockedReason && <p role="status" aria-label="行项目操作说明">{blockedReason}</p>}
       {dirty && <p role="status">存在未保存的行变更</p>}
     </div>
 
@@ -168,6 +184,7 @@ export function EditableLineGrid<TLine extends LineRecord>({
       <tbody>{rows.map((row) => {
         const label = rowLabel(row);
         const marked = row.persistedState === 'marked-for-deletion';
+        const copyPermission = permissionFor({ type: 'copy', payload: { rowId: row.rowId } });
         return <tr key={row.rowId} tabIndex={marked ? -1 : 0} aria-label={`${label} ${stateLabel(row.persistedState)}`} onKeyDown={(event) => {
           if (event.key !== 'Enter' || event.target !== event.currentTarget) return;
           const column = editableColumns[0];
@@ -211,7 +228,7 @@ export function EditableLineGrid<TLine extends LineRecord>({
                 if (token) onMutation({ type: 'undo-delete', payload: token });
               }}>撤销删除{label}</button>
               : <>
-                <button className="editable-line-grid-focusable" id={actionControlId(row.rowId)} type="button" disabled={mode === 'view'} onClick={() => onMutation({ type: 'copy', payload: { rowId: row.rowId } })}>复制{label}</button>
+                <button className="editable-line-grid-focusable" id={actionControlId(row.rowId)} type="button" disabled={mode === 'view' || !copyPermission.allowed} onClick={() => onMutation({ type: 'copy', payload: { rowId: row.rowId } })}>复制{label}</button>
                 <button className="editable-line-grid-focusable" type="button" disabled={mode === 'view'} onClick={() => onMutation({ type: row.persistedState === 'draft' ? 'remove-draft' : 'mark-delete', payload: { rowId: row.rowId } })}>删除{label}</button>
               </>}
           </td>

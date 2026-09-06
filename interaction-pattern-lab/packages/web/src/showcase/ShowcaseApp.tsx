@@ -201,7 +201,7 @@ function PageAdapter({ page, user, systemCode, allowedActions, gateway }: { page
   if (page.rendererKey === 'dictionary-admin') return <DictionaryAdminPage systemCode={systemCode} canManage={allowedActions.includes('manage')} gateway={gateway as EnterpriseGateway} />;
   if (page.rendererKey === 'list-view-admin') return <ListViewAdminPage systemCode={systemCode} gateway={gateway as EnterpriseGateway} />;
   if (page.rendererKey === 'sales-order-prototype') return <SalesOrderScenario />;
-  if ((page.rendererKey as string) === 'bom-scenario') return <BomScenario />;
+  if (page.rendererKey === 'bom-scenario') return <BomScenario />;
   if (page.rendererKey === 'personal-workbench') return <EnterpriseWorkbenchPrototype variant="personal" />;
   if (page.rendererKey === 'master-detail-workbench') return <EnterpriseWorkbenchPrototype variant="master-detail" />;
   if (page.rendererKey === 'description') return <DescriptionPage page={page} />;

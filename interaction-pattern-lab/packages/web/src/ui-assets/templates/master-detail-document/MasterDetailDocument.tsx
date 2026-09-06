@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AsyncOutcome } from '../../components/async-state/AsyncOutcome';
 import { EditableLineGrid } from '../../components/editable-line-grid/EditableLineGrid';
-import type { LineRecord } from '../../components/editable-line-grid/types';
+import type { LineMutation, LineRecord } from '../../components/editable-line-grid/types';
 import { SchemaForm, errorTargetId } from '../../components/schema-form/SchemaForm';
 import { ValidationSummary } from '../../components/validation-summary/ValidationSummary';
 import { createDocumentState, reduceDocument } from './reducer';
@@ -26,6 +26,15 @@ export function MasterDetailDocument<THeader, TLine extends LineRecord>({ scenar
     const result = reduceDocument(state, action);
     setState(result.state);
     return result;
+  };
+
+  const lineMutationPermission = (mutation: LineMutation<TLine>) => (
+    scenario.lineMutationPolicy?.({ rows: state.lines.rows, mutation }) ?? { allowed: true as const }
+  );
+
+  const mutateLines = (mutation: LineMutation<TLine>) => {
+    if (!lineMutationPermission(mutation).allowed) return;
+    apply({ type: 'mutate-lines', mutation, allocateId: scenario.allocateLineId });
   };
 
   const save = async () => {
@@ -94,7 +103,8 @@ export function MasterDetailDocument<THeader, TLine extends LineRecord>({ scenar
         dirty={state.phase === 'dirty' || state.phase === 'confirm-leave'}
         emptyLine={scenario.emptyLine}
         undoTokens={state.lines.pendingDeletions}
-        onMutation={(mutation) => apply({ type: 'mutate-lines', mutation, allocateId: scenario.allocateLineId })}
+        mutationPolicy={lineMutationPermission}
+        onMutation={mutateLines}
       />
     </section>
 

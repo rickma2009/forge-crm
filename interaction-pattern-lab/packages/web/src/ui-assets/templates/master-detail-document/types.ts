@@ -1,7 +1,7 @@
 import type { AsyncOutcomeValue } from '../../components/async-state/AsyncOutcome';
 import type { LineCandidate, LineColumn, LineError, SummaryItem } from '../../components/editable-line-grid/EditableLineGrid';
 import type { FieldError, FormMode } from '../../components/schema-form/types';
-import type { EditableLineState, LineIdAllocator, LineMutation, LineRecord } from '../../components/editable-line-grid/types';
+import type { EditableLineState, LineIdAllocator, LineMutation, LineMutationPolicy, LineRecord } from '../../components/editable-line-grid/types';
 import type { FormGroup } from '../../components/schema-form/SchemaForm';
 import type { FieldSchema } from '../../components/schema-form/types';
 
@@ -59,6 +59,7 @@ export interface DocumentScenario<THeader, TLine extends LineRecord> {
   candidates?: LineCandidate<TLine>[];
   emptyLine: Omit<TLine, keyof LineRecord>;
   allocateLineId: LineIdAllocator;
+  lineMutationPolicy?: LineMutationPolicy<TLine>;
   validate: (state: Pick<DocumentState<THeader, TLine>, 'header' | 'lines'>) => { headerErrors: FieldError<THeader>[]; lineErrors: LineError[] };
   save: (command: DocumentSaveCommand<THeader, TLine>) => Promise<DocumentSaveOutcome<THeader>>;
   summary: (lines: TLine[]) => SummaryItem[];

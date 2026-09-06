@@ -34,6 +34,15 @@ export type LineMutation<TLine extends LineRecord> =
   | { type: 'mark-delete'; payload: { rowId: string } }
   | { type: 'undo-delete'; payload: DeletedLineUndoToken<TLine> };
 
+export type LineMutationPermission =
+  | { allowed: true }
+  | { allowed: false; reason: string };
+
+export type LineMutationPolicy<TLine extends LineRecord> = (input: {
+  rows: TLine[];
+  mutation: LineMutation<TLine>;
+}) => LineMutationPermission;
+
 export type LineMutationOutcome<TLine extends LineRecord> =
   | { kind: 'applied' }
   | { kind: 'marked-delete'; undoToken: DeletedLineUndoToken<TLine> }

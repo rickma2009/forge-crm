@@ -1,6 +1,7 @@
 import type { LineCandidate, LineColumn, SummaryItem } from '../../components/editable-line-grid/EditableLineGrid';
 import type { FieldSchema } from '../../components/schema-form/types';
 import type { DocumentScenario } from '../../templates/master-detail-document/types';
+import type { LineMutationPolicy } from '../../components/editable-line-grid/types';
 import type { BomAdapter } from './adapter';
 
 export interface BomHeader {
@@ -36,6 +37,16 @@ export const bomExtension = {
   ],
   candidateReview: { id: 'MAT-AX-07', label: '滚珠丝杠副' },
 } as const;
+
+export const bomRowBudgetMessage = '已达到本场景行预算（6 行）；新增空行、添加候选行和复制行已停用。可删除草稿或标记已有行删除后再继续。';
+
+export const bomRowBudgetPolicy: LineMutationPolicy<BomLine> = ({ rows, mutation }) => {
+  if (mutation.type !== 'append-empty' && mutation.type !== 'append-candidate' && mutation.type !== 'copy') return { allowed: true };
+  const activeRows = rows.filter((line) => line.persistedState !== 'marked-for-deletion');
+  return activeRows.length >= bomExtension.budget.maxRows
+    ? { allowed: false, reason: bomRowBudgetMessage }
+    : { allowed: true };
+};
 
 const headerSchema: FieldSchema<BomHeader>[] = [
   { id: 'assemblyName', kind: 'text', label: '装配名称', groupId: 'definition', requiredWhen: { type: 'always', value: true } },
@@ -78,6 +89,7 @@ export function createBomScenario(adapter: BomAdapter): DocumentScenario<BomHead
     candidates,
     emptyLine: { itemName: '', materialCode: '', quantity: 1, unit: '件', hierarchyLevel: 3, differenceCue: '一致' },
     allocateLineId: adapter.allocateLineId,
+    lineMutationPolicy: bomRowBudgetPolicy,
     validate: () => ({ headerErrors: [], lineErrors: [] }),
     save: adapter.save,
     summary: summaryFor,

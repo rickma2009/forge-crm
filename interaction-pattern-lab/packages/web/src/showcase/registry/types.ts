@@ -1,6 +1,6 @@
 export type ShowcaseRoleId = 'admin' | 'viewer';
 export type PageCoverage = 'interactive-slice' | 'description-only';
-export type PageRendererKey = 'overview' | 'resource-catalog' | 'customer-directory' | 'dictionary-admin' | 'list-view-admin' | 'sales-order-prototype' | 'personal-workbench' | 'master-detail-workbench' | 'description';
+export type PageRendererKey = 'overview' | 'resource-catalog' | 'customer-directory' | 'dictionary-admin' | 'list-view-admin' | 'sales-order-prototype' | 'personal-workbench' | 'master-detail-workbench' | 'bom-scenario' | 'description';
 
 export interface ShowcaseOperation {
   id: string;
