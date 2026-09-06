@@ -5,8 +5,8 @@ import { fileURLToPath } from 'node:url';
 import { validateJsonSchema } from '../../_methodology/scripts/json-schema-subset.mjs';
 
 const root = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
-const contractPath = path.join(root, 'src/demos/bulk-assignment/bulk-assignment.scenarios.json');
-const schemaPath = path.join(root, 'src/demos/bulk-assignment/bulk-assignment.scenario.schema.json');
+const contractPath = path.join(root, 'packages/web/src/demos/bulk-assignment/bulk-assignment.scenarios.json');
+const schemaPath = path.join(root, 'packages/web/src/demos/bulk-assignment/bulk-assignment.scenario.schema.json');
 const contract = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
 const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
 

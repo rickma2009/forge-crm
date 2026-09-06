@@ -1,0 +1,6 @@
+packages:
+  - "packages/contracts"
+  - "packages/server"
+  - "packages/web"
+  - "packages/tsconfig"
+  - "!**/node_modules/**"

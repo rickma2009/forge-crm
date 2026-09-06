@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "showcase-registry.schema.json",
+  "title": "Showcase Registry v1",
+  "type": "object",
+  "required": ["version", "system", "capabilities", "roles", "pages", "navigation"],
+  "properties": {
+    "version": { "const": 1 },
+    "system": {
+      "type": "object",
+      "required": ["name", "logoKey", "defaultPageId"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "logoKey": { "type": "string", "minLength": 1 },
+        "defaultPageId": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "capabilities": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "roles": { "type": "array", "minItems": 2 },
+    "pages": { "type": "array", "minItems": 1 },
+    "navigation": {
+      "type": "object",
+      "required": ["primary", "management"],
+      "properties": {
+        "primary": { "type": "array", "minItems": 1 },
+        "management": { "type": "object" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
