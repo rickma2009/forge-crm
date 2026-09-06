@@ -1,0 +1,19 @@
+{
+  "sourceId": "REQSRC-014",
+  "title": "多来源 UI 萃取与演示门户 Business Gate 批准",
+  "sourceType": "user-provided-gate-approval",
+  "sourceDate": "2026-09-03",
+  "importedAt": "2026-09-03T17:49:49+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "7502c53429a11fa93d62a4611647a005bb317a5df16f80babaabaad3f7bcdec8",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved",
+  "gate": "business-003-multi-source-ui-distillation-showcase",
+  "approval": {
+    "approvedBy": "Rick",
+    "approvedAt": "2026-09-03T17:49:49+08:00",
+    "conclusion": "approved"
+  }
+}

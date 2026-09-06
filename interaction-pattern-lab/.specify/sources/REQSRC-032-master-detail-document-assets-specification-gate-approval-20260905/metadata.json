@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-032",
+  "title": "切片 010 主从单据与企业组件资产化 Specification Gate 批准",
+  "sourceType": "user-gate-approval",
+  "sourceDate": "2026-09-05",
+  "importedAt": "2026-09-05T11:44:47+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "193d2abf5e0efe71eb7aa0caa8f2de0084be6854ffb0ae9dc52fd0e2a798e663",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved"
+}

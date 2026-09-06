@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-033",
+  "title": "切片 010 持续计划执行指令",
+  "sourceType": "user-continuous-execution-direction",
+  "sourceDate": "2026-09-05",
+  "importedAt": "2026-09-05T11:54:22+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "1bb02cb67824495b89a8ac700cf41aef256e36e8c8ec32b463820cc125409029",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active-awaiting-architecture-gate"
+}
