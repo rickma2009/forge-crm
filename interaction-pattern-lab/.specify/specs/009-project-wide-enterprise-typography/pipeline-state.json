@@ -1,0 +1,12 @@
+{
+  "featureId": "009-project-wide-enterprise-typography",
+  "status": "released-in-validation-lab",
+  "currentStage": "operations-and-adoption-evidence",
+  "gates": {
+    "business": "approved-REQSRC-023",
+    "specification": "approved-REQSRC-028-under-REQSRC-023-standing-authorization",
+    "architecture": "approved-REQSRC-028-under-REQSRC-023-standing-authorization",
+    "release": "approved-for-local-validation-lab-REQSRC-023"
+  },
+  "updatedAt": "2026-09-04T23:06:00+08:00"
+}

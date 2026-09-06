@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-031",
+  "title": "企业 UI 资产技术路线确认与后续实施指令",
+  "sourceType": "user-implementation-direction",
+  "sourceDate": "2026-09-05",
+  "importedAt": "2026-09-05T00:00:00+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "2ea3255818cf193ab22b09135cb2fcfbee3112c03e20f006c93e18a51e614ea2",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active-awaiting-gates"
+}

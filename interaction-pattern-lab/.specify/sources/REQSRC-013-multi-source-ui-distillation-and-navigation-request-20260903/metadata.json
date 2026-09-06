@@ -1,0 +1,20 @@
+{
+  "sourceId": "REQSRC-013",
+  "title": "多来源 UI 萃取、方案保存与导航菜单首片请求",
+  "sourceType": "user-request-and-attachment",
+  "sourceDate": "2026-09-03",
+  "importedAt": "2026-09-03T16:40:59+08:00",
+  "originalPath": "current-codex-task:user-message-and-attachment",
+  "managedCopy": "source.md",
+  "sha256": "701c11ba775b75a9d688111c96d86004d16cc0ba9f9cdf743dc2d5145f6bc985",
+  "attachments": [
+    {
+      "managedCopy": "navigation-reference.png",
+      "sha256": "941e8871a53e8f1cbd12167a5dbb8624ac1daa1b93af9447c68d9b2d331906ff"
+    }
+  ],
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active",
+  "gateImpact": "reopens-business-scope-and-requires-new-specification-and-architecture-gates"
+}

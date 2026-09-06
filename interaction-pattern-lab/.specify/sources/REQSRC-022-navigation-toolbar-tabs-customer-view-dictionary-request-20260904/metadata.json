@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-022",
+  "title": "导航、顶部工具栏、多 Tab、客户列表、视图模板与数据字典需求",
+  "sourceType": "user-provided-change-request",
+  "sourceDate": "2026-09-04",
+  "importedAt": "2026-09-04T00:55:15+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "74b6f4ae8ddc7045f39b52b7d1b1ca8e97d852f3cc2faa25322023b2b465bec6",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active"
+}

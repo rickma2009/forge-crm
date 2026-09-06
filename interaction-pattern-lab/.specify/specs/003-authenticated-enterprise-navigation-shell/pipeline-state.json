@@ -1,0 +1,20 @@
+{
+  "featureId": "003-authenticated-enterprise-navigation-shell",
+  "status": "frontend-only-history-preserved-gates-reopened",
+  "currentStage": "business-gate-reopened",
+  "gates": {
+    "business": "historical-approval-REQSRC-014-reopened-by-REQSRC-017",
+    "specification": "historical-approval-REQSRC-015-reopened-for-new-target",
+    "architecture": "historical-approval-REQSRC-016-reopened-for-new-target",
+    "release": "not-started"
+  },
+  "checks": {
+    "sources": "REQSRC-017-archived-new-boundary",
+    "structure": "new-business-requirement-package-created",
+    "traceability": "historical-frontend-chain-preserved-new-chain-pending-gates",
+    "testDesign": "passed-12-files-56-tests",
+    "implementation": "historical-frontend-tasks-401-through-406-completed-not-current-target",
+    "browser": "passed-1440-1280-low-height-keyboard-network-storage"
+  },
+  "updatedAt": "2026-09-03T19:35:00+08:00"
+}

@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-025",
+  "title": "admin 系统访问运行事件",
+  "sourceType": "user-runtime-incident-report",
+  "sourceDate": "2026-09-04",
+  "importedAt": "2026-09-04T11:00:00+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "7db66e94d244dd812e541fa2dcf7ed817ce3a01d86e4d5a3668181cb123aeb67",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "resolved-runtime"
+}

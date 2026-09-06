@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-026",
+  "title": "数据字典层级与字典值维护增量需求",
+  "sourceType": "user-change-request-and-reference-page",
+  "sourceDate": "2026-09-04",
+  "importedAt": "2026-09-04T15:38:59+08:00",
+  "originalPath": "current-codex-task:user-message-and-reference-url",
+  "managedCopy": "source.md",
+  "sha256": "bd04ccea5305760bf5073c4434fa7e8607020416e57d90b25a2494e10f412722",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active"
+}

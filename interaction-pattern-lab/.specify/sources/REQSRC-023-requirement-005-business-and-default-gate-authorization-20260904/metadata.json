@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-023",
+  "title": "需求 005 Business Gate 与后续默认 Gate 连续实施授权",
+  "sourceType": "user-approval-and-implementation-authorization",
+  "sourceDate": "2026-09-04",
+  "importedAt": "2026-09-04T01:22:17+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "7f528cb1ac7dcd6cb489608c59e0fbe66356f37a74bcceee165bdcb37096b17b",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved"
+}

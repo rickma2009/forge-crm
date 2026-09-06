@@ -1,0 +1,19 @@
+{
+  "sourceId": "REQSRC-015",
+  "title": "认证式企业导航壳层 Specification Gate 批准",
+  "sourceType": "user-provided-gate-approval",
+  "sourceDate": "2026-09-03",
+  "importedAt": "2026-09-03T18:03:13+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "d158ea13d577795dc650c290a0d53d4b728887b7024882802861f031ec70600f",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved",
+  "gate": "specification-003-authenticated-enterprise-navigation-shell",
+  "approval": {
+    "approvedBy": "Rick",
+    "approvedAt": "2026-09-03T18:03:13+08:00",
+    "conclusion": "approved"
+  }
+}

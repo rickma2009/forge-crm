@@ -1,0 +1,19 @@
+{
+  "sourceId": "REQSRC-016",
+  "title": "认证式企业导航壳层 Architecture Gate 批准",
+  "sourceType": "user-provided-gate-approval",
+  "sourceDate": "2026-09-03",
+  "importedAt": "2026-09-03T18:29:56+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "cbd02104ba644e66518f955b5cd7c7db820e754634d374b606596f44324996cc",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved",
+  "gate": "architecture-003-authenticated-enterprise-navigation-shell",
+  "approval": {
+    "approvedBy": "Rick",
+    "approvedAt": "2026-09-03T18:29:56+08:00",
+    "conclusion": "approved"
+  }
+}

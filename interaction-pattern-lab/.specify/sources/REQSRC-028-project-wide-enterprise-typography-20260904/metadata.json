@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-028",
+  "title": "演示门户项目级统一字体需求",
+  "sourceType": "user-change-request",
+  "sourceDate": "2026-09-04",
+  "importedAt": "2026-09-04T18:10:00+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "e6399feeb048cb926b1abc248c99d959e611302e24154f1c693f391723244aa0",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active"
+}

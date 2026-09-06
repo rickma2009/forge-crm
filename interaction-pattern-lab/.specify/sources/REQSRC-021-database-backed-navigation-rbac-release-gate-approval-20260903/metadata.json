@@ -1,0 +1,19 @@
+{
+  "sourceId": "REQSRC-021",
+  "title": "数据库驱动导航与角色授权 Release Gate 批准",
+  "sourceType": "user-provided-gate-approval",
+  "sourceDate": "2026-09-03",
+  "importedAt": "2026-09-03T23:49:25+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "d97ff73b50dc2dbdcaaf206c403cc74c9528cb72bd63fe05467548bc555f97eb",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved",
+  "gate": "release-004-database-backed-navigation-rbac",
+  "approval": {
+    "approvedBy": "Rick",
+    "approvedAt": "2026-09-03T23:49:25+08:00",
+    "conclusion": "approved"
+  }
+}

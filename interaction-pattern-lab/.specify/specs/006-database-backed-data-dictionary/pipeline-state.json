@@ -1,0 +1,20 @@
+{
+  "featureId": "006-database-backed-data-dictionary",
+  "status": "reqsrc-027-increment-released-in-validation-lab",
+  "currentStage": "operations-and-adoption-evidence",
+  "gates": {
+    "business": "approved-REQSRC-023",
+    "specification": "approved-REQSRC-027-under-REQSRC-023-standing-authorization",
+    "architecture": "approved-REQSRC-027-under-REQSRC-023-standing-authorization",
+    "release": "approved-for-local-validation-lab-REQSRC-023"
+  },
+  "checks": {
+    "sources": "REQSRC-022-REQSRC-023-REQSRC-026-REQSRC-027-archived",
+    "traceability": "BUS-013-through-TASK-622-complete",
+    "migration": "20260904074000-applied-local",
+    "implementation": "TASK-611-through-TASK-622-complete",
+    "review": "requirements-data-security-integration-reviewed",
+    "releaseScope": "local-validation-lab-no-external-deployment"
+  },
+  "updatedAt": "2026-09-04T17:50:00+08:00"
+}

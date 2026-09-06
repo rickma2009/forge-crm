@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-024",
+  "title": "客户列表布局与交互优化请求",
+  "sourceType": "user-change-request-and-annotated-screenshot",
+  "sourceDate": "2026-09-04",
+  "importedAt": "2026-09-04T09:05:00+08:00",
+  "originalPath": "current-codex-task:user-message-and-attached-image",
+  "managedCopy": "source.md",
+  "sha256": "d748994cb89fdbaf41e7447bd7c54128dcb2de4c482a6769b9148e8c44cfae2e",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active"
+}

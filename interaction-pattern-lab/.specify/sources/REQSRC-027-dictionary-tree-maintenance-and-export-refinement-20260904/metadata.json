@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-027",
+  "title": "数据字典树、维护范围与导出功能增量需求",
+  "sourceType": "user-change-request",
+  "sourceDate": "2026-09-04",
+  "importedAt": "2026-09-04T17:43:26+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "dda87d2ef8e6b332f567d8eabf1ffd174ae2ba23fe623fb827229cd05c57b511",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active"
+}

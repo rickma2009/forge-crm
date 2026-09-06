@@ -1,0 +1,24 @@
+{
+  "featureId": "004-database-backed-navigation-rbac",
+  "status": "released-in-validation-lab",
+  "currentStage": "operations-and-adoption-evidence",
+  "gates": {
+    "business": "approved-REQSRC-018",
+    "specification": "approved-REQSRC-019",
+    "architecture": "approved-REQSRC-020",
+    "release": "approved-REQSRC-021"
+  },
+  "checks": {
+    "sources": "REQSRC-017-through-REQSRC-021-archived",
+    "businessClarifications": "Q-401-through-Q-407-approved",
+    "specificationClarifications": "Q-SPEC-501-through-Q-SPEC-507-approved",
+    "architectureClarifications": "Q-ARCH-501-through-Q-ARCH-508-approved",
+    "traceability": "business-through-test-design-complete",
+    "testDesign": "unit-web-database-api-performance-resilience-browser-executed",
+    "tasks": "TASK-501-through-TASK-509-created",
+    "implementation": "TASK-501-through-TASK-509-complete",
+    "review": "three-perspective-review-complete;one-nonblocking-p2-maintainability-debt",
+    "releaseGateSubmission": "approved-REQSRC-021;released-in-validation-lab;no-external-deployment"
+  },
+  "updatedAt": "2026-09-03T23:49:25+08:00"
+}
