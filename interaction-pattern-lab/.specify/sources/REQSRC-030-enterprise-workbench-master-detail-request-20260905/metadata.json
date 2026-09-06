@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-030",
+  "title": "企业工作台、主从工作区与交互资产提炼请求",
+  "sourceType": "user-change-request-and-autonomous-design-authorization",
+  "sourceDate": "2026-09-05",
+  "importedAt": "2026-09-05T01:20:00+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "c8af69a8bb0f1cef6260f911ca1b4e326998a0c30e6a777d57f4c710ef830a69",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "design-prototype"
+}

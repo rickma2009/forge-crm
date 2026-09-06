@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-029",
+  "title": "企业管理页面模板、销售订单子表与 BOM 展示研究请求",
+  "sourceType": "user-change-request-and-design-selection",
+  "sourceDate": "2026-09-05",
+  "importedAt": "2026-09-05T00:45:00+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "2f65a246e85b4828fd154a2d98a415e155b404a8a205e86eaab5fbe73b7bf79b",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "design-prototype"
+}
