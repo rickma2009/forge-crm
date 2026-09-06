@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 export const projectRoot = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 const workbenchRoot = path.resolve(projectRoot, '..');
-export const projectionPath = path.join(projectRoot, 'src/catalog/patterns.data.json');
+export const projectionPath = path.join(projectRoot, 'packages/web/src/catalog/patterns.data.json');
 
 function keywordsFor(asset) {
   return [...new Set([asset.name, asset.group, asset.kind, ...asset.definition.flatMap((value) => value.split(/[、，,/\s]+/))].filter(Boolean))];
@@ -24,7 +24,7 @@ function summaryFor(asset) {
 
 export function buildPatternProjection() {
   const registry = JSON.parse(fs.readFileSync(path.join(workbenchRoot, '_methodology/patterns/index.json'), 'utf8'));
-  const validations = JSON.parse(fs.readFileSync(path.join(projectRoot, 'src/catalog/validation-slices.data.json'), 'utf8'));
+  const validations = JSON.parse(fs.readFileSync(path.join(projectRoot, 'packages/web/src/catalog/validation-slices.data.json'), 'utf8'));
   const byAsset = new Map();
   for (const validation of validations) {
     for (const assetId of validation.coveredAssetIds) {
@@ -47,7 +47,7 @@ export function buildPatternProjection() {
       evidence: asset.evidence,
       nextEvidence: asset.nextEvidence,
       coveredBy: (byAsset.get(asset.assetId) ?? []).map((item) => item.validationId),
-      demos: byAsset.get(asset.assetId) ?? [],
+      demos: (byAsset.get(asset.assetId) ?? []).filter((item) => item.demoId),
     })),
     validations,
   };

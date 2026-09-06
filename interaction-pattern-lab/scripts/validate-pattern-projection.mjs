@@ -26,4 +26,12 @@ for (const pattern of projection.patterns) {
   for (const source of pattern.sources) assert.ok(fs.existsSync(path.resolve(projectRoot, '..', source)), `${pattern.id} 来源不存在: ${source}`);
 }
 
+const masterDetailValidation = projection.validations.find((validation) => validation.validationId === 'VAL-010');
+assert.ok(masterDetailValidation, 'VAL-010 必须登记为验证场候选切片');
+assert.equal(masterDetailValidation.primaryAssetId, 'EPM-PAGE-013');
+assert.equal(masterDetailValidation.validationState, 'in-lab-candidate');
+assert.equal(masterDetailValidation.demoId, undefined, '候选验证不得伪造独立 Catalog Demo');
+assert.deepEqual(masterDetailValidation.coveredAssetIds, ['EPM-PAGE-012', 'EPM-PAGE-013', 'EPM-ACT-010', 'EPM-ACT-011', 'EPM-ACT-012', 'EPM-ACT-013', 'EPM-ACT-017', 'EPM-ACT-043', 'EPM-ACT-044', 'EPM-VIEW-007', 'EPM-VIEW-010', 'EPM-VIEW-013', 'EPM-VIEW-018', 'EPM-STATE-002', 'EPM-STATE-004', 'EPM-STATE-005', 'EPM-STATE-006', 'EPM-STATE-007', 'EPM-STATE-008']);
+assert.equal(projection.patterns.find((pattern) => pattern.id === 'EPM-PAGE-013')?.maturity, 'implementation-verified', 'VAL-010 只登记验证覆盖，不得宣称项目采用或 Release');
+
 console.log(`PASS  Lab 投影 ${projection.patterns.length} 项、${projection.validations.length} 个验证切片，来源与覆盖关系有效`);

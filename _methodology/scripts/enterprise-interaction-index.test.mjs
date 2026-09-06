@@ -17,12 +17,29 @@ test('TC-301: 企业交互资产登记册包含六类 103 个唯一分类项', (
   );
 });
 
-test('TC-305: 两个既有资产保持不同成熟度，其余分类项不继承成熟度', () => {
+test('TC-305: 三个已有证据资产保持各自成熟度，其余分类项不继承成熟度', () => {
   const registry = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
   const byId = new Map(registry.assets.map((asset) => [asset.assetId, asset]));
   assert.equal(byId.get('EPM-PAGE-001').maturity, 'interaction-verified');
+  assert.equal(byId.get('EPM-PAGE-002').maturity, 'interaction-verified');
   assert.equal(byId.get('EPM-SCENE-001').maturity, 'implementation-verified');
   assert.equal(byId.get('EPM-PAGE-010').maturity, 'idea');
   assert.equal(byId.get('EPM-ACT-042').maturity, 'idea');
   assert.equal(byId.get('EPM-SPECIAL-002').maturity, 'idea');
+});
+
+test('TC-1017: 主从单据候选资产登记完整且不高于验证场工程证据', () => {
+  const registry = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+  const byId = new Map(registry.assets.map((asset) => [asset.assetId, asset]));
+  const expectedArtifacts = [
+    '_methodology/templates/ui/master-detail-document/README.md',
+    '_methodology/templates/ui/master-detail-document/schema-form.schema.example.json',
+    '_methodology/templates/ui/master-detail-document/editable-line-grid.schema.example.json',
+    '_methodology/templates/ui/master-detail-document/state-matrix.md',
+    '_methodology/templates/ui/master-detail-document/acceptance-checklist.md',
+    '_methodology/templates/ui/master-detail-document/master-detail-document.tokens.css',
+  ];
+  assert.equal(byId.get('EPM-PAGE-013').maturity, 'implementation-verified');
+  for (const artifact of expectedArtifacts) assert.ok(byId.get('EPM-PAGE-013').artifacts.includes(artifact), `缺少候选资产: ${artifact}`);
+  assert.ok(byId.get('EPM-PAGE-013').evidence.includes('interaction-pattern-lab:010-master-detail-document-assets-dual-scenario'));
 });

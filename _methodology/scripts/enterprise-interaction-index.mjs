@@ -6,6 +6,8 @@ export const indexRelativePath = '_methodology/patterns/index.json';
 
 const maturityOverrides = new Map([
   ['EPM-PAGE-001', 'interaction-verified'],
+  ['EPM-PAGE-002', 'interaction-verified'],
+  ['EPM-PAGE-013', 'implementation-verified'],
   ['EPM-SCENE-001', 'implementation-verified'],
 ]);
 
@@ -14,6 +16,19 @@ const artifactOverrides = new Map([
     '_methodology/patterns/enterprise-two-level-navigation-shell.md',
     '_methodology/templates/ui/enterprise-navigation-shell/README.md',
     '_methodology/examples/002-golden-interaction-enterprise-navigation-shell/README.md',
+  ]],
+  ['EPM-PAGE-002', [
+    '_methodology/reference-cases/enterprise-workbench-master-detail-candidate.md',
+    '_methodology/templates/ui/enterprise-workbench/README.md',
+    '_methodology/examples/004-golden-interaction-enterprise-workbench/README.md',
+  ]],
+  ['EPM-PAGE-013', [
+    '_methodology/templates/ui/master-detail-document/README.md',
+    '_methodology/templates/ui/master-detail-document/schema-form.schema.example.json',
+    '_methodology/templates/ui/master-detail-document/editable-line-grid.schema.example.json',
+    '_methodology/templates/ui/master-detail-document/state-matrix.md',
+    '_methodology/templates/ui/master-detail-document/acceptance-checklist.md',
+    '_methodology/templates/ui/master-detail-document/master-detail-document.tokens.css',
   ]],
   ['EPM-SCENE-001', [
     '_methodology/patterns/record-management-workspace.md',
@@ -24,6 +39,8 @@ const artifactOverrides = new Map([
 
 const evidenceOverrides = new Map([
   ['EPM-PAGE-001', ['interaction-pattern-lab:001-pattern-catalog-preview', 'mcrm:003-enterprise-navigation-shell']],
+  ['EPM-PAGE-002', ['interaction-pattern-lab:enterprise-workbench-design-prototype-REQSRC-030']],
+  ['EPM-PAGE-013', ['interaction-pattern-lab:010-master-detail-document-assets-dual-scenario']],
   ['EPM-SCENE-001', ['interaction-pattern-lab:001-pattern-catalog-preview', 'mcrm:004-customer-record-workspace']],
 ]);
 

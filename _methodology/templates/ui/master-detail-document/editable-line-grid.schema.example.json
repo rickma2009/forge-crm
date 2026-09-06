@@ -1,0 +1,10 @@
+{
+  "$id": "candidate://master-detail/editable-line-grid/v1",
+  "status": "candidate-technology-neutral",
+  "identity": { "rowId": "stable-deterministic", "forbid": ["array-index", "timestamp"] },
+  "columns": [{ "id": "description", "label": "明细描述", "editable": true }, { "id": "quantity", "label": "数量", "editable": true, "valueKind": "number" }],
+  "mutations": ["append-empty", "append-candidate", "copy", "update", "remove-draft", "mark-delete", "undo-delete", "select"],
+  "deletion": { "draft": "remove-immediately", "persisted": "mark-for-deletion", "undo": "requires-matching-revision-and-restores-identity-values-position" },
+  "budget": { "maxActiveRows": "scenario-defined", "onExceeded": "reject-and-explain" },
+  "accessibility": { "errorSummary": "focus-first-operable-error", "keyboard": ["Tab", "Enter", "Escape"] }
+}

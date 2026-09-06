@@ -1,0 +1,12 @@
+{
+  "$id": "candidate://master-detail/schema-form/v1",
+  "status": "candidate-technology-neutral",
+  "groups": [{ "id": "header", "label": "对象头" }],
+  "fields": [
+    { "id": "reference", "kind": "text", "label": "业务引用", "group": "header", "required": true },
+    { "id": "effectiveDate", "kind": "date", "label": "生效日期", "group": "header", "required": true },
+    { "id": "party", "kind": "resolved-choice", "label": "关联主体", "group": "header", "required": false, "display": { "id": "example-party", "label": "示例主体" } }
+  ],
+  "rules": { "hiddenError": "reveal-or-clear-by-scenario", "readonly": "readable-and-focusable", "disabled": "unavailable-with-reason" },
+  "failureBehavior": { "validation": "preserve-input-and-focus-error", "remoteResolution": "show-safe-readable-fallback" }
+}

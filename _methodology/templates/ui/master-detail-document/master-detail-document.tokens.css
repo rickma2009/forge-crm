@@ -1,0 +1,13 @@
+:root {
+  --master-detail-canvas: #f4f6fa;
+  --master-detail-surface: #ffffff;
+  --master-detail-ink: #1c2738;
+  --master-detail-muted: #6d7888;
+  --master-detail-border: #dfe4ec;
+  --master-detail-focus: #2f67df;
+  --master-detail-success: #188564;
+  --master-detail-warning: #c86d16;
+  --master-detail-danger: #c43d49;
+  --master-detail-radius: 7px;
+  --master-detail-space: 12px;
+}
