@@ -1,0 +1,210 @@
+interaction-pattern-lab/packages/web/tsconfig.app.json
+  e528476cbc97de75 1-10
+interaction-pattern-lab/packages/server/src/rbac/navigation-policy.ts
+  e528476cbc97de75 1-103
+interaction-pattern-lab/packages/web/src/showcase/domain/routes.ts
+  e528476cbc97de75 1-8
+interaction-pattern-lab/packages/server/src/http/api-exceptions.ts
+  e528476cbc97de75 1-9
+interaction-pattern-lab/packages/contracts/src/contracts.spec.ts
+  e528476cbc97de75 1-32
+interaction-pattern-lab/packages/server/src/rbac/authorization.service.ts
+  e528476cbc97de75 1-94
+interaction-pattern-lab/packages/server/src/auth/session.guard.ts
+  e528476cbc97de75 1-26
+interaction-pattern-lab/packages/web/package.json
+  e528476cbc97de75 1-12,14-19,21-32,34
+interaction-pattern-lab/packages/web/src/showcase/EnterpriseWorkbenchPrototype.tsx
+  e528476cbc97de75 1-178
+interaction-pattern-lab/packages/server/src/dictionary/dictionary.controller.ts
+  e528476cbc97de75 1-62
+interaction-pattern-lab/packages/server/src/rbac/seed-definition.spec.ts
+  e528476cbc97de75 1-47
+interaction-pattern-lab/packages/tsconfig/base.json
+  e528476cbc97de75 6-10,13-16
+interaction-pattern-lab/packages/web/src/styles/typography.test.ts
+  e528476cbc97de75 1-32
+interaction-pattern-lab/package.json
+  e528476cbc97de75 3,7,9-16,19,23-28,34,36
+interaction-pattern-lab/packages/web/src/showcase/previewGateway.ts
+  e528476cbc97de75 1-58
+interaction-pattern-lab/packages/server/src/customer/customer.controller.ts
+  e528476cbc97de75 1-50
+interaction-pattern-lab/packages/web/src/showcase/domain/domain.test.ts
+  e528476cbc97de75 1-64
+interaction-pattern-lab/packages/web/src/showcase/domain/access.ts
+  e528476cbc97de75 1-29
+interaction-pattern-lab/packages/server/src/demo-resource/demo-resource.service.ts
+  e528476cbc97de75 1-25
+interaction-pattern-lab/packages/tsconfig/nestjs.json
+  e528476cbc97de75 1-12
+interaction-pattern-lab/packages/server/prisma/migrations/20260904074000_hierarchical_dictionary_values/migration.sql
+  e528476cbc97de75 1-19
+interaction-pattern-lab/packages/server/src/config/runtime-config.spec.ts
+  e528476cbc97de75 1-18
+interaction-pattern-lab/packages/server/prisma/schema.prisma
+  e528476cbc97de75 1-307
+interaction-pattern-lab/packages/contracts/package.json
+  e528476cbc97de75 1-19
+interaction-pattern-lab/packages/server/src/rbac/database-definition.spec.ts
+  e528476cbc97de75 1-16
+interaction-pattern-lab/eslint.config.mjs
+  e528476cbc97de75 1,5-7,10-11,13-17
+interaction-pattern-lab/packages/web/src/styles/index.css
+  e528476cbc97de75 2-5,30-32,39,50-64,92
+interaction-pattern-lab/packages/server/src/demo-resource/demo-resource.service.spec.ts
+  e528476cbc97de75 1-18
+interaction-pattern-lab/packages/server/prisma/migrations/20260903204500_create_navigation_rbac/migration.sql
+  e528476cbc97de75 1-137
+interaction-pattern-lab/packages/server/tsconfig.json
+  e528476cbc97de75 1-6
+interaction-pattern-lab/scripts/validate-scenario-contracts.mjs
+  e528476cbc97de75 8-9
+interaction-pattern-lab/packages/server/src/auth/write-request.guard.ts
+  e528476cbc97de75 1-21
+interaction-pattern-lab/packages/web/tsconfig.node.json
+  e528476cbc97de75 2-3
+interaction-pattern-lab/packages/server/prisma/seed.ts
+  e528476cbc97de75 1-196
+interaction-pattern-lab/packages/server/src/customer/customer.service.ts
+  e528476cbc97de75 1-109
+interaction-pattern-lab/packages/server/src/rbac/database-definition.ts
+  e528476cbc97de75 1-87
+interaction-pattern-lab/packages/web/src/showcase/EnterprisePages.tsx
+  e528476cbc97de75 1-187
+interaction-pattern-lab/.env.example
+  e528476cbc97de75 1-10
+interaction-pattern-lab/packages/server/src/test/setup-env.ts
+  e528476cbc97de75 1-4
+interaction-pattern-lab/packages/server/src/database/migration.integration.spec.ts
+  e528476cbc97de75 1-39
+interaction-pattern-lab/packages/server/prisma/migrations/migration_lock.toml
+  e528476cbc97de75 1
+interaction-pattern-lab/packages/server/src/main.ts
+  e528476cbc97de75 1-15
+interaction-pattern-lab/packages/server/src/config/runtime-config.ts
+  e528476cbc97de75 1-40
+interaction-pattern-lab/packages/server/src/auth/auth.controller.ts
+  e528476cbc97de75 1-34
+interaction-pattern-lab/packages/contracts/src/index.ts
+  e528476cbc97de75 1-184
+interaction-pattern-lab/packages/web/src/showcase/sales-order.css
+  e528476cbc97de75 1-146
+interaction-pattern-lab/packages/server/prisma/migrations/20260904012500_workspace_views_dictionary_customer/migration.sql
+  e528476cbc97de75 1-146
+interaction-pattern-lab/packages/server/package.json
+  e528476cbc97de75 1-63
+interaction-pattern-lab/packages/server/src/http/api-exception.filter.ts
+  e528476cbc97de75 1-20
+interaction-pattern-lab/packages/web/src/app/App.test.tsx
+  e528476cbc97de75 32-34
+interaction-pattern-lab/compose.yaml
+  e528476cbc97de75 1-19
+interaction-pattern-lab/packages/server/src/auth/auth.service.ts
+  e528476cbc97de75 1-25
+interaction-pattern-lab/packages/server/tsconfig.scripts.json
+  e528476cbc97de75 1-9
+interaction-pattern-lab/packages/server/prisma/seed-data.ts
+  e528476cbc97de75 1-89
+interaction-pattern-lab/packages/server/src/rbac/navigation.controller.ts
+  e528476cbc97de75 1-24
+interaction-pattern-lab/packages/web/src/app/RootApp.test.tsx
+  e528476cbc97de75 1-20
+interaction-pattern-lab/packages/server/nest-cli.json
+  e528476cbc97de75 1-6
+interaction-pattern-lab/packages/server/src/health.controller.ts
+  e528476cbc97de75 1-14
+interaction-pattern-lab/packages/web/src/app/RootApp.tsx
+  e528476cbc97de75 1-20
+interaction-pattern-lab/packages/server/src/app.module.ts
+  e528476cbc97de75 1-51
+interaction-pattern-lab/packages/web/src/showcase/gateway.ts
+  e528476cbc97de75 1-71
+interaction-pattern-lab/pnpm-workspace.yaml
+  e528476cbc97de75 1-6
+interaction-pattern-lab/packages/web/src/main.tsx
+  e528476cbc97de75 3,5,7
+interaction-pattern-lab/packages/tsconfig/package.json
+  e528476cbc97de75 1-6
+interaction-pattern-lab/packages/web/src/showcase/EnterprisePages.test.tsx
+  e528476cbc97de75 1-108
+interaction-pattern-lab/packages/web/src/showcase/showcase.css
+  e528476cbc97de75 1-309
+interaction-pattern-lab/packages/server/src/auth/session-signer.ts
+  e528476cbc97de75 1-54
+interaction-pattern-lab/packages/server/src/auth/session-signer.spec.ts
+  e528476cbc97de75 1-29
+interaction-pattern-lab/packages/server/src/auth/session.guard.spec.ts
+  e528476cbc97de75 1-16
+interaction-pattern-lab/packages/server/src/dictionary/dictionary.service.ts
+  e528476cbc97de75 1-135
+interaction-pattern-lab/packages/web/vite.config.ts
+  e528476cbc97de75 3,7-12
+interaction-pattern-lab/packages/web/src/showcase/domain/resource.ts
+  e528476cbc97de75 1,5,8-11,14-26,28-42
+interaction-pattern-lab/packages/tsconfig/react.json
+  e528476cbc97de75 1-10
+interaction-pattern-lab/packages/web/src/showcase/SalesOrderPrototype.test.tsx
+  e528476cbc97de75 1-37
+interaction-pattern-lab/packages/server/prisma.config.ts
+  e528476cbc97de75 1-13
+interaction-pattern-lab/packages/web/src/showcase/domain/navigation.ts
+  e528476cbc97de75 1-52
+interaction-pattern-lab/packages/server/src/list-view/list-view.controller.ts
+  e528476cbc97de75 1-60
+interaction-pattern-lab/packages/web/src/showcase/registry/showcase-registry.schema.json
+  e528476cbc97de75 1-33
+interaction-pattern-lab/packages/server/src/demo-resource/demo-resource.controller.ts
+  e528476cbc97de75 1-25
+interaction-pattern-lab/packages/server/src/rbac/seed-definition.ts
+  e528476cbc97de75 1-76
+interaction-pattern-lab/packages/server/src/database/database.service.ts
+  e528476cbc97de75 1-12
+interaction-pattern-lab/packages/server/src/auth/auth.types.ts
+  e528476cbc97de75 1-4
+interaction-pattern-lab/packages/web/src/showcase/domain/resource.test.ts
+  e528476cbc97de75 1-27
+interaction-pattern-lab/packages/server/src/list-view/list-view.service.ts
+  e528476cbc97de75 1-113
+interaction-pattern-lab/README.md
+  e528476cbc97de75 4-5,9,13-24,32-36,38-39,45,47
+interaction-pattern-lab/packages/server/src/api.integration.spec.ts
+  e528476cbc97de75 1-226
+interaction-pattern-lab/packages/web/src/showcase/SalesOrderPrototype.tsx
+  e528476cbc97de75 1-178
+interaction-pattern-lab/packages/web/src/app/App.tsx
+  e528476cbc97de75 133
+interaction-pattern-lab/packages/server/scripts/performance-navigation.ts
+  e528476cbc97de75 1-121
+interaction-pattern-lab/packages/web/src/showcase/EnterpriseWorkbenchPrototype.test.tsx
+  e528476cbc97de75 1-8,10-11,13-14,17-24,27-29,32-39
+interaction-pattern-lab/packages/web/src/showcase/enterprise-workbench.css
+  e528476cbc97de75 1-52
+interaction-pattern-lab/turbo.json
+  e528476cbc97de75 1-11
+interaction-pattern-lab/packages/contracts/tsconfig.json
+  e528476cbc97de75 1-10
+interaction-pattern-lab/packages/server/src/rbac/navigation-policy.spec.ts
+  e528476cbc97de75 1-43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "8e04c52fa1be349764c24807e9d94325ce46bef8",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 7023,
+      "total_deletions": 6680,
+      "accepted_lines": 7064,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/f46e369cf7f1258b61e57137dc5ce49241f269d07715d9b99dc4b5408361dcc2"
+    }
+  }
+}
