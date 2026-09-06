@@ -1,0 +1,68 @@
+{
+  "system": {
+    "name": "企业页面模板展示",
+    "logoKey": "template-showcase"
+  },
+  "home": {
+    "id": "showcase-overview",
+    "label": "概览",
+    "path": "/showcase",
+    "iconKey": "workbench",
+    "requiredCapabilities": ["showcase.overview.view"]
+  },
+  "primaryGroups": [
+    {
+      "id": "foundation",
+      "label": "基础规范",
+      "iconKey": "foundation",
+      "children": [
+        { "id": "colors", "label": "颜色与主题", "path": "/showcase/foundations/colors", "iconKey": "palette", "requiredCapabilities": ["showcase.foundation.view"] },
+        { "id": "typography", "label": "字体与排版", "path": "/showcase/foundations/typography", "iconKey": "text", "requiredCapabilities": ["showcase.foundation.view"] },
+        { "id": "spacing", "label": "间距与布局", "path": "/showcase/foundations/spacing", "iconKey": "layout", "requiredCapabilities": ["showcase.foundation.view"] },
+        { "id": "icons", "label": "图标与状态色", "path": "/showcase/foundations/icons", "iconKey": "icons", "requiredCapabilities": ["showcase.foundation.view"] }
+      ]
+    },
+    {
+      "id": "components",
+      "label": "基础组件",
+      "iconKey": "components",
+      "children": [
+        { "id": "actions", "label": "按钮与操作", "path": "/showcase/components/actions", "iconKey": "action", "requiredCapabilities": ["showcase.component.view"] },
+        { "id": "form-controls", "label": "表单控件", "path": "/showcase/components/forms", "iconKey": "form", "requiredCapabilities": ["showcase.component.view"] },
+        { "id": "data-display", "label": "数据展示", "path": "/showcase/components/data-display", "iconKey": "table", "requiredCapabilities": ["showcase.component.view"] },
+        { "id": "feedback", "label": "反馈组件", "path": "/showcase/components/feedback", "iconKey": "feedback", "requiredCapabilities": ["showcase.component.view"] }
+      ]
+    },
+    {
+      "id": "page-templates",
+      "label": "页面模板",
+      "iconKey": "pages",
+      "children": [
+        { "id": "record-list", "label": "查询列表", "path": "/showcase/templates/record-list", "iconKey": "list", "requiredCapabilities": ["showcase.template.view"] },
+        { "id": "advanced-filter", "label": "高级筛选列表", "path": "/showcase/templates/advanced-filter", "iconKey": "filter", "requiredCapabilities": ["showcase.template.view"] },
+        { "id": "edit-form", "label": "新增编辑表单", "path": "/showcase/templates/edit-form", "iconKey": "form", "requiredCapabilities": ["showcase.template.view"] },
+        { "id": "record-detail", "label": "业务详情", "path": "/showcase/templates/record-detail", "iconKey": "detail", "requiredCapabilities": ["showcase.template.view"] },
+        { "id": "master-detail", "label": "主从工作区", "path": "/showcase/templates/master-detail", "iconKey": "split-view", "requiredCapabilities": ["showcase.template.view"] },
+        { "id": "workbench", "label": "工作台", "path": "/showcase/templates/workbench", "iconKey": "workbench", "requiredCapabilities": ["showcase.template.view"] }
+      ]
+    },
+    { "id": "interaction-patterns", "label": "交互模式", "path": "/showcase/interactions", "iconKey": "interaction", "requiredCapabilities": ["showcase.pattern.view"] },
+    { "id": "page-states", "label": "页面状态", "path": "/showcase/states", "iconKey": "state", "requiredCapabilities": ["showcase.state.view"] },
+    { "id": "scenarios", "label": "组合场景", "path": "/showcase/scenarios", "iconKey": "scene", "requiredCapabilities": ["showcase.scenario.view"] }
+  ],
+  "managementGroup": {
+    "id": "system-management",
+    "label": "系统管理",
+    "iconKey": "settings",
+    "placement": "rail-footer",
+    "requiredCapabilities": ["showcase.system.view"],
+    "children": [
+      { "id": "users", "label": "用户管理", "path": "/showcase/system/users", "iconKey": "user", "requiredCapabilities": ["showcase.user.view"] },
+      { "id": "roles", "label": "角色管理", "path": "/showcase/system/roles", "iconKey": "role", "requiredCapabilities": ["showcase.role.view"] },
+      { "id": "policies", "label": "权限策略", "path": "/showcase/system/policies", "iconKey": "lock", "requiredCapabilities": ["showcase.policy.view"] },
+      { "id": "menus", "label": "菜单管理", "path": "/showcase/system/menus", "iconKey": "menu", "requiredCapabilities": ["showcase.menu.view"] },
+      { "id": "logs", "label": "操作日志", "path": "/showcase/system/logs", "iconKey": "log", "requiredCapabilities": ["showcase.log.view"] },
+      { "id": "resources", "label": "资源目录", "path": "/showcase/system/resources", "iconKey": "resource", "requiredCapabilities": ["showcase.resource.view"] }
+    ]
+  }
+}
