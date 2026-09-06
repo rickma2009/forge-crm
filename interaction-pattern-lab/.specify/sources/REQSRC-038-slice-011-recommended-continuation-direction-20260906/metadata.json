@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-038",
+  "title": "切片 011 按推荐持续推进指令",
+  "sourceType": "user-provided-continuation-direction",
+  "sourceDate": "2026-09-06",
+  "importedAt": "2026-09-06T23:29:08+08:00",
+  "originalPath": "Codex task user message",
+  "managedCopy": "source.md",
+  "sha256": "32ba1fbb5035279d303f1eaa8b72e4a9167733b62fa88a4b677e7e43c9b7e26b",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active-with-gate-boundary"
+}

@@ -1,10 +1,10 @@
 # 企业批量导入验证业务需求
 
-> 版本：v0.1-rc1
+> 版本：v1.0
 >
-> 状态：`business-gate-draft-awaiting-approval`
+> 状态：`business-gate-approved`
 >
-> 来源：`REQSRC-036`
+> 来源：`REQSRC-036`、`REQSRC-037`
 
 ## 1. 业务问题
 
@@ -84,4 +84,4 @@
 
 ## 8. Gate 边界
 
-Business Gate 只批准目标、角色、流程、范围、不变量和价值验证方向。它不批准字段 Schema、精确阈值、测试用例、架构、实现、资产晋升、部署或 Release。
+Business Gate 已由 Rick 于 2026-09-06 通过 `REQSRC-037` 批准目标、角色、流程、范围、不变量、价值验证方向与 `Q-1101`—`Q-1110` 推荐答案。它不批准字段 Schema、精确阈值、测试用例、架构、实现、资产晋升、部署或 Release。

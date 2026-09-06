@@ -1,0 +1,22 @@
+{
+  "featureId": "011-import-validation-execution",
+  "status": "specification-gate-draft-awaiting-approval",
+  "currentStage": "specification-gate",
+  "gates": {
+    "business": "approved-REQSRC-037",
+    "specification": "pending-review",
+    "architecture": "not-started",
+    "release": "not-started"
+  },
+  "continuationDirection": {
+    "status": "active-with-gate-boundary",
+    "evidence": "REQSRC-038",
+    "scope": "recommended-non-gate-decisions-only"
+  },
+  "checks": {
+    "structure": "passed-2026-09-06-check-sdd-spec",
+    "traceability": "passed-2026-09-06-check-sdd-spec",
+    "implementation": "not-applicable-before-architecture-gate"
+  },
+  "updatedAt": "2026-09-06T23:29:08+08:00"
+}

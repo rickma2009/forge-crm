@@ -1,10 +1,10 @@
 # Business Gate 评审包：导入—校验—执行
 
-> 状态：`ready-for-review`
+> 状态：`approved`
 >
 > 拟议切片：`011-import-validation-execution`
 >
-> 来源：`REQSRC-036`
+> 来源：`REQSRC-036`、`REQSRC-037`
 
 ## 1. 请求决定
 
@@ -34,6 +34,11 @@
 
 ## 5. 建议决定
 
-建议：`approve-business-scope-and-recommended-clarifications`。
+结论：`approved-business-scope-and-recommended-clarifications`。
 
-批准后允许创建切片 011 的 `spec.md`、验收标准和 `testcases.md`，并停在 Specification Gate；不自动批准后续 Gate。
+- 批准人：Rick
+- 批准时间：2026-09-06
+- 批准来源：`REQSRC-037`
+- 批准对象：`BUS-017`、业务范围、目标角色、业务不变量、价值验证方向及 `Q-1101`—`Q-1110` 推荐答案
+- 批准边界：不包含 Specification、Architecture、Plan、Tasks、实现、资产晋升、部署或 Release
+- 下一步：允许创建切片 011 的 `spec.md`、验收标准和 `testcases.md`，并停在 Specification Gate。

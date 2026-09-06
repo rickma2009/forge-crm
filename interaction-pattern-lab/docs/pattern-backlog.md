@@ -30,7 +30,7 @@
 | 已发布 | `008-customer-directory-demo` | 客户目录页面族能否支撑可解释的业务演示 | released-in-validation-lab | 与真实项目字段和操作边界做差异评估 |
 | 已发布 | `009-project-wide-enterprise-typography` | 企业排版规范能否跨页面一致落地 | released-in-validation-lab | 收集第二项目采用与视觉回归证据 |
 | 已发布 | `010-master-detail-document-assets` | Schema 表单、可编辑行表、错误汇总和异步结果能否组成技术栈中立主从单据契约 | released-in-validation-lab | 按 `adoption-readiness.md` 进入真实项目采用评估；不得自动晋升 |
-| P0 | `011-import-validation-execution` | 用户能否区分上传、解析、校验和执行，并安全理解显式部分执行 | business-gate-draft-awaiting-approval | 评审需求 007 与 `Q-1101`—`Q-1110`；批准前不创建 Spec |
+| P0 | `011-import-validation-execution` | 用户能否区分上传、解析、校验和执行，并安全理解显式部分执行 | specification-gate-draft-awaiting-approval | 评审 `spec.md`、验收标准与 `testcases.md`；批准前不创建 Architecture、Plan、Tasks 或实现 |
 | 候选 | 提交—审批—生效 | 状态机、意见、代理和审计反馈 | idea | 先取得独立业务规则与来源 |
 | 候选 | 规则—模拟—发布 | 冲突、版本、生效范围和回滚 | idea | 先取得独立业务规则与来源 |
 

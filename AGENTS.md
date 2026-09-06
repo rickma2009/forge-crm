@@ -7,7 +7,7 @@
 - `_methodology/`：唯一方法论、模板、门禁和金标准案例来源。
 - `_ref/`：只读参考素材，不是规范源。
 - `mcrm/`：独立项目、独立 Git 仓库；当前由 `REQSRC-015` 暂停开发，恢复前不得从工作台侧推进实现或资产接入。
-- `interaction-pattern-lab/`：根仓库跟踪的企业交互模式验证场；迁移稳定基线为 `interaction-pattern-lab-baseline-20260906`。切片 002 等待 Release Gate，切片 004 与切片 010 已分别由 `REQSRC-021`、`REQSRC-035` 批准验证场内发布；切片 011 仅处于 Business Gate 草案阶段。
+- `interaction-pattern-lab/`：根仓库跟踪的企业交互模式验证场；迁移稳定基线为 `interaction-pattern-lab-baseline-20260906`。切片 002 等待 Release Gate，切片 004 与切片 010 已分别由 `REQSRC-021`、`REQSRC-035` 批准验证场内发布；切片 011 的 Business Gate 已由 `REQSRC-037` 批准，当前等待 Specification Gate。
 
 ## 绝对约束
 

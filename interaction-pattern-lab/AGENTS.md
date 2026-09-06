@@ -4,7 +4,7 @@
 
 ## 项目状态
 
-- 迁移稳定基线已记录为 `interaction-pattern-lab-baseline-20260906`；`REQSRC-036` 已启动切片 011“导入—校验—执行”的 Business Gate 草案。明确批准前不得创建该切片 Spec、Plan、Tasks 或实现。
+- 迁移稳定基线已记录为 `interaction-pattern-lab-baseline-20260906`；切片 011“导入—校验—执行”的 Business Gate 已由 `REQSRC-037` 批准，`REQSRC-038` 允许非 Gate 事项按推荐持续推进。当前为 Specification Gate 草案；明确批准前不得创建 Plan、Tasks 或实现。
 - 切片 010“主从单据与企业组件资产化”已完成实施、自动验证、响应式与全键盘浏览器 QA；Release Gate 已由 `REQSRC-035` 批准为 `released-in-validation-lab`。该批准不包含方法论资产晋升、独立包发布、真实项目采用或外部部署。
 - 当前阶段：切片 004 Release Gate 已由 `REQSRC-021` 批准，状态为 `released-in-validation-lab`；未执行外部部署或方法论晋升。原纯前端 `TASK-401`—`TASK-406` 及验证证据保留；既有切片 002 仍为 `review-complete-awaiting-release-gate`。
 - 重新定义证据：`REQSRC-007`。本目录是交互模式验证场，不是模板规范源或真实业务项目。

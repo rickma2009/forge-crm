@@ -9,5 +9,5 @@
   "sha256": "bc19cf350a91e034028e7478ebf851e5832ab6e53f38b3821b79e9be1a6b4921",
   "contentPolicy": "immutable-source-copy",
   "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
-  "status": "active-awaiting-business-gate"
+  "status": "fulfilled-by-REQSRC-037"
 }
