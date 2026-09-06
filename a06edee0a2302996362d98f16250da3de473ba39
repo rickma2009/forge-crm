@@ -1,0 +1,44 @@
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/traceability.md
+  e528476cbc97de75 10-11
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/README.md
+  e528476cbc97de75 8
+_methodology/scripts/enterprise-interaction-index.test.mjs
+  e528476cbc97de75 65-66
+interaction-pattern-lab/.specify/project-state.json
+  e528476cbc97de75 3-4,28-32,54,57,59
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/testcases.md
+  e528476cbc97de75 3,35-36,38
+_methodology/patterns/index.json
+  e528476cbc97de75 202-203
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/pipeline-state.json
+  e528476cbc97de75 23
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/review.md
+  e528476cbc97de75 14,24,28,30,33
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/implementation-evidence.md
+  e528476cbc97de75 4,75
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/release-gate-review.md
+  e528476cbc97de75 9,42-43,51,54,59
+_methodology/scripts/enterprise-interaction-index.mjs
+  e528476cbc97de75 58-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "a06edee0a2302996362d98f16250da3de473ba39",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2185,
+      "total_deletions": 6726,
+      "accepted_lines": 2185,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/fff43a29d828baaee521d52ae924b43480ccd406f2bd1d5e8a93b8277a000b36"
+    }
+  }
+}
