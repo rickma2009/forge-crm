@@ -1,0 +1,19 @@
+{
+  "workspaceKey": "role-workbench",
+  "label": "我的工作台",
+  "sources": [
+    { "key": "approval", "semantics": "action-required", "sourceSystem": "project-approved-workflow" },
+    { "key": "reminder", "semantics": "attention-time", "sourceSystem": "project-approved-scheduler" },
+    { "key": "alert", "semantics": "rule-signal", "sourceSystem": "project-approved-rule-engine" },
+    { "key": "message", "semantics": "information-arrival", "sourceSystem": "project-approved-messaging" }
+  ],
+  "queueFields": ["type", "title", "objectLabel", "reference", "priority", "dueAt", "owner", "state"],
+  "detailRegions": ["objectSummary", "facts", "checkpoints", "process", "collaboration"],
+  "contextRegions": ["responsibility", "deadline", "reminder", "relatedObjects", "activity"],
+  "actions": [
+    { "key": "start", "changesBusinessState": false, "requiresServerAuthorization": true },
+    { "key": "complete", "changesBusinessState": true, "requiresServerAuthorization": true },
+    { "key": "snooze", "changesBusinessState": false, "requiresServerAuthorization": false }
+  ],
+  "responsive": { "desktop": "three-region", "tablet": "queue-detail-plus-context-row", "narrow": "stacked-sections" }
+}

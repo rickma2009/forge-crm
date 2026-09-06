@@ -1,0 +1,6 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>企业工作台候选案例</title><link rel="stylesheet" href="../../templates/ui/enterprise-workbench/workbench.tokens.css"><link rel="stylesheet" href="styles.css"></head><body>
+<main class="workspace"><header><p>FOCUS WORKSPACE</p><h1>主从任务工作区</h1><span>保留队列上下文，集中处理当前业务对象。</span></header><section class="layout">
+<aside class="panel"><h2>工作队列</h2><label>搜索工作项<input data-search type="search" placeholder="标题、对象或编号"></label><nav class="filters" aria-label="工作类型"><button data-filter="all" aria-pressed="true">全部</button><button data-filter="approval">审批</button><button data-filter="exception">异常</button></nav><div data-list></div></aside>
+<section class="panel detail" data-detail aria-live="polite"></section>
+<aside class="panel context"><h2>行动上下文</h2><dl><dt>负责人</dt><dd data-owner></dd><dt>截止时间</dt><dd data-due></dd></dl><button data-snooze>30 分钟后提醒</button><h2>最近动态</h2><p data-activity></p></aside>
+</section><p class="feedback" data-feedback role="status">演示数据仅保留在当前页面</p></main><script src="app.js"></script></body></html>

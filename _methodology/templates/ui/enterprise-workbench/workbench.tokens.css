@@ -1,0 +1,19 @@
+:root {
+  --workbench-canvas: #f4f6fa;
+  --workbench-surface: #ffffff;
+  --workbench-ink: #1c2738;
+  --workbench-text: #445066;
+  --workbench-muted: #7b8799;
+  --workbench-border: #dfe4ec;
+  --workbench-primary: #2f67df;
+  --workbench-success: #188564;
+  --workbench-warning: #c86d16;
+  --workbench-danger: #c43d49;
+  --workbench-radius: 7px;
+  --workbench-master-width: 300px;
+  --workbench-context-width: 242px;
+  --workbench-item-min-height: 76px;
+  --workbench-page-title-size: 23px;
+  --workbench-body-size: 11px;
+  --workbench-meta-size: 9px;
+}
