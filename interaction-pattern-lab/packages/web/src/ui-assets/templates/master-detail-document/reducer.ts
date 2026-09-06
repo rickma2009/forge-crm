@@ -49,7 +49,7 @@ export function reduceDocument<THeader, TLine extends LineRecord>(
         nextSaveRequestId: state.nextSaveRequestId + 1,
       });
     case 'resolve-save':
-      if (state.phase !== 'saving' || state.activeSaveRequestId === null || (action.saveRequestId !== undefined && action.saveRequestId !== state.activeSaveRequestId)) {
+      if (state.phase !== 'saving' || state.activeSaveRequestId === null || action.saveRequestId !== state.activeSaveRequestId) {
         return ignored(state, 'stale-save');
       }
       return resolveSave(state, action.outcome);

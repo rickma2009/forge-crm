@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createDocumentState, reduceDocument } from './reducer';
-import type { DocumentState } from './types';
+import type { DocumentAction, DocumentState } from './types';
 
 interface Header {
   title: string;
@@ -18,6 +18,13 @@ const initial = (mode: 'create' | 'view' | 'edit' = 'edit'): DocumentState<Heade
   lines: [{ rowId: 'line-1', persistedState: 'persisted', quantity: 1 }],
   businessStatus: '草稿',
 });
+
+// @ts-expect-error resolve-save is not a valid controller action without its save request token.
+const missingTokenAction: DocumentAction<Header, Line> = {
+  type: 'resolve-save',
+  outcome: { kind: 'success', message: '缺失 token 的结果不得结算。' },
+};
+void missingTokenAction;
 
 describe('TASK-1008 MasterDetailDocument reducer', () => {
   it('freezes header and line mutations while saving and prevents duplicate save', () => {
@@ -38,8 +45,10 @@ describe('TASK-1008 MasterDetailDocument reducer', () => {
 
   it('keeps user input and business status after a failed save, while a success feedback does not transition business status', () => {
     const changed = reduceDocument(initial(), { type: 'change-header', header: { title: '保留输入' } }).state;
-    const rejected = reduceDocument(reduceDocument(changed, { type: 'begin-save' }).state, {
+    const rejectedSaving = reduceDocument(changed, { type: 'begin-save' }).state;
+    const rejected = reduceDocument(rejectedSaving, {
       type: 'resolve-save',
+      saveRequestId: rejectedSaving.activeSaveRequestId ?? -1,
       outcome: { kind: 'business-rejected', reason: '额度不足。' },
     }).state;
 
@@ -47,8 +56,10 @@ describe('TASK-1008 MasterDetailDocument reducer', () => {
     expect(rejected.phase).toBe('dirty');
     expect(rejected.businessStatus).toBe('草稿');
 
-    const saved = reduceDocument(reduceDocument(changed, { type: 'begin-save' }).state, {
+    const savedSaving = reduceDocument(changed, { type: 'begin-save' }).state;
+    const saved = reduceDocument(savedSaving, {
       type: 'resolve-save',
+      saveRequestId: savedSaving.activeSaveRequestId ?? -1,
       outcome: { kind: 'success', message: '模拟保存完成。', nextStatus: '已提交' },
     }).state;
 
@@ -59,8 +70,10 @@ describe('TASK-1008 MasterDetailDocument reducer', () => {
 
   it('keeps validation errors navigable and makes dirty leave confirmation cancelable', () => {
     const changed = reduceDocument(initial(), { type: 'change-header', header: { title: '' } }).state;
-    const validationFailed = reduceDocument(reduceDocument(changed, { type: 'begin-save' }).state, {
+    const validationSaving = reduceDocument(changed, { type: 'begin-save' }).state;
+    const validationFailed = reduceDocument(validationSaving, {
       type: 'resolve-save',
+      saveRequestId: validationSaving.activeSaveRequestId ?? -1,
       outcome: {
         kind: 'validation-failed',
         headerErrors: [{ id: 'title-required', fieldId: 'title', message: '标题必填。' }],
@@ -90,8 +103,10 @@ describe('TASK-1008 MasterDetailDocument reducer', () => {
       mutation: { type: 'update', payload: { rowId: 'line-1', changes: { quantity: 2 } } },
       allocateId: () => 'unused',
     }).state;
-    const saved = reduceDocument(reduceDocument(changedLines, { type: 'begin-save' }).state, {
+    const saving = reduceDocument(changedLines, { type: 'begin-save' }).state;
+    const saved = reduceDocument(saving, {
       type: 'resolve-save',
+      saveRequestId: saving.activeSaveRequestId ?? -1,
       outcome: { kind: 'success', message: '模拟保存完成。' },
     }).state;
     const selected = reduceDocument(saved, {
@@ -129,16 +144,27 @@ describe('TASK-1008 MasterDetailDocument reducer', () => {
       type: 'resolve-save',
       saveRequestId: 99,
       outcome: { kind: 'success', message: '过期保存不应生效。' },
-    } as never);
+    });
 
     expect(stale.state).toBe(saving);
     expect(stale.state.phase).toBe('saving');
   });
 
+  it('does not let an outcome without a save request token settle the active snapshot', () => {
+    const saving = reduceDocument(initial(), { type: 'begin-save' }).state;
+    const missing = reduceDocument(saving, {
+      type: 'resolve-save',
+      outcome: { kind: 'success', message: '缺失 token 的结果不得结算。' },
+    } as never);
+
+    expect(missing.state).toBe(saving);
+    expect(missing.outcome).toEqual({ kind: 'ignored', reason: 'stale-save' });
+  });
+
   it('changes mode through the reducer before applying the new mode protections', () => {
-    const viewed = reduceDocument(initial('edit'), { type: 'set-mode', mode: 'view' } as never).state;
+    const viewed = reduceDocument(initial('edit'), { type: 'set-mode', mode: 'view' }).state;
     const blocked = reduceDocument(viewed, { type: 'change-header', header: { title: '查看模式不得修改' } });
-    const created = reduceDocument(viewed, { type: 'set-mode', mode: 'create' } as never).state;
+    const created = reduceDocument(viewed, { type: 'set-mode', mode: 'create' }).state;
     const editable = reduceDocument(created, { type: 'change-header', header: { title: '创建模式可修改' } }).state;
 
     expect(viewed.mode).toBe('view');

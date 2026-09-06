@@ -26,7 +26,7 @@ export type DocumentAction<THeader, TLine extends LineRecord> =
   | { type: 'change-header'; header: THeader }
   | { type: 'mutate-lines'; mutation: LineMutation<TLine>; allocateId: LineIdAllocator }
   | { type: 'begin-save' }
-  | { type: 'resolve-save'; outcome: DocumentSaveOutcome<THeader>; saveRequestId?: number }
+  | { type: 'resolve-save'; outcome: DocumentSaveOutcome<THeader>; saveRequestId: number }
   | { type: 'request-leave' }
   | { type: 'cancel-leave' }
   | { type: 'continue-leave' }
