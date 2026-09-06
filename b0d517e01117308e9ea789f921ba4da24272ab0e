@@ -1,0 +1,76 @@
+interaction-pattern-lab/.specify/sources/REQSRC-038-slice-011-recommended-continuation-direction-20260906/metadata.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/specs/011-import-validation-execution/specification-gate-review.md
+  e528476cbc97de75 1-54
+interaction-pattern-lab/README.md
+  e528476cbc97de75 5,13,42,46,48
+interaction-pattern-lab/.specify/specs/011-import-validation-execution/pipeline-state.json
+  e528476cbc97de75 1-22
+interaction-pattern-lab/.specify/requirements/007-import-validation-execution/business-gate-review.md
+  e528476cbc97de75 3,7,37,39-44
+interaction-pattern-lab/.specify/sources/REQSRC-038-slice-011-recommended-continuation-direction-20260906/source.md
+  e528476cbc97de75 1-9
+interaction-pattern-lab/.specify/specs/011-import-validation-execution/testcases.md
+  e528476cbc97de75 1-34
+interaction-pattern-lab/.specify/specs/011-import-validation-execution/traceability.md
+  e528476cbc97de75 1-21
+interaction-pattern-lab/.specify/requirements/007-import-validation-execution/requirement.md
+  e528476cbc97de75 3,5,7,87
+interaction-pattern-lab/.specify/README.md
+  e528476cbc97de75 13
+interaction-pattern-lab/.specify/sources/REQSRC-037-slice-011-business-gate-approval-20260906/source.md
+  e528476cbc97de75 1-7
+interaction-pattern-lab/.specify/project-state.json
+  e528476cbc97de75 3-4,20-29,31,76,79,81
+interaction-pattern-lab/AGENTS.md
+  e528476cbc97de75 7
+interaction-pattern-lab/.specify/sources/REGISTRY.md
+  e528476cbc97de75 40-42
+interaction-pattern-lab/.specify/sources/REQSRC-037-slice-011-business-gate-approval-20260906/metadata.json
+  e528476cbc97de75 1-13
+AGENTS.md
+  e528476cbc97de75 10
+interaction-pattern-lab/.specify/memory/business-context.md
+  e528476cbc97de75 3,25,118
+interaction-pattern-lab/.specify/memory/project-charter.md
+  e528476cbc97de75 37,132-141
+interaction-pattern-lab/.specify/requirements/007-import-validation-execution/transformation.md
+  e528476cbc97de75 15,17-21,25
+interaction-pattern-lab/.specify/specs/011-import-validation-execution/clarification.md
+  e528476cbc97de75 1-16
+interaction-pattern-lab/.specify/specs/011-import-validation-execution/requirements/original.md
+  e528476cbc97de75 1-15
+interaction-pattern-lab/.specify/specs/011-import-validation-execution/spec.md
+  e528476cbc97de75 1-101
+interaction-pattern-lab/.specify/requirements/007-import-validation-execution/clarification.md
+  e528476cbc97de75 16
+interaction-pattern-lab/docs/pattern-backlog.md
+  e528476cbc97de75 33
+interaction-pattern-lab/.specify/sources/REQSRC-036-lab-migration-baseline-and-next-slice-20260906/metadata.json
+  e528476cbc97de75 12
+interaction-pattern-lab/.specify/specs/011-import-validation-execution/README.md
+  e528476cbc97de75 1-14
+interaction-pattern-lab/.specify/requirements/007-import-validation-execution/README.md
+  e528476cbc97de75 3,5,11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "b0d517e01117308e9ea789f921ba4da24272ab0e",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 399,
+      "total_deletions": 52,
+      "accepted_lines": 2291,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/2931f2f80c99bff900575d25309ca77ec948c8927246ae9a391d3d650f193520"
+    }
+  }
+}
