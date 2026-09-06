@@ -2,7 +2,7 @@
 
 > 评审日期：2026-09-06
 > 评审性质：AI 实施后自审与自动检查汇总，不冒充独立人工 Gate。
-> 结论：可提交 Release Gate 人工评审；Release 尚未批准。
+> 结论：实施自审通过；Release Gate 已由 `REQSRC-035` 批准为 `lab-release-only`。
 
 ## 产品与需求视角
 

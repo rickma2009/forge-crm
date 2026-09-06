@@ -1,0 +1,19 @@
+{
+  "sourceId": "REQSRC-035",
+  "title": "切片 010 主从单据与企业组件资产化 Release Gate 批准",
+  "sourceType": "user-gate-approval",
+  "sourceDate": "2026-09-06",
+  "importedAt": "2026-09-06T18:45:53+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "a59702aaeaf8eab743ceafb7b496e32c647ada4a2c57451f7abb00d6bc4d856c",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved",
+  "gate": "release-010-master-detail-document-assets",
+  "approval": {
+    "approvedBy": "Rick",
+    "approvedAt": "2026-09-06T18:45:53+08:00",
+    "conclusion": "approve-for-lab-release-only"
+  }
+}

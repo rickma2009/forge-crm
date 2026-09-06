@@ -1,6 +1,6 @@
 # 主从单据候选模板
 
-状态：`idea`；`VAL-010` 仅登记 interaction-pattern-lab 的销售订单与 BOM 确定性场景为 `in-lab-candidate` 证据，不提升方法论资产成熟度，也不是正式模式、真实项目采用、业务验收或 Release。
+状态：`idea`；`VAL-010` 登记 interaction-pattern-lab 的销售订单与 BOM 确定性场景为 `in-lab-candidate` 证据，并已由 `REQSRC-035` 批准在验证场内发布。它不提升方法论资产成熟度，也不是正式模式、真实项目采用、业务验收或外部部署。
 
 ## 问题与不变量
 
@@ -14,8 +14,8 @@
 |---|---|
 | 来源事实 | `REQSRC-029` 要求销售订单表头/网格/BOM 候选；`REQSRC-030` 要求保留主从上下文。 |
 | 实现支持推断 | `SchemaForm`、`ValidationSummary`、行 reducer/grid、`AsyncOutcome` 与 `MasterDetailDocument` 可被两种场景共同组合。 |
-| 已批准项目决定 | `ADR-005` 批准五层依赖、确定性内存 Adapter 和 sales-order 后 BOM 的验证顺序。 |
-| 当前未知 | 真实服务端权限、事务/并发、审计、行业字段、金额口径及浏览器 QA。 |
+| 已批准项目决定 | `ADR-005` 批准五层依赖、确定性内存 Adapter 和 sales-order 后 BOM 的验证顺序；`REQSRC-035` 仅批准验证场内 Release。 |
+| 当前未知 | 真实服务端权限、事务/并发、审计、行业字段、金额口径、真实项目采用与业务效果。 |
 
 可复用 core：语义令牌、受控字段、错误摘要、稳定行 reducer/grid、异步 outcome 与单据状态契约。场景专属：销售订单客户/税/交期，BOM 层级/物料候选/差异。组织角色、来源项目代码、数据库/API 与品牌样式均不复用；单一来源不是“最佳实践”。
 

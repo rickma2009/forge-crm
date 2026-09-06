@@ -1,7 +1,7 @@
 {
   "project": "Interaction Pattern Lab / 企业交互模式验证场",
-  "status": "slices-005-through-009-released-in-validation-lab-slice-010-release-review-awaiting-user-approval",
-  "currentStage": "slice-010-release-review",
+  "status": "slices-005-through-010-released-in-validation-lab",
+  "currentStage": "slice-010-released-in-validation-lab",
   "gates": {
     "business": {
       "status": "approved-for-requirement-005",
@@ -25,10 +25,13 @@
         "evidence": { "sourceId": "REQSRC-034", "approvedBy": "Rick", "approvedAt": "2026-09-05", "conclusion": "approved-plan-and-ADR-005-for-implementation" }
       },
       "release": {
-        "status": "awaiting-user-approval",
+        "status": "approved-released-in-validation-lab",
         "evidence": {
+          "sourceId": "REQSRC-035",
+          "approvedBy": "Rick",
+          "approvedAt": "2026-09-06",
           "review": "specs/010-master-detail-document-assets/release-gate-review.md",
-          "conclusion": "prepared-not-approved"
+          "conclusion": "approve-for-lab-release-only"
         }
       }
     }
@@ -51,10 +54,10 @@
     "007-role-scoped-list-views": "released-in-validation-lab",
     "008-customer-directory-demo": "released-in-validation-lab",
     "009-project-wide-enterprise-typography": "released-in-validation-lab",
-    "010-master-detail-document-assets": "verified-release-review-awaiting-user-approval"
+    "010-master-detail-document-assets": "released-in-validation-lab-REQSRC-035"
   },
-  "releaseEvidence": ".specify/specs/009-project-wide-enterprise-typography/implementation-evidence.md",
-  "nextAction": "Obtain an independent Release Gate decision for slice 010; keep asset promotion, external deployment and Release blocked until explicitly approved.",
+  "releaseEvidence": ".specify/specs/010-master-detail-document-assets/release-gate-review.md",
+  "nextAction": "Collect real-project adoption and business validation evidence before considering any asset maturity promotion; external deployment remains out of scope.",
   "parallelReviewCandidate": ".specify/specs/002-bulk-assignment-partial-success/review.md",
-  "updatedAt": "2026-09-06T14:45:00+08:00"
+  "updatedAt": "2026-09-06T18:45:53+08:00"
 }

@@ -1,8 +1,8 @@
 # Release Gate 评审包：010 主从单据与企业组件资产化
 
-> 状态：`awaiting-user-approval`
+> 状态：`approved-released-in-validation-lab`
 > 准备日期：2026-09-06
-> 本文件仅准备评审材料，不构成 Release、资产晋升或部署批准。
+> Gate 决定：`REQSRC-035` 批准 `approve-for-lab-release-only`；不构成资产晋升或外部部署批准。
 
 ## 1. 请求决定
 
@@ -55,10 +55,10 @@
 
 ## 7. 人工决定区
 
-- 当前决定：`awaiting-user-approval`
+- 当前决定：`approve-for-lab-release-only`
 - 建议决定：`approve-for-lab-release-only`
-- 批准人：未产生（等待人工决定）
-- 批准时间：未产生
-- 批准来源：未产生（批准后必须归档为新的 REQSRC）
+- 批准人：Rick
+- 批准时间：2026-09-06
+- 批准来源：`REQSRC-035`
 
-在收到独立明确批准前，`pipeline-state.json` 必须保持 Release 等待状态，不得执行资产晋升或外部部署。
+本批准只允许登记为验证场内已发布。资产晋升、独立包发布、真实项目采用和外部部署仍须各自取得新的证据与批准。

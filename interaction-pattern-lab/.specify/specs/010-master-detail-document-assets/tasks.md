@@ -2,7 +2,7 @@
 
 > Architecture Gate：approved（`REQSRC-034`）
 > 执行边界：只执行 `plan.md` 与 `ADR-005` 已批准的路线；资产晋升、外部部署和 Release 仍需后续独立 Gate。
-> 任务状态不能替代测试或 Release 证据；`TASK-1002`—`TASK-1012` 已完成，证据见 `implementation-evidence.md`，Release 仍等待独立人工 Gate。
+> 任务状态不能替代测试或 Release 证据；`TASK-1002`—`TASK-1012` 已完成，证据见 `implementation-evidence.md`，Release Gate 已由 `REQSRC-035` 批准为 `lab-release-only`。
 
 ## 已完成的治理基线
 

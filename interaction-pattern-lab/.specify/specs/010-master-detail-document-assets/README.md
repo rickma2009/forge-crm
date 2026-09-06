@@ -1,11 +1,11 @@
 # 010 主从单据与企业组件资产化
 
-> 状态：release-gate-review-ready-awaiting-user-approval
+> 状态：released-in-validation-lab（`REQSRC-035`）
 > Business 边界：`REQSRC-014` 已批准的 `BUS-005`—`BUS-007`
 > Specification Gate：approved（`REQSRC-032`）
 > Architecture Gate：approved（`REQSRC-034`）
 
-本切片已完成主从单据、SchemaForm、可编辑行表和组件状态矩阵的实现、自动验证、响应式浏览器 QA 与全键盘浏览器走查，并已准备 Release Gate 评审包。候选资产仍仅在验证场内，资产晋升、外部部署和 Release 均未获得批准。
+本切片已完成主从单据、SchemaForm、可编辑行表和组件状态矩阵的实现、自动验证、响应式浏览器 QA 与全键盘浏览器走查，并已由 `REQSRC-035` 批准在验证场内发布。候选资产仍仅在验证场内；资产晋升和外部部署均未获得批准。
 
 ## 文件职责
 
@@ -19,5 +19,5 @@
 - `tasks.md`：Architecture Gate 后的唯一执行顺序与追溯；
 - `implementation-evidence.md`：自动测试、浏览器 QA、隔离与逐用例证据；
 - `review.md`：产品、架构、QA 三视角实施后自审；
-- `release-gate-review.md`：等待独立人工决定的 Release Gate 评审包；
+- `release-gate-review.md`：已由 `REQSRC-035` 批准的 Release Gate 评审包；
 - `pipeline-state.json`：真实阶段状态。

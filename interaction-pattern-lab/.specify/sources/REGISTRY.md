@@ -20,5 +20,6 @@
 | `REQSRC-032` | 切片 010 主从单据与企业组件资产化 Specification Gate 批准 | 用户批准消息 | 2026-09-05 | `REQSRC-032-master-detail-document-assets-specification-gate-approval-20260905/source.md` | approved |
 | `REQSRC-033` | 切片 010 持续计划执行指令 | 用户持续执行指令 | 2026-09-05 | `REQSRC-033-slice-010-continuous-plan-execution-direction-20260905/source.md` | active-awaiting-architecture-gate |
 | `REQSRC-034` | 切片 010 主从单据与企业组件资产化 Architecture Gate 批准 | 用户批准消息 | 2026-09-05 | `REQSRC-034-master-detail-document-assets-architecture-gate-approval-20260905/source.md` | approved |
+| `REQSRC-035` | 切片 010 主从单据与企业组件资产化 Release Gate 批准 | 用户批准消息 | 2026-09-06 | `REQSRC-035-slice-010-release-gate-approval-20260906/source.md` | approved |
 
 所有来源副本按不可改写策略管理。后续用户提供的系统源码、截图、Open Design 案例链接或补充场景必须分配新的来源 ID，不覆盖现有副本。

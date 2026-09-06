@@ -4,7 +4,7 @@
 
 ## 项目状态
 
-- 新切片 010“主从单据与企业组件资产化”的 Architecture Gate 已由 `REQSRC-034` 批准；当前为 `implementation-authorized-awaiting-task-1002`，须按 `tasks.md` 的既定顺序实施。`TASK-1001` 的工作区基线为 green，但不等于任何切片需求已实现；资产晋升、外部部署和 Release 仍被独立 Gate 阻止。
+- 切片 010“主从单据与企业组件资产化”已完成实施、自动验证、响应式与全键盘浏览器 QA；Release Gate 已由 `REQSRC-035` 批准为 `released-in-validation-lab`。该批准不包含方法论资产晋升、独立包发布、真实项目采用或外部部署。
 - 当前阶段：切片 004 Release Gate 已由 `REQSRC-021` 批准，状态为 `released-in-validation-lab`；未执行外部部署或方法论晋升。原纯前端 `TASK-401`—`TASK-406` 及验证证据保留；既有切片 002 仍为 `review-complete-awaiting-release-gate`。
 - 重新定义证据：`REQSRC-007`。本目录是交互模式验证场，不是模板规范源或真实业务项目。
 - 既有 `REQSRC-002`—`REQSRC-006` 及实现证据作为历史切片证据保留，不改写、不冒充新边界的批准。

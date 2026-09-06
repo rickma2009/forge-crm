@@ -1,6 +1,6 @@
 # 测试用例：主从单据与企业组件资产化
 
-> 状态：implemented-and-executed；Specification Gate 仍由 `REQSRC-032` 批准，执行证据见 `implementation-evidence.md`，Release Gate 等待人工批准。
+> 状态：implemented-executed-and-released-in-validation-lab；Specification Gate 由 `REQSRC-032` 批准，执行证据见 `implementation-evidence.md`，Release Gate 由 `REQSRC-035` 批准。
 
 | ID | 类型 | 关联项 | Given / When | Then | 优先级 |
 |---|---|---|---|---|---|
