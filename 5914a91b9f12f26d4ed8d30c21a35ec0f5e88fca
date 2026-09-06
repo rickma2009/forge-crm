@@ -1,0 +1,316 @@
+interaction-pattern-lab/.specify/specs/006-database-backed-data-dictionary/spec.md
+  e528476cbc97de75 1-41
+interaction-pattern-lab/.specify/sources/REQSRC-026-hierarchical-initialized-dictionary-values-maintenance-20260904/metadata.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/specs/005-unified-navigation-toolbar-tab-workspace/README.md
+  e528476cbc97de75 1-16
+interaction-pattern-lab/.specify/sources/REQSRC-016-authenticated-navigation-shell-architecture-gate-approval-20260903/source.md
+  e528476cbc97de75 1-23
+interaction-pattern-lab/.specify/sources/REQSRC-019-database-backed-navigation-rbac-specification-gate-approval-20260903/source.md
+  e528476cbc97de75 1-24
+interaction-pattern-lab/.specify/requirements/005-enterprise-workspace-configurable-customer-directory/business-gate-review.md
+  e528476cbc97de75 1-60
+interaction-pattern-lab/.specify/sources/REQSRC-020-database-backed-navigation-rbac-architecture-gate-approval-20260903/metadata.json
+  e528476cbc97de75 1-19
+interaction-pattern-lab/.specify/sources/REQSRC-018-database-backed-navigation-rbac-business-gate-approval-20260903/metadata.json
+  e528476cbc97de75 1-19
+interaction-pattern-lab/.specify/specs/006-database-backed-data-dictionary/implementation-evidence.md
+  e528476cbc97de75 1-36
+interaction-pattern-lab/.specify/sources/REQSRC-020-database-backed-navigation-rbac-architecture-gate-approval-20260903/source.md
+  e528476cbc97de75 1-24
+interaction-pattern-lab/.specify/specs/008-customer-directory-demo/README.md
+  e528476cbc97de75 1-6
+interaction-pattern-lab/.specify/specs/006-database-backed-data-dictionary/plan.md
+  e528476cbc97de75 1-12
+interaction-pattern-lab/.specify/requirements/005-enterprise-workspace-configurable-customer-directory/clarification.md
+  e528476cbc97de75 1-31
+interaction-pattern-lab/.specify/requirements/004-database-backed-navigation-rbac/business-gate-review.md
+  e528476cbc97de75 1-46
+interaction-pattern-lab/.specify/specs/008-customer-directory-demo/architecture-gate-review.md
+  e528476cbc97de75 1-3
+interaction-pattern-lab/.specify/specs/008-customer-directory-demo/requirements/original.md
+  e528476cbc97de75 1-8
+interaction-pattern-lab/.specify/specs/004-database-backed-navigation-rbac/implementation-evidence.md
+  e528476cbc97de75 1-43
+interaction-pattern-lab/.specify/specs/009-project-wide-enterprise-typography/tasks.md
+  e528476cbc97de75 1-6
+interaction-pattern-lab/.specify/requirements/005-enterprise-workspace-configurable-customer-directory/transformation.md
+  e528476cbc97de75 1-65
+interaction-pattern-lab/.specify/sources/REQSRC-027-dictionary-tree-maintenance-and-export-refinement-20260904/source.md
+  e528476cbc97de75 1-15
+interaction-pattern-lab/.specify/specs/009-project-wide-enterprise-typography/traceability.md
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/sources/REQSRC-013-multi-source-ui-distillation-and-navigation-request-20260903/source.md
+  e528476cbc97de75 1-29
+interaction-pattern-lab/.specify/specs/005-unified-navigation-toolbar-tab-workspace/tasks.md
+  e528476cbc97de75 1-7
+interaction-pattern-lab/.specify/specs/008-customer-directory-demo/testcases.md
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/specs/004-database-backed-navigation-rbac/tasks.md
+  e528476cbc97de75 1-38
+interaction-pattern-lab/.specify/specs/009-project-wide-enterprise-typography/README.md
+  e528476cbc97de75 1-5
+interaction-pattern-lab/.specify/requirements/006-enterprise-ui-asset-system/requirement.md
+  e528476cbc97de75 1-52
+interaction-pattern-lab/.specify/sources/REQSRC-023-requirement-005-business-and-default-gate-authorization-20260904/source.md
+  e528476cbc97de75 1-16
+interaction-pattern-lab/docs/adr/ADR-004-数据库驱动导航与角色授权架构.md
+  e528476cbc97de75 1-41
+interaction-pattern-lab/.specify/specs/008-customer-directory-demo/pipeline-state.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/sources/REQSRC-023-requirement-005-business-and-default-gate-authorization-20260904/metadata.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/sources/REGISTRY.md
+  e528476cbc97de75 17,19-32,35
+interaction-pattern-lab/.specify/specs/003-authenticated-enterprise-navigation-shell/review.md
+  e528476cbc97de75 1-17
+interaction-pattern-lab/.specify/specs/006-database-backed-data-dictionary/requirements/original.md
+  e528476cbc97de75 1-11
+interaction-pattern-lab/.specify/specs/009-project-wide-enterprise-typography/review.md
+  e528476cbc97de75 1-10
+interaction-pattern-lab/.specify/sources/REQSRC-031-enterprise-ui-assets-technology-route-and-implementation-direction-20260905/source.md
+  e528476cbc97de75 1-14
+interaction-pattern-lab/.specify/requirements/003-multi-source-ui-distillation-showcase/README.md
+  e528476cbc97de75 1-19
+interaction-pattern-lab/.specify/specs/005-unified-navigation-toolbar-tab-workspace/requirements/original.md
+  e528476cbc97de75 1-8
+interaction-pattern-lab/.specify/specs/004-database-backed-navigation-rbac/spec.md
+  e528476cbc97de75 1-130
+interaction-pattern-lab/.specify/specs/008-customer-directory-demo/traceability.md
+  e528476cbc97de75 1-8
+interaction-pattern-lab/.specify/sources/REQSRC-016-authenticated-navigation-shell-architecture-gate-approval-20260903/metadata.json
+  e528476cbc97de75 1-19
+interaction-pattern-lab/.specify/specs/003-authenticated-enterprise-navigation-shell/clarification.md
+  e528476cbc97de75 1-34
+interaction-pattern-lab/.specify/specs/003-authenticated-enterprise-navigation-shell/traceability.md
+  e528476cbc97de75 1-70
+interaction-pattern-lab/.specify/sources/REQSRC-028-project-wide-enterprise-typography-20260904/metadata.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/specs/006-database-backed-data-dictionary/tasks.md
+  e528476cbc97de75 1-14
+interaction-pattern-lab/.specify/specs/007-role-scoped-list-views/pipeline-state.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/specs/003-authenticated-enterprise-navigation-shell/architecture-gate-review.md
+  e528476cbc97de75 1-86
+interaction-pattern-lab/.specify/specs/005-unified-navigation-toolbar-tab-workspace/spec.md
+  e528476cbc97de75 1-27
+interaction-pattern-lab/.specify/specs/007-role-scoped-list-views/plan.md
+  e528476cbc97de75 1-8
+interaction-pattern-lab/.specify/specs/004-database-backed-navigation-rbac/testcases.md
+  e528476cbc97de75 1-62
+interaction-pattern-lab/.specify/specs/009-project-wide-enterprise-typography/release-gate-review.md
+  e528476cbc97de75 1-8
+interaction-pattern-lab/.specify/specs/005-unified-navigation-toolbar-tab-workspace/clarification.md
+  e528476cbc97de75 1-10
+interaction-pattern-lab/.specify/sources/REQSRC-022-navigation-toolbar-tabs-customer-view-dictionary-request-20260904/source.md
+  e528476cbc97de75 1-29
+interaction-pattern-lab/.specify/specs/004-database-backed-navigation-rbac/architecture-gate-review.md
+  e528476cbc97de75 1-65
+interaction-pattern-lab/.specify/specs/004-database-backed-navigation-rbac/specification-gate-review.md
+  e528476cbc97de75 1-62
+interaction-pattern-lab/.specify/specs/009-project-wide-enterprise-typography/requirements/original.md
+  e528476cbc97de75 1-4
+interaction-pattern-lab/.specify/sources/REQSRC-022-navigation-toolbar-tabs-customer-view-dictionary-request-20260904/metadata.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/specs/004-database-backed-navigation-rbac/review.md
+  e528476cbc97de75 1-38
+interaction-pattern-lab/.specify/requirements/004-database-backed-navigation-rbac/requirement.md
+  e528476cbc97de75 1-195
+interaction-pattern-lab/.specify/specs/003-authenticated-enterprise-navigation-shell/tasks.md
+  e528476cbc97de75 1-110
+interaction-pattern-lab/.specify/specs/004-database-backed-navigation-rbac/plan.md
+  e528476cbc97de75 1-181
+interaction-pattern-lab/.specify/requirements/004-database-backed-navigation-rbac/clarification.md
+  e528476cbc97de75 1-17
+interaction-pattern-lab/.specify/specs/005-unified-navigation-toolbar-tab-workspace/traceability.md
+  e528476cbc97de75 1-7
+interaction-pattern-lab/.specify/sources/REQSRC-021-database-backed-navigation-rbac-release-gate-approval-20260903/source.md
+  e528476cbc97de75 1-24
+interaction-pattern-lab/.specify/specs/006-database-backed-data-dictionary/architecture-gate-review.md
+  e528476cbc97de75 1-17
+interaction-pattern-lab/.specify/specs/003-authenticated-enterprise-navigation-shell/requirements/original.md
+  e528476cbc97de75 1-31
+interaction-pattern-lab/.specify/requirements/003-multi-source-ui-distillation-showcase/clarification.md
+  e528476cbc97de75 1-51
+interaction-pattern-lab/.specify/specs/003-authenticated-enterprise-navigation-shell/spec.md
+  e528476cbc97de75 1-147
+interaction-pattern-lab/.specify/README.md
+  e528476cbc97de75 13
+interaction-pattern-lab/.specify/specs/004-database-backed-navigation-rbac/release-gate-review.md
+  e528476cbc97de75 1-98
+interaction-pattern-lab/docs/reference-inventory.md
+  e528476cbc97de75 15-19
+interaction-pattern-lab/.specify/specs/008-customer-directory-demo/spec.md
+  e528476cbc97de75 1-34
+interaction-pattern-lab/.specify/specs/005-unified-navigation-toolbar-tab-workspace/plan.md
+  e528476cbc97de75 1-11
+interaction-pattern-lab/.specify/specs/009-project-wide-enterprise-typography/testcases.md
+  e528476cbc97de75 1-7
+interaction-pattern-lab/.specify/specs/007-role-scoped-list-views/review.md
+  e528476cbc97de75 1-8
+interaction-pattern-lab/.specify/specs/008-customer-directory-demo/tasks.md
+  e528476cbc97de75 1-8
+interaction-pattern-lab/.specify/sources/REQSRC-025-admin-system-access-runtime-incident-20260904/source.md
+  e528476cbc97de75 1-8
+interaction-pattern-lab/.specify/requirements/005-enterprise-workspace-configurable-customer-directory/README.md
+  e528476cbc97de75 1-21
+interaction-pattern-lab/.specify/specs/006-database-backed-data-dictionary/README.md
+  e528476cbc97de75 1-21
+interaction-pattern-lab/.specify/specs/007-role-scoped-list-views/architecture-gate-review.md
+  e528476cbc97de75 1-3
+interaction-pattern-lab/.specify/specs/008-customer-directory-demo/review.md
+  e528476cbc97de75 1-8
+interaction-pattern-lab/.specify/specs/004-database-backed-navigation-rbac/requirements/original.md
+  e528476cbc97de75 1-10
+interaction-pattern-lab/.specify/specs/006-database-backed-data-dictionary/traceability.md
+  e528476cbc97de75 1-29
+interaction-pattern-lab/docs/adr/ADR-003-认证式导航展示壳层架构.md
+  e528476cbc97de75 1-86
+interaction-pattern-lab/.specify/sources/REQSRC-019-database-backed-navigation-rbac-specification-gate-approval-20260903/metadata.json
+  e528476cbc97de75 1-19
+interaction-pattern-lab/.specify/sources/REQSRC-028-project-wide-enterprise-typography-20260904/source.md
+  e528476cbc97de75 1-16
+interaction-pattern-lab/.specify/sources/REQSRC-013-multi-source-ui-distillation-and-navigation-request-20260903/metadata.json
+  e528476cbc97de75 1-20
+interaction-pattern-lab/.specify/specs/004-database-backed-navigation-rbac/README.md
+  e528476cbc97de75 1-29
+interaction-pattern-lab/.specify/specs/003-authenticated-enterprise-navigation-shell/pipeline-state.json
+  e528476cbc97de75 1-20
+interaction-pattern-lab/.specify/sources/REQSRC-015-authenticated-navigation-shell-specification-gate-approval-20260903/source.md
+  e528476cbc97de75 1-23
+interaction-pattern-lab/.specify/specs/009-project-wide-enterprise-typography/spec.md
+  e528476cbc97de75 1-26
+interaction-pattern-lab/.specify/requirements/006-enterprise-ui-asset-system/business-impact-review.md
+  e528476cbc97de75 1-18
+interaction-pattern-lab/.specify/memory/project-charter.md
+  e528476cbc97de75 3,9-10,21-36,61-64,71-72,105-130
+interaction-pattern-lab/docs/product/多来源交互资产萃取与演示门户规划.md
+  e528476cbc97de75 1-102
+interaction-pattern-lab/.specify/sources/REQSRC-015-authenticated-navigation-shell-specification-gate-approval-20260903/metadata.json
+  e528476cbc97de75 1-19
+interaction-pattern-lab/.specify/specs/005-unified-navigation-toolbar-tab-workspace/architecture-gate-review.md
+  e528476cbc97de75 1-7
+interaction-pattern-lab/.specify/specs/005-unified-navigation-toolbar-tab-workspace/implementation-evidence.md
+  e528476cbc97de75 1-22
+interaction-pattern-lab/.specify/sources/REQSRC-017-database-backed-role-menu-authorization-requirement-20260903/metadata.json
+  e528476cbc97de75 1-14
+interaction-pattern-lab/.specify/sources/REQSRC-018-database-backed-navigation-rbac-business-gate-approval-20260903/source.md
+  e528476cbc97de75 1-24
+interaction-pattern-lab/.specify/specs/003-authenticated-enterprise-navigation-shell/specification-gate-review.md
+  e528476cbc97de75 1-72
+interaction-pattern-lab/.specify/specs/003-authenticated-enterprise-navigation-shell/testcases.md
+  e528476cbc97de75 1-68
+interaction-pattern-lab/.specify/sources/REQSRC-027-dictionary-tree-maintenance-and-export-refinement-20260904/metadata.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/requirements/004-database-backed-navigation-rbac/transformation.md
+  e528476cbc97de75 1-64
+interaction-pattern-lab/.specify/specs/009-project-wide-enterprise-typography/clarification.md
+  e528476cbc97de75 1-7
+interaction-pattern-lab/.specify/requirements/004-database-backed-navigation-rbac/README.md
+  e528476cbc97de75 1-23
+interaction-pattern-lab/.specify/specs/006-database-backed-data-dictionary/testcases.md
+  e528476cbc97de75 1-18
+interaction-pattern-lab/.specify/specs/007-role-scoped-list-views/README.md
+  e528476cbc97de75 1-6
+interaction-pattern-lab/.specify/specs/007-role-scoped-list-views/traceability.md
+  e528476cbc97de75 1-7
+interaction-pattern-lab/.specify/specs/008-customer-directory-demo/clarification.md
+  e528476cbc97de75 1-10
+interaction-pattern-lab/.specify/specs/008-customer-directory-demo/plan.md
+  e528476cbc97de75 1-9
+interaction-pattern-lab/.specify/specs/009-project-wide-enterprise-typography/pipeline-state.json
+  e528476cbc97de75 1-12
+interaction-pattern-lab/.specify/requirements/003-multi-source-ui-distillation-showcase/business-gate-review.md
+  e528476cbc97de75 1-59
+interaction-pattern-lab/.specify/sources/REQSRC-031-enterprise-ui-assets-technology-route-and-implementation-direction-20260905/metadata.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/specs/003-authenticated-enterprise-navigation-shell/plan.md
+  e528476cbc97de75 1-236
+interaction-pattern-lab/.specify/sources/REQSRC-017-database-backed-role-menu-authorization-requirement-20260903/source.md
+  e528476cbc97de75 1-17
+interaction-pattern-lab/.specify/specs/009-project-wide-enterprise-typography/implementation-evidence.md
+  e528476cbc97de75 1-7
+interaction-pattern-lab/.specify/specs/007-role-scoped-list-views/testcases.md
+  e528476cbc97de75 1-8
+interaction-pattern-lab/.specify/sources/REQSRC-021-database-backed-navigation-rbac-release-gate-approval-20260903/metadata.json
+  e528476cbc97de75 1-19
+interaction-pattern-lab/.specify/specs/005-unified-navigation-toolbar-tab-workspace/pipeline-state.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/specs/005-unified-navigation-toolbar-tab-workspace/testcases.md
+  e528476cbc97de75 1-10
+interaction-pattern-lab/.specify/specs/004-database-backed-navigation-rbac/clarification.md
+  e528476cbc97de75 1-30
+interaction-pattern-lab/.specify/memory/constitution.md
+  e528476cbc97de75 3-4,20,27,34
+interaction-pattern-lab/.specify/specs/003-authenticated-enterprise-navigation-shell/evidence/browser-validation.md
+  e528476cbc97de75 1-24
+interaction-pattern-lab/.specify/memory/business-context.md
+  e528476cbc97de75 3,20-24,90-93,117
+interaction-pattern-lab/.specify/specs/007-role-scoped-list-views/requirements/original.md
+  e528476cbc97de75 1-7
+interaction-pattern-lab/.specify/specs/003-authenticated-enterprise-navigation-shell/README.md
+  e528476cbc97de75 1-25
+interaction-pattern-lab/.specify/specs/004-database-backed-navigation-rbac/traceability.md
+  e528476cbc97de75 1-77
+interaction-pattern-lab/.specify/requirements/003-multi-source-ui-distillation-showcase/requirement.md
+  e528476cbc97de75 1-123
+interaction-pattern-lab/.specify/sources/REQSRC-024-customer-directory-layout-and-interaction-refinement-20260904/metadata.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/specs/005-unified-navigation-toolbar-tab-workspace/review.md
+  e528476cbc97de75 1-8
+interaction-pattern-lab/.specify/specs/007-role-scoped-list-views/spec.md
+  e528476cbc97de75 1-22
+interaction-pattern-lab/.specify/requirements/006-enterprise-ui-asset-system/technology-route-assessment.md
+  e528476cbc97de75 1-54
+interaction-pattern-lab/.specify/requirements/005-enterprise-workspace-configurable-customer-directory/requirement.md
+  e528476cbc97de75 1-178
+interaction-pattern-lab/.specify/specs/004-database-backed-navigation-rbac/pipeline-state.json
+  e528476cbc97de75 1-24
+interaction-pattern-lab/.specify/specs/006-database-backed-data-dictionary/clarification.md
+  e528476cbc97de75 1-16
+interaction-pattern-lab/.specify/specs/006-database-backed-data-dictionary/review.md
+  e528476cbc97de75 1-26
+interaction-pattern-lab/.specify/requirements/003-multi-source-ui-distillation-showcase/transformation.md
+  e528476cbc97de75 1-69
+interaction-pattern-lab/.specify/specs/007-role-scoped-list-views/clarification.md
+  e528476cbc97de75 1-7
+interaction-pattern-lab/.specify/specs/007-role-scoped-list-views/implementation-evidence.md
+  e528476cbc97de75 1-22
+interaction-pattern-lab/.specify/specs/006-database-backed-data-dictionary/pipeline-state.json
+  e528476cbc97de75 1-20
+interaction-pattern-lab/.specify/specs/007-role-scoped-list-views/tasks.md
+  e528476cbc97de75 1-6
+interaction-pattern-lab/.specify/specs/008-customer-directory-demo/implementation-evidence.md
+  e528476cbc97de75 1-33
+interaction-pattern-lab/.specify/specs/009-project-wide-enterprise-typography/plan.md
+  e528476cbc97de75 1-8
+interaction-pattern-lab/.specify/sources/REQSRC-024-customer-directory-layout-and-interaction-refinement-20260904/source.md
+  e528476cbc97de75 1-16
+interaction-pattern-lab/.specify/sources/REQSRC-025-admin-system-access-runtime-incident-20260904/metadata.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/sources/REQSRC-026-hierarchical-initialized-dictionary-values-maintenance-20260904/source.md
+  e528476cbc97de75 1-20
+interaction-pattern-lab/.specify/specs/006-database-backed-data-dictionary/release-gate-review.md
+  e528476cbc97de75 1-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "5914a91b9f12f26d4ed8d30c21a35ec0f5e88fca",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 6568,
+      "total_deletions": 6725,
+      "accepted_lines": 6537,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/e9552d50e32875e6c79b5ff5ac77cbefcd8501a464a00b821e126dd08433e764"
+    }
+  }
+}
