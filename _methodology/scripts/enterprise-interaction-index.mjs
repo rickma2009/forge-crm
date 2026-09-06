@@ -55,9 +55,9 @@ const evidenceCardOverrides = new Map([
       project: 'interaction-pattern-lab',
       slice: '010-master-detail-document-assets',
       environment: 'deterministic in-memory interaction validation lab',
-      versionPoint: 'bf68ffd',
-      result: 'VAL-010 records dual-scenario in-lab candidate evidence; maturity remains idea.',
-      unknowns: ['real-project adoption', 'business validation', 'browser QA', 'Release approval'],
+      versionPoint: '70caa49',
+      result: 'VAL-010 records dual-scenario implementation, automated checks and responsive browser QA; maturity remains idea.',
+      unknowns: ['real-project adoption', 'business validation', 'Release approval'],
     },
   }]],
 ]);

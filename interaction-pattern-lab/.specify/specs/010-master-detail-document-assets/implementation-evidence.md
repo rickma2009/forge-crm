@@ -1,7 +1,7 @@
 # 实施与验证证据：010 主从单据与企业组件资产化
 
 > 证据日期：2026-09-06（Asia/Shanghai）
-> 结论：实现与验证已完成，Release Gate 仍为 `awaiting-user-approval`。
+> 结论：实现、自动验证与响应式浏览器 QA 已完成；`TC-1013` 全键盘浏览器走查为 `PARTIAL`，Release Gate 仍为 `awaiting-user-approval`。
 > 边界：本文件不批准资产晋升、外部部署或 Release。
 
 ## 1. 实现结果
@@ -72,7 +72,7 @@
 | `TC-1010` | PASS | AsyncOutcome + 销售订单部分成功守恒测试和浏览器反馈 |
 | `TC-1011` | PASS | document reducer 创建/查看/编辑状态测试 |
 | `TC-1012` | PASS | 可取消离开测试 + 浏览器继续编辑保留输入 |
-| `TC-1013` | PASS（组合证据） | 完整键盘组件测试 + 真实浏览器错误聚焦/键盘修正；驱动限制见上文 |
+| `TC-1013` | PARTIAL（待人工全键盘走查） | 完整键盘组件测试 + 真实浏览器错误聚焦/键盘修正；尚未完成仅用键盘的浏览器端到端主路径 |
 | `TC-1014` | PASS | BOM 4 tests + boundary validator + 浏览器层级/候选/预算 |
 | `TC-1015` | PASS | 1440/1024/390 DOM 尺寸检查与 5 张截图 |
 | `TC-1016` | PASS | isolation validator + localhost-only page-assets + 刷新复位 |

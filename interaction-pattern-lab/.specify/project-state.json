@@ -1,7 +1,7 @@
 {
   "project": "Interaction Pattern Lab / 企业交互模式验证场",
-  "status": "slices-005-through-009-released-in-validation-lab-slice-010-implementation-authorized",
-  "currentStage": "slice-010-implementation-authorized",
+  "status": "slices-005-through-009-released-in-validation-lab-slice-010-release-review-awaiting-user-approval",
+  "currentStage": "slice-010-release-review",
   "gates": {
     "business": {
       "status": "approved-for-requirement-005",
@@ -25,8 +25,11 @@
         "evidence": { "sourceId": "REQSRC-034", "approvedBy": "Rick", "approvedAt": "2026-09-05", "conclusion": "approved-plan-and-ADR-005-for-implementation" }
       },
       "release": {
-        "status": "not-started",
-        "evidence": null
+        "status": "awaiting-user-approval",
+        "evidence": {
+          "review": "specs/010-master-detail-document-assets/release-gate-review.md",
+          "conclusion": "prepared-not-approved"
+        }
       }
     }
   },
@@ -48,10 +51,10 @@
     "007-role-scoped-list-views": "released-in-validation-lab",
     "008-customer-directory-demo": "released-in-validation-lab",
     "009-project-wide-enterprise-typography": "released-in-validation-lab",
-    "010-master-detail-document-assets": "architecture-approved-REQSRC-034-implementation-authorized"
+    "010-master-detail-document-assets": "verified-with-TC-1013-partial-release-review-awaiting-user-approval"
   },
   "releaseEvidence": ".specify/specs/009-project-wide-enterprise-typography/implementation-evidence.md",
-  "nextAction": "Execute slice 010 TASK-1002 onward in approved order; keep asset promotion, external deployment and Release blocked pending independent Gates.",
+  "nextAction": "Complete manual keyboard-only browser QA for TC-1013 or obtain explicit Release Gate risk acceptance; keep asset promotion, external deployment and Release blocked.",
   "parallelReviewCandidate": ".specify/specs/002-bulk-assignment-partial-success/review.md",
-  "updatedAt": "2026-09-05T13:03:20+08:00"
+  "updatedAt": "2026-09-06T14:10:00+08:00"
 }
