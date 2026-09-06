@@ -1,0 +1,28 @@
+interaction-pattern-lab/packages/web/src/ui-assets/templates/master-detail-document/reducer.test.ts
+  e528476cbc97de75 3,22-28,48-49,51,59-60,62,73-74,76,106-107,109,147,153-163,165,167
+interaction-pattern-lab/packages/web/src/ui-assets/templates/master-detail-document/reducer.ts
+  e528476cbc97de75 52
+interaction-pattern-lab/packages/web/src/ui-assets/templates/master-detail-document/types.ts
+  e528476cbc97de75 29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "5973d8159c32abe3d9274046bdb2669da34ba622",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2340,
+      "total_deletions": 6715,
+      "accepted_lines": 2776,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/bc820fee4db7ebec5670ae32c4aecfd6ae5c4b931067026e0de334c7badf1eaa"
+    }
+  }
+}
