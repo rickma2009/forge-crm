@@ -1,7 +1,7 @@
 {
   "project": "Interaction Pattern Lab / 企业交互模式验证场",
-  "status": "slices-005-through-010-released-in-validation-lab",
-  "currentStage": "slice-010-released-in-validation-lab",
+  "status": "stable-monorepo-baseline-with-slice-011-business-gate-draft",
+  "currentStage": "slice-011-business-gate",
   "gates": {
     "business": {
       "status": "approved-for-requirement-005",
@@ -15,6 +15,15 @@
     "release": { "status": "approved-for-slices-005-through-009-released-in-validation-lab", "evidence": { "sourceId": "REQSRC-023", "approvedBy": "Rick", "conclusion": "approved-after-verification", "scope": "validation-lab-release-no-external-deployment" } }
   },
   "sliceGates": {
+    "011-import-validation-execution": {
+      "business": {
+        "status": "draft-awaiting-explicit-approval",
+        "evidence": { "sourceId": "REQSRC-036", "review": "requirements/007-import-validation-execution/business-gate-review.md" }
+      },
+      "specification": { "status": "not-started" },
+      "architecture": { "status": "not-started" },
+      "release": { "status": "not-started" }
+    },
     "010-master-detail-document-assets": {
       "specification": {
         "status": "approved",
@@ -54,10 +63,11 @@
     "007-role-scoped-list-views": "released-in-validation-lab",
     "008-customer-directory-demo": "released-in-validation-lab",
     "009-project-wide-enterprise-typography": "released-in-validation-lab",
-    "010-master-detail-document-assets": "released-in-validation-lab-REQSRC-035"
+    "010-master-detail-document-assets": "released-in-validation-lab-REQSRC-035",
+    "011-import-validation-execution": "business-gate-draft-awaiting-approval"
   },
   "releaseEvidence": ".specify/specs/010-master-detail-document-assets/release-gate-review.md",
-  "nextAction": "Collect real-project adoption and business validation evidence before considering any asset maturity promotion; external deployment remains out of scope.",
+  "nextAction": "Obtain explicit Business Gate decision for requirement 007 before creating slice 011 Specification; external deployment and asset promotion remain out of scope.",
   "parallelReviewCandidate": ".specify/specs/002-bulk-assignment-partial-success/review.md",
-  "updatedAt": "2026-09-06T18:45:53+08:00"
+  "updatedAt": "2026-09-06T22:00:36+08:00"
 }

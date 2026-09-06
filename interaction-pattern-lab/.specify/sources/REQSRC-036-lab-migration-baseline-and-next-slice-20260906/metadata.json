@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-036",
+  "title": "Lab 迁移基线与下一切片启动指令",
+  "sourceType": "user-provided-continuation-direction",
+  "sourceDate": "2026-09-06",
+  "importedAt": "2026-09-06T22:00:36+08:00",
+  "originalPath": "Codex task user message",
+  "managedCopy": "source.md",
+  "sha256": "bc19cf350a91e034028e7478ebf851e5832ab6e53f38b3821b79e9be1a6b4921",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active-awaiting-business-gate"
+}
