@@ -1,0 +1,52 @@
+interaction-pattern-lab/design-qa.md
+  e528476cbc97de75 1-46
+_methodology/examples/004-golden-interaction-enterprise-workbench/styles.css
+  e528476cbc97de75 1
+_methodology/templates/ui/enterprise-workbench/workbench.tokens.css
+  e528476cbc97de75 1-19
+interaction-pattern-lab/.scratch/workbench-design-20260905/implementation-plan.md
+  e528476cbc97de75 1-51
+_methodology/templates/ui/enterprise-workbench/README.md
+  e528476cbc97de75 1-14
+_methodology/examples/004-golden-interaction-enterprise-workbench/index.html
+  e528476cbc97de75 1-6
+_methodology/examples/004-golden-interaction-enterprise-workbench/app.js
+  e528476cbc97de75 1-6
+_methodology/scripts/verify-workbench.sh
+  e528476cbc97de75 21
+_methodology/scripts/check-enterprise-workbench-candidate.mjs
+  e528476cbc97de75 1-30
+_methodology/templates/ui/enterprise-workbench/workbench-schema.example.json
+  e528476cbc97de75 1-19
+_methodology/examples/004-golden-interaction-enterprise-workbench/README.md
+  e528476cbc97de75 1-11
+interaction-pattern-lab/.scratch/workbench-design-20260905/design-brief.md
+  e528476cbc97de75 1-46
+_methodology/reference-cases/enterprise-workbench-master-detail-candidate.md
+  e528476cbc97de75 1-4,6-83
+interaction-pattern-lab/.scratch/enterprise-template-research-20260905.md
+  e528476cbc97de75 1-37
+_methodology/templates/ui/enterprise-workbench/acceptance-checklist.md
+  e528476cbc97de75 1-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "2027d60ff31e0b1e6e8e2a09ac30bc4510dfe57c",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 383,
+      "total_deletions": 0,
+      "accepted_lines": 2287,
+      "overriden_lines": 1,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/6f92f9a12400d21c3adabb119ebeb5e3ee4bd9f041964534ab8a679b4fa381dd"
+    }
+  }
+}
