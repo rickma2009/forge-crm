@@ -1,0 +1,58 @@
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/implementation-evidence.md
+  e528476cbc97de75 4-5,88
+interaction-pattern-lab/.specify/sources/REQSRC-035-slice-010-release-gate-approval-20260906/source.md
+  e528476cbc97de75 1-16
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/tasks.md
+  e528476cbc97de75 5
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/traceability.md
+  e528476cbc97de75 11,20
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/pipeline-state.json
+  e528476cbc97de75 3-4,9,27-28,30
+interaction-pattern-lab/.specify/sources/REQSRC-035-slice-010-release-gate-approval-20260906/metadata.json
+  e528476cbc97de75 1-19
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/review.md
+  e528476cbc97de75 5
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/release-gate-review.md
+  e528476cbc97de75 3,5,58,60-62,64
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/testcases.md
+  e528476cbc97de75 3
+interaction-pattern-lab/.specify/sources/REGISTRY.md
+  e528476cbc97de75 23
+interaction-pattern-lab/.specify/project-state.json
+  e528476cbc97de75 3-4,28,30-32,34,57,59-60,62
+_methodology/scripts/enterprise-interaction-index.test.mjs
+  e528476cbc97de75 55,66-67
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/README.md
+  e528476cbc97de75 3,8,22
+interaction-pattern-lab/AGENTS.md
+  e528476cbc97de75 7
+_methodology/scripts/enterprise-interaction-index.mjs
+  e528476cbc97de75 48,59-61
+_methodology/templates/ui/master-detail-document/README.md
+  e528476cbc97de75 3,17-18
+AGENTS.md
+  e528476cbc97de75 10
+_methodology/patterns/index.json
+  e528476cbc97de75 184-185,203-204,207
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "2472e35154da3b8ed9c66dd4a99da78cfa94908b",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2235,
+      "total_deletions": 6737,
+      "accepted_lines": 2234,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/ddcf2fd716062c7755ec1045b3adda0c07d873cef27896cd6f189173103b5ce7"
+    }
+  }
+}
