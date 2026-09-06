@@ -1,0 +1,24 @@
+.gitignore
+  e528476cbc97de75 7-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "77430ddfc870ad2dcb516e7f12b7e12cd5bb006d",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2146,
+      "total_deletions": 6690,
+      "accepted_lines": 2146,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/a30e3a67982b8f2a753842fc1f2ab2f20632252e3f27646d750d2a0af2033278"
+    }
+  }
+}
