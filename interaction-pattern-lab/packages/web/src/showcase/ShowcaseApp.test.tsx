@@ -65,7 +65,7 @@ describe('database-backed enterprise navigation showcase', () => {
   it('TC-1002: distinguishes interactive pages from description-only pages on the overview', async () => {
     window.location.hash = '#/showcase/overview';
     await login('admin');
-    expect(await screen.findByText('8')).toBeInTheDocument();
+    expect(await screen.findByText('9')).toBeInTheDocument();
     expect(screen.getByText('交互页面')).toBeInTheDocument();
     expect(screen.getByText('19')).toBeInTheDocument();
     expect(screen.getByText('说明页面')).toBeInTheDocument();
@@ -87,6 +87,14 @@ describe('database-backed enterprise navigation showcase', () => {
     expect(screen.getByRole('table', { name: '新建销售订单行项目' })).toBeInTheDocument();
     expect(screen.getAllByText(/REQSRC-029、REQSRC-030/).length).toBeGreaterThan(0);
     expect(screen.queryByRole('button', { name: '添加一行' })).not.toBeInTheDocument();
+  });
+
+  it('loads the registered BOM route through the shared master-detail document template', async () => {
+    window.location.hash = '#/showcase/scenarios/bom';
+    await login('admin');
+    expect(await screen.findByRole('heading', { name: '装配清单复核' })).toBeInTheDocument();
+    expect(screen.getByRole('table', { name: '装配清单复核行项目' })).toBeInTheDocument();
+    expect(screen.getByRole('tree', { name: '层级预览' })).toBeInTheDocument();
   });
 
   it('opens the personal workbench and filters its explainable task queue', async () => {

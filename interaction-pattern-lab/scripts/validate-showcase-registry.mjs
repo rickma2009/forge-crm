@@ -8,7 +8,7 @@ const projectRoot = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 const registry = JSON.parse(fs.readFileSync(path.join(projectRoot, 'packages/web/src/showcase/registry/showcase-registry.data.json'), 'utf8'));
 const methodIndex = JSON.parse(fs.readFileSync(path.resolve(projectRoot, '../_methodology/patterns/index.json'), 'utf8'));
 const iconKeys = new Set(['portal', 'overview', 'foundation', 'palette', 'text', 'layout', 'icons', 'components', 'action', 'form', 'table', 'feedback', 'pages', 'list', 'filter', 'detail', 'split', 'workbench', 'interaction', 'state', 'scenario', 'settings', 'user', 'role', 'lock', 'menu', 'log', 'resource', 'data']);
-const rendererKeys = new Set(['overview', 'resource-catalog', 'customer-directory', 'dictionary-admin', 'list-view-admin', 'sales-order-prototype', 'personal-workbench', 'master-detail-workbench', 'description']);
+const rendererKeys = new Set(['overview', 'resource-catalog', 'customer-directory', 'dictionary-admin', 'list-view-admin', 'sales-order-prototype', 'personal-workbench', 'master-detail-workbench', 'bom-scenario', 'description']);
 const errors = validateShowcaseRegistry(registry, {
   iconKeys,
   rendererKeys,

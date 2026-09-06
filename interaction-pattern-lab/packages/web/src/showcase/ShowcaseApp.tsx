@@ -14,6 +14,7 @@ import type { ShowcaseNavigationNode, ShowcasePage } from './registry/types';
 import { GatewayError, httpNavigationGateway, type EnterpriseGateway, type NavigationGateway } from './gateway';
 import { CustomerDirectoryPage, DictionaryAdminPage, ListViewAdminPage } from './EnterprisePages';
 import { SalesOrderScenario } from '../ui-assets/scenarios/sales-order/SalesOrderScenario';
+import { BomScenario } from '../ui-assets/scenarios/bom/BomScenario';
 import { EnterpriseWorkbenchPrototype } from './EnterpriseWorkbenchPrototype';
 import { OverviewPage } from './OverviewPage';
 import { FoundationSpecimen } from '../ui-assets/foundation/FoundationSpecimen';
@@ -200,6 +201,7 @@ function PageAdapter({ page, user, systemCode, allowedActions, gateway }: { page
   if (page.rendererKey === 'dictionary-admin') return <DictionaryAdminPage systemCode={systemCode} canManage={allowedActions.includes('manage')} gateway={gateway as EnterpriseGateway} />;
   if (page.rendererKey === 'list-view-admin') return <ListViewAdminPage systemCode={systemCode} gateway={gateway as EnterpriseGateway} />;
   if (page.rendererKey === 'sales-order-prototype') return <SalesOrderScenario />;
+  if ((page.rendererKey as string) === 'bom-scenario') return <BomScenario />;
   if (page.rendererKey === 'personal-workbench') return <EnterpriseWorkbenchPrototype variant="personal" />;
   if (page.rendererKey === 'master-detail-workbench') return <EnterpriseWorkbenchPrototype variant="master-detail" />;
   if (page.rendererKey === 'description') return <DescriptionPage page={page} />;

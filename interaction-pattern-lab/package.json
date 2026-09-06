@@ -18,7 +18,8 @@
     "validate:patterns": "node scripts/validate-pattern-projection.mjs",
     "validate:scenarios": "node scripts/validate-scenario-contracts.mjs",
     "validate:isolation": "node scripts/validate-demo-isolation.mjs",
-    "verify": "pnpm validate:patterns && pnpm validate:scenarios && pnpm validate:isolation && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+    "validate:ui-assets": "node scripts/validate-ui-asset-boundaries.mjs",
+    "verify": "pnpm validate:patterns && pnpm validate:scenarios && pnpm validate:isolation && pnpm validate:ui-assets && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
   },
   "dependencies": {
     "react": "19.1.1",

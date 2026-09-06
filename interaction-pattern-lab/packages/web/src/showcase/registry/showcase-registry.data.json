@@ -65,6 +65,7 @@
     { "id": "interaction-patterns", "path": "/showcase/interactions", "title": "交互模式", "summary": "查看交互模式分类入口说明。", "coverage": "description-only", "viewCapability": "showcase.pattern.view", "rendererKey": "description", "iconKey": "interaction", "sourceRefs": ["UID-001"] },
     { "id": "page-states", "path": "/showcase/states", "title": "页面状态", "summary": "查看页面状态与反馈候选说明。", "coverage": "description-only", "viewCapability": "showcase.state.view", "rendererKey": "description", "iconKey": "state", "sourceRefs": ["UID-001"] },
     { "id": "scenarios", "path": "/showcase/scenarios", "title": "组合场景", "summary": "查看页面与交互组合场景说明。", "coverage": "description-only", "viewCapability": "showcase.scenario.view", "rendererKey": "description", "iconKey": "scenario", "sourceRefs": ["UID-001"] },
+    { "id": "scenario-bom", "path": "/showcase/scenarios/bom", "title": "装配清单层级复核", "summary": "使用同一主从单据模板验证层级、候选匹配和差异提示。", "coverage": "interactive-slice", "viewCapability": "showcase.scenario.view", "rendererKey": "bom-scenario", "iconKey": "scenario", "sourceRefs": ["UID-001"], "traceability": { "directSourceRefs": ["REQSRC-029", "REQSRC-030"], "extractionRefs": ["UID-001"], "assetRefs": ["EPM-PAGE-012", "EPM-PAGE-013", "EPM-ACT-043", "EPM-ACT-044"], "implementationRefs": ["packages/web/src/ui-assets/scenarios/bom/BomScenario.tsx"], "qaRefs": [], "qaStatus": "not-run" } },
     { "id": "customer-directory", "path": "/showcase/customers", "title": "客户列表", "summary": "数据库驱动的客户查询、新增、编辑与个人视图演示。", "coverage": "interactive-slice", "viewCapability": "showcase.customer.view", "rendererKey": "customer-directory", "iconKey": "user", "sourceRefs": ["UID-002"], "operations": [
       { "id": "customer-create", "label": "新增客户", "capability": "showcase.customer.create" },
       { "id": "customer-update", "label": "编辑客户", "capability": "showcase.customer.update" }
@@ -106,7 +107,10 @@
       ] },
       { "id": "nav-interactions", "label": "交互模式", "iconKey": "interaction", "pageId": "interaction-patterns" },
       { "id": "nav-states", "label": "页面状态", "iconKey": "state", "pageId": "page-states" },
-      { "id": "nav-scenarios", "label": "组合场景", "iconKey": "scenario", "pageId": "scenarios" }
+      { "id": "nav-scenarios", "label": "组合场景", "iconKey": "scenario", "children": [
+        { "id": "nav-scenarios-index", "label": "组合场景说明", "iconKey": "scenario", "pageId": "scenarios" },
+        { "id": "nav-scenario-bom", "label": "装配清单层级复核", "iconKey": "scenario", "pageId": "scenario-bom" }
+      ] }
       ,{ "id": "nav-business-demo", "label": "业务数据演示", "iconKey": "workbench", "children": [
         { "id": "nav-customer-directory", "label": "客户列表", "iconKey": "user", "pageId": "customer-directory" }
       ] },
