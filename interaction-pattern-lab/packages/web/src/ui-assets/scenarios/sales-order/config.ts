@@ -31,7 +31,8 @@ export interface SalesOrderLine {
 export const salesOrderTraceability = {
   directSourceRefs: ['REQSRC-029', 'REQSRC-030'],
   assetRefs: ['UID-001', 'EPM-PAGE-012', 'EPM-PAGE-013', 'EPM-ACT-010', 'EPM-ACT-011', 'EPM-ACT-012', 'EPM-ACT-013'],
-  qaStatus: 'not-run',
+  qaStatus: 'recorded',
+  qaRef: '.specify/specs/010-master-detail-document-assets/implementation-evidence.md',
 } as const;
 
 const headerSchema: FieldSchema<SalesOrderHeader>[] = [

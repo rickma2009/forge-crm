@@ -121,4 +121,7 @@ function validateTraceability(page, requiredPageIds, evidence, errors) {
   for (const implementationRef of traceability.implementationRefs ?? []) {
     if (evidence?.implementationRefExists && !evidence.implementationRefExists(implementationRef)) errors.push(`MISSING_IMPLEMENTATION_REF:${page.id}:${implementationRef}`);
   }
+  for (const qaRef of qaRefs) {
+    if (evidence?.qaRefExists && !evidence.qaRefExists(qaRef)) errors.push(`MISSING_QA_REF:${page.id}:${qaRef}`);
+  }
 }

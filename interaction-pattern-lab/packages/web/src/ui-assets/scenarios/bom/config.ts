@@ -25,7 +25,8 @@ export const bomTraceability = {
   directSourceRefs: ['REQSRC-029', 'REQSRC-030'],
   extractionRefs: ['UID-001'],
   assetRefs: ['EPM-PAGE-012', 'EPM-PAGE-013', 'EPM-ACT-043', 'EPM-ACT-044'],
-  qaStatus: 'not-run',
+  qaStatus: 'recorded',
+  qaRef: '.specify/specs/010-master-detail-document-assets/implementation-evidence.md',
 } as const;
 
 export const bomExtension = {

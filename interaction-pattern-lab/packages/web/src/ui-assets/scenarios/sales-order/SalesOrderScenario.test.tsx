@@ -16,12 +16,14 @@ describe('TASK-1009 sales-order scenario', () => {
     expect(salesOrderTraceability).toEqual({
       directSourceRefs: ['REQSRC-029', 'REQSRC-030'],
       assetRefs: ['UID-001', 'EPM-PAGE-012', 'EPM-PAGE-013', 'EPM-ACT-010', 'EPM-ACT-011', 'EPM-ACT-012', 'EPM-ACT-013'],
-      qaStatus: 'not-run',
+      qaStatus: 'recorded',
+      qaRef: '.specify/specs/010-master-detail-document-assets/implementation-evidence.md',
     });
     for (const reference of [...salesOrderTraceability.directSourceRefs, ...salesOrderTraceability.assetRefs]) {
       expect(screen.getAllByText(new RegExp(reference)).length).toBeGreaterThan(0);
     }
-    expect(screen.getAllByText(/QA：not-run/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/QA：recorded/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/implementation-evidence\.md/).length).toBeGreaterThan(0);
 
     await user.selectOptions(screen.getByRole('combobox', { name: '候选行' }), 'PRD-5001');
     await user.click(screen.getByRole('button', { name: '添加候选行' }));

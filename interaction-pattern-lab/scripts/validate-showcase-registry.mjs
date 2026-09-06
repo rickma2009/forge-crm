@@ -18,6 +18,10 @@ const errors = validateShowcaseRegistry(registry, {
       const resolved = path.resolve(projectRoot, reference);
       return resolved.startsWith(`${projectRoot}${path.sep}`) && fs.existsSync(resolved);
     },
+    qaRefExists(reference) {
+      const resolved = path.resolve(projectRoot, reference);
+      return resolved.startsWith(`${projectRoot}${path.sep}`) && fs.existsSync(resolved);
+    },
   },
 });
 assert.deepEqual(errors, [], `Showcase Registry 校验失败:\n${errors.join('\n')}`);

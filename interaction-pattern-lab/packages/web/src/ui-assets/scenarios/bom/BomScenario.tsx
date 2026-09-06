@@ -9,7 +9,7 @@ export function BomScenario() {
   const { budget, hierarchyPreview, candidateReview } = scenario.extension;
 
   return <section aria-label="装配清单确定性场景">
-    <p>追溯：{scenario.traceability.directSourceRefs.join('、')}；{scenario.traceability.extractionRefs.join('、')}；{scenario.traceability.assetRefs.join('、')}；QA：{scenario.traceability.qaStatus}。</p>
+    <p>追溯：{scenario.traceability.directSourceRefs.join('、')}；{scenario.traceability.extractionRefs.join('、')}；{scenario.traceability.assetRefs.join('、')}；QA：{scenario.traceability.qaStatus}（{scenario.traceability.qaRef}）。</p>
     <section aria-label="层级与候选扩展">
       <p>演示深度 {budget.maxDepth} 层；行预算 {budget.maxRows} 行（当前 {scenario.initialState.lines.length} 行）。</p>
       <ul role="tree" aria-label="层级预览">

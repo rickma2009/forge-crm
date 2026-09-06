@@ -29,6 +29,7 @@ const methodIndex = JSON.parse(fs.readFileSync(path.resolve(projectRoot, '../_me
 const traceabilityEvidence = {
   assetIds: new Set(methodIndex.assets.map((asset) => asset.assetId)),
   implementationRefExists: (reference: string) => fs.existsSync(path.resolve(projectRoot, reference)),
+  qaRefExists: (reference: string) => fs.existsSync(path.resolve(projectRoot, reference)),
 };
 
 function mutatedRegistry(mutate: (draft: ShowcaseRegistry) => void) {
@@ -69,12 +70,15 @@ describe('showcase registry contract', () => {
       {
         id: 'template-form',
         traceability: {
-          directSourceRefs: ['REQSRC-029'],
+          directSourceRefs: ['REQSRC-029', 'REQSRC-030'],
           extractionRefs: ['UID-001'],
-          assetRefs: ['EPM-PAGE-012'],
-          implementationRefs: ['packages/web/src/showcase/SalesOrderPrototype.tsx'],
-          qaRefs: [],
-          qaStatus: 'not-run',
+          assetRefs: ['EPM-PAGE-012', 'EPM-PAGE-013', 'EPM-ACT-010', 'EPM-ACT-011', 'EPM-ACT-012', 'EPM-ACT-013'],
+          implementationRefs: [
+            'packages/web/src/ui-assets/scenarios/sales-order/SalesOrderScenario.tsx',
+            'packages/web/src/ui-assets/templates/master-detail-document/MasterDetailDocument.tsx',
+          ],
+          qaRefs: ['.specify/specs/010-master-detail-document-assets/implementation-evidence.md'],
+          qaStatus: 'recorded',
         },
       },
       {
@@ -126,6 +130,13 @@ describe('showcase registry contract', () => {
       const page = draft.pages.find((candidate) => candidate.id === 'template-form') as unknown as { traceability?: { implementationRefs: string[] } };
       page.traceability = { implementationRefs: ['packages/web/src/showcase/missing.tsx'] };
     })).toContain('MISSING_IMPLEMENTATION_REF:template-form:packages/web/src/showcase/missing.tsx');
+  });
+
+  it('TC-1002: reports recorded QA whose evidence file cannot be resolved from the project root', () => {
+    expect(mutatedRegistry((draft) => {
+      const page = draft.pages.find((candidate) => candidate.id === 'template-form');
+      if (page?.traceability) page.traceability.qaRefs = ['.specify/specs/010-master-detail-document-assets/missing-evidence.md'];
+    })).toContain('MISSING_QA_REF:template-form:.specify/specs/010-master-detail-document-assets/missing-evidence.md');
   });
 
   it('TC-1002: reports a registered page with no navigation entry', () => {

@@ -1,12 +1,12 @@
 {
   "featureId": "010-master-detail-document-assets",
-  "status": "implementation-authorized-awaiting-task-1002",
-  "currentStage": "implementation",
+  "status": "release-gate-review-ready-awaiting-user-approval",
+  "currentStage": "release-review",
   "gates": {
     "business": "approved-REQSRC-014-BUS-005-through-BUS-007-scope-confirmed-by-impact-review",
     "specification": "approved-REQSRC-032",
     "architecture": "approved-REQSRC-034",
-    "release": "not-started"
+    "release": "awaiting-user-approval"
   },
   "technologyRoute": {
     "profile": "typescript-enterprise-web",
@@ -19,5 +19,12 @@
     "evidence": "REQSRC-033",
     "scope": "continue-after-each-approved-gate-without-reconfirming-recommended-implementation-details"
   },
-  "updatedAt": "2026-09-05T12:48:13+08:00"
+  "implementation": {
+    "status": "verified",
+    "completedTasks": ["TASK-1001", "TASK-1002", "TASK-1003", "TASK-1004", "TASK-1005", "TASK-1006", "TASK-1007", "TASK-1008", "TASK-1009", "TASK-1010", "TASK-1011", "TASK-1012"],
+    "evidence": "implementation-evidence.md",
+    "review": "review.md",
+    "releaseGatePackage": "release-gate-review.md"
+  },
+  "updatedAt": "2026-09-06T13:20:00+08:00"
 }
