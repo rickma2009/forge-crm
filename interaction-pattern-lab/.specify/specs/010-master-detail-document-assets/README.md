@@ -20,4 +20,5 @@
 - `implementation-evidence.md`：自动测试、浏览器 QA、隔离与逐用例证据；
 - `review.md`：产品、架构、QA 三视角实施后自审；
 - `release-gate-review.md`：已由 `REQSRC-035` 批准的 Release Gate 评审包；
+- `adoption-readiness.md`：Release 后进入独立真实项目评估的交接边界、差异项和证据清单；
 - `pipeline-state.json`：真实阶段状态。
