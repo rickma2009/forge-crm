@@ -1,0 +1,24 @@
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/pipeline-state.json
+  e528476cbc97de75 29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "7243bb48b98f12cdd02daa18606e393199757e7f",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2148,
+      "total_deletions": 6692,
+      "accepted_lines": 2148,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/c66b26460790b766cf3b3b75ef2ce5d8a9e514b6c125a345c6b845693b6ee33a"
+    }
+  }
+}
