@@ -80,7 +80,12 @@ export function createSalesOrderScenario(adapter: SalesOrderAdapter): DocumentSc
     lineColumns,
     emptyLine: { productName: '', productCode: '', quantity: 1, unitPriceMinorUnits: 0, taxRate: 13, requestedDeliveryDate: '2026-09-20', warehouse: '广州成品仓' },
     allocateLineId: adapter.allocateLineId,
-    validate: () => ({ headerErrors: [], lineErrors: [] }),
+    validate: ({ header }) => ({
+      headerErrors: header.customer.trim()
+        ? []
+        : [{ id: 'sales-order-customer-required', fieldId: 'customer', message: '客户不能为空。' }],
+      lineErrors: [],
+    }),
     save: adapter.save,
     summary: (lines) => summaryFor(lines),
     relatedEntries: ['来源：REQSRC-029、REQSRC-030；资产：UID-001、EPM-PAGE-012、EPM-PAGE-013。', '所有结果为确定性模拟，不会写入订单、库存、价格、BOM 或审批系统。'],

@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { SalesOrderScenario } from './SalesOrderScenario';
+import { salesOrderTraceability } from './config';
 
 describe('TASK-1009 sales-order scenario', () => {
   it('renders REQSRC-traceable header fields, controlled product candidates, and deterministic integer totals', async () => {
@@ -12,7 +13,15 @@ describe('TASK-1009 sales-order scenario', () => {
     expect(screen.getByRole('textbox', { name: '客户' })).toHaveValue('广州精工设备有限公司');
     expect(screen.getByRole('table', { name: '新建销售订单行项目' })).toBeInTheDocument();
     expect(screen.getByText('含税合计：¥127,803')).toBeInTheDocument();
-    expect(screen.getAllByText(/REQSRC-029/).length).toBeGreaterThan(0);
+    expect(salesOrderTraceability).toEqual({
+      directSourceRefs: ['REQSRC-029', 'REQSRC-030'],
+      assetRefs: ['UID-001', 'EPM-PAGE-012', 'EPM-PAGE-013', 'EPM-ACT-010', 'EPM-ACT-011', 'EPM-ACT-012', 'EPM-ACT-013'],
+      qaStatus: 'not-run',
+    });
+    for (const reference of [...salesOrderTraceability.directSourceRefs, ...salesOrderTraceability.assetRefs]) {
+      expect(screen.getAllByText(new RegExp(reference)).length).toBeGreaterThan(0);
+    }
+    expect(screen.getAllByText(/QA：not-run/).length).toBeGreaterThan(0);
 
     await user.selectOptions(screen.getByRole('combobox', { name: '候选行' }), 'PRD-5001');
     await user.click(screen.getByRole('button', { name: '添加候选行' }));
@@ -40,11 +49,52 @@ describe('TASK-1009 sales-order scenario', () => {
     expect(screen.getByRole('row', { name: /伺服驱动器 已保存/ })).toBeInTheDocument();
   });
 
-  it('keeps simulated validation failure distinct', async () => {
+  it('updates quantity, minor-unit price, tax rate, and requested delivery with deterministic tax totals', async () => {
+    const user = userEvent.setup();
+    render(<SalesOrderScenario />);
+
+    await user.click(screen.getByRole('button', { name: '编辑精密主轴组件的数量' }));
+    let input = screen.getByRole('spinbutton', { name: '精密主轴组件 数量' });
+    await user.clear(input);
+    await user.type(input, '3');
+    await user.keyboard('{Enter}');
+
+    await user.click(screen.getByRole('button', { name: '编辑精密主轴组件的含税单价' }));
+    input = screen.getByRole('spinbutton', { name: '精密主轴组件 含税单价' });
+    await user.clear(input);
+    await user.type(input, '3000000');
+    await user.keyboard('{Enter}');
+
+    await user.click(screen.getByRole('button', { name: '编辑精密主轴组件的税率' }));
+    input = screen.getByRole('spinbutton', { name: '精密主轴组件 税率' });
+    await user.clear(input);
+    await user.type(input, '10');
+    await user.keyboard('{Enter}');
+
+    await user.click(screen.getByRole('button', { name: '编辑精密主轴组件的要求交付日期' }));
+    const requestedDelivery = screen.getByLabelText('精密主轴组件 要求交付日期');
+    await user.clear(requestedDelivery);
+    await user.type(requestedDelivery, '2026-10-01');
+    await user.keyboard('{Enter}');
+
+    expect(screen.getByRole('button', { name: '编辑精密主轴组件的要求交付日期' })).toHaveTextContent('2026-10-01');
+    expect(screen.getByText('税额：¥16,293')).toBeInTheDocument();
+    expect(screen.getByText('含税合计：¥162,393')).toBeInTheDocument();
+  });
+
+  it('validates the current customer value, preserves the error context, and succeeds after correction', async () => {
     const user = userEvent.setup();
     render(<SalesOrderScenario initialOutcome="validation" />);
+
+    const customer = screen.getByRole('textbox', { name: '客户' });
+    await user.clear(customer);
     await user.click(screen.getByRole('button', { name: '保存模拟单据' }));
     expect(screen.getByRole('alert', { name: '校验失败' })).toHaveTextContent('客户不能为空。');
+    expect(customer).toHaveValue('');
+
+    await user.type(customer, '可修正客户');
+    await user.click(screen.getByRole('button', { name: '保存模拟单据' }));
+    expect(screen.getByRole('status', { name: '模拟操作结果' })).toHaveTextContent('草稿已暂存（模拟）。');
   });
 
   it('keeps simulated business rejection distinct', async () => {

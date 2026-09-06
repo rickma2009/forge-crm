@@ -80,6 +80,15 @@ describe('database-backed enterprise navigation showcase', () => {
     expect(screen.getByRole('navigation', { name: '演示门户菜单' })).toBeInTheDocument();
   });
 
+  it('loads the registered edit-form route with the enterprise sales-order scenario while keeping the legacy component separately testable', async () => {
+    window.location.hash = '#/showcase/templates/edit-form';
+    await login('admin');
+    expect(await screen.findByRole('heading', { name: '新建销售订单' })).toBeInTheDocument();
+    expect(screen.getByRole('table', { name: '新建销售订单行项目' })).toBeInTheDocument();
+    expect(screen.getAllByText(/REQSRC-029、REQSRC-030/).length).toBeGreaterThan(0);
+    expect(screen.queryByRole('button', { name: '添加一行' })).not.toBeInTheDocument();
+  });
+
   it('opens the personal workbench and filters its explainable task queue', async () => {
     window.location.hash = '#/showcase/templates/workbench';
     const { user } = await login('admin');

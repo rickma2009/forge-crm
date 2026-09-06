@@ -14,7 +14,7 @@ export function createSalesOrderAdapter(initialSimulation?: SalesOrderSimulation
     save: async (command) => {
       const simulation = initialSimulation ?? command.header.simulatedOutcome;
       if (simulation === 'pending-success') return new Promise<DocumentSaveOutcome<SalesOrderHeader>>(() => undefined);
-      if (simulation === 'validation') return {
+      if (simulation === 'validation' && !command.header.customer.trim()) return {
         kind: 'validation-failed',
         headerErrors: [{ id: 'sales-order-customer-required', fieldId: 'customer', message: '客户不能为空。' }],
         lineErrors: [],
