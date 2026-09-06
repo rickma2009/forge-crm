@@ -1,0 +1,50 @@
+_methodology/reference-cases/ui-distillations/UID-001-enterprise-navigation-shell/candidate/navigation-schema.example.json
+  e528476cbc97de75 1-68
+_methodology/reference-cases/ui-distillations/UID-002-enterprise-workspace-configurable-list/candidate/contracts.md
+  e528476cbc97de75 1-42
+_methodology/reference-cases/ui-distillations/UID-001-enterprise-navigation-shell/candidate/navigation-shell.tokens.css
+  e528476cbc97de75 1-31
+_methodology/reference-cases/ui-distillations/UID-002-enterprise-workspace-configurable-list/evidence-matrix.md
+  e528476cbc97de75 1-26
+_methodology/reference-cases/ui-distillations/UID-002-enterprise-workspace-configurable-list/distillation.md
+  e528476cbc97de75 1-181
+interaction-pattern-lab/.scratch/product-design-audit-20260904/report.md
+  e528476cbc97de75 1-87
+_methodology/reference-cases/ui-distillations/UID-001-enterprise-navigation-shell/source-selection.md
+  e528476cbc97de75 1-52
+_methodology/reference-cases/ui-distillations/UID-002-enterprise-workspace-configurable-list/README.md
+  e528476cbc97de75 1-20
+_methodology/reference-cases/ui-distillations/UID-001-enterprise-navigation-shell/evidence-matrix.md
+  e528476cbc97de75 1-15
+_methodology/reference-cases/ui-distillations/UID-001-enterprise-navigation-shell/distillation.md
+  e528476cbc97de75 1-167
+_methodology/reference-cases/ui-distillations/UID-001-enterprise-navigation-shell/candidate/README.md
+  e528476cbc97de75 1-44
+_methodology/reference-cases/ui-distillations/UID-002-enterprise-workspace-configurable-list/source-selection.md
+  e528476cbc97de75 1-61
+_methodology/reference-cases/ui-distillations/README.md
+  e528476cbc97de75 1-19
+_methodology/reference-cases/ui-distillations/UID-001-enterprise-navigation-shell/README.md
+  e528476cbc97de75 1-24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "6b2681dc371a202baea9576431b77969d6a6e90b",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 996,
+      "total_deletions": 0,
+      "accepted_lines": 2900,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/7d9b2bdc7c58c2ab74652b1a98063756a8f10720bf7dba5a58a22e1fad2cd76a"
+    }
+  }
+}
