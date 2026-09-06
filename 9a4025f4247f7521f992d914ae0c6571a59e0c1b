@@ -1,0 +1,52 @@
+interaction-pattern-lab/.specify/README.md
+  e528476cbc97de75 13
+interaction-pattern-lab/AGENTS.md
+  e528476cbc97de75 7
+interaction-pattern-lab/.specify/sources/REQSRC-036-lab-migration-baseline-and-next-slice-20260906/source.md
+  e528476cbc97de75 1-9
+interaction-pattern-lab/.specify/requirements/007-import-validation-execution/requirement.md
+  e528476cbc97de75 1-87
+interaction-pattern-lab/.specify/sources/REGISTRY.md
+  e528476cbc97de75 40
+interaction-pattern-lab/.specify/project-state.json
+  e528476cbc97de75 3-4,18-26,66-67,70,72
+interaction-pattern-lab/.specify/memory/project-charter.md
+  e528476cbc97de75 37
+interaction-pattern-lab/.specify/requirements/007-import-validation-execution/README.md
+  e528476cbc97de75 1-11
+interaction-pattern-lab/.specify/requirements/007-import-validation-execution/clarification.md
+  e528476cbc97de75 1-16
+interaction-pattern-lab/.specify/requirements/007-import-validation-execution/transformation.md
+  e528476cbc97de75 1-32
+interaction-pattern-lab/README.md
+  e528476cbc97de75 5,13
+interaction-pattern-lab/docs/pattern-backlog.md
+  e528476cbc97de75 33
+interaction-pattern-lab/.specify/requirements/007-import-validation-execution/business-gate-review.md
+  e528476cbc97de75 1-39
+AGENTS.md
+  e528476cbc97de75 10
+interaction-pattern-lab/.specify/sources/REQSRC-036-lab-migration-baseline-and-next-slice-20260906/metadata.json
+  e528476cbc97de75 1-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "9a4025f4247f7521f992d914ae0c6571a59e0c1b",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 230,
+      "total_deletions": 10,
+      "accepted_lines": 2134,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/17a70f6cb9f5e4d000185ea613189f0a0882253fc454f3e0535b4d1910ee6fd2"
+    }
+  }
+}
