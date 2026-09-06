@@ -1,0 +1,28 @@
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/adoption-readiness.md
+  e528476cbc97de75 5,11,71-73
+AGENTS.md
+  e528476cbc97de75 9
+interaction-pattern-lab/docs/pattern-backlog.md
+  e528476cbc97de75 55-57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.7",
+  "base_commit_sha": "c900069399eeb512d4c59fc74e12b4a69a1ee24c",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2156,
+      "total_deletions": 6699,
+      "accepted_lines": 2155,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/5992cfdf13e2b6dbe89d597784cada1bd828d3dae0c9c61bbeab460147f127d2"
+    }
+  }
+}
