@@ -1,0 +1,36 @@
+interaction-pattern-lab/packages/web/src/ui-assets/templates/master-detail-document/MasterDetailDocument.tsx
+  e528476cbc97de75 92
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/sales-order/SalesOrderScenario.tsx
+  e528476cbc97de75 1-12
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/sales-order/SalesOrderScenario.test.tsx
+  e528476cbc97de75 1-99
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/sales-order/config.ts
+  e528476cbc97de75 1-101
+interaction-pattern-lab/packages/web/src/showcase/ShowcaseApp.tsx
+  e528476cbc97de75 16,202
+interaction-pattern-lab/packages/web/src/ui-assets/templates/master-detail-document/types.ts
+  e528476cbc97de75 2,59
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/sales-order/adapter.ts
+  e528476cbc97de75 1-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.8",
+  "base_commit_sha": "05cdd4e2e2b10c64b00aa96e69e30043e34486d7",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2553,
+      "total_deletions": 6708,
+      "accepted_lines": 2989,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/13586aee6d76bb4f50d45e0f3785ea4904875d56968e832b6bccd85ba7dfd444"
+    }
+  }
+}
