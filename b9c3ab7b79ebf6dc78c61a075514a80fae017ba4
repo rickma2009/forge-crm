@@ -1,0 +1,82 @@
+_methodology/examples/ui-adoption-rehearsal/README.md
+  e528476cbc97de75 1-7
+_methodology/scripts/check-ui-adoption.mjs
+  e528476cbc97de75 1-11
+interaction-pattern-lab/packages/web/src/demos/record-workspace/RecordWorkspaceDemo.tsx
+  e528476cbc97de75 2,4,20-31,39-40,42,59,78,91,95,99
+interaction-pattern-lab/packages/web/src/showcase/registry/bom-registration.test.ts
+  e528476cbc97de75 1-15
+interaction-pattern-lab/docs/baselines/2026-09-18-ui-adoption-rehearsal.md
+  e528476cbc97de75 1-45
+interaction-pattern-lab/packages/web/src/demos/navigation-shell/NavigationShellConfig.test.tsx
+  e528476cbc97de75 1-17
+interaction-pattern-lab/docs/baselines/evidence/ui-adoption-20260918/install.log
+  e528476cbc97de75 1-3
+interaction-pattern-lab/docs/baselines/evidence/ui-adoption-20260918/vitest.log
+  e528476cbc97de75 1-25
+interaction-pattern-lab/.specify/sources/REGISTRY.md
+  e528476cbc97de75 45-48
+interaction-pattern-lab/packages/web/src/ui-assets/templates/master-detail-document/types.ts
+  e528476cbc97de75 52-58
+_methodology/templates/ui/ADOPTION.md
+  e528476cbc97de75 1-59
+interaction-pattern-lab/.specify/sources/REQSRC-039-ui-reuse-adoption-direction-20260918/metadata.json
+  e528476cbc97de75 1-12
+_methodology/templates/ui/adoption-record-template.md
+  e528476cbc97de75 1-20
+interaction-pattern-lab/packages/web/src/ui-assets/adoption/adoption.css
+  e528476cbc97de75 1-41
+interaction-pattern-lab/.specify/sources/REQSRC-040-ui-adoption-next-step-20260918/metadata.json
+  e528476cbc97de75 1-12
+interaction-pattern-lab/.specify/sources/REQSRC-040-ui-adoption-next-step-20260918/source.md
+  e528476cbc97de75 1-9
+interaction-pattern-lab/docs/baselines/2026-09-18-ui-adoption-refactoring.md
+  e528476cbc97de75 1-41
+_methodology/scripts/verify-workbench.sh
+  e528476cbc97de75 27
+interaction-pattern-lab/packages/web/src/ui-assets/adoption/ResourceWorkspace.tsx
+  e528476cbc97de75 1-68
+_methodology/scripts/rehearse-ui-adoption.mjs
+  e528476cbc97de75 1-34,36-46
+interaction-pattern-lab/packages/web/src/ui-assets/templates/master-detail-document/MasterDetailDocument.tsx
+  e528476cbc97de75 60,79,111,118
+interaction-pattern-lab/.specify/sources/REQSRC-039-ui-reuse-adoption-direction-20260918/source.md
+  e528476cbc97de75 1-13
+interaction-pattern-lab/packages/web/src/demos/navigation-shell/NavigationShellDemo.tsx
+  e528476cbc97de75 2,4,11,42-48,52-57,69,88,165,173
+interaction-pattern-lab/docs/baselines/evidence/ui-adoption-20260918/result.json
+  e528476cbc97de75 1-22
+interaction-pattern-lab/packages/web/src/demos/record-workspace/RecordWorkspaceConfig.test.tsx
+  e528476cbc97de75 1-15
+_methodology/templates/README.md
+  e528476cbc97de75 29-33
+interaction-pattern-lab/packages/web/src/ui-assets/components/async-state/AsyncOutcome.tsx
+  e528476cbc97de75 14-15,18,21-22
+interaction-pattern-lab/packages/web/src/ui-assets/adoption/ResourceWorkspace.test.tsx
+  e528476cbc97de75 1-38
+interaction-pattern-lab/docs/baselines/evidence/ui-adoption-20260918/vite.log
+  e528476cbc97de75 1-9
+README.md
+  e528476cbc97de75 100-101
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.8",
+  "base_commit_sha": "b9c3ab7b79ebf6dc78c61a075514a80fae017ba4",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 1547,
+      "total_deletions": 77,
+      "accepted_lines": 3393,
+      "overriden_lines": 9,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/37f8d5edfc1fdf42d708b763be919756c35af7625ffc8ac028eab4c77097e78f"
+    }
+  }
+}
