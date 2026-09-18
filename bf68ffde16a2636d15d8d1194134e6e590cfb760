@@ -1,0 +1,52 @@
+interaction-pattern-lab/packages/web/src/catalog/validation-slices.data.json
+  e528476cbc97de75 1-34
+_methodology/scripts/enterprise-interaction-index.mjs
+  e528476cbc97de75 9-10,20-32,42-43
+interaction-pattern-lab/packages/web/src/catalog/patterns.data.json
+  e528476cbc97de75 1-4696
+_methodology/templates/ui/master-detail-document/state-matrix.md
+  e528476cbc97de75 1-13
+_methodology/scripts/enterprise-interaction-index.test.mjs
+  e528476cbc97de75 20,24,30-45
+interaction-pattern-lab/scripts/validate-pattern-projection.mjs
+  e528476cbc97de75 29-36
+interaction-pattern-lab/packages/web/src/catalog/types.ts
+  e528476cbc97de75 1-65
+_methodology/templates/ui/master-detail-document/editable-line-grid.schema.example.json
+  e528476cbc97de75 1-10
+_methodology/patterns/index.json
+  e528476cbc97de75 37,47-55,157,167-178
+_methodology/templates/ui/master-detail-document/master-detail-document.tokens.css
+  e528476cbc97de75 1-13
+interaction-pattern-lab/packages/web/src/catalog/patterns.test.ts
+  e528476cbc97de75 1-46
+_methodology/templates/ui/master-detail-document/schema-form.schema.example.json
+  e528476cbc97de75 1-12
+_methodology/templates/ui/master-detail-document/README.md
+  e528476cbc97de75 1-30
+_methodology/templates/ui/master-detail-document/acceptance-checklist.md
+  e528476cbc97de75 1-11
+interaction-pattern-lab/scripts/pattern-projection.mjs
+  e528476cbc97de75 7,27,50
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.8",
+  "base_commit_sha": "bf68ffde16a2636d15d8d1194134e6e590cfb760",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 7396,
+      "total_deletions": 6817,
+      "accepted_lines": 7260,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/054df9c1701d227b55f10ee269c4473ef3967672140d4bd9845b02429edfecdb"
+    }
+  }
+}
