@@ -1,0 +1,42 @@
+_methodology/patterns/index.schema.json
+  e528476cbc97de75 17,36-63
+_methodology/templates/ui/master-detail-document/README.md
+  e528476cbc97de75 3
+interaction-pattern-lab/scripts/validate-pattern-projection.mjs
+  e528476cbc97de75 35
+interaction-pattern-lab/packages/web/src/catalog/patterns.data.json
+  e528476cbc97de75 67,100,102-103,371,412-413
+interaction-pattern-lab/scripts/generate-pattern-projection.test.mjs
+  e528476cbc97de75 1-17
+interaction-pattern-lab/scripts/generate-pattern-projection.mjs
+  e528476cbc97de75 5
+_methodology/scripts/enterprise-interaction-index.test.mjs
+  e528476cbc97de75 20,25-27,33,44-45,47-74
+_methodology/scripts/check-enterprise-interaction-index.mjs
+  e528476cbc97de75 19-21,31-35,41-51,57-64
+_methodology/scripts/enterprise-interaction-index.mjs
+  e528476cbc97de75 12-20,27,40-64,100
+_methodology/patterns/index.json
+  e528476cbc97de75 30,38,48-51,70,90,110,130,150,158,176-211,213,232,252,272,292,312,332,352,372,392,412,432,452,472,492,512,532,552,570,588,606,624,642,660,678,696,714,732,750,768,786,804,822,840,858,876,894,912,930,948,966,984,1002,1020,1038,1056,1074,1092,1110,1128,1146,1164,1182,1200,1218,1236,1254,1272,1290,1308,1326,1344,1362,1380,1398,1416,1434,1452,1470,1488,1506,1524,1542,1560,1578,1596,1614,1632,1650,1669,1688,1707,1726,1745,1764,1783,1802,1821,1840,1867,1887,1907,1927,1947,1967,1987
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.8",
+  "base_commit_sha": "725b6b8801aac20cc2a0ad6f3e375ca12b4d1d09",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2631,
+      "total_deletions": 6746,
+      "accepted_lines": 2630,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/3afbb06ebab0045878d84ac3873660bcebc54d5ff1434d4d78daf46ed303f6aa"
+    }
+  }
+}
