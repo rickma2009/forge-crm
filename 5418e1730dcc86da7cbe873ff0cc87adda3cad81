@@ -1,0 +1,24 @@
+interaction-pattern-lab/scripts/showcase-registry-validation.d.mts
+  e528476cbc97de75 9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.8",
+  "base_commit_sha": "5418e1730dcc86da7cbe873ff0cc87adda3cad81",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2151,
+      "total_deletions": 6691,
+      "accepted_lines": 2151,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/07428595f8700bcfc6173166a93c755d103916e27fdfb1174b7e7940ec25bfeb"
+    }
+  }
+}
