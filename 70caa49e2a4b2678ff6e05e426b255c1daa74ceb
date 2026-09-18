@@ -1,0 +1,68 @@
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/release-gate-review.md
+  e528476cbc97de75 1-63
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/tasks.md
+  e528476cbc97de75 5,22-32
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/testcases.md
+  e528476cbc97de75 1-2,4-34
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/sales-order/SalesOrderScenario.tsx
+  e528476cbc97de75 9
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/specification-gate-review.md
+  e528476cbc97de75 1-37
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/pipeline-state.json
+  e528476cbc97de75 3-4,9,22-29
+interaction-pattern-lab/scripts/showcase-registry-validation.mjs
+  e528476cbc97de75 124-126
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/implementation-evidence.md
+  e528476cbc97de75 1-88
+interaction-pattern-lab/docs/superpowers/plans/2026-09-05-master-detail-document-assets.md
+  e528476cbc97de75 1-219
+interaction-pattern-lab/scripts/validate-showcase-registry.mjs
+  e528476cbc97de75 21-24
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/bom/BomScenario.test.tsx
+  e528476cbc97de75 58,67-72
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/requirements/original.md
+  e528476cbc97de75 1-9
+interaction-pattern-lab/packages/web/src/showcase/registry/registry.test.ts
+  e528476cbc97de75 32,73,75-81,135-139
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/spec.md
+  e528476cbc97de75 1-80
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/bom/BomScenario.tsx
+  e528476cbc97de75 12
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/bom/config.ts
+  e528476cbc97de75 28-29
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/clarification.md
+  e528476cbc97de75 1-27
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/review.md
+  e528476cbc97de75 1-37
+interaction-pattern-lab/packages/web/src/showcase/registry/showcase-registry.data.json
+  e528476cbc97de75 61,68
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/sales-order/SalesOrderScenario.test.tsx
+  e528476cbc97de75 19-20,25-26
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/traceability.md
+  e528476cbc97de75 5-11,21-23
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/sales-order/config.ts
+  e528476cbc97de75 34-35
+interaction-pattern-lab/.specify/specs/010-master-detail-document-assets/README.md
+  e528476cbc97de75 3,8,20-22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.8",
+  "base_commit_sha": "70caa49e2a4b2678ff6e05e426b255c1daa74ceb",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2834,
+      "total_deletions": 6744,
+      "accepted_lines": 2823,
+      "overriden_lines": 4,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/e14b63dd0f1d1dbdda1b4488fa4c731e2283bee1c755397f2cfd3855cd34060f"
+    }
+  }
+}
