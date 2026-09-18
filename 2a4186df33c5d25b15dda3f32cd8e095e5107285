@@ -1,0 +1,28 @@
+_methodology/scripts/check-sources.mjs
+  e528476cbc97de75 15,24-50,77-113
+_methodology/scripts/check-sources.test.mjs
+  e528476cbc97de75 1-117
+interaction-pattern-lab/.specify/sources/REGISTRY.md
+  e528476cbc97de75 17-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.8",
+  "base_commit_sha": "2a4186df33c5d25b15dda3f32cd8e095e5107285",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2523,
+      "total_deletions": 6701,
+      "accepted_lines": 2514,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/ca0ce0e62e6901f3d02380497848c8828184091928ba3dc4a699c7c3defa401b"
+    }
+  }
+}
