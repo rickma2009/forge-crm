@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
 
-interface DemoRecord {
+export interface DemoRecord {
   id: string;
   name: string;
   type: string;
@@ -16,7 +17,18 @@ const demoRecords: DemoRecord[] = [
   { id: 'PAT-003', name: '示例记录 C', type: '标准对象', status: '停用', updatedAt: '预置时间 C' },
 ];
 
-export function RecordWorkspaceDemo() {
+export interface RecordColumn {
+  id: string;
+  label: string;
+  render: (record: DemoRecord) => ReactNode;
+}
+
+export function RecordWorkspaceDemo({ records = demoRecords, columns, renderDetail, allowCreate = true }: {
+  records?: DemoRecord[];
+  columns?: RecordColumn[];
+  renderDetail?: (record: DemoRecord) => ReactNode;
+  allowCreate?: boolean;
+} = {}) {
   const [input, setInput] = useState('');
   const [query, setQuery] = useState('');
   const [pages, setPages] = useState<WorkspacePage[]>([{ id: 'list', label: '记录列表', kind: 'list' }]);
@@ -24,10 +36,10 @@ export function RecordWorkspaceDemo() {
 
   const filteredRecords = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase('zh-CN');
-    if (!normalized) return demoRecords;
-    return demoRecords.filter((record) => `${record.id} ${record.name} ${record.type} ${record.status}`
+    if (!normalized) return records;
+    return records.filter((record) => `${record.id} ${record.name} ${record.type} ${record.status}`
       .toLocaleLowerCase('zh-CN').includes(normalized));
-  }, [query]);
+  }, [query, records]);
 
   const openPage = (page: WorkspacePage) => {
     setPages((current) => current.some((item) => item.id === page.id) ? current : [...current, page]);
@@ -44,24 +56,26 @@ export function RecordWorkspaceDemo() {
   };
 
   const activePage = pages.find((page) => page.id === activePageId) ?? pages[0];
-  const activeRecord = demoRecords.find((record) => record.id === activePage.recordId);
+  const activeRecord = records.find((record) => record.id === activePage.recordId);
 
   return (
     <div className="demo-record-workspace">
       <div className="demo-record-tabs" role="tablist" aria-label="案例工作区页签">
-        {pages.map((page) => (
+        {pages.map((storedPage) => {
+          const page = storedPage.kind === 'detail' ? { ...storedPage, label: records.find(record => record.id === storedPage.recordId)?.name ?? storedPage.label } : storedPage;
+          return (
           <div className={`demo-record-tab${page.id === activePageId ? ' is-active' : ''}`} key={page.id}>
             <button type="button" role="tab" aria-selected={page.id === activePageId} onClick={() => setActivePageId(page.id)}>{page.label}</button>
             {page.id !== 'list' && <button type="button" className="demo-tab-close" aria-label={`关闭页签 ${page.label}`} onClick={() => closePage(page.id)}>×</button>}
           </div>
-        ))}
+        ); })}
       </div>
 
       {activePage.kind === 'list' && (
         <section className="demo-record-page">
           <header className="demo-page-heading">
             <div><p className="demo-eyebrow">RECORD WORKSPACE</p><h2>记录列表</h2><p>去业务化数据，仅用于观察列表操作与页面身份。</p></div>
-            <button className="demo-primary-button" type="button" onClick={() => openPage({ id: 'create', label: '新建记录', kind: 'create' })}>新建记录</button>
+            {allowCreate && <button className="demo-primary-button" type="button" onClick={() => openPage({ id: 'create', label: '新建记录', kind: 'create' })}>新建记录</button>}
           </header>
           <form className="demo-query-panel" onSubmit={(event) => { event.preventDefault(); setQuery(input); }}>
             <label><span>关键词</span><input type="search" aria-label="查询示例记录" placeholder="编号、名称或状态" value={input} onChange={(event) => setInput(event.target.value)} /></label>
@@ -74,15 +88,15 @@ export function RecordWorkspaceDemo() {
             <div className="demo-table-meta"><strong>记录</strong><span>共 {filteredRecords.length} 项</span></div>
             <div className="demo-table-scroll">
               <table>
-                <thead><tr><th>编号</th><th>名称</th><th>类型</th><th>状态</th><th>更新时间</th><th>操作</th></tr></thead>
+                <thead><tr>{columns ? columns.map(column => <th key={column.id}>{column.label}</th>) : <><th>编号</th><th>名称</th><th>类型</th><th>状态</th><th>更新时间</th></>}<th>操作</th></tr></thead>
                 <tbody>
                   {filteredRecords.map((record) => (
                     <tr key={record.id}>
-                      <td><code>{record.id}</code></td><td>{record.name}</td><td>{record.type}</td><td><span className={`demo-status is-${record.status}`}>{record.status}</span></td><td>{record.updatedAt}</td>
+                      {columns ? columns.map(column => <td key={column.id}>{column.render(record)}</td>) : <><td><code>{record.id}</code></td><td>{record.name}</td><td>{record.type}</td><td><span className={`demo-status is-${record.status}`}>{record.status}</span></td><td>{record.updatedAt}</td></>}
                       <td><button className="demo-text-button" type="button" aria-label={`查看 ${record.name}`} onClick={() => openPage({ id: `detail-${record.id}`, label: record.name, kind: 'detail', recordId: record.id })}>查看</button></td>
                     </tr>
                   ))}
-                  {filteredRecords.length === 0 && <tr><td className="demo-table-empty" colSpan={6}>没有匹配的示例记录，请重置查询。</td></tr>}
+                  {filteredRecords.length === 0 && <tr><td className="demo-table-empty" colSpan={(columns?.length ?? 5) + 1}>没有匹配的示例记录，请重置查询。</td></tr>}
                 </tbody>
               </table>
             </div>
@@ -111,6 +125,7 @@ export function RecordWorkspaceDemo() {
           <div className="demo-detail-panel">
             <h3>基本信息</h3>
             <dl><div><dt>记录编号</dt><dd><code>{activeRecord.id}</code></dd></div><div><dt>记录类型</dt><dd>{activeRecord.type}</dd></div><div><dt>当前状态</dt><dd>{activeRecord.status}</dd></div><div><dt>更新时间</dt><dd>{activeRecord.updatedAt}</dd></div></dl>
+            {renderDetail?.(activeRecord)}
           </div>
         </section>
       )}

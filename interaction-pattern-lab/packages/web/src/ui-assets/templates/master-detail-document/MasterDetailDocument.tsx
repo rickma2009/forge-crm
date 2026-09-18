@@ -57,7 +57,7 @@ export function MasterDetailDocument<THeader, TLine extends LineRecord>({ scenar
     } catch {
       setState((current) => reduceDocument(current, {
         type: 'resolve-save', saveRequestId,
-        outcome: { kind: 'business-rejected', reason: '模拟保存适配器未完成，请保留当前输入后重试。' },
+        outcome: { kind: 'business-rejected', reason: scenario.presentation?.saveFailure ?? '模拟保存适配器未完成，请保留当前输入后重试。' },
       }).state);
     }
   };
@@ -76,7 +76,7 @@ export function MasterDetailDocument<THeader, TLine extends LineRecord>({ scenar
     <header>
       <h1>{scenario.title}</h1>
       <p>业务状态：{state.businessStatus}</p>
-      <p>这是本地可验证模板；保存仅调用注入的模拟适配器，不会写入业务系统。</p>
+      <p>{scenario.presentation?.notice ?? '这是本地可验证模板；保存仅调用注入的模拟适配器，不会写入业务系统。'}</p>
     </header>
 
     <ValidationSummary errors={state.headerErrors.map((error) => ({ error, targetId: errorTargetId(error) }))} />
@@ -108,14 +108,14 @@ export function MasterDetailDocument<THeader, TLine extends LineRecord>({ scenar
       />
     </section>
 
-    <AsyncOutcome outcome={state.outcome} />
+    <AsyncOutcome outcome={state.outcome} label={scenario.presentation?.outcomeLabel} successPrefix={scenario.presentation?.outcomePrefix} />
     <section aria-label="相关记录">
       <h2>相关记录</h2>
       <ul>{scenario.relatedEntries.map((entry) => <li key={entry}>{entry}</li>)}</ul>
     </section>
 
     <footer data-fixed-document-actions="true" style={{ position: 'sticky', bottom: 0, background: 'var(--surface, white)' }}>
-      {state.mode !== 'view' && <button data-fixed-document-actions="true" type="button" disabled={state.phase === 'saving'} onClick={save}>保存模拟单据</button>}
+      {state.mode !== 'view' && <button data-fixed-document-actions="true" type="button" disabled={state.phase === 'saving'} onClick={save}>{scenario.presentation?.saveLabel ?? '保存模拟单据'}</button>}
       <button type="button" disabled={state.phase === 'saving'} onClick={requestLeave}>离开单据</button>
     </footer>
 

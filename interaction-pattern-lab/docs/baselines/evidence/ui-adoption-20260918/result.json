@@ -1,0 +1,22 @@
+{
+  "cleanInstall": true,
+  "results": [
+    {
+      "command": "tsc --noEmit",
+      "exitCode": 0
+    },
+    {
+      "command": "vite build",
+      "exitCode": 0
+    },
+    {
+      "command": "vitest run",
+      "exitCode": 0
+    }
+  ],
+  "limitations": [
+    "Fresh npm installation; generated package-lock retained.",
+    "Standalone scoped adoption.css; Lab global CSS not imported.",
+    "No production adoption claimed."
+  ]
+}

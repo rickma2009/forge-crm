@@ -97,6 +97,8 @@ sdd-forge/
 
 ## 5. 使用顺序
 
+需要选择样式、组件或页面时，先读 [企业 UI 资产采用入口](_methodology/templates/ui/ADOPTION.md)。可运行隔离接入演练，区分已验证源码与仍需适配的示例。
+
 1. 阅读 [`00-搭建指南.md`](_methodology/00-搭建指南.md)。
 2. 运行 `node _methodology/scripts/init-skills.mjs`，并阅读 [`07-Skills初始化与使用规范.md`](_methodology/07-Skills初始化与使用规范.md)。
 3. 使用治理初始化器建立项目最小事实源；Business/Architecture Gate 后再显式应用技术 Profile。进入企业系统页面规划时，先按 [`08-企业管理系统交互模式分类方法.md`](_methodology/08-企业管理系统交互模式分类方法.md) 识别页面、操作、展示、状态与特殊操作。

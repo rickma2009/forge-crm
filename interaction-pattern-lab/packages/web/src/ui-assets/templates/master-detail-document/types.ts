@@ -49,6 +49,13 @@ export interface DocumentSaveCommand<THeader, TLine extends LineRecord> {
 }
 
 export interface DocumentScenario<THeader, TLine extends LineRecord> {
+  presentation?: {
+    notice?: string;
+    saveLabel?: string;
+    saveFailure?: string;
+    outcomeLabel?: string;
+    outcomePrefix?: string;
+  };
   scenarioId: string;
   title: string;
   mode: FormMode;

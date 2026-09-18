@@ -1,0 +1,25 @@
+
+ RUN  v3.2.4 /private/var/folders/38/70f3qb9d057gtjfmjjkfnxyw0000gn/T/forge-ui-adoption-SOf89A
+
+ ✓ src/ui-assets/components/schema-form/SchemaForm.test.tsx (7 tests) 158ms
+ ✓ src/ui-assets/components/editable-line-grid/reducer.test.ts (10 tests) 4ms
+ ✓ src/ui-assets/components/editable-line-grid/EditableLineGrid.test.tsx (6 tests) 401ms
+ ✓ src/ui-assets/templates/master-detail-document/MasterDetailDocument.test.tsx (6 tests) 328ms
+ ✓ src/ui-assets/scenarios/sales-order/SalesOrderScenario.test.tsx (9 tests) 1062ms
+ ✓ src/ui-assets/templates/master-detail-document/reducer.test.ts (9 tests) 3ms
+ ✓ src/ui-assets/primitives/field-adapters.test.tsx (14 tests) 97ms
+ ✓ src/ui-assets/components/schema-form/rules.test.ts (13 tests) 2ms
+ ✓ src/ui-assets/scenarios/bom/BomScenario.test.tsx (3 tests) 298ms
+ ✓ src/ui-assets/adoption/ResourceWorkspace.test.tsx (2 tests) 327ms
+ ✓ src/ui-assets/components/async-state/AsyncOutcome.test.tsx (2 tests) 76ms
+ ✓ src/ui-assets/components/validation-summary/ValidationSummary.test.tsx (2 tests) 70ms
+ ✓ src/demos/navigation-shell/NavigationShellConfig.test.tsx (1 test) 68ms
+ ✓ src/demos/record-workspace/RecordWorkspaceDemo.test.tsx (1 test) 148ms
+ ✓ src/demos/navigation-shell/NavigationShellDemo.test.tsx (1 test) 111ms
+ ✓ src/demos/record-workspace/RecordWorkspaceConfig.test.tsx (1 test) 70ms
+
+ Test Files  16 passed (16)
+      Tests  87 passed (87)
+   Start at  15:35:04
+   Duration  9.82s (transform 162ms, setup 865ms, collect 494ms, tests 3.22s, environment 2.87s, prepare 627ms)
+

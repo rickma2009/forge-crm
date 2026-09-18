@@ -1,0 +1,12 @@
+{
+  "sourceId": "REQSRC-039",
+  "title": "UI 复用资产整理与接入演练指令",
+  "sourceType": "user-provided-continuation-direction",
+  "sourceDate": "2026-09-18",
+  "originalPath": "Codex task user messages",
+  "managedCopy": "source.md",
+  "sha256": "6d98f1c6eda5e26e9d9e2d4cd1f4338c584c8fe3cff10f30c42f395c11d3ba95",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active-adoption-rehearsal"
+}

@@ -1,13 +1,14 @@
 import { useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
 
-interface DemoGroup {
+export interface DemoGroup {
   id: string;
   label: string;
   marker: string;
   children: Array<{ id: string; label: string; marker: string }>;
 }
 
-const groups: DemoGroup[] = [
+const defaultGroups: DemoGroup[] = [
   {
     id: 'objects',
     label: '对象管理',
@@ -37,11 +38,23 @@ const groups: DemoGroup[] = [
   },
 ];
 
-export function NavigationShellDemo() {
+export function NavigationShellDemo({ groups = defaultGroups, title = '示例管理系统', activeId, onSelect, children, showOverview = true }: {
+  groups?: DemoGroup[];
+  title?: string;
+  activeId?: string;
+  onSelect?: (id: string) => void;
+  children?: ReactNode;
+  showOverview?: boolean;
+} = {}) {
   const [query, setQuery] = useState('');
   const [collapsed, setCollapsed] = useState(false);
-  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set());
-  const [activeItem, setActiveItem] = useState('overview');
+  const [openGroups, setOpenGroups] = useState<Set<string>>(() => new Set(groups.filter(group => group.children.some(child => child.id === activeId)).map(group => group.id)));
+  const [localActiveItem, setLocalActiveItem] = useState('overview');
+  const activeItem = activeId ?? localActiveItem;
+  const setActiveItem = (id: string) => {
+    if (activeId === undefined) setLocalActiveItem(id);
+    onSelect?.(id);
+  };
 
   const filteredGroups = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase('zh-CN');
@@ -53,7 +66,7 @@ export function NavigationShellDemo() {
         : group.children.filter((child) => child.label.toLocaleLowerCase('zh-CN').includes(normalized));
       return children.length ? [{ ...group, children }] : [];
     });
-  }, [query]);
+  }, [query, groups]);
 
   const toggleGroup = (id: string) => {
     setOpenGroups((current) => {
@@ -72,7 +85,7 @@ export function NavigationShellDemo() {
       <aside className="demo-nav-rail" aria-label="导航壳层案例侧栏" data-collapsed={collapsed}>
         <div className="demo-nav-brand">
           <span className="demo-nav-brand-mark" aria-hidden="true">IP</span>
-          {!collapsed && <strong>示例管理系统</strong>}
+          {!collapsed && <strong>{title}</strong>}
           <button
             type="button"
             className="demo-nav-collapse"
@@ -97,14 +110,14 @@ export function NavigationShellDemo() {
         )}
 
         <nav className="demo-nav-menu" aria-label="案例菜单">
-          <button
+          {showOverview && <button
             type="button"
             className={`demo-nav-item${activeItem === 'overview' ? ' is-active' : ''}`}
             aria-current={activeItem === 'overview' ? 'page' : undefined}
             aria-label="工作概览"
             title="工作概览"
             onClick={() => setActiveItem('overview')}
-          ><span className="demo-nav-marker">D</span>{!collapsed && <span>工作概览</span>}</button>
+          ><span className="demo-nav-marker">D</span>{!collapsed && <span>工作概览</span>}</button>}
 
           {filteredGroups.map((group) => {
             const open = query.trim() ? true : openGroups.has(group.id);
@@ -149,6 +162,7 @@ export function NavigationShellDemo() {
           <span className="demo-nav-user"><span aria-hidden="true">样</span> 示例用户</span>
         </header>
         <div className="demo-nav-content">
+          {children ?? <>
           <p className="demo-eyebrow">CURRENT DESTINATION</p>
           <h2>{activeLabel}</h2>
           <p>点击侧栏分组和二级入口，观察层级、搜索、折叠与当前项反馈。</p>
@@ -156,6 +170,7 @@ export function NavigationShellDemo() {
             <div><span>内容工作面</span><i /></div>
             <div><span>独立滚动区</span><i /></div>
           </div>
+          </>}
         </div>
       </section>
     </div>

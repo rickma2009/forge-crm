@@ -26,6 +26,11 @@
 
 ## UI 与交互模板
 
+- [企业 UI 资产采用入口](ui/ADOPTION.md)：按任务选择代码、模板和验收，附隔离接入演练。
+- [采用记录模板](ui/adoption-record-template.md)：记录版本、采用差异、验证与回退。
+- `ui/enterprise-workbench/`：工作台、提醒与待办候选。
+- `ui/master-detail-document/`：主从表单、行表、状态与验收候选。
+
 - `ui/interaction-pattern-candidate-template.md`：页面、操作、展示、状态或特殊交互的候选登记卡，用于补齐适用边界、行为契约、风险、验收和来源证据。
 - `ui/enterprise-navigation-shell/`：企业系统双层导航壳层，包含设计令牌、菜单配置骨架和接入/验收说明。
 - `ui/record-management-workspace/`：列表—新增—详情记录管理工作区，包含路由/字段配置骨架、设计令牌和验收清单。

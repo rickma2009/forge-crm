@@ -42,3 +42,8 @@
 | `REQSRC-038` | 切片 011 按推荐持续推进指令 | 用户继续指令 | 2026-09-06 | `REQSRC-038-slice-011-recommended-continuation-direction-20260906/source.md` | active-with-gate-boundary |
 
 所有来源副本按不可改写策略管理。后续用户提供的系统源码、截图、Open Design 案例链接或补充场景必须分配新的来源 ID，不覆盖现有副本。
+
+| 来源 ID | 标题 | 类型 | 日期 | managed-copy | 状态 |
+|---|---|---|---|---|---|
+| `REQSRC-039` | UI 复用资产整理与接入演练指令 | 用户执行指令 | 2026-09-18 | `REQSRC-039-ui-reuse-adoption-direction-20260918/source.md` | active-adoption-rehearsal |
+| `REQSRC-040` | UI 接入整改继续指令 | 用户执行指令 | 2026-09-18 | `REQSRC-040-ui-adoption-next-step-20260918/source.md` | active-local-adoption-refactoring |

@@ -1,0 +1,41 @@
+/* Scoped standalone entry. Override --adopt-* on .adoption-app in the consuming app. */
+.adoption-app { --adopt-primary: #245bce; --adopt-text: #1c293e; --adopt-border: #ced7e4; --adopt-surface: #fff; --surface: var(--adopt-surface); font: 14px/1.6 system-ui, sans-serif; color: var(--adopt-text); background: #f3f6fa; min-height: 100vh; }
+.adoption-app * { box-sizing: border-box; }
+.adoption-app button, .adoption-app input, .adoption-app select, .adoption-app textarea { font: inherit; min-height: 36px; border: 1px solid var(--adopt-border); border-radius: 5px; padding: 6px 10px; background: var(--adopt-surface); color: inherit; max-width: 100%; }
+.adoption-app button { cursor: pointer; }
+.adoption-app button:disabled { cursor: not-allowed; opacity: .55; }
+.adoption-app :focus-visible { outline: 3px solid var(--adopt-primary); outline-offset: 2px; }
+.adoption-app h1 { font-size: 24px; }.adoption-app h2 { font-size: 18px; }.adoption-app h3 { font-size: 15px; }
+.adoption-app p { overflow-wrap: anywhere; }
+.adoption-app .demo-nav-shell { display: grid; grid-template-columns: 240px minmax(0,1fr); min-height: 100vh; }
+.adoption-app .demo-nav-rail { padding: 16px; border-right: 1px solid var(--adopt-border); background: var(--adopt-surface); }
+.adoption-app .demo-nav-shell:has([data-collapsed="true"]) { grid-template-columns: 90px minmax(0,1fr); }
+.adoption-app .demo-nav-brand { display: flex; gap: 8px; align-items: center; margin-bottom: 20px; }
+.adoption-app .demo-nav-brand-mark { color: var(--adopt-primary); font-weight: 700; }
+.adoption-app .demo-nav-menu, .adoption-app .demo-nav-children { display: grid; gap: 8px; margin-top: 12px; }
+.adoption-app .demo-nav-item { display: flex; gap: 10px; width: 100%; text-align: left; }
+.adoption-app [aria-current="page"], .adoption-app [aria-selected="true"] { color: var(--adopt-primary); background: #eef3ff; font-weight: 600; }
+.adoption-app .demo-nav-workspace { min-width: 0; }
+.adoption-app .demo-nav-topbar { padding: 12px 24px; border-bottom: 1px solid var(--adopt-border); display: flex; justify-content: space-between; background: var(--adopt-surface); }
+.adoption-app .demo-nav-content { padding: 24px; }
+.adoption-app .adoption-notice { color: #4e607c; }
+.adoption-app .demo-record-tabs, .adoption-app .demo-query-panel, .adoption-app .demo-query-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+.adoption-app .demo-record-page, .adoption-app article { padding: 20px; border: 1px solid var(--adopt-border); background: var(--adopt-surface); border-radius: 8px; }
+.adoption-app table { border-collapse: collapse; width: 100%; }
+.adoption-app article table { min-width: 600px; }
+.adoption-app th { white-space: nowrap; }
+.adoption-app th, .adoption-app td { border-bottom: 1px solid var(--adopt-border); padding: 10px; text-align: left; }
+.adoption-app .demo-table-scroll, .adoption-app article > section { overflow-x: auto; }
+.adoption-app dl { display: grid; gap: 8px; }.adoption-app dd { margin: 0; }
+.adoption-app fieldset { border: 1px solid var(--adopt-border); margin-block: 16px; }
+.adoption-app footer { display: flex; gap: 12px; padding: 12px; }
+.adoption-app [role="dialog"] { border: 2px solid var(--adopt-primary); padding: 16px; background: var(--adopt-surface); }
+@media (max-width: 700px) {
+ .adoption-app .demo-nav-shell { grid-template-columns: 1fr; }
+ .adoption-app .demo-nav-shell:has([data-collapsed="true"]) { grid-template-columns: 1fr; }
+ .adoption-app .demo-nav-rail { border-right: 0; border-bottom: 1px solid var(--adopt-border); }
+ .adoption-app .demo-nav-content { padding: 12px; }
+ .adoption-app .demo-record-page, .adoption-app article { padding: 12px; }
+ .adoption-app button { min-height: 44px; }
+ .adoption-app [data-fixed-actions="true"] { position: static !important; }
+}

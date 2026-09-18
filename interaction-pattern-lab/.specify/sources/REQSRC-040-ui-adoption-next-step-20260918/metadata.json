@@ -1,0 +1,12 @@
+{
+  "sourceId": "REQSRC-040",
+  "title": "UI 接入整改继续指令",
+  "sourceType": "user-provided-continuation-direction",
+  "sourceDate": "2026-09-18",
+  "originalPath": "Codex task user message",
+  "managedCopy": "source.md",
+  "sha256": "5aee0596928d63aff1afe7d358f435ac64443f555683de14cb374df785692a5b",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active-local-adoption-refactoring"
+}

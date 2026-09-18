@@ -11,13 +11,15 @@ export type AsyncOutcomeValue =
 
 export interface AsyncOutcomeProps {
   outcome: AsyncOutcomeValue | null;
+  label?: string;
+  successPrefix?: string;
 }
 
-export function AsyncOutcome({ outcome }: AsyncOutcomeProps) {
+export function AsyncOutcome({ outcome, label = '模拟操作结果', successPrefix = '模拟操作已完成' }: AsyncOutcomeProps) {
   if (!outcome) return null;
 
-  if (outcome.kind === 'success') return <section role="status" aria-label="模拟操作结果">
-    <p>模拟操作已完成：{outcome.message}</p>
+  if (outcome.kind === 'success') return <section role="status" aria-label={label}>
+    <p>{successPrefix}：{outcome.message}</p>
     {outcome.nextStatus && <p>当前状态：{outcome.nextStatus}</p>}
   </section>;
 
