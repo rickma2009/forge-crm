@@ -1,0 +1,46 @@
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/bom/BomScenario.test.tsx
+  e528476cbc97de75 1-49
+interaction-pattern-lab/package.json
+  e528476cbc97de75 22
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/bom/adapter.ts
+  e528476cbc97de75 1-15
+interaction-pattern-lab/scripts/validate-ui-asset-boundaries.test.mjs
+  e528476cbc97de75 1-22
+interaction-pattern-lab/packages/web/src/showcase/ShowcaseApp.tsx
+  e528476cbc97de75 17,204
+interaction-pattern-lab/packages/web/src/showcase/registry/registry.ts
+  e528476cbc97de75 1-13
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/bom/config.ts
+  e528476cbc97de75 1-93
+interaction-pattern-lab/scripts/validate-ui-asset-boundaries.mjs
+  e528476cbc97de75 10-11
+interaction-pattern-lab/packages/web/src/showcase/registry/showcase-registry.data.json
+  e528476cbc97de75 68,110-113
+interaction-pattern-lab/scripts/validate-showcase-registry.mjs
+  e528476cbc97de75 11
+interaction-pattern-lab/packages/web/src/showcase/ShowcaseApp.test.tsx
+  e528476cbc97de75 68
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/bom/BomScenario.tsx
+  e528476cbc97de75 1-25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.8",
+  "base_commit_sha": "683819fa34e1315a434b97741862986b2affe00d",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2514,
+      "total_deletions": 6705,
+      "accepted_lines": 2511,
+      "overriden_lines": 1,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/4373a4983075f4a02cd4df721b010b5efec532001aec5f27cd4c6d7e6410326e"
+    }
+  }
+}
