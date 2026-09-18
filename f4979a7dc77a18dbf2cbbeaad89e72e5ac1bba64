@@ -1,0 +1,36 @@
+interaction-pattern-lab/.specify/sources/REQSRC-014-multi-source-ui-distillation-business-gate-approval-20260903/metadata.json
+  e528476cbc97de75 1-19
+interaction-pattern-lab/.specify/sources/REGISTRY.md
+  e528476cbc97de75 17,20-21
+interaction-pattern-lab/.specify/sources/REQSRC-033-slice-010-continuous-plan-execution-direction-20260905/metadata.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/sources/REQSRC-032-master-detail-document-assets-specification-gate-approval-20260905/source.md
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/sources/REQSRC-032-master-detail-document-assets-specification-gate-approval-20260905/metadata.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/sources/REQSRC-033-slice-010-continuous-plan-execution-direction-20260905/source.md
+  e528476cbc97de75 1-14
+interaction-pattern-lab/.specify/sources/REQSRC-014-multi-source-ui-distillation-business-gate-approval-20260903/source.md
+  e528476cbc97de75 1-22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.8",
+  "base_commit_sha": "f4979a7dc77a18dbf2cbbeaad89e72e5ac1bba64",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2283,
+      "total_deletions": 6727,
+      "accepted_lines": 2282,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/a09d84844d5879a936a24a39086e3f60a02ce5619673eb81ceebad7d02beb759"
+    }
+  }
+}
