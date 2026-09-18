@@ -1,0 +1,30 @@
+interaction-pattern-lab/.specify/sources/REQSRC-029-sales-order-bom-template-research-20260905/metadata.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/sources/REQSRC-030-enterprise-workbench-master-detail-request-20260905/metadata.json
+  e528476cbc97de75 1-13
+interaction-pattern-lab/.specify/sources/REQSRC-030-enterprise-workbench-master-detail-request-20260905/source.md
+  e528476cbc97de75 1-20
+interaction-pattern-lab/.specify/sources/REQSRC-029-sales-order-bom-template-research-20260905/source.md
+  e528476cbc97de75 1-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.8",
+  "base_commit_sha": "8afcde5c323d364e89117d7af04d64dcee41b6ca",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2396,
+      "total_deletions": 6691,
+      "accepted_lines": 2396,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/712483d121e6941f220364678086b8ff40b4e7fd03df3043c58903ce62171939"
+    }
+  }
+}
