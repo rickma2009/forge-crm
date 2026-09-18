@@ -1,0 +1,44 @@
+interaction-pattern-lab/packages/web/src/ui-assets/components/editable-line-grid/EditableLineGrid.tsx
+  e528476cbc97de75 2,47,69,76-88,152,154,158,160,187,231
+interaction-pattern-lab/packages/web/src/showcase/registry/registry.test.ts
+  e528476cbc97de75 10-23,113-114
+interaction-pattern-lab/packages/web/src/ui-assets/templates/master-detail-document/MasterDetailDocument.test.tsx
+  e528476cbc97de75 114-129
+interaction-pattern-lab/packages/web/src/showcase/registry/registry.ts
+  e528476cbc97de75 3,5
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/bom/BomScenario.test.tsx
+  e528476cbc97de75 33-57
+interaction-pattern-lab/packages/web/src/showcase/registry/types.ts
+  e528476cbc97de75 3
+interaction-pattern-lab/packages/web/src/showcase/ShowcaseApp.tsx
+  e528476cbc97de75 204
+interaction-pattern-lab/packages/web/src/ui-assets/templates/master-detail-document/types.ts
+  e528476cbc97de75 4,62
+interaction-pattern-lab/packages/web/src/ui-assets/templates/master-detail-document/MasterDetailDocument.tsx
+  e528476cbc97de75 32-34,36-39,106-107
+interaction-pattern-lab/packages/web/src/ui-assets/scenarios/bom/config.ts
+  e528476cbc97de75 4,41-50,92
+interaction-pattern-lab/packages/web/src/ui-assets/components/editable-line-grid/types.ts
+  e528476cbc97de75 37-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.8",
+  "base_commit_sha": "54ccb35f928f9327cae704c99ad20d5cf0159967",
+  "prompts": {
+    "e528476cbc97de75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04c85-68ef-7e70-a8e9-1c5a989985ab",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "malanjun <168594168@qq.com>",
+      "messages": [],
+      "total_additions": 2401,
+      "total_deletions": 6710,
+      "accepted_lines": 2399,
+      "overriden_lines": 2,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/3f1613ea4caf120146efba19d5b2ca2293ac421c554d7d4b2336ea912ebcd098"
+    }
+  }
+}
