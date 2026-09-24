@@ -1,0 +1,270 @@
+_methodology/scripts/check-ui-adoption.mjs
+  3b33a616c8f4756c 6
+packages/server/src/opportunity/opportunity.controller.ts
+  3b33a616c8f4756c 3
+packages/web/src/showcase/QuotationPages.test.tsx
+  3b33a616c8f4756c 1,6
+packages/server/src/role-management/data-policy.ts
+  3b33a616c8f4756c 3-4
+packages/web/src/showcase/OpportunityPages.test.tsx
+  3b33a616c8f4756c 2
+packages/web/src/showcase/AttachmentPanel.tsx
+  3b33a616c8f4756c 3
+_methodology/examples/ui-adoption-rehearsal/README.md
+  3b33a616c8f4756c 5
+packages/server/src/opportunity/opportunity-detail-contract.spec.ts
+  3b33a616c8f4756c 1
+_methodology/scripts/check-sources.mjs
+  3b33a616c8f4756c 6,17,23,64-72,76,100,104,122,132-133
+packages/web/src/showcase/QuotationLineDialog.tsx
+  3b33a616c8f4756c 2
+.gitignore
+  3b33a616c8f4756c 12-15
+packages/web/src/showcase/InboundOrderDetailPage.test.tsx
+  3b33a616c8f4756c 3
+packages/server/src/style-scene/style-scene.service.ts
+  3b33a616c8f4756c 2
+packages/server/scripts/init-business-list-views.ts
+  3b33a616c8f4756c 3
+packages/web/src/showcase/OpportunityPages.tsx
+  3b33a616c8f4756c 8
+_methodology/scripts/rehearse-ui-adoption.mjs
+  3b33a616c8f4756c 9,23
+packages/server/src/customer/customer.controller.ts
+  3b33a616c8f4756c 2
+packages/web/src/showcase/RolePolicyPanel.tsx
+  3b33a616c8f4756c 3
+packages/web/src/showcase/SystemParametersPage.test.tsx
+  3b33a616c8f4756c 4
+packages/web/index.html
+  3b33a616c8f4756c 6,8
+docs/adr/ADR-007-Forge-CRM项目身份迁移.md
+  3b33a616c8f4756c 3-4,33-40
+packages/server/src/organization/organization.controller.ts
+  3b33a616c8f4756c 2
+packages/server/src/customer/customer.service.ts
+  3b33a616c8f4756c 2
+packages/server/src/opportunity/opportunity-amount.service.ts
+  3b33a616c8f4756c 3
+packages/server/src/list-view/list-view.controller.ts
+  3b33a616c8f4756c 2
+.github/workflows/forge-crm.yml
+  3b33a616c8f4756c 1,19-20,22
+packages/server/scripts/init-warehouse-dictionaries.ts
+  3b33a616c8f4756c 4
+packages/server/src/access/access.controller.ts
+  3b33a616c8f4756c 2
+packages/server/src/opportunity/opportunity.service.ts
+  3b33a616c8f4756c 6
+packages/server/src/rbac/resource-menu.controller.ts
+  3b33a616c8f4756c 2
+packages/web/src/showcase/ShowcaseApp.tsx
+  3b33a616c8f4756c 10
+docs/local-start.md
+  3b33a616c8f4756c 1,14
+_methodology/patterns/index.json
+  3b33a616c8f4756c 200
+packages/server/src/rbac/navigation.controller.ts
+  3b33a616c8f4756c 2
+packages/web/src/showcase/RoleUserPanel.tsx
+  3b33a616c8f4756c 4
+packages/server/src/dictionary/dictionary.service.ts
+  3b33a616c8f4756c 3
+packages/server/src/quotation/pricing.service.ts
+  3b33a616c8f4756c 3
+_methodology/patterns/index.schema.json
+  3b33a616c8f4756c 40,44
+packages/server/scripts/verify-parameter-api.ts
+  3b33a616c8f4756c 3
+packages/tsconfig/package.json
+  3b33a616c8f4756c 2
+packages/server/src/organization/employee.controller.ts
+  3b33a616c8f4756c 2
+.specify/sources/REGISTRY.md
+  3b33a616c8f4756c 76
+packages/web/src/showcase/QuotationPages.tsx
+  3b33a616c8f4756c 4
+packages/web/src/showcase/RoleWorkspace.tsx
+  3b33a616c8f4756c 3
+packages/server/src/style-scene/style-scene.controller.ts
+  3b33a616c8f4756c 2
+_methodology/scripts/enterprise-interaction-index.mjs
+  3b33a616c8f4756c 44,51-52,56
+packages/server/src/config/runtime-config.ts
+  3b33a616c8f4756c 1
+packages/web/src/showcase/EnterprisePages.test.tsx
+  3b33a616c8f4756c 4
+packages/server/src/role-management/role-management.controller.ts
+  3b33a616c8f4756c 2
+packages/server/scripts/verify-ui-audit.ts
+  3b33a616c8f4756c 3
+AGENTS.md
+  3b33a616c8f4756c 3
+packages/web/src/showcase/EmployeeDirectoryPage.tsx
+  3b33a616c8f4756c 5
+_methodology/scripts/verify-workbench.sh
+  3b33a616c8f4756c 44
+packages/server/src/auth/auth.controller.ts
+  3b33a616c8f4756c 3
+scripts/project-identity.test.mjs
+  3b33a616c8f4756c 1-50
+packages/web/src/showcase/InventoryPages.tsx
+  3b33a616c8f4756c 5
+packages/web/src/showcase/RolePermissionTree.tsx
+  3b33a616c8f4756c 3
+packages/web/src/showcase/InboundOrderDetailPage.tsx
+  3b33a616c8f4756c 3
+packages/web/src/showcase/CustomerDetailPage.test.tsx
+  3b33a616c8f4756c 4
+_methodology/scripts/verify-validation-projects.sh
+  3b33a616c8f4756c 8-9,11
+packages/server/src/rbac/resource-menu.service.ts
+  3b33a616c8f4756c 2
+packages/web/src/showcase/SystemParametersPage.tsx
+  3b33a616c8f4756c 3
+packages/server/prisma/seed.ts
+  3b33a616c8f4756c 6
+_methodology/templates/ui/ADOPTION.md
+  3b33a616c8f4756c 10-17,48
+packages/server/tsconfig.scripts.json
+  3b33a616c8f4756c 2
+packages/web/src/showcase/QuotationCreateDialog.tsx
+  3b33a616c8f4756c 2
+packages/server/src/attachment/attachment.service.ts
+  3b33a616c8f4756c 3
+packages/web/src/showcase/EnterprisePages.tsx
+  3b33a616c8f4756c 8
+packages/web/vite.config.ts
+  3b33a616c8f4756c 8
+packages/server/src/inventory/inventory.service.ts
+  3b33a616c8f4756c 4
+packages/web/package.json
+  3b33a616c8f4756c 2,15,22
+packages/server/src/rbac/authorization.service.ts
+  3b33a616c8f4756c 2
+packages/web/src/common/route-tabs/README.md
+  3b33a616c8f4756c 52
+compose.yaml
+  3b33a616c8f4756c 1-4
+packages/server/scripts/init-system-parameters.ts
+  3b33a616c8f4756c 4
+packages/web/src/common/BusinessDirectory.tsx
+  3b33a616c8f4756c 5
+packages/web/src/showcase/CustomerDetailPage.tsx
+  3b33a616c8f4756c 4
+packages/web/src/showcase/quotation-api.ts
+  3b33a616c8f4756c 1
+packages/web/src/showcase/AccessAdminPages.tsx
+  3b33a616c8f4756c 5
+packages/web/src/showcase/ShowcaseApp.test.tsx
+  3b33a616c8f4756c 3
+packages/server/package.json
+  3b33a616c8f4756c 2,6,8,12,14,23,38
+packages/server/src/list-view/list-view.service.spec.ts
+  3b33a616c8f4756c 1
+packages/server/src/organization/employee.service.ts
+  3b33a616c8f4756c 2
+_methodology/style-index.md
+  3b33a616c8f4756c 169
+packages/web/src/showcase/OrganizationUnitsPage.test.tsx
+  3b33a616c8f4756c 2
+packages/web/src/showcase/RolePermissionTree.test.tsx
+  3b33a616c8f4756c 5
+packages/server/src/access/access.service.ts
+  3b33a616c8f4756c 2
+packages/server/src/role-management/role-contract.spec.ts
+  3b33a616c8f4756c 1
+packages/server/src/system-parameter/system-parameter.controller.ts
+  3b33a616c8f4756c 2
+README.md
+  3b33a616c8f4756c 1,3,5,7-8,11,13,16-28,31,33,36-38,42,44,46,48-52,54,56,58
+packages/server/src/quotation/quotation.controller.ts
+  3b33a616c8f4756c 6
+package.json
+  3b33a616c8f4756c 2,10-11,14-17,24
+packages/server/src/role-management/role-subject.controller.ts
+  3b33a616c8f4756c 2
+packages/server/src/quotation/quotation-domain.ts
+  3b33a616c8f4756c 1
+scripts/validate-demo-isolation.test.mjs
+  3b33a616c8f4756c 18
+packages/web/src/showcase/gateway.ts
+  3b33a616c8f4756c 1-5,7-8,17,24,59,76,78,173-174
+packages/server/src/organization/organization.service.ts
+  3b33a616c8f4756c 2
+_methodology/scripts/check-enterprise-interaction-index.mjs
+  3b33a616c8f4756c 44-47
+packages/server/src/list-view/list-view.service.ts
+  3b33a616c8f4756c 2
+packages/server/src/demo-resource/demo-resource.controller.ts
+  3b33a616c8f4756c 2
+packages/web/src/showcase/ResourceMenuPage.tsx
+  3b33a616c8f4756c 7
+packages/server/src/dictionary/dictionary.controller.ts
+  3b33a616c8f4756c 2
+packages/server/src/role-management/role-subject.service.ts
+  3b33a616c8f4756c 3
+packages/web/src/showcase/OrganizationUnitsPage.tsx
+  3b33a616c8f4756c 4
+packages/web/src/showcase/previewGateway.ts
+  3b33a616c8f4756c 1
+packages/web/src/showcase/RoleUserPanel.test.tsx
+  3b33a616c8f4756c 5
+docs/superpowers/plans/2026-09-25-forge-crm-project-rename.md
+  3b33a616c8f4756c 27,43-47
+packages/server/src/system-parameter/system-parameter.integration.spec.ts
+  3b33a616c8f4756c 5
+packages/web/src/showcase/RoleSubjects.tsx
+  3b33a616c8f4756c 3
+start.sh
+  3b33a616c8f4756c 2
+packages/server/src/list-view/business-list-defaults.ts
+  3b33a616c8f4756c 1
+packages/server/src/inventory/inventory.controller.ts
+  3b33a616c8f4756c 2
+packages/server/tsconfig.json
+  3b33a616c8f4756c 2
+_methodology/scripts/enterprise-interaction-index.test.mjs
+  3b33a616c8f4756c 51,58-59,63
+packages/web/src/showcase/ProductDetailPage.tsx
+  3b33a616c8f4756c 2
+packages/contracts/package.json
+  3b33a616c8f4756c 2,15
+packages/server/src/role-management/role-policy.controller.ts
+  3b33a616c8f4756c 2
+packages/web/src/common/BusinessDirectory.test.tsx
+  3b33a616c8f4756c 4
+packages/server/src/role-management/role-management.service.ts
+  3b33a616c8f4756c 3
+packages/server/src/system-parameter/system-parameter.service.ts
+  3b33a616c8f4756c 4
+_methodology/scripts/check-project.sh
+  3b33a616c8f4756c 54-58
+packages/server/src/rbac/navigation-policy.ts
+  3b33a616c8f4756c 2
+packages/server/src/quotation/quotation.service.ts
+  3b33a616c8f4756c 4
+packages/web/src/showcase/CustomerWorkspace.test.tsx
+  3b33a616c8f4756c 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.9",
+  "base_commit_sha": "e592829840214dcee06cdf54b4e6927279be534b",
+  "prompts": {
+    "3b33a616c8f4756c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05527-1dbc-7e01-9817-2f478f16d6a2",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 422,
+      "total_deletions": 413,
+      "accepted_lines": 21818,
+      "overriden_lines": 2,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/b955cb9b786a72cfef063ed19465af380acff16bcc3d6c6ac1627e7b51f7bcb2"
+    }
+  }
+}
