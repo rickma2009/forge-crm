@@ -1,0 +1,13 @@
+.business-directory .view-controls { margin-left: auto; }
+.business-directory .table-toolbar { gap: 8px; flex-wrap: wrap; }
+.business-directory .view-controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.business-directory .customer-code-link, a.record-detail-link { color: var(--ipl-primary, #2f6bff); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.business-view-columns > div { display: grid; grid-template-columns: minmax(150px, 1fr) 80px 32px 32px; align-items: center; gap: 8px; padding: 6px 0; }
+.business-view-columns label { display: flex; align-items: center; gap: 8px; }
+.business-view-columns input[type=checkbox] { width: auto; }
+.business-view-columns button { padding: 0; width: 32px; }
+.view-modal fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.view-modal fieldset > label { display: inline-flex; align-items: center; gap: 8px; margin: 0 16px 8px 0; }
+.business-directory .query-grid { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; }
+.business-directory .query-grid .keyword-field { flex: 1 1 260px; max-width: 560px; }
+.business-directory .query-grid .query-buttons { margin-left: auto; }

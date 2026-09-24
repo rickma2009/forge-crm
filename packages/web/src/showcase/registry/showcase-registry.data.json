@@ -1,0 +1,212 @@
+{
+  "version": 1,
+  "system": {
+    "name": "CRM 工作台",
+    "logoKey": "portal",
+    "defaultPageId": "customer-directory"
+  },
+  "capabilities": ["showcase.parameter.view", "showcase.parameter.manage",
+    "showcase.quotation.view",
+    "showcase.user.view",
+    "showcase.role.view",
+    "showcase.policy.view",
+    "showcase.menu.view",
+    "showcase.menu.manage",
+    "showcase.menu.export",
+    "showcase.log.view",
+    "showcase.resource.view",
+    "showcase.resource.manage",
+    "showcase.resource.export",
+    "showcase.customer.view",
+    "showcase.customer.create",
+    "showcase.customer.update",
+    "showcase.dictionary.view",
+    "showcase.dictionary.manage",
+    "showcase.list-view.view",
+    "showcase.list-view.manage",
+    "showcase.style-scene.view",
+    "showcase.style-scene.manage",
+    "showcase.organization.view",
+    "showcase.organization.manage",
+    "showcase.employee.view",
+    "showcase.employee.manage",
+    "showcase.item.view",
+    "showcase.item.create",
+    "showcase.item.update",
+    "showcase.item.price-view",
+    "showcase.item.price-manage",
+    "showcase.item.attachment-view",
+    "showcase.item.attachment-upload",
+    "showcase.item.attachment-download",
+    "showcase.item.attachment-update",
+    "showcase.item.attachment-delete",
+    "showcase.inbound.view",
+    "showcase.inbound.create",
+    "showcase.inbound.update",
+    "showcase.inbound.void",
+    "showcase.inbound.post",
+    "showcase.inbound.reverse",
+    "showcase.inventory.view",
+    "showcase.inventory.export",
+    "showcase.legal-entity.view",
+    "showcase.legal-entity.manage",
+    "showcase.warehouse.view",
+    "showcase.warehouse.manage",
+    "showcase.product.view",
+    "showcase.product.manage",
+    "showcase.product.create",
+    "showcase.product.update",
+    "showcase.product.delete",
+    "showcase.product.price-view",
+    "showcase.product.price-manage",
+    "showcase.product.attachment-view",
+    "showcase.product.attachment-upload",
+    "showcase.product.attachment-download",
+    "showcase.product.attachment-update",
+    "showcase.product.attachment-delete",
+    "showcase.competitor.view",
+    "showcase.competitor.manage",
+    "showcase.opportunity.view",
+    "showcase.opportunity.create",
+    "showcase.opportunity.update",
+    "showcase.opportunity.follow-up",
+    "showcase.opportunity.analyze",
+    "showcase.opportunity.stage.manage"
+  ],
+  "roles": [
+    { "id": "admin", "grantMode": "all-registered" },
+    {
+      "id": "viewer",
+      "grantMode": "explicit",
+      "capabilities": [
+        "showcase.customer.view",
+        "showcase.resource.view",
+        "showcase.item.view",
+        "showcase.inbound.view",
+        "showcase.inventory.view",
+        "showcase.legal-entity.view",
+        "showcase.warehouse.view",
+        "showcase.product.view",
+        "showcase.product.price-view",
+        "showcase.product.attachment-view",
+        "showcase.product.attachment-download"
+      ]
+    }
+  ],
+  "pages": [
+    {"id": "system-parameters", "path": "/showcase/system/parameters", "title": "参数设置", "summary": "维护系统预置参数值与可用状态。", "coverage": "interactive-slice", "viewCapability": "showcase.parameter.view", "rendererKey": "system-parameters", "iconKey": "settings", "sourceRefs": [], "operations": [{"id": "parameter-manage", "label": "设置参数", "capability": "showcase.parameter.manage"}]},
+    { "id": "item-directory", "path": "/showcase/items", "title": "物料产品管理", "summary": "统一维护产品、物料和半成品主数据。", "coverage": "interactive-slice", "viewCapability": "showcase.item.view", "rendererKey": "item-directory", "iconKey": "resource", "sourceRefs": ["UID-002"], "operations": [
+      { "id": "item-create", "label": "新增物料", "capability": "showcase.item.create" },
+      { "id": "item-update", "label": "修改物料", "capability": "showcase.item.update" },
+      { "id": "item-price-view", "label": "查看物料定价", "capability": "showcase.item.price-view" },
+      { "id": "item-price-manage", "label": "维护物料定价", "capability": "showcase.item.price-manage" },
+      { "id": "item-attachment-view", "label": "查看物料附件", "capability": "showcase.item.attachment-view" },
+      { "id": "item-attachment-upload", "label": "上传物料附件", "capability": "showcase.item.attachment-upload" },
+      { "id": "item-attachment-download", "label": "下载物料附件", "capability": "showcase.item.attachment-download" },
+      { "id": "item-attachment-update", "label": "维护物料附件", "capability": "showcase.item.attachment-update" },
+      { "id": "item-attachment-delete", "label": "删除物料附件", "capability": "showcase.item.attachment-delete" }
+    ] },
+    { "id": "inbound-order-directory", "path": "/showcase/inbound-orders", "title": "入库单", "summary": "新建、修改、作废、审核过账及冲销入库单。", "coverage": "interactive-slice", "viewCapability": "showcase.inbound.view", "rendererKey": "inbound-order-directory", "iconKey": "table", "sourceRefs": ["UID-002"], "operations": [
+      { "id": "inbound-create", "label": "新建入库单", "capability": "showcase.inbound.create" },
+      { "id": "inbound-update", "label": "修改入库单", "capability": "showcase.inbound.update" },
+      { "id": "inbound-void", "label": "作废入库单", "capability": "showcase.inbound.void" },
+      { "id": "inbound-post", "label": "审核过账", "capability": "showcase.inbound.post" },
+      { "id": "inbound-reverse", "label": "冲销入库单", "capability": "showcase.inbound.reverse" }
+    ] },
+    { "id": "inventory-balance-directory", "path": "/showcase/inventory-balances", "title": "库存明细", "summary": "按法人、仓库、物料和批次查询当前库存。", "coverage": "interactive-slice", "viewCapability": "showcase.inventory.view", "rendererKey": "inventory-balance-directory", "iconKey": "list", "sourceRefs": ["UID-002"], "operations": [
+      { "id": "inventory-export", "label": "导出库存明细", "capability": "showcase.inventory.export" }
+    ] },
+    { "id": "legal-entity-admin", "path": "/showcase/system/legal-entities", "title": "法人管理", "summary": "维护管理组织下的法人主体。", "coverage": "interactive-slice", "viewCapability": "showcase.legal-entity.view", "rendererKey": "legal-entity-admin", "iconKey": "resource", "sourceRefs": ["UID-002"], "operations": [{ "id": "legal-entity-manage", "label": "维护法人", "capability": "showcase.legal-entity.manage" }] },
+    { "id": "warehouse-admin", "path": "/showcase/system/warehouses", "title": "仓库管理", "summary": "维护法人所属仓库及启停状态。", "coverage": "interactive-slice", "viewCapability": "showcase.warehouse.view", "rendererKey": "warehouse-admin", "iconKey": "resource", "sourceRefs": ["UID-002"], "operations": [{ "id": "warehouse-manage", "label": "维护仓库", "capability": "showcase.warehouse.manage" }] },
+    { "id": "quotation-directory", "path": "/showcase/quotations", "title": "报价管理", "summary": "客户报价、价格快照与商机金额回写。", "coverage": "interactive-slice", "viewCapability": "showcase.quotation.view", "rendererKey": "quotation-directory", "iconKey": "table", "sourceRefs": ["UID-002"] },
+    { "id": "product-directory", "path": "/showcase/products", "title": "产品管理", "summary": "维护企业共享产品基础信息。", "coverage": "interactive-slice", "viewCapability": "showcase.product.view", "rendererKey": "product-directory", "iconKey": "resource", "sourceRefs": ["UID-002"], "operations": [
+      { "id": "product-manage", "label": "维护产品", "capability": "showcase.product.manage" },
+      { "id": "product-create", "label": "新增产品", "capability": "showcase.product.create" },
+      { "id": "product-update", "label": "修改产品", "capability": "showcase.product.update" },
+      { "id": "product-delete", "label": "删除产品", "capability": "showcase.product.delete" },
+      { "id": "product-price-view", "label": "查看定价", "capability": "showcase.product.price-view" },
+      { "id": "product-price-manage", "label": "维护定价", "capability": "showcase.product.price-manage" },
+      { "id": "product-attachment-view", "label": "查看附件", "capability": "showcase.product.attachment-view" },
+      { "id": "product-attachment-upload", "label": "上传附件", "capability": "showcase.product.attachment-upload" },
+      { "id": "product-attachment-download", "label": "下载附件", "capability": "showcase.product.attachment-download" },
+      { "id": "product-attachment-update", "label": "维护附件说明", "capability": "showcase.product.attachment-update" },
+      { "id": "product-attachment-delete", "label": "删除附件", "capability": "showcase.product.attachment-delete" }
+    ] },
+    { "id": "competitor-directory", "path": "/showcase/competitors", "title": "竞争对象", "summary": "维护营销域竞争对手档案。", "coverage": "interactive-slice", "viewCapability": "showcase.competitor.view", "rendererKey": "competitor-directory", "iconKey": "role", "sourceRefs": ["UID-002"], "operations": [
+      { "id": "competitor-manage", "label": "维护竞争对象", "capability": "showcase.competitor.manage" }
+    ] },
+    { "id": "opportunity-directory", "path": "/showcase/opportunities", "title": "商机信息", "summary": "商机查询、新增及多页签详情工作区。", "coverage": "interactive-slice", "viewCapability": "showcase.opportunity.view", "rendererKey": "opportunity-directory", "iconKey": "workbench", "sourceRefs": ["UID-002"], "operations": [
+      { "id": "opportunity-create", "label": "新增商机", "capability": "showcase.opportunity.create" },
+      { "id": "opportunity-update", "label": "修改商机", "capability": "showcase.opportunity.update" },
+      { "id": "opportunity-follow-up", "label": "维护跟进", "capability": "showcase.opportunity.follow-up" },
+      { "id": "opportunity-analyze", "label": "商机分析", "capability": "showcase.opportunity.analyze" }
+    ] },
+    { "id": "opportunity-stage-admin", "path": "/showcase/opportunity-stages", "title": "商机阶段", "summary": "按商机模板维护阶段及固定赢率。", "coverage": "interactive-slice", "viewCapability": "showcase.opportunity.view", "rendererKey": "opportunity-stage-admin", "iconKey": "settings", "sourceRefs": ["UID-002"], "operations": [
+      { "id": "opportunity-stage-manage", "label": "维护商机阶段", "capability": "showcase.opportunity.stage.manage" }
+    ] },
+    { "id": "customer-directory", "path": "/showcase/customers", "title": "客户管理", "summary": "数据库驱动的客户查询、新增、编辑与个人视图。", "coverage": "interactive-slice", "viewCapability": "showcase.customer.view", "rendererKey": "customer-directory", "iconKey": "user", "sourceRefs": ["UID-002"], "operations": [
+      { "id": "customer-create", "label": "新增客户", "capability": "showcase.customer.create" },
+      { "id": "customer-update", "label": "编辑客户", "capability": "showcase.customer.update" }
+    ] },
+    { "id": "system-organization", "path": "/showcase/system/organization", "title": "组织架构", "summary": "按租户维护公司、事业部、部门和团队的单父级组织树。", "coverage": "interactive-slice", "viewCapability": "showcase.organization.view", "rendererKey": "organization-units", "iconKey": "data", "sourceRefs": ["UID-001"], "operations": [
+      { "id": "organization-manage", "label": "维护组织架构", "capability": "showcase.organization.manage" }
+    ] },
+    { "id": "system-employees", "path": "/showcase/system/employees", "title": "员工管理", "summary": "维护员工档案、工号、主职部门、岗位和登录账号。", "coverage": "interactive-slice", "viewCapability": "showcase.employee.view", "rendererKey": "employee-directory", "iconKey": "user", "sourceRefs": ["UID-001"], "operations": [
+      { "id": "employee-manage", "label": "维护员工", "capability": "showcase.employee.manage" }
+    ] },
+    { "id": "system-users", "path": "/showcase/system/users", "title": "用户管理", "summary": "按租户和系统查看用户、有效角色并管理账号状态。", "coverage": "interactive-slice", "viewCapability": "showcase.user.view", "rendererKey": "access-users", "iconKey": "user", "sourceRefs": ["UID-001"] },
+    { "id": "system-roles", "path": "/showcase/system/roles", "title": "角色管理", "summary": "维护角色、成员有效期和角色权限集合。", "coverage": "interactive-slice", "viewCapability": "showcase.role.view", "rendererKey": "access-roles", "iconKey": "role", "sourceRefs": ["UID-001"] },
+    { "id": "system-policies", "path": "/showcase/system/policies", "title": "权限策略", "summary": "查看系统发布的稳定权限点目录。", "coverage": "interactive-slice", "viewCapability": "showcase.policy.view", "rendererKey": "access-permissions", "iconKey": "lock", "sourceRefs": ["UID-001"] },
+    { "id": "system-menus", "path": "/showcase/system/menus", "title": "资源菜单", "summary": "维护页面资源树、页面按钮、关联页签与实际导航挂载。", "coverage": "interactive-slice", "viewCapability": "showcase.menu.view", "rendererKey": "resource-menu", "iconKey": "menu", "sourceRefs": ["UID-001"], "operations": [
+      { "id": "resource-menu-manage", "label": "维护资源菜单", "capability": "showcase.menu.manage" },
+      { "id": "resource-menu-export", "label": "导出菜单 SQL", "capability": "showcase.menu.export" }
+    ] },
+    { "id": "system-logs", "path": "/showcase/system/logs", "title": "操作日志", "summary": "查看操作日志页面。", "coverage": "description-only", "viewCapability": "showcase.log.view", "rendererKey": "description", "iconKey": "log", "sourceRefs": ["UID-001"] },
+    { "id": "system-resources", "path": "/showcase/system/resources", "title": "资源目录", "summary": "资源查看、维护、导出与只读权限。", "coverage": "interactive-slice", "viewCapability": "showcase.resource.view", "rendererKey": "resource-catalog", "iconKey": "resource", "sourceRefs": ["UID-001"], "operations": [
+      { "id": "resource-maintain", "label": "维护资源", "capability": "showcase.resource.manage" },
+      { "id": "resource-export", "label": "导出清单", "capability": "showcase.resource.export" }
+    ] },
+    { "id": "system-dictionaries", "path": "/showcase/system/dictionaries", "title": "数据字典", "summary": "维护系统级字典类型、字典项与启停状态。", "coverage": "interactive-slice", "viewCapability": "showcase.dictionary.view", "rendererKey": "dictionary-admin", "iconKey": "data", "sourceRefs": ["UID-002"] },
+    { "id": "system-list-views", "path": "/showcase/system/list-views", "title": "列表视图", "summary": "角色基线视图及个人视图的继承关系。", "coverage": "interactive-slice", "viewCapability": "showcase.list-view.view", "rendererKey": "list-view-admin", "iconKey": "table", "sourceRefs": ["UID-002"] },
+    { "id": "style-scene-list", "path": "/showcase/style-scenes", "title": "场景清单", "summary": "梳理样式场景的完成状态、对应业务页面与访问地址。", "coverage": "interactive-slice", "viewCapability": "showcase.style-scene.view", "rendererKey": "style-scene-list", "iconKey": "palette", "sourceRefs": ["UID-002"], "operations": [
+      { "id": "style-scene-manage", "label": "维护场景", "capability": "showcase.style-scene.manage" }
+    ] }
+  ],
+  "navigation": {
+    "items": [
+      { "id": "nav-basic-info", "label": "基本信息", "iconKey": "info", "children": [
+        { "id": "nav-customer-directory", "label": "客户管理", "iconKey": "user", "pageId": "customer-directory" },
+        { "id": "nav-item-directory", "label": "物料产品管理", "iconKey": "resource", "pageId": "item-directory" },
+        { "id": "nav-competitor-directory", "label": "竞争对象", "iconKey": "role", "pageId": "competitor-directory" }
+      ] },
+      { "id": "nav-inventory-management", "label": "库存管理", "iconKey": "resource", "children": [
+        { "id": "nav-inbound-order-directory", "label": "入库单", "iconKey": "table", "pageId": "inbound-order-directory" },
+        { "id": "nav-inventory-balance-directory", "label": "库存明细", "iconKey": "list", "pageId": "inventory-balance-directory" }
+      ] },
+      { "id": "nav-opportunity-management", "label": "商机管理", "iconKey": "workbench", "children": [
+        { "id": "nav-opportunity-directory", "label": "商机信息", "iconKey": "list", "pageId": "opportunity-directory" },
+        { "id": "nav-quotation-directory", "label": "报价管理", "iconKey": "table", "pageId": "quotation-directory" },
+        { "id": "nav-opportunity-stage-admin", "label": "商机阶段", "iconKey": "settings", "pageId": "opportunity-stage-admin" }
+      ] },
+      { "id": "nav-style-scenes", "label": "样式场景", "iconKey": "palette", "children": [
+        { "id": "nav-style-scene-list", "label": "场景清单", "iconKey": "list", "pageId": "style-scene-list" }
+      ] },
+      {
+      "id": "nav-system", "label": "系统管理", "iconKey": "settings", "children": [
+        { "id": "nav-system-parameters", "label": "参数设置", "iconKey": "settings", "pageId": "system-parameters" },
+        { "id": "nav-system-organization", "label": "组织架构", "iconKey": "data", "pageId": "system-organization" },
+        { "id": "nav-system-employees", "label": "员工管理", "iconKey": "user", "pageId": "system-employees" },
+        { "id": "nav-system-users", "label": "用户管理", "iconKey": "user", "pageId": "system-users" },
+        { "id": "nav-system-roles", "label": "角色管理", "iconKey": "role", "pageId": "system-roles" },
+        { "id": "nav-system-policies", "label": "权限策略", "iconKey": "lock", "pageId": "system-policies" },
+        { "id": "nav-system-menus", "label": "资源菜单", "iconKey": "menu", "pageId": "system-menus" },
+        { "id": "nav-system-logs", "label": "操作日志", "iconKey": "log", "pageId": "system-logs" },
+        { "id": "nav-system-resources", "label": "资源目录", "iconKey": "resource", "pageId": "system-resources" },
+        { "id": "nav-system-dictionaries", "label": "数据字典", "iconKey": "data", "pageId": "system-dictionaries" },
+        { "id": "nav-system-list-views", "label": "列表视图", "iconKey": "table", "pageId": "system-list-views" },
+        { "id": "nav-legal-entity-admin", "label": "法人管理", "iconKey": "resource", "pageId": "legal-entity-admin" },
+        { "id": "nav-warehouse-admin", "label": "仓库管理", "iconKey": "resource", "pageId": "warehouse-admin" }
+      ]
+    }]
+  }
+}

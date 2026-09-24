@@ -1,0 +1,1636 @@
+{
+  "generatedAt": "2026-09-23T01:50:18.731Z",
+  "source": "local PostgreSQL, pg_dump --schema-only, consistent read-only snapshot",
+  "database": "interaction_pattern_lab",
+  "schema": "public",
+  "authoritativeSource": "packages/server/prisma/migrations/",
+  "sha256": "c3ecaf25e41c52c01c5b596a64dfe533a503ead1f814a5e1206b4e035b4aed87",
+  "migrations": [
+    {
+      "migration_name": "20260903204500_create_navigation_rbac",
+      "checksum": "f7618dcfb4eff0dffaabfbc6385545d48840f7d9841818b1f1aeade6e33ced4d"
+    },
+    {
+      "migration_name": "20260904012500_workspace_views_dictionary_customer",
+      "checksum": "c7329d67d4811dd042a3bce1743013e673d2190285675cd04a982e9b3cd62167"
+    },
+    {
+      "migration_name": "20260904074000_hierarchical_dictionary_values",
+      "checksum": "94469073ab2434003f4240a463b3dbf8a8a29732a38df15580c3b7b219d3d38a"
+    },
+    {
+      "migration_name": "20260920090642_add_style_scene",
+      "checksum": "f17980380c13b9c84aad4430f280500ba653a27c1ad04afb816a3973faec1c8c"
+    },
+    {
+      "migration_name": "20260921031401_add_customer_contacts_addresses",
+      "checksum": "9386bdaa9fcbc175517aa2fc451cd8f6dc214f1ea523b7da40238dccc7e42623"
+    },
+    {
+      "migration_name": "20260922071848_add_role_tree_fields",
+      "checksum": "ef3d8a6612d287c899458c0571d17ed45a7a4f246ebb039b65a5f0e1a399912e"
+    },
+    {
+      "migration_name": "20260922093000_platform_access_administration",
+      "checksum": "81baa2e0a34a41ab3649a064fab65e45bec5d97312223941946ef55df800f43c"
+    },
+    {
+      "migration_name": "20260922102500_role_membership_period_guard",
+      "checksum": "28127b038b88478a25aaa6269f0cc4b298d51a5e6bab9dfd9e3b45a0056e5878"
+    },
+    {
+      "migration_name": "20260922104500_user_tenant_account_scope",
+      "checksum": "3915453c665b1cf8feeeed1230368e6748773ce5787276415674735e139a78ad"
+    },
+    {
+      "migration_name": "20260922130000_organization_unit_hierarchy",
+      "checksum": "a90460f3ca20197f413e394394218c1c6f0ab0d6d950f33ff614c177dea02308"
+    },
+    {
+      "migration_name": "20260922160000_resource_menu_administration",
+      "checksum": "7fba94f3d178543d62a39ae4c312d01de162c5b465f0ed9c667940e2996f29d2"
+    },
+    {
+      "migration_name": "20260922170000_scope_page_tabs_to_application",
+      "checksum": "fc5022d3f3de903106aa59a9d6c80a0def6668f9a03d872d0757a6bb7263f18b"
+    },
+    {
+      "migration_name": "20260922180000_role_workspace_safety",
+      "checksum": "8d62ff8bcd314b284d09b7532095adb9dc38b6a0e80db62ff17eafcbdeef8b66"
+    },
+    {
+      "migration_name": "20260922200000_role_data_policy",
+      "checksum": "76ccccd759edf24e21b9968ab9af61185ad6674be5cc855bf31e16701b23c555"
+    },
+    {
+      "migration_name": "20260922210000_role_dynamic_subjects",
+      "checksum": "044f90261772607f824527ccb6df64871fec66137a0f4c1043eedcad482d58e5"
+    },
+    {
+      "migration_name": "20260922213000_remove_obsolete_disabled_page_resources",
+      "checksum": "3acd17eff5a122892d4928a11299ad53925b8859660a7793c22ac90fec87efb3"
+    },
+    {
+      "migration_name": "20260922220000_employee_directory",
+      "checksum": "68e5478249e6590a0218a28525c6c0668a3726c4f62495fb1889c071afc3adc2"
+    }
+  ],
+  "pendingMigrations": [],
+  "migrationChecksumMismatches": [],
+  "prismaMissingInDatabase": [],
+  "databaseNotInPrisma": [],
+  "tables": [
+    {
+      "name": "_prisma_migrations",
+      "columns": 8,
+      "foreign_keys": 0,
+      "indexes": 1
+    },
+    {
+      "name": "crm_customer",
+      "columns": 18,
+      "foreign_keys": 0,
+      "indexes": 4
+    },
+    {
+      "name": "crm_customer_address",
+      "columns": 19,
+      "foreign_keys": 1,
+      "indexes": 2
+    },
+    {
+      "name": "crm_customer_contact",
+      "columns": 18,
+      "foreign_keys": 1,
+      "indexes": 2
+    },
+    {
+      "name": "org_employee",
+      "columns": 12,
+      "foreign_keys": 3,
+      "indexes": 3
+    },
+    {
+      "name": "org_employee_assignment",
+      "columns": 16,
+      "foreign_keys": 5,
+      "indexes": 5
+    },
+    {
+      "name": "org_employment",
+      "columns": 13,
+      "foreign_keys": 3,
+      "indexes": 3
+    },
+    {
+      "name": "org_position",
+      "columns": 10,
+      "foreign_keys": 3,
+      "indexes": 4
+    },
+    {
+      "name": "org_unit",
+      "columns": 16,
+      "foreign_keys": 2,
+      "indexes": 5
+    },
+    {
+      "name": "org_user_assignment",
+      "columns": 12,
+      "foreign_keys": 4,
+      "indexes": 3
+    },
+    {
+      "name": "style_scene",
+      "columns": 16,
+      "foreign_keys": 0,
+      "indexes": 2
+    },
+    {
+      "name": "sys_application",
+      "columns": 8,
+      "foreign_keys": 1,
+      "indexes": 4
+    },
+    {
+      "name": "sys_audit_log",
+      "columns": 11,
+      "foreign_keys": 0,
+      "indexes": 3
+    },
+    {
+      "name": "sys_authorization_field",
+      "columns": 13,
+      "foreign_keys": 1,
+      "indexes": 3
+    },
+    {
+      "name": "sys_authorization_resource",
+      "columns": 11,
+      "foreign_keys": 3,
+      "indexes": 4
+    },
+    {
+      "name": "sys_dictionary",
+      "columns": 15,
+      "foreign_keys": 1,
+      "indexes": 5
+    },
+    {
+      "name": "sys_dictionary_item",
+      "columns": 14,
+      "foreign_keys": 1,
+      "indexes": 4
+    },
+    {
+      "name": "sys_menu",
+      "columns": 20,
+      "foreign_keys": 2,
+      "indexes": 6
+    },
+    {
+      "name": "sys_menu_action",
+      "columns": 11,
+      "foreign_keys": 1,
+      "indexes": 4
+    },
+    {
+      "name": "sys_page_button",
+      "columns": 15,
+      "foreign_keys": 1,
+      "indexes": 3
+    },
+    {
+      "name": "sys_page_resource",
+      "columns": 22,
+      "foreign_keys": 2,
+      "indexes": 4
+    },
+    {
+      "name": "sys_page_tab",
+      "columns": 13,
+      "foreign_keys": 2,
+      "indexes": 4
+    },
+    {
+      "name": "sys_permission",
+      "columns": 11,
+      "foreign_keys": 1,
+      "indexes": 4
+    },
+    {
+      "name": "sys_policy_revision",
+      "columns": 7,
+      "foreign_keys": 2,
+      "indexes": 2
+    },
+    {
+      "name": "sys_role",
+      "columns": 21,
+      "foreign_keys": 2,
+      "indexes": 8
+    },
+    {
+      "name": "sys_role_data_policy",
+      "columns": 9,
+      "foreign_keys": 3,
+      "indexes": 3
+    },
+    {
+      "name": "sys_role_data_rule",
+      "columns": 7,
+      "foreign_keys": 1,
+      "indexes": 2
+    },
+    {
+      "name": "sys_role_field_rule",
+      "columns": 8,
+      "foreign_keys": 2,
+      "indexes": 2
+    },
+    {
+      "name": "sys_role_group",
+      "columns": 9,
+      "foreign_keys": 1,
+      "indexes": 2
+    },
+    {
+      "name": "sys_role_list_view",
+      "columns": 4,
+      "foreign_keys": 2,
+      "indexes": 2
+    },
+    {
+      "name": "sys_role_permission",
+      "columns": 11,
+      "foreign_keys": 2,
+      "indexes": 3
+    },
+    {
+      "name": "sys_role_subject_binding",
+      "columns": 15,
+      "foreign_keys": 5,
+      "indexes": 4
+    },
+    {
+      "name": "sys_role_user",
+      "columns": 12,
+      "foreign_keys": 2,
+      "indexes": 4
+    },
+    {
+      "name": "sys_system_list_view",
+      "columns": 18,
+      "foreign_keys": 0,
+      "indexes": 4
+    },
+    {
+      "name": "sys_tenant",
+      "columns": 7,
+      "foreign_keys": 0,
+      "indexes": 2
+    },
+    {
+      "name": "sys_user",
+      "columns": 14,
+      "foreign_keys": 1,
+      "indexes": 6
+    },
+    {
+      "name": "sys_user_group",
+      "columns": 12,
+      "foreign_keys": 3,
+      "indexes": 3
+    },
+    {
+      "name": "sys_user_group_member",
+      "columns": 13,
+      "foreign_keys": 4,
+      "indexes": 3
+    },
+    {
+      "name": "sys_user_list_view",
+      "columns": 13,
+      "foreign_keys": 2,
+      "indexes": 4
+    },
+    {
+      "name": "sys_user_list_view_preference",
+      "columns": 7,
+      "foreign_keys": 1,
+      "indexes": 1
+    }
+  ],
+  "objects": [
+    {
+      "name": "public",
+      "type": "SCHEMA",
+      "table": null
+    },
+    {
+      "name": "SCHEMA public",
+      "type": "COMMENT",
+      "table": null
+    },
+    {
+      "name": "MenuNodeType",
+      "type": "TYPE",
+      "table": null
+    },
+    {
+      "name": "OrgUnitType",
+      "type": "TYPE",
+      "table": null
+    },
+    {
+      "name": "PageResourceType",
+      "type": "TYPE",
+      "table": null
+    },
+    {
+      "name": "PermissionSource",
+      "type": "TYPE",
+      "table": null
+    },
+    {
+      "name": "PermissionType",
+      "type": "TYPE",
+      "table": null
+    },
+    {
+      "name": "RecordStatus",
+      "type": "TYPE",
+      "table": null
+    },
+    {
+      "name": "ResourceButtonType",
+      "type": "TYPE",
+      "table": null
+    },
+    {
+      "name": "ResourcePermissionMode",
+      "type": "TYPE",
+      "table": null
+    },
+    {
+      "name": "RoleType",
+      "type": "TYPE",
+      "table": null
+    },
+    {
+      "name": "SceneStatus",
+      "type": "TYPE",
+      "table": null
+    },
+    {
+      "name": "UserStatus",
+      "type": "TYPE",
+      "table": null
+    },
+    {
+      "name": "UserType",
+      "type": "TYPE",
+      "table": null
+    },
+    {
+      "name": "_prisma_migrations",
+      "type": "TABLE",
+      "table": "_prisma_migrations"
+    },
+    {
+      "name": "crm_customer",
+      "type": "TABLE",
+      "table": "crm_customer"
+    },
+    {
+      "name": "crm_customer_address",
+      "type": "TABLE",
+      "table": "crm_customer_address"
+    },
+    {
+      "name": "crm_customer_contact",
+      "type": "TABLE",
+      "table": "crm_customer_contact"
+    },
+    {
+      "name": "org_employee",
+      "type": "TABLE",
+      "table": "org_employee"
+    },
+    {
+      "name": "org_employee_assignment",
+      "type": "TABLE",
+      "table": "org_employee_assignment"
+    },
+    {
+      "name": "org_employment",
+      "type": "TABLE",
+      "table": "org_employment"
+    },
+    {
+      "name": "org_position",
+      "type": "TABLE",
+      "table": "org_position"
+    },
+    {
+      "name": "org_unit",
+      "type": "TABLE",
+      "table": "org_unit"
+    },
+    {
+      "name": "org_user_assignment",
+      "type": "TABLE",
+      "table": "org_user_assignment"
+    },
+    {
+      "name": "style_scene",
+      "type": "TABLE",
+      "table": "style_scene"
+    },
+    {
+      "name": "sys_application",
+      "type": "TABLE",
+      "table": "sys_application"
+    },
+    {
+      "name": "sys_audit_log",
+      "type": "TABLE",
+      "table": "sys_audit_log"
+    },
+    {
+      "name": "sys_authorization_field",
+      "type": "TABLE",
+      "table": "sys_authorization_field"
+    },
+    {
+      "name": "sys_authorization_resource",
+      "type": "TABLE",
+      "table": "sys_authorization_resource"
+    },
+    {
+      "name": "sys_dictionary",
+      "type": "TABLE",
+      "table": "sys_dictionary"
+    },
+    {
+      "name": "sys_dictionary_item",
+      "type": "TABLE",
+      "table": "sys_dictionary_item"
+    },
+    {
+      "name": "sys_menu",
+      "type": "TABLE",
+      "table": "sys_menu"
+    },
+    {
+      "name": "sys_menu_action",
+      "type": "TABLE",
+      "table": "sys_menu_action"
+    },
+    {
+      "name": "sys_page_button",
+      "type": "TABLE",
+      "table": "sys_page_button"
+    },
+    {
+      "name": "sys_page_resource",
+      "type": "TABLE",
+      "table": "sys_page_resource"
+    },
+    {
+      "name": "sys_page_tab",
+      "type": "TABLE",
+      "table": "sys_page_tab"
+    },
+    {
+      "name": "sys_permission",
+      "type": "TABLE",
+      "table": "sys_permission"
+    },
+    {
+      "name": "sys_policy_revision",
+      "type": "TABLE",
+      "table": "sys_policy_revision"
+    },
+    {
+      "name": "sys_role",
+      "type": "TABLE",
+      "table": "sys_role"
+    },
+    {
+      "name": "sys_role_data_policy",
+      "type": "TABLE",
+      "table": "sys_role_data_policy"
+    },
+    {
+      "name": "sys_role_data_rule",
+      "type": "TABLE",
+      "table": "sys_role_data_rule"
+    },
+    {
+      "name": "sys_role_field_rule",
+      "type": "TABLE",
+      "table": "sys_role_field_rule"
+    },
+    {
+      "name": "sys_role_group",
+      "type": "TABLE",
+      "table": "sys_role_group"
+    },
+    {
+      "name": "sys_role_list_view",
+      "type": "TABLE",
+      "table": "sys_role_list_view"
+    },
+    {
+      "name": "sys_role_permission",
+      "type": "TABLE",
+      "table": "sys_role_permission"
+    },
+    {
+      "name": "sys_role_subject_binding",
+      "type": "TABLE",
+      "table": "sys_role_subject_binding"
+    },
+    {
+      "name": "sys_role_user",
+      "type": "TABLE",
+      "table": "sys_role_user"
+    },
+    {
+      "name": "sys_system_list_view",
+      "type": "TABLE",
+      "table": "sys_system_list_view"
+    },
+    {
+      "name": "sys_tenant",
+      "type": "TABLE",
+      "table": "sys_tenant"
+    },
+    {
+      "name": "sys_user",
+      "type": "TABLE",
+      "table": "sys_user"
+    },
+    {
+      "name": "sys_user_group",
+      "type": "TABLE",
+      "table": "sys_user_group"
+    },
+    {
+      "name": "sys_user_group_member",
+      "type": "TABLE",
+      "table": "sys_user_group_member"
+    },
+    {
+      "name": "sys_user_list_view",
+      "type": "TABLE",
+      "table": "sys_user_list_view"
+    },
+    {
+      "name": "sys_user_list_view_preference",
+      "type": "TABLE",
+      "table": "sys_user_list_view_preference"
+    },
+    {
+      "name": "_prisma_migrations _prisma_migrations_pkey",
+      "type": "CONSTRAINT",
+      "table": "_prisma_migrations"
+    },
+    {
+      "name": "crm_customer_address crm_customer_address_pkey",
+      "type": "CONSTRAINT",
+      "table": "crm_customer_address"
+    },
+    {
+      "name": "crm_customer_contact crm_customer_contact_pkey",
+      "type": "CONSTRAINT",
+      "table": "crm_customer_contact"
+    },
+    {
+      "name": "crm_customer crm_customer_pkey",
+      "type": "CONSTRAINT",
+      "table": "crm_customer"
+    },
+    {
+      "name": "org_employee_assignment org_employee_assignment_period_key",
+      "type": "CONSTRAINT",
+      "table": "org_employee_assignment"
+    },
+    {
+      "name": "org_employee_assignment org_employee_assignment_pkey",
+      "type": "CONSTRAINT",
+      "table": "org_employee_assignment"
+    },
+    {
+      "name": "org_employee org_employee_id_tenant_key",
+      "type": "CONSTRAINT",
+      "table": "org_employee"
+    },
+    {
+      "name": "org_employee org_employee_pkey",
+      "type": "CONSTRAINT",
+      "table": "org_employee"
+    },
+    {
+      "name": "org_employment org_employment_pkey",
+      "type": "CONSTRAINT",
+      "table": "org_employment"
+    },
+    {
+      "name": "org_employment org_employment_tenant_employee_no_key",
+      "type": "CONSTRAINT",
+      "table": "org_employment"
+    },
+    {
+      "name": "org_position org_position_id_tenant_key",
+      "type": "CONSTRAINT",
+      "table": "org_position"
+    },
+    {
+      "name": "org_position org_position_pkey",
+      "type": "CONSTRAINT",
+      "table": "org_position"
+    },
+    {
+      "name": "org_position org_position_tenant_code_key",
+      "type": "CONSTRAINT",
+      "table": "org_position"
+    },
+    {
+      "name": "org_unit org_unit_pkey",
+      "type": "CONSTRAINT",
+      "table": "org_unit"
+    },
+    {
+      "name": "org_user_assignment org_user_assignment_period_key",
+      "type": "CONSTRAINT",
+      "table": "org_user_assignment"
+    },
+    {
+      "name": "org_user_assignment org_user_assignment_pkey",
+      "type": "CONSTRAINT",
+      "table": "org_user_assignment"
+    },
+    {
+      "name": "style_scene style_scene_pkey",
+      "type": "CONSTRAINT",
+      "table": "style_scene"
+    },
+    {
+      "name": "sys_application sys_application_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_application"
+    },
+    {
+      "name": "sys_audit_log sys_audit_log_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_audit_log"
+    },
+    {
+      "name": "sys_authorization_field sys_auth_field_code_key",
+      "type": "CONSTRAINT",
+      "table": "sys_authorization_field"
+    },
+    {
+      "name": "sys_authorization_field sys_auth_field_scope_key",
+      "type": "CONSTRAINT",
+      "table": "sys_authorization_field"
+    },
+    {
+      "name": "sys_authorization_resource sys_auth_resource_binding_key",
+      "type": "CONSTRAINT",
+      "table": "sys_authorization_resource"
+    },
+    {
+      "name": "sys_authorization_resource sys_auth_resource_code_key",
+      "type": "CONSTRAINT",
+      "table": "sys_authorization_resource"
+    },
+    {
+      "name": "sys_authorization_resource sys_auth_resource_scope_key",
+      "type": "CONSTRAINT",
+      "table": "sys_authorization_resource"
+    },
+    {
+      "name": "sys_authorization_field sys_authorization_field_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_authorization_field"
+    },
+    {
+      "name": "sys_authorization_resource sys_authorization_resource_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_authorization_resource"
+    },
+    {
+      "name": "sys_dictionary_item sys_dictionary_item_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_dictionary_item"
+    },
+    {
+      "name": "sys_dictionary sys_dictionary_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_dictionary"
+    },
+    {
+      "name": "sys_menu_action sys_menu_action_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_menu_action"
+    },
+    {
+      "name": "sys_menu sys_menu_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_menu"
+    },
+    {
+      "name": "sys_page_button sys_page_button_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_page_button"
+    },
+    {
+      "name": "sys_page_resource sys_page_resource_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_page_resource"
+    },
+    {
+      "name": "sys_page_tab sys_page_tab_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_page_tab"
+    },
+    {
+      "name": "sys_permission sys_permission_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_permission"
+    },
+    {
+      "name": "sys_policy_revision sys_policy_revision_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_policy_revision"
+    },
+    {
+      "name": "sys_policy_revision sys_policy_revision_version_key",
+      "type": "CONSTRAINT",
+      "table": "sys_policy_revision"
+    },
+    {
+      "name": "sys_role_data_policy sys_role_data_policy_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_role_data_policy"
+    },
+    {
+      "name": "sys_role_data_policy sys_role_data_policy_resource_key",
+      "type": "CONSTRAINT",
+      "table": "sys_role_data_policy"
+    },
+    {
+      "name": "sys_role_data_policy sys_role_data_policy_scope_key",
+      "type": "CONSTRAINT",
+      "table": "sys_role_data_policy"
+    },
+    {
+      "name": "sys_role_data_rule sys_role_data_rule_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_role_data_rule"
+    },
+    {
+      "name": "sys_role_field_rule sys_role_field_rule_field_key",
+      "type": "CONSTRAINT",
+      "table": "sys_role_field_rule"
+    },
+    {
+      "name": "sys_role_field_rule sys_role_field_rule_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_role_field_rule"
+    },
+    {
+      "name": "sys_role_group sys_role_group_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_role_group"
+    },
+    {
+      "name": "sys_role sys_role_id_application_tenant_key",
+      "type": "CONSTRAINT",
+      "table": "sys_role"
+    },
+    {
+      "name": "sys_role_list_view sys_role_list_view_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_role_list_view"
+    },
+    {
+      "name": "sys_role_permission sys_role_permission_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_role_permission"
+    },
+    {
+      "name": "sys_role sys_role_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_role"
+    },
+    {
+      "name": "sys_role_subject_binding sys_role_subject_binding_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_role_subject_binding"
+    },
+    {
+      "name": "sys_role_subject_binding sys_role_subject_group_period_key",
+      "type": "CONSTRAINT",
+      "table": "sys_role_subject_binding"
+    },
+    {
+      "name": "sys_role_subject_binding sys_role_subject_org_period_key",
+      "type": "CONSTRAINT",
+      "table": "sys_role_subject_binding"
+    },
+    {
+      "name": "sys_role_user sys_role_user_no_overlap",
+      "type": "CONSTRAINT",
+      "table": "sys_role_user"
+    },
+    {
+      "name": "sys_role_user sys_role_user_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_role_user"
+    },
+    {
+      "name": "sys_system_list_view sys_system_list_view_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_system_list_view"
+    },
+    {
+      "name": "sys_tenant sys_tenant_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_tenant"
+    },
+    {
+      "name": "sys_user sys_user_employee_id_key",
+      "type": "CONSTRAINT",
+      "table": "sys_user"
+    },
+    {
+      "name": "sys_user sys_user_employee_tenant_key",
+      "type": "CONSTRAINT",
+      "table": "sys_user"
+    },
+    {
+      "name": "sys_user_group sys_user_group_code_key",
+      "type": "CONSTRAINT",
+      "table": "sys_user_group"
+    },
+    {
+      "name": "sys_user_group_member sys_user_group_member_period_key",
+      "type": "CONSTRAINT",
+      "table": "sys_user_group_member"
+    },
+    {
+      "name": "sys_user_group_member sys_user_group_member_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_user_group_member"
+    },
+    {
+      "name": "sys_user_group sys_user_group_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_user_group"
+    },
+    {
+      "name": "sys_user_group sys_user_group_scope_key",
+      "type": "CONSTRAINT",
+      "table": "sys_user_group"
+    },
+    {
+      "name": "sys_user sys_user_id_tenant_key",
+      "type": "CONSTRAINT",
+      "table": "sys_user"
+    },
+    {
+      "name": "sys_user_list_view sys_user_list_view_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_user_list_view"
+    },
+    {
+      "name": "sys_user_list_view_preference sys_user_list_view_preference_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_user_list_view_preference"
+    },
+    {
+      "name": "sys_user sys_user_pkey",
+      "type": "CONSTRAINT",
+      "table": "sys_user"
+    },
+    {
+      "name": "crm_address_customer_idx",
+      "type": "INDEX",
+      "table": "crm_customer_address"
+    },
+    {
+      "name": "crm_contact_customer_idx",
+      "type": "INDEX",
+      "table": "crm_customer_contact"
+    },
+    {
+      "name": "crm_customer_list_idx",
+      "type": "INDEX",
+      "table": "crm_customer"
+    },
+    {
+      "name": "crm_customer_system_code_customer_code_key",
+      "type": "INDEX",
+      "table": "crm_customer"
+    },
+    {
+      "name": "crm_customer_system_code_customer_name_key",
+      "type": "INDEX",
+      "table": "crm_customer"
+    },
+    {
+      "name": "iam_role_id_system_code_key",
+      "type": "INDEX",
+      "table": "sys_role"
+    },
+    {
+      "name": "iam_role_list_view_lookup_idx",
+      "type": "INDEX",
+      "table": "sys_role_list_view"
+    },
+    {
+      "name": "iam_role_lookup_idx",
+      "type": "INDEX",
+      "table": "sys_role"
+    },
+    {
+      "name": "iam_role_one_system_manager_key",
+      "type": "INDEX",
+      "table": "sys_role"
+    },
+    {
+      "name": "iam_role_system_code_role_code_key",
+      "type": "INDEX",
+      "table": "sys_role"
+    },
+    {
+      "name": "iam_role_user_effective_idx",
+      "type": "INDEX",
+      "table": "sys_role_user"
+    },
+    {
+      "name": "iam_user_status_idx",
+      "type": "INDEX",
+      "table": "sys_user"
+    },
+    {
+      "name": "org_employee_assignment_active_idx",
+      "type": "INDEX",
+      "table": "org_employee_assignment"
+    },
+    {
+      "name": "org_employee_assignment_open_primary_key",
+      "type": "INDEX",
+      "table": "org_employee_assignment"
+    },
+    {
+      "name": "org_employee_assignment_org_idx",
+      "type": "INDEX",
+      "table": "org_employee_assignment"
+    },
+    {
+      "name": "org_employee_lookup_idx",
+      "type": "INDEX",
+      "table": "org_employee"
+    },
+    {
+      "name": "org_employment_active_idx",
+      "type": "INDEX",
+      "table": "org_employment"
+    },
+    {
+      "name": "org_position_lookup_idx",
+      "type": "INDEX",
+      "table": "org_position"
+    },
+    {
+      "name": "org_unit_id_tenant_key",
+      "type": "INDEX",
+      "table": "org_unit"
+    },
+    {
+      "name": "org_unit_status_idx",
+      "type": "INDEX",
+      "table": "org_unit"
+    },
+    {
+      "name": "org_unit_tenant_code_key",
+      "type": "INDEX",
+      "table": "org_unit"
+    },
+    {
+      "name": "org_unit_tree_idx",
+      "type": "INDEX",
+      "table": "org_unit"
+    },
+    {
+      "name": "org_user_assignment_active_idx",
+      "type": "INDEX",
+      "table": "org_user_assignment"
+    },
+    {
+      "name": "style_scene_list_idx",
+      "type": "INDEX",
+      "table": "style_scene"
+    },
+    {
+      "name": "sys_application_code_status_idx",
+      "type": "INDEX",
+      "table": "sys_application"
+    },
+    {
+      "name": "sys_application_id_tenant_key",
+      "type": "INDEX",
+      "table": "sys_application"
+    },
+    {
+      "name": "sys_application_tenant_code_key",
+      "type": "INDEX",
+      "table": "sys_application"
+    },
+    {
+      "name": "sys_audit_log_actor_time_idx",
+      "type": "INDEX",
+      "table": "sys_audit_log"
+    },
+    {
+      "name": "sys_audit_log_application_time_idx",
+      "type": "INDEX",
+      "table": "sys_audit_log"
+    },
+    {
+      "name": "sys_dictionary_id_system_code_key",
+      "type": "INDEX",
+      "table": "sys_dictionary"
+    },
+    {
+      "name": "sys_dictionary_item_dict_code_key",
+      "type": "INDEX",
+      "table": "sys_dictionary_item"
+    },
+    {
+      "name": "sys_dictionary_item_dict_value_key",
+      "type": "INDEX",
+      "table": "sys_dictionary_item"
+    },
+    {
+      "name": "sys_dictionary_item_lookup_idx",
+      "type": "INDEX",
+      "table": "sys_dictionary_item"
+    },
+    {
+      "name": "sys_dictionary_lookup_idx",
+      "type": "INDEX",
+      "table": "sys_dictionary"
+    },
+    {
+      "name": "sys_dictionary_system_code_dict_code_key",
+      "type": "INDEX",
+      "table": "sys_dictionary"
+    },
+    {
+      "name": "sys_dictionary_tree_idx",
+      "type": "INDEX",
+      "table": "sys_dictionary"
+    },
+    {
+      "name": "sys_menu_page_resource_idx",
+      "type": "INDEX",
+      "table": "sys_menu"
+    },
+    {
+      "name": "sys_page_button_lookup_idx",
+      "type": "INDEX",
+      "table": "sys_page_button"
+    },
+    {
+      "name": "sys_page_button_page_code_key",
+      "type": "INDEX",
+      "table": "sys_page_button"
+    },
+    {
+      "name": "sys_page_resource_application_code_key",
+      "type": "INDEX",
+      "table": "sys_page_resource"
+    },
+    {
+      "name": "sys_page_resource_id_application_key",
+      "type": "INDEX",
+      "table": "sys_page_resource"
+    },
+    {
+      "name": "sys_page_resource_tree_idx",
+      "type": "INDEX",
+      "table": "sys_page_resource"
+    },
+    {
+      "name": "sys_page_tab_lookup_idx",
+      "type": "INDEX",
+      "table": "sys_page_tab"
+    },
+    {
+      "name": "sys_page_tab_page_name_key",
+      "type": "INDEX",
+      "table": "sys_page_tab"
+    },
+    {
+      "name": "sys_page_tab_target_idx",
+      "type": "INDEX",
+      "table": "sys_page_tab"
+    },
+    {
+      "name": "sys_permission_application_code_key",
+      "type": "INDEX",
+      "table": "sys_permission"
+    },
+    {
+      "name": "sys_permission_id_application_key",
+      "type": "INDEX",
+      "table": "sys_permission"
+    },
+    {
+      "name": "sys_permission_lookup_idx",
+      "type": "INDEX",
+      "table": "sys_permission"
+    },
+    {
+      "name": "sys_role_data_rule_policy_idx",
+      "type": "INDEX",
+      "table": "sys_role_data_rule"
+    },
+    {
+      "name": "sys_role_group_application_code_key",
+      "type": "INDEX",
+      "table": "sys_role_group"
+    },
+    {
+      "name": "sys_role_id_application_key",
+      "type": "INDEX",
+      "table": "sys_role"
+    },
+    {
+      "name": "sys_role_permission_role_idx",
+      "type": "INDEX",
+      "table": "sys_role_permission"
+    },
+    {
+      "name": "sys_role_permission_role_permission_key",
+      "type": "INDEX",
+      "table": "sys_role_permission"
+    },
+    {
+      "name": "sys_role_subject_binding_active_idx",
+      "type": "INDEX",
+      "table": "sys_role_subject_binding"
+    },
+    {
+      "name": "sys_role_tree_idx",
+      "type": "INDEX",
+      "table": "sys_role"
+    },
+    {
+      "name": "sys_role_user_period_key",
+      "type": "INDEX",
+      "table": "sys_role_user"
+    },
+    {
+      "name": "sys_tenant_tenant_code_key",
+      "type": "INDEX",
+      "table": "sys_tenant"
+    },
+    {
+      "name": "sys_user_group_member_active_idx",
+      "type": "INDEX",
+      "table": "sys_user_group_member"
+    },
+    {
+      "name": "sys_user_tenant_normalized_account_key",
+      "type": "INDEX",
+      "table": "sys_user"
+    },
+    {
+      "name": "ui_menu_action_id_menu_id_key",
+      "type": "INDEX",
+      "table": "sys_menu_action"
+    },
+    {
+      "name": "ui_menu_action_lookup_idx",
+      "type": "INDEX",
+      "table": "sys_menu_action"
+    },
+    {
+      "name": "ui_menu_action_menu_id_action_code_key",
+      "type": "INDEX",
+      "table": "sys_menu_action"
+    },
+    {
+      "name": "ui_menu_id_system_code_key",
+      "type": "INDEX",
+      "table": "sys_menu"
+    },
+    {
+      "name": "ui_menu_navigation_idx",
+      "type": "INDEX",
+      "table": "sys_menu"
+    },
+    {
+      "name": "ui_menu_system_code_menu_code_key",
+      "type": "INDEX",
+      "table": "sys_menu"
+    },
+    {
+      "name": "ui_menu_system_route_key",
+      "type": "INDEX",
+      "table": "sys_menu"
+    },
+    {
+      "name": "ui_system_list_view_lookup_idx",
+      "type": "INDEX",
+      "table": "sys_system_list_view"
+    },
+    {
+      "name": "ui_system_list_view_one_default_key",
+      "type": "INDEX",
+      "table": "sys_system_list_view"
+    },
+    {
+      "name": "ui_system_list_view_scope_code_key",
+      "type": "INDEX",
+      "table": "sys_system_list_view"
+    },
+    {
+      "name": "ui_user_list_view_lookup_idx",
+      "type": "INDEX",
+      "table": "sys_user_list_view"
+    },
+    {
+      "name": "ui_user_list_view_one_default_key",
+      "type": "INDEX",
+      "table": "sys_user_list_view"
+    },
+    {
+      "name": "ui_user_list_view_owner_scope_name_key",
+      "type": "INDEX",
+      "table": "sys_user_list_view"
+    },
+    {
+      "name": "crm_customer_address crm_customer_address_customer_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "crm_customer_address"
+    },
+    {
+      "name": "crm_customer_contact crm_customer_contact_customer_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "crm_customer_contact"
+    },
+    {
+      "name": "org_employee_assignment org_employee_assignment_created_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "org_employee_assignment"
+    },
+    {
+      "name": "org_employee_assignment org_employee_assignment_employee_fk",
+      "type": "FK CONSTRAINT",
+      "table": "org_employee_assignment"
+    },
+    {
+      "name": "org_employee_assignment org_employee_assignment_org_fk",
+      "type": "FK CONSTRAINT",
+      "table": "org_employee_assignment"
+    },
+    {
+      "name": "org_employee_assignment org_employee_assignment_position_fk",
+      "type": "FK CONSTRAINT",
+      "table": "org_employee_assignment"
+    },
+    {
+      "name": "org_employee_assignment org_employee_assignment_updated_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "org_employee_assignment"
+    },
+    {
+      "name": "org_employee org_employee_created_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "org_employee"
+    },
+    {
+      "name": "org_employee org_employee_tenant_fk",
+      "type": "FK CONSTRAINT",
+      "table": "org_employee"
+    },
+    {
+      "name": "org_employee org_employee_updated_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "org_employee"
+    },
+    {
+      "name": "org_employment org_employment_created_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "org_employment"
+    },
+    {
+      "name": "org_employment org_employment_employee_fk",
+      "type": "FK CONSTRAINT",
+      "table": "org_employment"
+    },
+    {
+      "name": "org_employment org_employment_updated_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "org_employment"
+    },
+    {
+      "name": "org_position org_position_created_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "org_position"
+    },
+    {
+      "name": "org_position org_position_tenant_fk",
+      "type": "FK CONSTRAINT",
+      "table": "org_position"
+    },
+    {
+      "name": "org_position org_position_updated_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "org_position"
+    },
+    {
+      "name": "org_unit org_unit_parent_id_tenant_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "org_unit"
+    },
+    {
+      "name": "org_unit org_unit_tenant_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "org_unit"
+    },
+    {
+      "name": "org_user_assignment org_user_assignment_created_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "org_user_assignment"
+    },
+    {
+      "name": "org_user_assignment org_user_assignment_org_fk",
+      "type": "FK CONSTRAINT",
+      "table": "org_user_assignment"
+    },
+    {
+      "name": "org_user_assignment org_user_assignment_updated_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "org_user_assignment"
+    },
+    {
+      "name": "org_user_assignment org_user_assignment_user_fk",
+      "type": "FK CONSTRAINT",
+      "table": "org_user_assignment"
+    },
+    {
+      "name": "sys_application sys_application_tenant_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_application"
+    },
+    {
+      "name": "sys_authorization_field sys_auth_field_resource_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_authorization_field"
+    },
+    {
+      "name": "sys_authorization_resource sys_auth_resource_app_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_authorization_resource"
+    },
+    {
+      "name": "sys_authorization_resource sys_authorization_resource_created_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_authorization_resource"
+    },
+    {
+      "name": "sys_authorization_resource sys_authorization_resource_updated_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_authorization_resource"
+    },
+    {
+      "name": "sys_dictionary_item sys_dictionary_item_dictionary_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_dictionary_item"
+    },
+    {
+      "name": "sys_dictionary sys_dictionary_parent_id_system_code_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_dictionary"
+    },
+    {
+      "name": "sys_menu_action sys_menu_action_menu_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_menu_action"
+    },
+    {
+      "name": "sys_menu sys_menu_page_resource_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_menu"
+    },
+    {
+      "name": "sys_menu sys_menu_parent_id_system_code_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_menu"
+    },
+    {
+      "name": "sys_page_button sys_page_button_page_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_page_button"
+    },
+    {
+      "name": "sys_page_resource sys_page_resource_application_id_tenant_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_page_resource"
+    },
+    {
+      "name": "sys_page_resource sys_page_resource_parent_id_application_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_page_resource"
+    },
+    {
+      "name": "sys_page_tab sys_page_tab_page_application_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_page_tab"
+    },
+    {
+      "name": "sys_page_tab sys_page_tab_target_application_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_page_tab"
+    },
+    {
+      "name": "sys_permission sys_permission_application_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_permission"
+    },
+    {
+      "name": "sys_policy_revision sys_policy_revision_policy_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_policy_revision"
+    },
+    {
+      "name": "sys_policy_revision sys_policy_revision_published_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_policy_revision"
+    },
+    {
+      "name": "sys_role_data_policy sys_role_data_policy_published_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_data_policy"
+    },
+    {
+      "name": "sys_role_data_policy sys_role_data_policy_resource_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_data_policy"
+    },
+    {
+      "name": "sys_role_data_policy sys_role_data_policy_role_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_data_policy"
+    },
+    {
+      "name": "sys_role_data_rule sys_role_data_rule_policy_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_data_rule"
+    },
+    {
+      "name": "sys_role_field_rule sys_role_field_rule_field_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_field_rule"
+    },
+    {
+      "name": "sys_role_field_rule sys_role_field_rule_policy_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_field_rule"
+    },
+    {
+      "name": "sys_role_group sys_role_group_application_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_group"
+    },
+    {
+      "name": "sys_role_list_view sys_role_list_view_role_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_list_view"
+    },
+    {
+      "name": "sys_role_list_view sys_role_list_view_view_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_list_view"
+    },
+    {
+      "name": "sys_role sys_role_parent_application_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role"
+    },
+    {
+      "name": "sys_role sys_role_parent_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role"
+    },
+    {
+      "name": "sys_role_permission sys_role_permission_permission_id_application_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_permission"
+    },
+    {
+      "name": "sys_role_permission sys_role_permission_role_id_application_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_permission"
+    },
+    {
+      "name": "sys_role_subject_binding sys_role_subject_binding_created_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_subject_binding"
+    },
+    {
+      "name": "sys_role_subject_binding sys_role_subject_binding_updated_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_subject_binding"
+    },
+    {
+      "name": "sys_role_subject_binding sys_role_subject_group_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_subject_binding"
+    },
+    {
+      "name": "sys_role_subject_binding sys_role_subject_org_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_subject_binding"
+    },
+    {
+      "name": "sys_role_subject_binding sys_role_subject_role_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_subject_binding"
+    },
+    {
+      "name": "sys_role_user sys_role_user_role_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_user"
+    },
+    {
+      "name": "sys_role_user sys_role_user_user_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_role_user"
+    },
+    {
+      "name": "sys_user sys_user_employee_scope_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_user"
+    },
+    {
+      "name": "sys_user_group sys_user_group_app_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_user_group"
+    },
+    {
+      "name": "sys_user_group sys_user_group_created_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_user_group"
+    },
+    {
+      "name": "sys_user_group_member sys_user_group_member_created_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_user_group_member"
+    },
+    {
+      "name": "sys_user_group_member sys_user_group_member_group_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_user_group_member"
+    },
+    {
+      "name": "sys_user_group_member sys_user_group_member_updated_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_user_group_member"
+    },
+    {
+      "name": "sys_user_group_member sys_user_group_member_user_fk",
+      "type": "FK CONSTRAINT",
+      "table": "sys_user_group_member"
+    },
+    {
+      "name": "sys_user_group sys_user_group_updated_by_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_user_group"
+    },
+    {
+      "name": "sys_user_list_view sys_user_list_view_base_view_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_user_list_view"
+    },
+    {
+      "name": "sys_user_list_view_preference sys_user_list_view_preference_user_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_user_list_view_preference"
+    },
+    {
+      "name": "sys_user_list_view sys_user_list_view_user_id_fkey",
+      "type": "FK CONSTRAINT",
+      "table": "sys_user_list_view"
+    }
+  ]
+}

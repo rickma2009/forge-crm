@@ -1,0 +1,12 @@
+{
+  "sourceId": "REQSRC-064",
+  "title": "商机详情 Tab 与商品行操作增量要求",
+  "sourceType": "user-interaction-refinement-request",
+  "sourceDate": "2026-09-23",
+  "managedCopy": "source.md",
+  "sha256": "4e0d9171da1924d67971c92e6dbc8d89f5b7170cd676bb7aa6c9c26f6bddfae6",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "existing-slice-approved-increment",
+  "gateChange": "none-continuous-authorization-REQSRC-060"
+}

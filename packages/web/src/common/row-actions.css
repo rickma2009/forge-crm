@@ -1,0 +1,15 @@
+/* UI-BUTTON-01 / UI-LIST-01: shared record actions, independent of business pages. */
+button.row-action-button, .enterprise-page button.row-action-button, .enterprise-modal button.row-action-button {
+  display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;
+  width: 28px; min-width: 28px; height: 28px; min-height: 28px; padding: 0;
+  border: 1px solid transparent; border-radius: 5px; background: transparent;
+  color: var(--ipl-primary, #2f6bff); cursor: pointer;
+}
+button.row-action-button + button.row-action-button { margin-left: 4px; }
+button.row-action-button:hover { background: var(--ipl-primary-wash, #eaf0ff); }
+button.row-action-button.is-danger { color: #dc2626; }
+button.row-action-button.is-danger:hover { background: #fef2f2; }
+button.row-action-button:active { background: #dce6ff; }
+button.row-action-button:focus-visible { outline: 2px solid var(--ipl-primary, #2f6bff); outline-offset: 2px; }
+button.row-action-button:disabled { color: #9aa4b2; background: transparent; cursor: not-allowed; }
+@media (pointer: coarse) { button.row-action-button, .enterprise-page button.row-action-button, .enterprise-modal button.row-action-button { width: 44px; min-width: 44px; height: 44px; min-height: 44px; } }

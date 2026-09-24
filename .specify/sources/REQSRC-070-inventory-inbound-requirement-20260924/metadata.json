@@ -1,0 +1,16 @@
+{
+  "sourceId": "REQSRC-070",
+  "title": "库存与入库单需求及澄清决策",
+  "capturedAt": "2026-09-24",
+  "sourceType": "external-document-and-user-decisions",
+  "managedCopy": "mcrm-inbound-stock.md",
+  "sha256": "b0dd7f347bdc8e43bf3262cc6508cd837b6f4922ecc02c222d941e7cdf7e251d",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "originalPath": "/Users/malanjun/projects/mcrm/docs/business/inbound-stock.md",
+  "immutable": true,
+  "targets": [
+    ".specify/requirements/011-inventory-inbound-management/requirement.md",
+    ".specify/specs/024-inventory-inbound-management/spec.md"
+  ]
+}

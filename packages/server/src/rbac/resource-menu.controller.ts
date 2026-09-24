@@ -1,0 +1,35 @@
+import { Body, Controller, Delete, Get, Header, Param, Patch, Post, Put, Query, Req, Res, UseGuards } from '@nestjs/common';
+import { systemCodeSchema } from '@interaction-pattern-lab/contracts';
+import type { Response } from 'express';
+import { SessionGuard } from '../auth/session.guard';
+import type { AuthenticatedRequest } from '../auth/auth.types';
+import { WriteRequestGuard } from '../auth/write-request.guard';
+import { AuthorizationService } from './authorization.service';
+import { ResourceMenuService } from './resource-menu.service';
+
+@Controller('api/systems/:systemCode/resource-menu')
+@UseGuards(SessionGuard)
+export class ResourceMenuController {
+  constructor(private readonly service: ResourceMenuService, private readonly authorization: AuthorizationService) {}
+  private system(raw: string) { return systemCodeSchema.parse(raw); }
+  private requestId(response: Response) { return String(response.locals.requestId ?? 'unknown'); }
+  private async view(req: AuthenticatedRequest, code: string) { await this.authorization.assertPermission(req.currentUser.id, code, 'access.resource-menu.view'); }
+  private async manage(req: AuthenticatedRequest, code: string) { await this.authorization.assertPermission(req.currentUser.id, code, 'access.resource-menu.manage'); }
+
+  @Get('pages') async pages(@Req() req: AuthenticatedRequest, @Param('systemCode') raw: string) { const code = this.system(raw); await this.view(req, code); return this.service.listPages(code); }
+  @Post('pages/move') @UseGuards(WriteRequestGuard) async move(@Req() req: AuthenticatedRequest, @Res({ passthrough: true }) res: Response, @Param('systemCode') raw: string, @Body() body: unknown) { const code = this.system(raw); await this.manage(req, code); return this.service.movePage(code, req.currentUser.id, this.requestId(res), body); }
+  @Post('pages') @UseGuards(WriteRequestGuard) async create(@Req() req: AuthenticatedRequest, @Res({ passthrough: true }) res: Response, @Param('systemCode') raw: string, @Body() body: unknown) { const code = this.system(raw); await this.manage(req, code); return this.service.createPage(code, req.currentUser.id, this.requestId(res), body); }
+  @Patch('pages/:pageId') @UseGuards(WriteRequestGuard) async update(@Req() req: AuthenticatedRequest, @Res({ passthrough: true }) res: Response, @Param('systemCode') raw: string, @Param('pageId') id: string, @Body() body: unknown) { const code = this.system(raw); await this.manage(req, code); return this.service.updatePage(code, id, req.currentUser.id, this.requestId(res), body); }
+  @Delete('pages/:pageId') @UseGuards(WriteRequestGuard) async remove(@Req() req: AuthenticatedRequest, @Res({ passthrough: true }) res: Response, @Param('systemCode') raw: string, @Param('pageId') id: string, @Body() body: unknown) { const code = this.system(raw); await this.manage(req, code); return this.service.disablePage(code, id, req.currentUser.id, this.requestId(res), body); }
+  @Get('pages/:pageId/buttons') async buttons(@Req() req: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('pageId') id: string) { const code = this.system(raw); await this.view(req, code); return this.service.listButtons(code, id); }
+  @Post('pages/:pageId/buttons') @UseGuards(WriteRequestGuard) async createButton(@Req() req: AuthenticatedRequest, @Res({ passthrough: true }) res: Response, @Param('systemCode') raw: string, @Param('pageId') id: string, @Body() body: unknown) { const code = this.system(raw); await this.manage(req, code); return this.service.saveButton(code, id, undefined, req.currentUser.id, this.requestId(res), body); }
+  @Patch('pages/:pageId/buttons/:buttonId') @UseGuards(WriteRequestGuard) async updateButton(@Req() req: AuthenticatedRequest, @Res({ passthrough: true }) res: Response, @Param('systemCode') raw: string, @Param('pageId') id: string, @Param('buttonId') buttonId: string, @Body() body: unknown) { const code = this.system(raw); await this.manage(req, code); return this.service.saveButton(code, id, buttonId, req.currentUser.id, this.requestId(res), body); }
+  @Delete('pages/:pageId/buttons/:buttonId') @UseGuards(WriteRequestGuard) async removeButton(@Req() req: AuthenticatedRequest, @Res({ passthrough: true }) res: Response, @Param('systemCode') raw: string, @Param('pageId') id: string, @Param('buttonId') buttonId: string, @Body() body: unknown) { const code = this.system(raw); await this.manage(req, code); return this.service.deleteButton(code, id, buttonId, req.currentUser.id, this.requestId(res), body); }
+  @Get('pages/:pageId/tabs') async tabs(@Req() req: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('pageId') id: string) { const code = this.system(raw); await this.view(req, code); return this.service.listTabs(code, id); }
+  @Post('pages/:pageId/tabs') @UseGuards(WriteRequestGuard) async createTab(@Req() req: AuthenticatedRequest, @Res({ passthrough: true }) res: Response, @Param('systemCode') raw: string, @Param('pageId') id: string, @Body() body: unknown) { const code = this.system(raw); await this.manage(req, code); return this.service.saveTab(code, id, undefined, req.currentUser.id, this.requestId(res), body); }
+  @Patch('pages/:pageId/tabs/:tabId') @UseGuards(WriteRequestGuard) async updateTab(@Req() req: AuthenticatedRequest, @Res({ passthrough: true }) res: Response, @Param('systemCode') raw: string, @Param('pageId') id: string, @Param('tabId') tabId: string, @Body() body: unknown) { const code = this.system(raw); await this.manage(req, code); return this.service.saveTab(code, id, tabId, req.currentUser.id, this.requestId(res), body); }
+  @Delete('pages/:pageId/tabs/:tabId') @UseGuards(WriteRequestGuard) async removeTab(@Req() req: AuthenticatedRequest, @Res({ passthrough: true }) res: Response, @Param('systemCode') raw: string, @Param('pageId') id: string, @Param('tabId') tabId: string, @Body() body: unknown) { const code = this.system(raw); await this.manage(req, code); return this.service.deleteTab(code, id, tabId, req.currentUser.id, this.requestId(res), body); }
+  @Get('navigation-mounts') async mounts(@Req() req: AuthenticatedRequest, @Param('systemCode') raw: string) { const code = this.system(raw); await this.view(req, code); return this.service.listMounts(code); }
+  @Put('navigation-mounts') @UseGuards(WriteRequestGuard) async saveMounts(@Req() req: AuthenticatedRequest, @Res({ passthrough: true }) res: Response, @Param('systemCode') raw: string, @Body() body: unknown) { const code = this.system(raw); await this.manage(req, code); return this.service.saveMounts(code, req.currentUser.id, this.requestId(res), body); }
+  @Get('export') @Header('content-type', 'application/sql; charset=utf-8') @Header('content-disposition', 'attachment; filename="resource-menu.sql"') async export(@Req() req: AuthenticatedRequest, @Param('systemCode') raw: string, @Query('rootId') rootId?: string) { const code = this.system(raw); await this.authorization.assertPermission(req.currentUser.id, code, 'access.resource-menu.export'); return this.service.exportSql(code, rootId); }
+}

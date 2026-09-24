@@ -1,0 +1,20 @@
+{
+  "featureId": "014-resource-menu-administration",
+  "status": "ui-audit-implemented-local-validation",
+  "currentStage": "ui-audit-verification",
+  "gates": {
+    "business": "approved-REQSRC-050-continuous-implementation",
+    "specification": "approved-REQSRC-050-continuous-implementation",
+    "architecture": "approved-REQSRC-050-continuous-implementation",
+    "release": "not-approved"
+  },
+  "updatedAt": "2026-09-24",
+  "uiAudit": {
+    "source": "UIAUDIT-20260923",
+    "specification": "updated-under-user-recommended-decision-authorization",
+    "architecture": "existing-public-list-view-service-no-new-tables",
+    "implementation": "implemented-local-validation",
+    "evidence": ".specify/requirements/global-page-style/audit.md",
+    "release": "no-new-release-approval"
+  }
+}

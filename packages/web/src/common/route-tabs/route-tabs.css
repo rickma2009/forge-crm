@@ -1,0 +1,14 @@
+/* UI-TAB-01: portal menu and tab titles share the global typography tokens. */
+.common-route-tabs, .common-route-tab-menu { font-family: var(--ipl-font-family); font-size: var(--ipl-font-size, 12px); }
+.common-route-tabs { display: flex; overflow-x: auto; flex-shrink: 0; background: #fff; border-bottom: 1px solid #e3e7ef; min-height: 43px; }
+.common-route-tab { display: flex; align-items: stretch; flex-shrink: 0; border-right: 1px solid #edf0f5; border-bottom: 2px solid transparent; color: #5f6981; }
+.common-route-tab[data-active] { color: #3478f6; border-bottom-color: #3478f6; background: #f8faff; }
+.common-route-tab button { font: inherit; color: inherit; border: 0; background: transparent; cursor: pointer; padding: 11px 16px; white-space: nowrap; }
+.common-route-tab button.common-route-tab-close { padding: 0 10px; font-size: 18px; color: #8a94a8; }
+.common-route-tab button:hover { background: #eef3fb; }
+.common-route-tabs button:focus-visible, .common-route-tab-menu button:focus-visible { outline: 2px solid #3478f6; outline-offset: -3px; }
+.common-route-tab-menu { position: fixed; z-index: 1000; width: 188px; max-width: calc(100vw - 16px); max-height: calc(100vh - 16px); overflow-y: auto; padding: 6px; background: #fff; border: 1px solid #e3e7ef; border-radius: 8px; box-shadow: 0 10px 32px #172b4d26; color: #202838; }
+.common-route-tab-menu button { display: block; width: 100%; text-align: left; padding: 10px 14px; background: transparent; border: 0; color: inherit; font: inherit; cursor: pointer; }
+.common-route-tab-menu button[data-divider] { border-top: 1px solid #edf0f5; margin-top: 5px; }
+.common-route-tab-menu button:hover:not(:disabled), .common-route-tab-menu button:focus-visible { background: #eef3fb; }
+.common-route-tab-menu button:disabled { opacity: .4; cursor: default; }

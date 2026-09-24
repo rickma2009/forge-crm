@@ -1,0 +1,1587 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RecordStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+  LOCKED
+}
+
+enum MenuNodeType {
+  GROUP
+  PAGE
+}
+
+enum PageResourceType {
+  SYSTEM
+  MODULE
+  PAGE
+  SUBPAGE
+  COMPONENT
+}
+
+enum ResourcePermissionMode {
+  RESTRICTED
+  COMMON
+}
+
+enum ResourceButtonType {
+  TOOL
+  LINE
+}
+
+enum RoleType {
+  SYSTEM
+  BUSINESS
+}
+
+enum PermissionType {
+  MENU
+  ACTION
+}
+
+enum UserType {
+  INTERNAL
+  EXTERNAL
+  SERVICE
+}
+
+enum PermissionSource {
+  SYSTEM
+  CUSTOM
+}
+
+enum OrgUnitType {
+  COMPANY
+  DIVISION
+  DEPARTMENT
+  TEAM
+}
+
+enum ItemType {
+  PRODUCT
+  MATERIAL
+  SEMI_FINISHED
+}
+
+enum InboundType {
+  PRODUCTION
+  FINISHED_GOODS
+  TRANSFER
+  STOCK_GAIN
+}
+
+enum InboundStatus {
+  DRAFT
+  POSTED
+  REVERSED
+  VOIDED
+}
+
+enum InventoryMoveType {
+  INBOUND
+  REVERSAL
+}
+
+model SysTenant {
+  id           String           @id @default(uuid()) @db.Uuid
+  tenantCode   String           @unique(map: "sys_tenant_tenant_code_key") @map("tenant_code") @db.VarChar(64)
+  tenantName   String           @map("tenant_name") @db.VarChar(128)
+  status       RecordStatus     @default(ACTIVE)
+  version      Int              @default(1)
+  createdAt    DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime         @updatedAt @map("updated_at") @db.Timestamptz(3)
+  applications SysApplication[]
+  orgUnits     OrgUnit[]
+  employees    OrgEmployee[]
+  positions    OrgPosition[]
+
+  @@map("sys_tenant")
+}
+
+model OrgUnit {
+  id                  String                  @id @default(uuid()) @db.Uuid
+  tenantId            String                  @map("tenant_id") @db.Uuid
+  parentId            String?                 @map("parent_id") @db.Uuid
+  unitCode            String                  @map("unit_code") @db.VarChar(64)
+  unitName            String                  @map("unit_name") @db.VarChar(128)
+  unitType            OrgUnitType             @map("unit_type")
+  sortNo              Int                     @default(0) @map("sort_no")
+  status              RecordStatus            @default(ACTIVE)
+  effectiveAt         DateTime                @default(now()) @map("effective_at") @db.Timestamptz(3)
+  expiresAt           DateTime?               @map("expires_at") @db.Timestamptz(3)
+  remark              String?                 @db.VarChar(500)
+  version             Int                     @default(1)
+  createdBy           String                  @map("created_by") @db.Uuid
+  updatedBy           String                  @map("updated_by") @db.Uuid
+  createdAt           DateTime                @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt           DateTime                @updatedAt @map("updated_at") @db.Timestamptz(3)
+  tenant              SysTenant               @relation(fields: [tenantId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  parent              OrgUnit?                @relation("OrgUnitTree", fields: [parentId, tenantId], references: [id, tenantId], onDelete: Restrict, onUpdate: Cascade)
+  children            OrgUnit[]               @relation("OrgUnitTree")
+  userAssignments     OrgUserAssignment[]
+  employeeAssignments OrgEmployeeAssignment[]
+  roleBindings        SysRoleSubjectBinding[]
+
+  @@unique([tenantId, unitCode], map: "org_unit_tenant_code_key")
+  @@unique([id, tenantId], map: "org_unit_id_tenant_key")
+  @@index([tenantId, parentId, sortNo], map: "org_unit_tree_idx")
+  @@index([tenantId, status], map: "org_unit_status_idx")
+  @@map("org_unit")
+}
+
+model SysApplication {
+  id                     String                     @id @default(uuid()) @db.Uuid
+  tenantId               String                     @map("tenant_id") @db.Uuid
+  applicationCode        String                     @map("application_code") @db.VarChar(64)
+  applicationName        String                     @map("application_name") @db.VarChar(128)
+  status                 RecordStatus               @default(ACTIVE)
+  version                Int                        @default(1)
+  createdAt              DateTime                   @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt              DateTime                   @updatedAt @map("updated_at") @db.Timestamptz(3)
+  tenant                 SysTenant                  @relation(fields: [tenantId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  roleGroups             SysRoleGroup[]
+  permissions            SysPermission[]
+  pageResources          SysPageResource[]
+  authorizationResources SysAuthorizationResource[]
+  parameters             SysParameter[]
+  userGroups             SysUserGroup[]
+
+  @@unique([tenantId, applicationCode], map: "sys_application_tenant_code_key")
+  @@unique([id, tenantId], map: "sys_application_id_tenant_key")
+  @@index([applicationCode, status], map: "sys_application_code_status_idx")
+  @@map("sys_application")
+}
+
+model SysRoleGroup {
+  id            String         @id @default(uuid()) @db.Uuid
+  applicationId String         @map("application_id") @db.Uuid
+  groupCode     String         @map("group_code") @db.VarChar(64)
+  groupName     String         @map("group_name") @db.VarChar(128)
+  sortNo        Int            @default(0) @map("sort_no")
+  status        RecordStatus   @default(ACTIVE)
+  version       Int            @default(1)
+  createdAt     DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime       @updatedAt @map("updated_at") @db.Timestamptz(3)
+  application   SysApplication @relation(fields: [applicationId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@unique([applicationId, groupCode], map: "sys_role_group_application_code_key")
+  @@map("sys_role_group")
+}
+
+model SysPermission {
+  id             String              @id @default(uuid()) @db.Uuid
+  applicationId  String              @map("application_id") @db.Uuid
+  permissionCode String              @map("permission_code") @db.VarChar(160)
+  permissionName String              @map("permission_name") @db.VarChar(128)
+  resourceCode   String              @map("resource_code") @db.VarChar(128)
+  actionCode     String              @map("action_code") @db.VarChar(64)
+  source         PermissionSource    @default(SYSTEM)
+  status         RecordStatus        @default(ACTIVE)
+  version        Int                 @default(1)
+  createdAt      DateTime            @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime            @updatedAt @map("updated_at") @db.Timestamptz(3)
+  application    SysApplication      @relation(fields: [applicationId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  grants         IamRolePermission[]
+
+  @@unique([applicationId, permissionCode], map: "sys_permission_application_code_key")
+  @@unique([id, applicationId], map: "sys_permission_id_application_key")
+  @@index([applicationId, resourceCode, status], map: "sys_permission_lookup_idx")
+  @@map("sys_permission")
+}
+
+model SysAuditLog {
+  id             String   @id @default(uuid()) @db.Uuid
+  tenantId       String   @map("tenant_id") @db.Uuid
+  applicationId  String   @map("application_id") @db.Uuid
+  actorUserId    String?  @map("actor_user_id") @db.Uuid
+  actionCode     String   @map("action_code") @db.VarChar(128)
+  resourceType   String   @map("resource_type") @db.VarChar(64)
+  resourceId     String?  @map("resource_id") @db.VarChar(128)
+  beforeSnapshot Json?    @map("before_snapshot")
+  afterSnapshot  Json?    @map("after_snapshot")
+  requestId      String   @map("request_id") @db.VarChar(128)
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([applicationId, createdAt(sort: Desc)], map: "sys_audit_log_application_time_idx")
+  @@index([actorUserId, createdAt(sort: Desc)], map: "sys_audit_log_actor_time_idx")
+  @@map("sys_audit_log")
+}
+
+model UiMenu {
+  id                 String           @id @default(uuid()) @db.Uuid
+  systemCode         String           @map("system_code") @db.VarChar(64)
+  applicationId      String?          @map("application_id") @db.Uuid
+  accessPermissionId String?          @map("access_permission_id") @db.Uuid
+  pageResourceId     String?          @map("page_resource_id") @db.Uuid
+  menuCode           String           @map("menu_code") @db.VarChar(64)
+  menuName           String           @map("menu_name") @db.VarChar(128)
+  nodeType           MenuNodeType     @map("node_type")
+  parentId           String?          @map("parent_id") @db.Uuid
+  routePath          String?          @map("route_path") @db.VarChar(256)
+  iconKey            String           @map("icon_key") @db.VarChar(64)
+  sortNo             Int              @default(0) @map("sort_no")
+  menuType           String           @default("PAGE") @map("menu_type") @db.VarChar(20)
+  openType           String           @default("INTERNAL") @map("open_type") @db.VarChar(20)
+  autoAdd            Boolean          @default(true) @map("is_auto_add")
+  remark             String?          @db.VarChar(500)
+  status             RecordStatus     @default(ACTIVE)
+  version            Int              @default(1)
+  createdAt          DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt          DateTime         @updatedAt @map("updated_at") @db.Timestamptz(3)
+  parent             UiMenu?          @relation("MenuTree", fields: [parentId, systemCode], references: [id, systemCode], onDelete: Restrict, onUpdate: Cascade)
+  children           UiMenu[]         @relation("MenuTree")
+  actions            UiMenuAction[]
+  pageResource       SysPageResource? @relation(fields: [pageResourceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@unique([systemCode, menuCode], map: "ui_menu_system_code_menu_code_key")
+  @@unique([id, systemCode], map: "ui_menu_id_system_code_key")
+  @@index([systemCode, status, parentId, sortNo], map: "ui_menu_navigation_idx")
+  @@index([pageResourceId], map: "sys_menu_page_resource_idx")
+  @@map("sys_menu")
+}
+
+model SysPageResource {
+  id                    String                 @id @default(uuid()) @db.Uuid
+  tenantId              String                 @map("tenant_id") @db.Uuid
+  applicationId         String                 @map("application_id") @db.Uuid
+  pageCode              String                 @map("page_code") @db.VarChar(128)
+  pageName              String                 @map("page_name") @db.VarChar(128)
+  parentId              String?                @map("parent_id") @db.Uuid
+  pageType              PageResourceType       @map("page_type")
+  routePath             String?                @map("route_path") @db.VarChar(256)
+  iconKey               String                 @map("icon_key") @db.VarChar(64)
+  permissionMode        ResourcePermissionMode @default(RESTRICTED) @map("permission_mode")
+  autoAddMenu           Boolean                @default(true) @map("is_auto_add_menu")
+  viewConfigEnabled     Boolean                @default(false) @map("is_view_config_enabled")
+  groupManageEnabled    Boolean                @default(false) @map("is_group_manage_enabled")
+  dataPermissionEnabled Boolean                @default(false) @map("is_data_permission_enabled")
+  sortNo                Int                    @default(0) @map("sort_no")
+  status                RecordStatus           @default(ACTIVE)
+  remark                String?                @db.VarChar(1000)
+  version               Int                    @default(1)
+  createdBy             String                 @map("created_by") @db.Uuid
+  updatedBy             String                 @map("updated_by") @db.Uuid
+  createdAt             DateTime               @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt             DateTime               @updatedAt @map("updated_at") @db.Timestamptz(3)
+  application           SysApplication         @relation(fields: [applicationId, tenantId], references: [id, tenantId], onDelete: Restrict, onUpdate: Cascade)
+  parent                SysPageResource?       @relation("PageResourceTree", fields: [parentId, applicationId], references: [id, applicationId], onDelete: Restrict, onUpdate: Cascade)
+  children              SysPageResource[]      @relation("PageResourceTree")
+  buttons               SysPageButton[]
+  ownedTabs             SysPageTab[]           @relation("PageTabs")
+  targetTabs            SysPageTab[]           @relation("TabTarget")
+  menuMounts            UiMenu[]
+
+  @@unique([applicationId, pageCode], map: "sys_page_resource_application_code_key")
+  @@unique([id, applicationId], map: "sys_page_resource_id_application_key")
+  @@index([applicationId, parentId, status, sortNo], map: "sys_page_resource_tree_idx")
+  @@map("sys_page_resource")
+}
+
+model SysPageButton {
+  id         String             @id @default(uuid()) @db.Uuid
+  pageId     String             @map("page_id") @db.Uuid
+  buttonCode String             @map("button_code") @db.VarChar(128)
+  buttonName String             @map("button_name") @db.VarChar(128)
+  buttonType ResourceButtonType @map("button_type")
+  iconKey    String?            @map("icon_key") @db.VarChar(64)
+  eventName  String?            @map("event_name") @db.VarChar(128)
+  sortNo     Int                @default(0) @map("sort_no")
+  status     RecordStatus       @default(ACTIVE)
+  remark     String?            @db.VarChar(1000)
+  version    Int                @default(1)
+  createdBy  String             @map("created_by") @db.Uuid
+  updatedBy  String             @map("updated_by") @db.Uuid
+  createdAt  DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt  DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
+  page       SysPageResource    @relation(fields: [pageId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@unique([pageId, buttonCode], map: "sys_page_button_page_code_key")
+  @@index([pageId, status, sortNo], map: "sys_page_button_lookup_idx")
+  @@map("sys_page_button")
+}
+
+model SysPageTab {
+  id            String          @id @default(uuid()) @db.Uuid
+  applicationId String          @map("application_id") @db.Uuid
+  pageId        String          @map("page_id") @db.Uuid
+  targetPageId  String          @map("target_page_id") @db.Uuid
+  tabName       String          @map("tab_name") @db.VarChar(80)
+  sortNo        Int             @default(0) @map("sort_no")
+  status        RecordStatus    @default(ACTIVE)
+  remark        String?         @db.VarChar(300)
+  version       Int             @default(1)
+  createdBy     String          @map("created_by") @db.Uuid
+  updatedBy     String          @map("updated_by") @db.Uuid
+  createdAt     DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
+  page          SysPageResource @relation("PageTabs", fields: [pageId, applicationId], references: [id, applicationId], onDelete: Restrict, onUpdate: Cascade)
+  targetPage    SysPageResource @relation("TabTarget", fields: [targetPageId, applicationId], references: [id, applicationId], onDelete: Restrict, onUpdate: Cascade)
+
+  @@unique([pageId, tabName], map: "sys_page_tab_page_name_key")
+  @@index([pageId, status, sortNo], map: "sys_page_tab_lookup_idx")
+  @@index([targetPageId], map: "sys_page_tab_target_idx")
+  @@map("sys_page_tab")
+}
+
+model UiMenuAction {
+  id           String       @id @default(uuid()) @db.Uuid
+  menuId       String       @map("menu_id") @db.Uuid
+  permissionId String?      @map("permission_id") @db.Uuid
+  actionCode   String       @map("action_code") @db.VarChar(64)
+  actionName   String       @map("action_name") @db.VarChar(128)
+  actionType   String       @map("action_type") @db.VarChar(64)
+  sortNo       Int          @default(0) @map("sort_no")
+  status       RecordStatus @default(ACTIVE)
+  version      Int          @default(1)
+  createdAt    DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  menu         UiMenu       @relation(fields: [menuId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@unique([menuId, actionCode], map: "ui_menu_action_menu_id_action_code_key")
+  @@unique([id, menuId], map: "ui_menu_action_id_menu_id_key")
+  @@index([menuId, status, sortNo], map: "ui_menu_action_lookup_idx")
+  @@map("sys_menu_action")
+}
+
+model IamUser {
+  id                      String                     @id @default(uuid()) @db.Uuid
+  tenantId                String?                    @map("tenant_id") @db.Uuid
+  employeeId              String?                    @unique(map: "sys_user_employee_id_key") @map("employee_id") @db.Uuid
+  account                 String                     @db.VarChar(128)
+  normalizedAccount       String                     @map("normalized_account") @db.VarChar(128)
+  displayName             String                     @map("display_name") @db.VarChar(128)
+  userType                UserType                   @default(INTERNAL) @map("user_type")
+  authSource              String                     @default("LOCAL") @map("auth_source") @db.VarChar(32)
+  externalSubject         String?                    @map("external_subject") @db.VarChar(256)
+  passwordHash            String?                    @map("password_hash") @db.VarChar(512)
+  status                  UserStatus                 @default(ACTIVE)
+  version                 Int                        @default(1)
+  createdAt               DateTime                   @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt               DateTime                   @updatedAt @map("updated_at") @db.Timestamptz(3)
+  roleMemberships         IamRoleUser[]
+  organizationAssignments OrgUserAssignment[]
+  employee                OrgEmployee?               @relation(fields: [employeeId, tenantId], references: [id, tenantId], onDelete: Restrict, onUpdate: Cascade)
+  groupMemberships        SysUserGroupMember[]
+  personalListViews       UiUserListView[]
+  listViewPreferences     UiUserListViewPreference[]
+
+  @@unique([tenantId, normalizedAccount], map: "sys_user_tenant_normalized_account_key")
+  @@unique([id, tenantId], map: "sys_user_id_tenant_key")
+  @@unique([employeeId, tenantId], map: "sys_user_employee_tenant_key")
+  @@index([status], map: "iam_user_status_idx")
+  @@map("sys_user")
+}
+
+model OrgEmployee {
+  id           String                  @id @default(uuid()) @db.Uuid
+  tenantId     String                  @map("tenant_id") @db.Uuid
+  employeeName String                  @map("employee_name") @db.VarChar(128)
+  email        String?                 @db.VarChar(256)
+  mobile       String?                 @db.VarChar(32)
+  status       RecordStatus            @default(ACTIVE)
+  remark       String?                 @db.VarChar(500)
+  version      Int                     @default(1)
+  createdBy    String                  @map("created_by") @db.Uuid
+  updatedBy    String                  @map("updated_by") @db.Uuid
+  createdAt    DateTime                @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime                @updatedAt @map("updated_at") @db.Timestamptz(3)
+  tenant       SysTenant               @relation(fields: [tenantId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  employments  OrgEmployment[]
+  assignments  OrgEmployeeAssignment[]
+  user         IamUser?
+
+  @@unique([id, tenantId], map: "org_employee_id_tenant_key")
+  @@index([tenantId, status, employeeName], map: "org_employee_lookup_idx")
+  @@map("org_employee")
+}
+
+model OrgEmployment {
+  id             String       @id @default(uuid()) @db.Uuid
+  tenantId       String       @map("tenant_id") @db.Uuid
+  employeeId     String       @map("employee_id") @db.Uuid
+  employeeNo     String       @map("employee_no") @db.VarChar(64)
+  employmentType String       @default("FULL_TIME") @map("employment_type") @db.VarChar(32)
+  status         RecordStatus @default(ACTIVE)
+  effectiveAt    DateTime     @default(now()) @map("effective_at") @db.Timestamptz(3)
+  expiresAt      DateTime?    @map("expires_at") @db.Timestamptz(3)
+  version        Int          @default(1)
+  createdBy      String       @map("created_by") @db.Uuid
+  updatedBy      String       @map("updated_by") @db.Uuid
+  createdAt      DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  employee       OrgEmployee  @relation(fields: [employeeId, tenantId], references: [id, tenantId], onDelete: Restrict, onUpdate: Cascade)
+
+  @@unique([tenantId, employeeNo], map: "org_employment_tenant_employee_no_key")
+  @@index([employeeId, status, effectiveAt, expiresAt], map: "org_employment_active_idx")
+  @@map("org_employment")
+}
+
+model OrgPosition {
+  id           String                  @id @default(uuid()) @db.Uuid
+  tenantId     String                  @map("tenant_id") @db.Uuid
+  positionCode String                  @map("position_code") @db.VarChar(64)
+  positionName String                  @map("position_name") @db.VarChar(128)
+  status       RecordStatus            @default(ACTIVE)
+  version      Int                     @default(1)
+  createdBy    String                  @map("created_by") @db.Uuid
+  updatedBy    String                  @map("updated_by") @db.Uuid
+  createdAt    DateTime                @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime                @updatedAt @map("updated_at") @db.Timestamptz(3)
+  tenant       SysTenant               @relation(fields: [tenantId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  assignments  OrgEmployeeAssignment[]
+
+  @@unique([tenantId, positionCode], map: "org_position_tenant_code_key")
+  @@unique([id, tenantId], map: "org_position_id_tenant_key")
+  @@index([tenantId, status, positionName], map: "org_position_lookup_idx")
+  @@map("org_position")
+}
+
+model OrgEmployeeAssignment {
+  id                   String       @id @default(uuid()) @db.Uuid
+  tenantId             String       @map("tenant_id") @db.Uuid
+  employeeId           String       @map("employee_id") @db.Uuid
+  orgUnitId            String       @map("org_unit_id") @db.Uuid
+  positionId           String       @map("position_id") @db.Uuid
+  positionNameSnapshot String       @map("position_name_snapshot") @db.VarChar(128)
+  assignmentType       String       @default("PRIMARY") @map("assignment_type") @db.VarChar(32)
+  isPrimary            Boolean      @default(true) @map("is_primary")
+  status               RecordStatus @default(ACTIVE)
+  effectiveAt          DateTime     @default(now()) @map("effective_at") @db.Timestamptz(3)
+  expiresAt            DateTime?    @map("expires_at") @db.Timestamptz(3)
+  version              Int          @default(1)
+  createdBy            String       @map("created_by") @db.Uuid
+  updatedBy            String       @map("updated_by") @db.Uuid
+  createdAt            DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt            DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  employee             OrgEmployee  @relation(fields: [employeeId, tenantId], references: [id, tenantId], onDelete: Restrict, onUpdate: Cascade)
+  organization         OrgUnit      @relation(fields: [orgUnitId, tenantId], references: [id, tenantId], onDelete: Restrict, onUpdate: Cascade)
+  position             OrgPosition  @relation(fields: [positionId, tenantId], references: [id, tenantId], onDelete: Restrict, onUpdate: Cascade)
+
+  @@unique([employeeId, orgUnitId, positionId, effectiveAt], map: "org_employee_assignment_period_key")
+  @@index([employeeId, status, effectiveAt, expiresAt], map: "org_employee_assignment_active_idx")
+  @@index([orgUnitId, status], map: "org_employee_assignment_org_idx")
+  @@map("org_employee_assignment")
+}
+
+model IamRole {
+  id                 String                  @id @default(uuid()) @db.Uuid
+  systemCode         String                  @map("system_code") @db.VarChar(64)
+  tenantId           String?                 @map("tenant_id") @db.Uuid
+  applicationId      String?                 @map("application_id") @db.Uuid
+  roleGroupId        String?                 @map("role_group_id") @db.Uuid
+  parentId           String?                 @map("parent_id") @db.Uuid
+  roleCode           String                  @map("role_code") @db.VarChar(64)
+  roleName           String                  @map("role_name") @db.VarChar(128)
+  roleAbbrName       String?                 @map("role_abbr_name") @db.VarChar(64)
+  roleType           RoleType                @map("role_type")
+  isSystem           Boolean                 @default(false) @map("is_system")
+  isEnabled          Boolean                 @default(true) @map("is_enabled")
+  archivedAt         DateTime?               @map("archived_at") @db.Timestamptz(3)
+  sortNo             Int                     @default(0) @map("sort_no")
+  effectiveDateBegin DateTime?               @map("effective_date_begin") @db.Timestamptz(3)
+  effectiveDateEnd   DateTime?               @map("effective_date_end") @db.Timestamptz(3)
+  description        String?                 @db.VarChar(512)
+  status             RecordStatus            @default(ACTIVE)
+  version            Int                     @default(1)
+  createdAt          DateTime                @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt          DateTime                @updatedAt @map("updated_at") @db.Timestamptz(3)
+  members            IamRoleUser[]
+  grants             IamRolePermission[]
+  listViews          IamRoleListView[]
+  dataPolicies       SysRoleDataPolicy[]
+  subjectBindings    SysRoleSubjectBinding[]
+  parent             IamRole?                @relation("RoleTree", fields: [parentId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  children           IamRole[]               @relation("RoleTree")
+
+  @@unique([systemCode, roleCode], map: "iam_role_system_code_role_code_key")
+  @@unique([id, systemCode], map: "iam_role_id_system_code_key")
+  @@unique([id, applicationId], map: "sys_role_id_application_key")
+  @@unique([id, applicationId, tenantId], map: "sys_role_id_application_tenant_key")
+  @@index([systemCode, status], map: "iam_role_lookup_idx")
+  @@index([parentId, sortNo], map: "sys_role_tree_idx")
+  @@map("sys_role")
+}
+
+model IamRoleUser {
+  id          String       @id @default(uuid()) @db.Uuid
+  roleId      String       @map("role_id") @db.Uuid
+  userId      String       @map("user_id") @db.Uuid
+  status      RecordStatus @default(ACTIVE)
+  effectiveAt DateTime     @default(now()) @map("effective_at") @db.Timestamptz(3)
+  expiresAt   DateTime?    @map("expires_at") @db.Timestamptz(3)
+  version     Int          @default(1)
+  grantedBy   String?      @map("granted_by") @db.Uuid
+  endedBy     String?      @map("ended_by") @db.Uuid
+  endedAt     DateTime?    @map("ended_at") @db.Timestamptz(3)
+  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  role        IamRole      @relation(fields: [roleId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  user        IamUser      @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@unique([roleId, userId, effectiveAt], map: "sys_role_user_period_key")
+  @@index([userId, status, effectiveAt, expiresAt], map: "iam_role_user_effective_idx")
+  @@map("sys_role_user")
+}
+
+model IamRolePermission {
+  id            String        @id @default(uuid()) @db.Uuid
+  roleId        String        @map("role_id") @db.Uuid
+  applicationId String        @map("application_id") @db.Uuid
+  permissionId  String        @map("permission_id") @db.Uuid
+  status        RecordStatus  @default(ACTIVE)
+  version       Int           @default(1)
+  grantedBy     String?       @map("granted_by") @db.Uuid
+  revokedBy     String?       @map("revoked_by") @db.Uuid
+  revokedAt     DateTime?     @map("revoked_at") @db.Timestamptz(3)
+  createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+  role          IamRole       @relation(fields: [roleId, applicationId], references: [id, applicationId], onDelete: Restrict, onUpdate: Cascade)
+  permission    SysPermission @relation(fields: [permissionId, applicationId], references: [id, applicationId], onDelete: Restrict, onUpdate: Cascade)
+
+  @@unique([roleId, permissionId], map: "sys_role_permission_role_permission_key")
+  @@index([roleId, status], map: "sys_role_permission_role_idx")
+  @@map("sys_role_permission")
+}
+
+model OrgUserAssignment {
+  id           String       @id @default(uuid()) @db.Uuid
+  tenantId     String       @map("tenant_id") @db.Uuid
+  orgUnitId    String       @map("org_unit_id") @db.Uuid
+  userId       String       @map("user_id") @db.Uuid
+  status       RecordStatus @default(ACTIVE)
+  effectiveAt  DateTime     @default(now()) @map("effective_at") @db.Timestamptz(3)
+  expiresAt    DateTime?    @map("expires_at") @db.Timestamptz(3)
+  version      Int          @default(1)
+  createdBy    String       @map("created_by") @db.Uuid
+  updatedBy    String       @map("updated_by") @db.Uuid
+  createdAt    DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  organization OrgUnit      @relation(fields: [orgUnitId, tenantId], references: [id, tenantId], onDelete: Restrict)
+  user         IamUser      @relation(fields: [userId, tenantId], references: [id, tenantId], onDelete: Restrict)
+
+  @@unique([orgUnitId, userId, effectiveAt], map: "org_user_assignment_period_key")
+  @@index([userId, status, effectiveAt, expiresAt], map: "org_user_assignment_active_idx")
+  @@map("org_user_assignment")
+}
+
+model SysUserGroup {
+  id            String                  @id @default(uuid()) @db.Uuid
+  applicationId String                  @map("application_id") @db.Uuid
+  tenantId      String                  @map("tenant_id") @db.Uuid
+  groupCode     String                  @map("group_code") @db.VarChar(64)
+  groupName     String                  @map("group_name") @db.VarChar(128)
+  description   String?                 @db.VarChar(500)
+  status        RecordStatus            @default(ACTIVE)
+  version       Int                     @default(1)
+  createdBy     String                  @map("created_by") @db.Uuid
+  updatedBy     String                  @map("updated_by") @db.Uuid
+  createdAt     DateTime                @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime                @updatedAt @map("updated_at") @db.Timestamptz(3)
+  application   SysApplication          @relation(fields: [applicationId, tenantId], references: [id, tenantId], onDelete: Restrict)
+  members       SysUserGroupMember[]
+  roleBindings  SysRoleSubjectBinding[]
+
+  @@unique([applicationId, groupCode], map: "sys_user_group_code_key")
+  @@unique([id, applicationId, tenantId], map: "sys_user_group_scope_key")
+  @@map("sys_user_group")
+}
+
+model SysUserGroupMember {
+  id            String       @id @default(uuid()) @db.Uuid
+  applicationId String       @map("application_id") @db.Uuid
+  tenantId      String       @map("tenant_id") @db.Uuid
+  groupId       String       @map("group_id") @db.Uuid
+  userId        String       @map("user_id") @db.Uuid
+  status        RecordStatus @default(ACTIVE)
+  effectiveAt   DateTime     @default(now()) @map("effective_at") @db.Timestamptz(3)
+  expiresAt     DateTime?    @map("expires_at") @db.Timestamptz(3)
+  version       Int          @default(1)
+  createdBy     String       @map("created_by") @db.Uuid
+  updatedBy     String       @map("updated_by") @db.Uuid
+  createdAt     DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  group         SysUserGroup @relation(fields: [groupId, applicationId, tenantId], references: [id, applicationId, tenantId], onDelete: Restrict)
+  user          IamUser      @relation(fields: [userId, tenantId], references: [id, tenantId], onDelete: Restrict)
+
+  @@unique([groupId, userId, effectiveAt], map: "sys_user_group_member_period_key")
+  @@index([userId, applicationId, status], map: "sys_user_group_member_active_idx")
+  @@map("sys_user_group_member")
+}
+
+model SysRoleSubjectBinding {
+  id                 String        @id @default(uuid()) @db.Uuid
+  applicationId      String        @map("application_id") @db.Uuid
+  tenantId           String        @map("tenant_id") @db.Uuid
+  roleId             String        @map("role_id") @db.Uuid
+  orgUnitId          String?       @map("org_unit_id") @db.Uuid
+  groupId            String?       @map("group_id") @db.Uuid
+  includeDescendants Boolean       @default(false) @map("include_descendants")
+  status             RecordStatus  @default(ACTIVE)
+  effectiveAt        DateTime      @default(now()) @map("effective_at") @db.Timestamptz(3)
+  expiresAt          DateTime?     @map("expires_at") @db.Timestamptz(3)
+  version            Int           @default(1)
+  createdBy          String        @map("created_by") @db.Uuid
+  updatedBy          String        @map("updated_by") @db.Uuid
+  createdAt          DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt          DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+  role               IamRole       @relation(fields: [roleId, applicationId, tenantId], references: [id, applicationId, tenantId], onDelete: Restrict)
+  organization       OrgUnit?      @relation(fields: [orgUnitId, tenantId], references: [id, tenantId], onDelete: Restrict)
+  group              SysUserGroup? @relation(fields: [groupId, applicationId, tenantId], references: [id, applicationId, tenantId], onDelete: Restrict)
+
+  @@unique([roleId, orgUnitId, effectiveAt], map: "sys_role_subject_org_period_key")
+  @@unique([roleId, groupId, effectiveAt], map: "sys_role_subject_group_period_key")
+  @@index([applicationId, status, effectiveAt, expiresAt], map: "sys_role_subject_binding_active_idx")
+  @@map("sys_role_subject_binding")
+}
+
+model SysAuthorizationResource {
+  id            String                  @id @default(uuid()) @db.Uuid
+  applicationId String                  @map("application_id") @db.Uuid
+  resourceCode  String                  @map("resource_code") @db.VarChar(128)
+  resourceName  String                  @map("resource_name") @db.VarChar(128)
+  bindingKey    String                  @map("binding_key") @db.VarChar(128)
+  enabled       Boolean                 @default(false)
+  version       Int                     @default(1)
+  createdBy     String                  @map("created_by") @db.Uuid
+  updatedBy     String                  @map("updated_by") @db.Uuid
+  createdAt     DateTime                @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime                @updatedAt @map("updated_at") @db.Timestamptz(3)
+  application   SysApplication          @relation(fields: [applicationId], references: [id], onDelete: Restrict)
+  fields        SysAuthorizationField[]
+  policies      SysRoleDataPolicy[]
+
+  @@unique([applicationId, resourceCode], map: "sys_auth_resource_code_key")
+  @@unique([applicationId, bindingKey], map: "sys_auth_resource_binding_key")
+  @@unique([id, applicationId], map: "sys_auth_resource_scope_key")
+  @@map("sys_authorization_resource")
+}
+
+model SysAuthorizationField {
+  id          String                   @id @default(uuid()) @db.Uuid
+  resourceId  String                   @map("resource_id") @db.Uuid
+  fieldCode   String                   @map("field_code") @db.VarChar(128)
+  fieldName   String                   @map("field_name") @db.VarChar(128)
+  bindingKey  String                   @map("binding_key") @db.VarChar(128)
+  fieldType   String                   @map("field_type") @db.VarChar(16)
+  groupName   String                   @default("基本字段") @map("group_name") @db.VarChar(64)
+  source      String                   @default("SYSTEM") @db.VarChar(16)
+  status      RecordStatus             @default(ACTIVE)
+  valueSource Json?                    @map("value_source")
+  version     Int                      @default(1)
+  createdAt   DateTime                 @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime                 @updatedAt @map("updated_at") @db.Timestamptz(3)
+  resource    SysAuthorizationResource @relation(fields: [resourceId], references: [id], onDelete: Restrict)
+  rules       SysRoleFieldRule[]
+
+  @@unique([resourceId, fieldCode], map: "sys_auth_field_code_key")
+  @@unique([id, resourceId], map: "sys_auth_field_scope_key")
+  @@map("sys_authorization_field")
+}
+
+model SysRoleDataPolicy {
+  id            String                   @id @default(uuid()) @db.Uuid
+  applicationId String                   @map("application_id") @db.Uuid
+  roleId        String                   @map("role_id") @db.Uuid
+  resourceId    String                   @map("resource_id") @db.Uuid
+  actionCode    String                   @map("action_code") @db.VarChar(32)
+  version       Int                      @default(1)
+  publishedBy   String                   @map("published_by") @db.Uuid
+  createdAt     DateTime                 @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime                 @updatedAt @map("updated_at") @db.Timestamptz(3)
+  role          IamRole                  @relation(fields: [roleId, applicationId], references: [id, applicationId], onDelete: Restrict)
+  resource      SysAuthorizationResource @relation(fields: [resourceId, applicationId], references: [id, applicationId], onDelete: Restrict)
+  rules         SysRoleDataRule[]
+  fields        SysRoleFieldRule[]
+  revisions     SysPolicyRevision[]
+
+  @@unique([roleId, resourceId, actionCode], map: "sys_role_data_policy_scope_key")
+  @@unique([id, resourceId], map: "sys_role_data_policy_resource_key")
+  @@map("sys_role_data_policy")
+}
+
+model SysRoleDataRule {
+  id        String            @id @default(uuid()) @db.Uuid
+  policyId  String            @map("policy_id") @db.Uuid
+  ruleName  String            @map("rule_name") @db.VarChar(128)
+  effect    String            @db.VarChar(8)
+  enabled   Boolean           @default(true)
+  sortNo    Int               @default(0) @map("sort_no")
+  condition Json
+  policy    SysRoleDataPolicy @relation(fields: [policyId], references: [id], onDelete: Restrict)
+
+  @@index([policyId, enabled], map: "sys_role_data_rule_policy_idx")
+  @@map("sys_role_data_rule")
+}
+
+model SysRoleFieldRule {
+  id         String                @id @default(uuid()) @db.Uuid
+  policyId   String                @map("policy_id") @db.Uuid
+  resourceId String                @map("resource_id") @db.Uuid
+  fieldId    String                @map("field_id") @db.Uuid
+  visible    Boolean
+  writable   Boolean
+  exportable Boolean
+  mask       String                @db.VarChar(16)
+  policy     SysRoleDataPolicy     @relation(fields: [policyId, resourceId], references: [id, resourceId], onDelete: Restrict)
+  field      SysAuthorizationField @relation(fields: [fieldId, resourceId], references: [id, resourceId], onDelete: Restrict)
+
+  @@unique([policyId, fieldId], map: "sys_role_field_rule_field_key")
+  @@map("sys_role_field_rule")
+}
+
+model SysPolicyRevision {
+  id          String            @id @default(uuid()) @db.Uuid
+  policyId    String            @map("policy_id") @db.Uuid
+  version     Int
+  snapshot    Json
+  summary     String            @db.VarChar(500)
+  publishedBy String            @map("published_by") @db.Uuid
+  createdAt   DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  policy      SysRoleDataPolicy @relation(fields: [policyId], references: [id], onDelete: Restrict)
+
+  @@unique([policyId, version], map: "sys_policy_revision_version_key")
+  @@map("sys_policy_revision")
+}
+
+model SysDictionary {
+  id            String              @id @default(uuid()) @db.Uuid
+  systemCode    String              @map("system_code") @db.VarChar(64)
+  dictCode      String              @map("dict_code") @db.VarChar(64)
+  dictName      String              @map("dict_name") @db.VarChar(128)
+  groupCode     String?             @map("group_code") @db.VarChar(64)
+  parentId      String?             @map("parent_id") @db.Uuid
+  description   String?             @db.VarChar(512)
+  sortNo        Int                 @default(0) @map("sort_no")
+  status        RecordStatus        @default(ACTIVE)
+  itemsEditable Boolean             @default(true) @map("items_editable")
+  version       Int                 @default(1)
+  createdBy     String              @map("created_by") @db.VarChar(128)
+  updatedBy     String              @map("updated_by") @db.VarChar(128)
+  createdAt     DateTime            @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime            @updatedAt @map("updated_at") @db.Timestamptz(3)
+  parent        SysDictionary?      @relation("DictionaryTree", fields: [parentId, systemCode], references: [id, systemCode], onDelete: Restrict, onUpdate: Cascade)
+  children      SysDictionary[]     @relation("DictionaryTree")
+  items         SysDictionaryItem[]
+
+  @@unique([systemCode, dictCode], map: "sys_dictionary_system_code_dict_code_key")
+  @@unique([id, systemCode], map: "sys_dictionary_id_system_code_key")
+  @@index([systemCode, parentId, status, sortNo], map: "sys_dictionary_tree_idx")
+  @@index([systemCode, status, sortNo], map: "sys_dictionary_lookup_idx")
+  @@map("sys_dictionary")
+}
+
+model SysDictionaryItem {
+  id           String        @id @default(uuid()) @db.Uuid
+  dictionaryId String        @map("dictionary_id") @db.Uuid
+  parentItemId String?       @map("parent_item_id") @db.Uuid
+  itemCode     String        @map("item_code") @db.VarChar(64)
+  itemValue    String        @map("item_value") @db.VarChar(128)
+  itemName     String        @map("item_name") @db.VarChar(128)
+  colorKey     String?       @map("color_key") @db.VarChar(32)
+  description  String?       @db.VarChar(512)
+  sortNo       Int           @default(0) @map("sort_no")
+  status       RecordStatus  @default(ACTIVE)
+  version      Int           @default(1)
+  createdBy    String        @map("created_by") @db.VarChar(128)
+  updatedBy    String        @map("updated_by") @db.VarChar(128)
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+  dictionary   SysDictionary @relation(fields: [dictionaryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  parent       SysDictionaryItem? @relation("DictionaryItemTree", fields: [parentItemId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  children     SysDictionaryItem[] @relation("DictionaryItemTree")
+
+  @@unique([dictionaryId, itemCode], map: "sys_dictionary_item_dict_code_key")
+  @@unique([dictionaryId, itemValue], map: "sys_dictionary_item_dict_value_key")
+  @@index([dictionaryId, status, sortNo], map: "sys_dictionary_item_lookup_idx")
+  @@index([parentItemId, status, sortNo], map: "sys_dict_item_parent_idx")
+  @@map("sys_dictionary_item")
+}
+
+model UiSystemListView {
+  id                    String            @id @default(uuid()) @db.Uuid
+  systemCode            String            @map("system_code") @db.VarChar(64)
+  applicationId         String?           @map("application_id") @db.Uuid
+  pageCode              String            @map("page_code") @db.VarChar(64)
+  actionCode            String            @map("action_code") @db.VarChar(64)
+  viewCode              String            @map("view_code") @db.VarChar(64)
+  viewName              String            @map("view_name") @db.VarChar(128)
+  description           String?           @db.VarChar(512)
+  isDefault             Boolean           @default(false) @map("is_default")
+  allowPersonalOverride Boolean           @default(true) @map("allow_personal_override")
+  priority              Int               @default(100)
+  status                RecordStatus      @default(ACTIVE)
+  config                Json
+  version               Int               @default(1)
+  createdBy             String            @map("created_by") @db.VarChar(128)
+  updatedBy             String            @map("updated_by") @db.VarChar(128)
+  createdAt             DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt             DateTime          @updatedAt @map("updated_at") @db.Timestamptz(3)
+  roleAssignments       IamRoleListView[]
+  personalViews         UiUserListView[]
+
+  @@unique([systemCode, pageCode, actionCode, viewCode], map: "ui_system_list_view_scope_code_key")
+  @@index([systemCode, pageCode, actionCode, status, priority], map: "ui_system_list_view_lookup_idx")
+  @@map("sys_system_list_view")
+}
+
+model IamRoleListView {
+  roleId    String           @map("role_id") @db.Uuid
+  viewId    String           @map("view_id") @db.Uuid
+  status    RecordStatus     @default(ACTIVE)
+  createdAt DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  role      IamRole          @relation(fields: [roleId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  view      UiSystemListView @relation(fields: [viewId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@id([roleId, viewId])
+  @@index([viewId, status], map: "iam_role_list_view_lookup_idx")
+  @@map("sys_role_list_view")
+}
+
+model UiUserListView {
+  id            String           @id @default(uuid()) @db.Uuid
+  systemCode    String           @map("system_code") @db.VarChar(64)
+  applicationId String?          @map("application_id") @db.Uuid
+  pageCode      String           @map("page_code") @db.VarChar(64)
+  actionCode    String           @map("action_code") @db.VarChar(64)
+  baseViewId    String           @map("base_view_id") @db.Uuid
+  userId        String           @map("user_id") @db.Uuid
+  viewName      String           @map("view_name") @db.VarChar(128)
+  isDefault     Boolean          @default(false) @map("is_default")
+  config        Json
+  version       Int              @default(1)
+  createdAt     DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime         @updatedAt @map("updated_at") @db.Timestamptz(3)
+  baseView      UiSystemListView @relation(fields: [baseViewId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  user          IamUser          @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@unique([userId, systemCode, pageCode, actionCode, viewName], map: "ui_user_list_view_owner_scope_name_key")
+  @@index([userId, systemCode, pageCode, actionCode], map: "ui_user_list_view_lookup_idx")
+  @@map("sys_user_list_view")
+}
+
+model UiUserListViewPreference {
+  userId          String   @map("user_id") @db.Uuid
+  systemCode      String   @map("system_code") @db.VarChar(64)
+  applicationId   String?  @map("application_id") @db.Uuid
+  pageCode        String   @map("page_code") @db.VarChar(64)
+  actionCode      String   @map("action_code") @db.VarChar(64)
+  selectedViewKey String   @map("selected_view_key") @db.VarChar(160)
+  updatedAt       DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  user            IamUser  @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@id([userId, systemCode, pageCode, actionCode])
+  @@map("sys_user_list_view_preference")
+}
+
+model CrmCustomer {
+  id             String               @id @default(uuid()) @db.Uuid
+  systemCode     String               @map("system_code") @db.VarChar(64)
+  customerCode   String               @map("customer_code") @db.VarChar(20)
+  customerName   String               @map("customer_name") @db.VarChar(255)
+  shortName      String               @map("short_name") @db.VarChar(100)
+  categoryValue  String               @map("category_value") @db.VarChar(128)
+  address        String?              @db.VarChar(500)
+  statusValue    String               @map("status_value") @db.VarChar(128)
+  industryValue  String?              @map("industry_value") @db.VarChar(128)
+  levelValue     String?              @map("level_value") @db.VarChar(128)
+  salesOwnerKey  String?              @map("sales_owner_key") @db.VarChar(128)
+  salesOwnerName String?              @map("sales_owner_name") @db.VarChar(128)
+  remark         String?              @db.VarChar(1000)
+  version        Int                  @default(1)
+  createdBy      String               @map("created_by") @db.VarChar(128)
+  updatedBy      String               @map("updated_by") @db.VarChar(128)
+  createdAt      DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime             @updatedAt @map("updated_at") @db.Timestamptz(3)
+  contacts       CrmCustomerContact[]
+  addresses      CrmCustomerAddress[]
+
+  @@unique([systemCode, customerCode], map: "crm_customer_system_code_customer_code_key")
+  @@unique([systemCode, customerName], map: "crm_customer_system_code_customer_name_key")
+  @@index([systemCode, statusValue, categoryValue, updatedAt(sort: Desc)], map: "crm_customer_list_idx")
+  @@map("crm_customer")
+}
+
+model CrmCustomerContact {
+  id           String      @id @default(uuid()) @db.Uuid
+  systemCode   String      @map("system_code") @db.VarChar(64)
+  customerId   String      @map("customer_id") @db.Uuid
+  name         String      @db.VarChar(100)
+  department   String?     @db.VarChar(128)
+  position     String?     @db.VarChar(128)
+  decisionRole String?     @map("decision_role") @db.VarChar(64)
+  mobile       String?     @db.VarChar(32)
+  phone        String?     @db.VarChar(32)
+  email        String?     @db.VarChar(128)
+  status       String      @default("ACTIVE") @db.VarChar(32)
+  remark       String?     @db.VarChar(500)
+  sortNo       Int         @default(0)
+  version      Int         @default(1)
+  createdBy    String      @map("created_by") @db.VarChar(128)
+  updatedBy    String      @map("updated_by") @db.VarChar(128)
+  createdAt    DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime    @updatedAt @map("updated_at") @db.Timestamptz(3)
+  customer     CrmCustomer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([systemCode, customerId], map: "crm_contact_customer_idx")
+  @@map("crm_customer_contact")
+}
+
+model CrmCustomerAddress {
+  id          String      @id @default(uuid()) @db.Uuid
+  systemCode  String      @map("system_code") @db.VarChar(64)
+  customerId  String      @map("customer_id") @db.Uuid
+  addressType String      @map("address_type") @db.VarChar(32)
+  recipient   String?     @db.VarChar(100)
+  phone       String?     @db.VarChar(32)
+  province    String?     @db.VarChar(64)
+  city        String?     @db.VarChar(64)
+  district    String?     @db.VarChar(64)
+  detail      String      @db.VarChar(500)
+  isDefault   Boolean     @default(false) @map("is_default")
+  status      String      @default("ACTIVE") @db.VarChar(32)
+  remark      String?     @db.VarChar(500)
+  sortNo      Int         @default(0)
+  version     Int         @default(1)
+  createdBy   String      @map("created_by") @db.VarChar(128)
+  updatedBy   String      @map("updated_by") @db.VarChar(128)
+  createdAt   DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime    @updatedAt @map("updated_at") @db.Timestamptz(3)
+  customer    CrmCustomer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([systemCode, customerId], map: "crm_address_customer_idx")
+  @@map("crm_customer_address")
+}
+
+model SdProductPrice {
+  id String @id @default(uuid()) @db.Uuid
+  tenantId String @map("tenant_id") @db.Uuid
+  productId String @map("product_id") @db.Uuid
+  itemCode String @map("item_code") @db.VarChar(32)
+  version Int
+  pricingType String @default("STANDARD") @map("pricing_type") @db.VarChar(16)
+  currencyCode String @default("CNY") @map("currency_code") @db.Char(3)
+  unitPrice Decimal? @map("unit_price") @db.Decimal(18, 2)
+  effectiveDate DateTime @map("effective_date") @db.Date
+  expiresDate DateTime? @map("expires_date") @db.Date
+  status String @default("ACTIVE") @db.VarChar(16)
+  remark String? @db.VarChar(1000)
+  createdBy String @map("created_by") @db.Uuid
+  updatedBy String @map("updated_by") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  tiers SdPriceTier[]
+  @@unique([productId, version])
+  @@unique([tenantId, itemCode, version], map: "sd_price_item_version_key")
+  @@unique([id, tenantId, productId])
+  @@index([tenantId, productId, version])
+  @@map("sd_product_price")
+}
+
+model SysAttachment {
+  id String @id @default(uuid()) @db.Uuid
+  tenantId String @map("tenant_id") @db.Uuid
+  applicationId String @map("application_id") @db.Uuid
+  ownerType String @map("owner_type") @db.VarChar(32)
+  ownerId String @map("owner_id") @db.Uuid
+  originalName String @map("original_name") @db.VarChar(255)
+  attachmentType String @map("attachment_type") @db.VarChar(16)
+  mimeType String @map("mime_type") @db.VarChar(128)
+  fileSize BigInt @map("file_size")
+  storageKey String @map("storage_key") @db.VarChar(512)
+  description String? @db.VarChar(1000)
+  fileVersion String? @map("file_version") @db.VarChar(64)
+  status String @default("ACTIVE") @db.VarChar(16)
+  version Int @default(1)
+  createdBy String @map("created_by") @db.Uuid
+  updatedBy String @map("updated_by") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  @@unique([applicationId, storageKey], map: "sys_attach_app_storage_key")
+  @@index([applicationId, ownerType, ownerId, status, createdAt], map: "sys_attach_owner_idx")
+  @@map("sys_attachment")
+}
+
+model SdPriceTier {
+  id String @id @default(uuid()) @db.Uuid
+  priceId String @map("price_id") @db.Uuid
+  lowerQty Decimal @map("lower_qty") @db.Decimal(18, 4)
+  upperQty Decimal? @map("upper_qty") @db.Decimal(18, 4)
+  unitPrice Decimal @map("unit_price") @db.Decimal(18, 2)
+  price SdProductPrice @relation(fields: [priceId], references: [id], onDelete: Restrict)
+  @@unique([priceId, lowerQty])
+  @@map("sd_price_tier")
+}
+
+model SdQuotation {
+  id String @id @default(uuid()) @db.Uuid
+  tenantId String @map("tenant_id") @db.Uuid
+  applicationId String @map("application_id") @db.Uuid
+  systemCode String @map("system_code") @db.VarChar(64)
+  quoteCode String @unique @map("quote_code") @db.VarChar(64)
+  title String @db.VarChar(200)
+  customerId String @map("customer_id") @db.Uuid
+  customerName String @map("customer_name") @db.VarChar(255)
+  contactId String? @map("contact_id") @db.Uuid
+  contactName String? @map("contact_name") @db.VarChar(100)
+  opportunityId String? @map("opportunity_id") @db.Uuid
+  ownerUserId String @map("owner_user_id") @db.Uuid
+  quoteDate DateTime @map("quote_date") @db.Date
+  validUntil DateTime @map("valid_until") @db.Date
+  status String @default("DRAFT") @db.VarChar(16)
+  total Decimal @default(0) @db.Decimal(18, 2)
+  terms String @default("") @db.VarChar(8000)
+  remark String @default("") @db.VarChar(2000)
+  sourceQuoteId String? @map("source_quote_id") @db.Uuid
+  version Int @default(1)
+  createdBy String @map("created_by") @db.Uuid
+  updatedBy String @map("updated_by") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  lines SdQuotationLine[]
+  events SdQuoteEvent[]
+  @@unique([id, tenantId, applicationId])
+  @@index([applicationId, ownerUserId, updatedAt])
+  @@index([opportunityId])
+  @@index([customerId])
+  @@index([status, validUntil])
+  @@map("sd_quotation")
+}
+
+model SdQuotationLine {
+  id String @id @default(uuid()) @db.Uuid
+  quotationId String @map("quotation_id") @db.Uuid
+  tenantId String @map("tenant_id") @db.Uuid
+  applicationId String @map("application_id") @db.Uuid
+  productId String @map("product_id") @db.Uuid
+  priceId String @map("price_id") @db.Uuid
+  productCode String @map("item_code") @db.VarChar(32)
+  productName String @map("product_name") @db.VarChar(128)
+  model String? @db.VarChar(128)
+  unit String @db.VarChar(32)
+  productLine String @map("product_line") @db.VarChar(64)
+  quantity Decimal @db.Decimal(18, 4)
+  suggestedPrice Decimal @map("suggested_price") @db.Decimal(18, 2)
+  priceSource String @map("price_source") @db.VarChar(16)
+  lowerQty Decimal? @map("lower_qty") @db.Decimal(18, 4)
+  upperQty Decimal? @map("upper_qty") @db.Decimal(18, 4)
+  unitPrice Decimal @map("unit_price") @db.Decimal(18, 2)
+  discount Decimal @default(0) @db.Decimal(5, 2)
+  amount Decimal @db.Decimal(18, 2)
+  sortNo Int @map("sort_no")
+  delivery String @default("") @db.VarChar(200)
+  remark String @default("") @db.VarChar(2000)
+  quotation SdQuotation @relation(fields: [quotationId, tenantId, applicationId], references: [id, tenantId, applicationId], onDelete: Restrict)
+  @@index([quotationId, sortNo])
+  @@map("sd_quotation_line")
+}
+
+model SdQuoteEvent {
+  id String @id @default(uuid()) @db.Uuid
+  quotationId String @map("quotation_id") @db.Uuid
+  tenantId String @map("tenant_id") @db.Uuid
+  applicationId String @map("application_id") @db.Uuid
+  action String @db.VarChar(32)
+  requestKey String @map("request_key") @db.Uuid
+  requestHash String @map("request_hash") @db.VarChar(64)
+  actorId String @map("actor_id") @db.Uuid
+  note String @default("") @db.VarChar(2000)
+  result Json
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  quotation SdQuotation @relation(fields: [quotationId, tenantId, applicationId], references: [id, tenantId, applicationId], onDelete: Restrict)
+  @@unique([applicationId, actorId, requestKey])
+  @@index([quotationId, createdAt])
+  @@map("sd_quote_event")
+}
+
+model SdOppAmountEvent {
+  id String @id @default(uuid()) @db.Uuid
+  tenantId String @map("tenant_id") @db.Uuid
+  applicationId String @map("application_id") @db.Uuid
+  opportunityId String @map("opportunity_id") @db.Uuid
+  quotationId String? @map("quotation_id") @db.Uuid
+  oldAmount Decimal? @map("old_amount") @db.Decimal(18, 2)
+  newAmount Decimal? @map("new_amount") @db.Decimal(18, 2)
+  opportunityVersion Int @map("opportunity_version")
+  actorId String @map("actor_id") @db.VarChar(128)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  @@unique([opportunityId, opportunityVersion])
+  @@map("sd_opp_amount_event")
+}
+
+model MdProduct {
+  id          String       @id @default(uuid()) @db.Uuid
+  tenantId    String       @map("tenant_id") @db.Uuid
+  productCode String       @map("product_code") @db.VarChar(32)
+  productName String       @map("product_name") @db.VarChar(128)
+  model       String?      @db.VarChar(128)
+  productLine String?      @map("product_line") @db.VarChar(64)
+  unit        String?      @db.VarChar(32)
+  status      RecordStatus @default(ACTIVE)
+  remark      String?      @db.VarChar(500)
+  version     Int          @default(1)
+  createdBy   String       @map("created_by") @db.VarChar(128)
+  updatedBy   String       @map("updated_by") @db.VarChar(128)
+  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([tenantId, productCode], map: "md_product_tenant_code_key")
+  @@index([tenantId, status, productName], map: "md_product_lookup_idx")
+  @@map("md_product")
+}
+
+model MdItem {
+  id           String       @id @default(uuid()) @map("item_id") @db.Uuid
+  tenantId     String       @map("tenant_id") @db.Uuid
+  itemCode     String       @map("item_code") @db.VarChar(32)
+  itemName     String       @map("item_name") @db.VarChar(128)
+  itemType     ItemType     @map("item_type")
+  majorCategoryId  String?  @map("major_category_id") @db.Uuid
+  middleCategoryId String?  @map("middle_category_id") @db.Uuid
+  minorCategoryId  String?  @map("minor_category_id") @db.Uuid
+  model        String?      @db.VarChar(128)
+  productLine  String?      @map("product_line") @db.VarChar(64)
+  baseUnit     String       @map("base_unit") @db.VarChar(32)
+  batchManaged Boolean      @default(false) @map("batch_managed")
+  status       RecordStatus @default(ACTIVE)
+  remark       String?      @db.VarChar(500)
+  version      Int          @default(1)
+  createdBy    String       @map("created_by") @db.VarChar(128)
+  updatedBy    String       @map("updated_by") @db.VarChar(128)
+  createdAt    DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  inboundLines ScmInboundLine[]
+
+  @@unique([tenantId, itemCode], map: "md_item_tenant_code_key")
+  @@index([tenantId, itemType, status], map: "md_item_lookup_idx")
+  @@index([tenantId, majorCategoryId, middleCategoryId, minorCategoryId], map: "md_item_category_idx")
+  @@map("md_item")
+}
+
+model OrgLegalEntity {
+  id           String       @id @default(uuid()) @map("entity_id") @db.Uuid
+  tenantId     String       @map("tenant_id") @db.Uuid
+  orgUnitId    String       @map("org_unit_id") @db.Uuid
+  entityCode   String       @map("entity_code") @db.VarChar(32)
+  entityName   String       @map("entity_name") @db.VarChar(128)
+  currencyCode String       @default("CNY") @map("currency_code") @db.Char(3)
+  status       RecordStatus @default(ACTIVE)
+  sortNo       Int          @default(0) @map("sort_no")
+  remark       String?      @db.VarChar(500)
+  version      Int          @default(1)
+  createdBy    String       @map("created_by") @db.VarChar(128)
+  updatedBy    String       @map("updated_by") @db.VarChar(128)
+  createdAt    DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([tenantId, entityCode], map: "org_legal_tenant_code_key")
+  @@index([tenantId, status, sortNo], map: "org_legal_lookup_idx")
+  @@map("org_legal_entity")
+}
+
+model ScmWarehouse {
+  id              String       @id @default(uuid()) @map("warehouse_id") @db.Uuid
+  tenantId        String       @map("tenant_id") @db.Uuid
+  legalEntityId   String       @map("legal_entity_id") @db.Uuid
+  warehouseCode   String       @map("warehouse_code") @db.VarChar(32)
+  warehouseName   String       @map("warehouse_name") @db.VarChar(128)
+  warehouseType   String       @map("warehouse_type") @db.VarChar(32)
+  warehouseNature String       @map("warehouse_nature") @db.VarChar(32)
+  status          RecordStatus @default(ACTIVE)
+  sortNo          Int          @default(0) @map("sort_no")
+  remark          String?      @db.VarChar(500)
+  version         Int          @default(1)
+  createdBy       String       @map("created_by") @db.VarChar(128)
+  updatedBy       String       @map("updated_by") @db.VarChar(128)
+  createdAt       DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([tenantId, warehouseCode], map: "scm_wh_tenant_code_key")
+  @@index([tenantId, legalEntityId, status], map: "scm_wh_entity_lookup_idx")
+  @@map("scm_warehouse")
+}
+
+model ScmInboundOrder {
+  id              String        @id @default(uuid()) @map("order_id") @db.Uuid
+  tenantId        String        @map("tenant_id") @db.Uuid
+  applicationId   String        @map("application_id") @db.Uuid
+  orderNo         String        @map("order_no") @db.VarChar(32)
+  documentDate    DateTime      @map("document_date") @db.Date
+  creatorId       String        @map("creator_id") @db.Uuid
+  inboundType     InboundType   @map("inbound_type")
+  status          InboundStatus @default(DRAFT)
+  postedAt        DateTime?     @map("posted_at") @db.Timestamptz(3)
+  postedBy        String?       @map("posted_by") @db.Uuid
+  reversedAt      DateTime?     @map("reversed_at") @db.Timestamptz(3)
+  reversedBy      String?       @map("reversed_by") @db.Uuid
+  legalEntityId   String        @map("legal_entity_id") @db.Uuid
+  warehouseId     String        @map("warehouse_id") @db.Uuid
+  factoryCode     String?       @map("factory_code") @db.VarChar(32)
+  reasonCode      String        @map("reason_code") @db.VarChar(32)
+  currencyCode    String        @default("CNY") @map("currency_code") @db.Char(3)
+  remark          String?       @db.VarChar(1000)
+  version         Int           @default(1)
+  createdBy       String        @map("created_by") @db.VarChar(128)
+  updatedBy       String        @map("updated_by") @db.VarChar(128)
+  createdAt       DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+  lines           ScmInboundLine[]
+
+  @@unique([tenantId, orderNo], map: "scm_in_tenant_no_key")
+  @@index([applicationId, status, updatedAt(sort: Desc)], map: "scm_in_order_list_idx")
+  @@map("scm_inbound_order")
+}
+
+model ScmInboundLine {
+  id           String          @id @default(uuid()) @map("line_id") @db.Uuid
+  orderId      String          @map("order_id") @db.Uuid
+  tenantId     String          @map("tenant_id") @db.Uuid
+  lineNo       Int             @map("line_no")
+  itemId       String          @map("item_id") @db.Uuid
+  itemCode     String          @map("item_code") @db.VarChar(32)
+  itemName     String          @map("item_name") @db.VarChar(128)
+  batchNo      String          @default("") @map("batch_no") @db.VarChar(64)
+  originalQty  Decimal?        @map("original_qty") @db.Decimal(18, 4)
+  actualQty    Decimal         @map("actual_qty") @db.Decimal(18, 4)
+  baseUnit     String          @map("base_unit") @db.VarChar(32)
+  amount       Decimal         @db.Decimal(18, 2)
+  remark       String?         @db.VarChar(1000)
+  createdBy    String          @map("created_by") @db.VarChar(128)
+  updatedBy    String          @map("updated_by") @db.VarChar(128)
+  createdAt    DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
+  order        ScmInboundOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  item         MdItem          @relation(fields: [itemId], references: [id], onDelete: Restrict)
+
+  @@unique([orderId, lineNo], map: "scm_in_line_no_key")
+  @@unique([orderId, itemId, batchNo], map: "scm_in_line_item_batch_key")
+  @@index([tenantId, itemId], map: "scm_in_line_item_idx")
+  @@map("scm_inbound_line")
+}
+
+model ScmInventoryBalance {
+  id            String   @id @default(uuid()) @map("balance_id") @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  legalEntityId String   @map("legal_entity_id") @db.Uuid
+  warehouseId   String   @map("warehouse_id") @db.Uuid
+  itemCode      String   @map("item_code") @db.VarChar(32)
+  batchNo       String   @default("") @map("batch_no") @db.VarChar(64)
+  baseUnit      String   @map("base_unit") @db.VarChar(32)
+  quantity      Decimal  @default(0) @db.Decimal(18, 4)
+  amount        Decimal  @default(0) @db.Decimal(18, 2)
+  currencyCode  String   @default("CNY") @map("currency_code") @db.Char(3)
+  version       Int      @default(1)
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([tenantId, legalEntityId, warehouseId, itemCode, batchNo], map: "scm_inv_bal_dim_key")
+  @@index([tenantId, itemCode, quantity], map: "scm_inv_bal_lookup_idx")
+  @@map("scm_inventory_balance")
+}
+
+model ScmInventoryTxn {
+  id            String            @id @default(uuid()) @map("txn_id") @db.Uuid
+  tenantId      String            @map("tenant_id") @db.Uuid
+  applicationId String            @map("application_id") @db.Uuid
+  sourceType    String            @map("source_type") @db.VarChar(32)
+  sourceName    String            @map("source_name") @db.VarChar(64)
+  sourceOrderId String            @map("source_order_id") @db.Uuid
+  orderNo       String            @map("order_no") @db.VarChar(32)
+  sourceLineId  String            @map("source_line_id") @db.Uuid
+  lineNo        Int               @map("line_no")
+  movementType  InventoryMoveType @map("movement_type")
+  itemCode      String            @map("item_code") @db.VarChar(32)
+  itemName      String            @map("item_name") @db.VarChar(128)
+  quantity      Decimal           @db.Decimal(18, 4)
+  amount        Decimal           @db.Decimal(18, 2)
+  batchNo       String            @default("") @map("batch_no") @db.VarChar(64)
+  warehouseId   String            @map("warehouse_id") @db.Uuid
+  legalEntityId String            @map("legal_entity_id") @db.Uuid
+  currencyCode  String            @map("currency_code") @db.Char(3)
+  remark        String?           @db.VarChar(1000)
+  occurredAt    DateTime          @default(now()) @map("occurred_at") @db.Timestamptz(3)
+  actorId       String            @map("actor_id") @db.Uuid
+
+  @@unique([sourceLineId, movementType], map: "scm_inv_txn_source_key")
+  @@index([tenantId, warehouseId, itemCode, occurredAt(sort: Desc)], map: "scm_inv_txn_lookup_idx")
+  @@map("scm_inventory_txn")
+}
+
+model ScmInventoryEvent {
+  id            String   @id @default(uuid()) @map("event_id") @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  orderId       String   @map("order_id") @db.Uuid
+  action        String   @db.VarChar(16)
+  requestKey    String   @map("request_key") @db.Uuid
+  requestHash   String   @map("request_hash") @db.VarChar(64)
+  actorId       String   @map("actor_id") @db.Uuid
+  result        Json
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@unique([applicationId, actorId, requestKey], map: "scm_inv_event_req_key")
+  @@index([orderId, createdAt], map: "scm_inv_event_order_idx")
+  @@map("scm_inventory_event")
+}
+
+model ScmDocumentCounter {
+  id           String   @id @default(uuid()) @map("counter_id") @db.Uuid
+  tenantId     String   @map("tenant_id") @db.Uuid
+  documentType String   @map("document_type") @db.VarChar(16)
+  businessDate DateTime @map("business_date") @db.Date
+  currentValue Int      @default(0) @map("current_value")
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([tenantId, documentType, businessDate], map: "scm_doc_counter_scope_key")
+  @@map("scm_document_counter")
+}
+
+model SdCompetitor {
+  id               String       @id @default(uuid()) @db.Uuid
+  tenantId         String       @map("tenant_id") @db.Uuid
+  competitorName   String       @map("competitor_name") @db.VarChar(128)
+  industryPosition String?      @map("industry_position") @db.VarChar(128)
+  location         String?      @db.VarChar(256)
+  mainProducts     String?      @map("main_products") @db.VarChar(1000)
+  strengths        String?      @db.VarChar(2000)
+  weaknesses       String?      @db.VarChar(2000)
+  status           RecordStatus @default(ACTIVE)
+  remark           String?      @db.VarChar(500)
+  version          Int          @default(1)
+  createdBy        String       @map("created_by") @db.VarChar(128)
+  updatedBy        String       @map("updated_by") @db.VarChar(128)
+  createdAt        DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([tenantId, competitorName], map: "sd_competitor_tenant_name_key")
+  @@index([tenantId, status, competitorName], map: "sd_competitor_lookup_idx")
+  @@map("sd_competitor")
+}
+
+model SdOppTemplate {
+  id              String       @id @default(uuid()) @db.Uuid
+  tenantId        String       @map("tenant_id") @db.Uuid
+  applicationId   String       @map("application_id") @db.Uuid
+  templateCode    String       @map("template_code") @db.VarChar(32)
+  templateName    String       @map("template_name") @db.VarChar(128)
+  isDefault       Boolean      @default(false) @map("is_default")
+  status          RecordStatus @default(ACTIVE)
+  version         Int          @default(1)
+  createdBy       String       @map("created_by") @db.VarChar(128)
+  updatedBy       String       @map("updated_by") @db.VarChar(128)
+  createdAt       DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  stages          SdOppStage[]
+
+  @@unique([applicationId, templateCode], map: "sd_opp_template_app_code_key")
+  @@index([applicationId, status], map: "sd_opp_template_lookup_idx")
+  @@map("sd_opp_template")
+}
+
+model SdOppStage {
+  id          String        @id @default(uuid()) @db.Uuid
+  templateId  String        @map("template_id") @db.Uuid
+  stageCode   String        @map("stage_code") @db.VarChar(32)
+  stageName   String        @map("stage_name") @db.VarChar(128)
+  probability Int
+  isDefault   Boolean       @default(false) @map("is_default")
+  sortNo      Int           @default(0) @map("sort_no")
+  status      RecordStatus  @default(ACTIVE)
+  version     Int           @default(1)
+  createdBy   String        @map("created_by") @db.VarChar(128)
+  updatedBy   String        @map("updated_by") @db.VarChar(128)
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+  template    SdOppTemplate @relation(fields: [templateId], references: [id], onDelete: Restrict)
+
+  @@unique([templateId, stageCode], map: "sd_opp_stage_template_code_key")
+  @@index([templateId, status, sortNo], map: "sd_opp_stage_lookup_idx")
+  @@map("sd_opp_stage")
+}
+
+model SdOpp {
+  id                 String       @id @default(uuid()) @db.Uuid
+  tenantId           String       @map("tenant_id") @db.Uuid
+  applicationId      String       @map("application_id") @db.Uuid
+  systemCode         String       @map("system_code") @db.VarChar(64)
+  opportunityCode    String       @map("opportunity_code") @db.VarChar(32)
+  opportunityName    String       @map("opportunity_name") @db.VarChar(200)
+  customerId         String       @map("customer_id") @db.Uuid
+  customerName       String       @map("customer_name") @db.VarChar(255)
+  contactId          String?      @map("contact_id") @db.Uuid
+  contactName        String?      @map("contact_name") @db.VarChar(100)
+  ownerUserId        String       @map("owner_user_id") @db.Uuid
+  ownerName          String       @map("owner_name") @db.VarChar(128)
+  source             String?      @db.VarChar(128)
+  templateId         String       @map("template_id") @db.Uuid
+  templateName       String       @map("template_name") @db.VarChar(128)
+  stageId            String       @map("stage_id") @db.Uuid
+  stageName          String       @map("stage_name") @db.VarChar(128)
+  stageProbability   Int          @map("stage_probability")
+  confidence         Int          @default(0)
+  confirmedDate      DateTime?    @map("confirmed_date") @db.Date
+  expectedSignDate   DateTime?    @map("expected_sign_date") @db.Date
+  customerBudget     Decimal?     @map("customer_budget") @db.Decimal(18, 2)
+  expectedAmount     Decimal?     @map("expected_amount") @db.Decimal(18, 2)
+  partner            String?      @db.VarChar(200)
+  status             RecordStatus @default(ACTIVE)
+  remark             String?      @db.VarChar(1000)
+  version            Int          @default(1)
+  createdBy          String       @map("created_by") @db.VarChar(128)
+  updatedBy          String       @map("updated_by") @db.VarChar(128)
+  createdAt          DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt          DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  products           SdOppProduct[]
+  followUps          SdOppFollowUp[]
+  analyses           SdOppAnalysis[]
+
+  @@unique([applicationId, opportunityCode], map: "sd_opp_app_code_key")
+  @@index([applicationId, status, updatedAt(sort: Desc)], map: "sd_opp_list_idx")
+  @@index([customerId], map: "sd_opp_customer_idx")
+  @@index([ownerUserId], map: "sd_opp_owner_idx")
+  @@map("sd_opp")
+}
+
+model SdOppProduct {
+  id             String   @id @default(uuid()) @db.Uuid
+  tenantId       String   @map("tenant_id") @db.Uuid
+  opportunityId  String   @map("opportunity_id") @db.Uuid
+  productId      String   @map("product_id") @db.Uuid
+  productCode    String   @map("item_code") @db.VarChar(32)
+  productName    String   @map("product_name") @db.VarChar(128)
+  model          String?  @db.VarChar(128)
+  quantity       Decimal  @db.Decimal(18, 4)
+  unitPrice      Decimal  @map("unit_price") @db.Decimal(18, 2)
+  expectedAmount Decimal  @map("expected_amount") @db.Decimal(18, 2)
+  requirement    String?  @db.VarChar(1000)
+  sortNo         Int      @default(0) @map("sort_no")
+  version        Int      @default(1)
+  createdBy      String   @map("created_by") @db.VarChar(128)
+  updatedBy      String   @map("updated_by") @db.VarChar(128)
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  opportunity    SdOpp    @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@index([opportunityId, sortNo], map: "sd_opp_product_list_idx")
+  @@index([tenantId, productCode], map: "sd_opp_product_item_idx")
+  @@map("sd_opp_product")
+}
+
+model SdOppFollowUp {
+  id             String       @id @default(uuid()) @db.Uuid
+  opportunityId  String       @map("opportunity_id") @db.Uuid
+  followedAt     DateTime     @map("followed_at") @db.Timestamptz(3)
+  followerUserId String       @map("follower_user_id") @db.Uuid
+  followerName   String       @map("follower_name") @db.VarChar(128)
+  workItem       String       @map("work_item") @db.VarChar(1000)
+  resultNext     String?      @map("result_next") @db.VarChar(2000)
+  status         RecordStatus @default(ACTIVE)
+  version        Int          @default(1)
+  createdBy      String       @map("created_by") @db.VarChar(128)
+  updatedBy      String       @map("updated_by") @db.VarChar(128)
+  createdAt      DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  opportunity    SdOpp        @relation(fields: [opportunityId], references: [id], onDelete: Restrict)
+
+  @@index([opportunityId, followedAt(sort: Desc)], map: "sd_opp_follow_up_list_idx")
+  @@map("sd_opp_follow_up")
+}
+
+model SdOppAnalysis {
+  id               String                    @id @default(uuid()) @db.Uuid
+  opportunityId    String                    @map("opportunity_id") @db.Uuid
+  opportunityName  String                    @map("opportunity_name") @db.VarChar(200)
+  stageId          String                    @map("stage_id") @db.Uuid
+  stageName        String                    @map("stage_name") @db.VarChar(128)
+  stageProbability Int                       @map("stage_probability")
+  confidence       Int
+  opportunityPoint String                    @map("opportunity_point") @db.VarChar(2000)
+  risk             String                    @db.VarChar(2000)
+  nextPlan         String                    @map("next_plan") @db.VarChar(2000)
+  remark           String?                   @db.VarChar(1000)
+  analystUserId    String                    @map("analyst_user_id") @db.Uuid
+  analystName      String                    @map("analyst_name") @db.VarChar(128)
+  analyzedAt       DateTime                  @default(now()) @map("analyzed_at") @db.Timestamptz(3)
+  createdAt        DateTime                  @default(now()) @map("created_at") @db.Timestamptz(3)
+  opportunity      SdOpp                     @relation(fields: [opportunityId], references: [id], onDelete: Restrict)
+  competitors      SdOppAnalysisCompetitor[]
+
+  @@index([opportunityId, analyzedAt(sort: Desc)], map: "sd_opp_analysis_list_idx")
+  @@map("sd_opp_analysis")
+}
+
+model SdOppAnalysisCompetitor {
+  id             String        @id @default(uuid()) @db.Uuid
+  analysisId     String        @map("analysis_id") @db.Uuid
+  competitorId   String        @map("competitor_id") @db.Uuid
+  competitorName String        @map("competitor_name") @db.VarChar(128)
+  rank           Int
+  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  analysis       SdOppAnalysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+
+  @@unique([analysisId, rank], map: "sd_opp_analysis_rank_key")
+  @@unique([analysisId, competitorId], map: "sd_opp_analysis_comp_key")
+  @@map("sd_opp_analysis_competitor")
+}
+
+enum SceneStatus {
+  DONE
+  WIP
+  TODO
+}
+
+model StyleScene {
+  id          String      @id @default(uuid()) @db.Uuid
+  systemCode  String      @map("system_code") @db.VarChar(64)
+  category    String      @db.VarChar(64)
+  subCategory String?     @map("sub_category") @db.VarChar(64)
+  sceneName   String      @map("scene_name") @db.VarChar(128)
+  description String?     @db.VarChar(512)
+  status      SceneStatus @default(TODO)
+  pagePath    String?     @map("page_path") @db.VarChar(256)
+  note        String?     @db.VarChar(512)
+  doneAt      DateTime?   @map("done_at") @db.Timestamptz(3)
+  sortNo      Int         @default(0) @map("sort_no")
+  version     Int         @default(1)
+  createdBy   String      @map("created_by") @db.VarChar(128)
+  updatedBy   String      @map("updated_by") @db.VarChar(128)
+  createdAt   DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime    @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([systemCode, status, category, sortNo], map: "style_scene_list_idx")
+  @@map("style_scene")
+}
+
+model SysParameter {
+  id             String         @id @default(uuid()) @db.Uuid
+  tenantId       String         @map("tenant_id") @db.Uuid
+  applicationId  String         @map("application_id") @db.Uuid
+  parameterCode  String         @map("parameter_code") @db.VarChar(64)
+  parameterName  String         @map("parameter_name") @db.VarChar(128)
+  value          String?        @map("parameter_value") @db.VarChar(1000)
+  usageNote      String         @map("usage_note") @db.VarChar(1000)
+  sortNo         Int            @default(0) @map("sort_no")
+  status         RecordStatus   @default(ACTIVE)
+  version        Int            @default(1)
+  createdBy      String         @map("created_by") @db.VarChar(128)
+  updatedBy      String         @map("updated_by") @db.VarChar(128)
+  createdAt      DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime       @updatedAt @map("updated_at") @db.Timestamptz(3)
+  application    SysApplication @relation(fields: [applicationId, tenantId], references: [id, tenantId], onDelete: Restrict, map: "sys_parameter_app_scope_fk")
+
+  @@unique([tenantId, applicationId, parameterCode], map: "sys_parameter_scope_code_key")
+  @@index([tenantId, applicationId, sortNo, parameterCode], map: "sys_parameter_list_idx")
+  @@map("sys_parameter")
+}

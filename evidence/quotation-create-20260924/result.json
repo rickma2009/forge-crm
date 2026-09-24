@@ -1,0 +1,13 @@
+{
+  "result": "PASS",
+  "quotationWrites": "mocked",
+  "scenarios": [
+    "list create modal",
+    "default opportunity",
+    "searchable customer selection",
+    "confirm then navigate",
+    "summary and readonly fields",
+    "mobile layout"
+  ],
+  "pageErrors": []
+}

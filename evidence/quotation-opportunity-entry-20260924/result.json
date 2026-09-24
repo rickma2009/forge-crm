@@ -1,0 +1,15 @@
+{
+  "result": "PASS",
+  "quotationWrites": "mocked",
+  "sourceMutation": "mocked",
+  "scenarios": [
+    "top entry",
+    "locked context",
+    "customer summary",
+    "conflict refresh",
+    "explicit reconfirmation",
+    "mobile modal",
+    "open quote detail"
+  ],
+  "pageErrors": []
+}

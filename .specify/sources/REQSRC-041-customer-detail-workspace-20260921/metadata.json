@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-041",
+  "title": "CRM 客户详情双层页签与联系人地址维护需求",
+  "sourceType": "user-provided-incremental-requirement",
+  "sourceDate": "2026-09-21",
+  "importedAt": "2026-09-21",
+  "originalPath": "Codex task user message",
+  "managedCopy": "source.md",
+  "sha256": "dd04b7958e53dc79169bf1d171d5c96bf0dcff5916d912bb19b1db256d815f5f",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active-awaiting-incremental-design-review"
+}

@@ -1,5 +1,9 @@
 # sdd-forge
 
+本机日常启动：在根目录执行 `bash start.sh`。首次准备、原数据库保留策略及故障提示见 [本机一键启动](docs/local-start.md)。
+
+当前运行入口为 CRM：[本地应用](http://localhost:5173/)，[角色管理](http://localhost:5173/#/showcase/system/roles)。旧“企业交互验证场”分类菜单与独占演示页面已按用户要求移除；旧 `?pattern=...` 链接进入 CRM，不再打开分类应用。历史方法论与验证材料保留为证据，不作为产品入口。清理与恢复说明见 [.specify/changes/20260922-retire-interaction-catalog.md](.specify/changes/20260922-retire-interaction-catalog.md)。
+
 > 面向企业应用 AI 工程的治理、创建、验证与资产复用工作台。
 >
 > 目标不是复制某个历史项目，而是把业务目标稳定地转化为可追溯、可验证、可运营的数字化系统。

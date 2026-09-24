@@ -1,0 +1,12 @@
+{
+  "sourceId": "REQSRC-050",
+  "title": "Supply 资源菜单萃取与本地实现",
+  "sourceType": "user-reference-extraction-and-implementation-request",
+  "sourceDate": "2026-09-22",
+  "importedAt": "2026-09-22T16:00:00+08:00",
+  "originalPath": "https://scssit.gz.cvte.cn/settings/resources; /Users/malanjun/projects/supply/packages/scs-web/src/pages/settings/resources; /Users/malanjun/projects/supply/packages/scs-server/src/modules/system/menu",
+  "managedCopy": "source.md",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved-continuous-local-implementation"
+}

@@ -1,0 +1,12 @@
+{
+  "sourceId": "REQSRC-044",
+  "title": "组织与访问管理下一切片实施请求",
+  "sourceType": "user-implementation-request",
+  "sourceDate": "2026-09-21",
+  "originalPath": "Codex task user message",
+  "managedCopy": "source.md",
+  "sha256": "2d182cd33d84c1d965a597288efa2b0e7248baeace65d76951442c6ec86dc29a",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "fulfilled-by-REQSRC-045"
+}

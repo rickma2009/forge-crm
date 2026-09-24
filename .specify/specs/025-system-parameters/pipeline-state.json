@@ -1,0 +1,22 @@
+{
+  "feature": "025-system-parameters",
+  "gates": {
+    "business": "approved-by-user",
+    "specification": "approved-by-user",
+    "architecture": "approved-existing-profile-under-user-recommended-implementation-authorization",
+    "release": "not-approved"
+  },
+  "approvalEvidence": "../../sources/PARAMETERS-20260924/source.md：开发指令与两轮按推荐；技术方案遵循已批准仓库技术栈和数据库规范，不声称另有独立人工评审。 本次修改依照 ../../sources/PARAMETERS-20260924-text-values/source.md 的明确开发指令。",
+  "implementation": "implemented-local-validated",
+  "verification": {
+    "featureDatabase": "18-passed-including-2-access-tests",
+    "webFeature": "5-passed",
+    "typesLintBuild": "passed; existing-large-chunk-warning",
+    "api": "passed",
+    "emptyDatabaseMigration": "historical-blocker-not-rerun: 20260922071848-org_unit-missing",
+    "repositoryGate": "failed-tree-dual-entry-static-check-four-unrelated-pages",
+    "browser": "raw-invalid-text-save-and-warehouse-unchanged-passed; later-current-value-changed-externally-preserved",
+    "sdd": "passed"
+  },
+  "updatedAt": "2026-09-24"
+}

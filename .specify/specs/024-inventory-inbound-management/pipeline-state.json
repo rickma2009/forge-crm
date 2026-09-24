@@ -1,0 +1,22 @@
+{
+  "feature": "024-inventory-inbound-management",
+  "businessGate": "approved",
+  "specificationGate": "approved",
+  "architectureGate": "approved",
+  "tasks": "complete",
+  "implementation": "verified",
+  "releaseGate": "approved",
+  "updatedAt": "2026-09-24",
+  "gates": {
+    "business": "approved-by-user",
+    "specification": "approved-by-user",
+    "architecture": "approved-existing-profile-under-user-implementation-authorization",
+    "release": "not-approved-for-warehouse-dictionary-change"
+  },
+  "warehouseDictionaryChange": {
+    "source": "../../sources/WAREHOUSE-DICT-20260924/source.md",
+    "authorization": "用户明确要求添加字典并修改页面；沿用已批准技术栈，无另行人工评审声明。",
+    "implementation": "implemented-local-validated",
+    "verification": "9 web tests, 5 server tests, 1 PostgreSQL test; types/lint/build/browser passed"
+  }
+}

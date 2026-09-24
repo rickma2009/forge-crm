@@ -1,0 +1,12 @@
+.enterprise-page.customer-detail-page { min-width: 0; display: flex; flex-direction: column; gap: 0; }
+.customer-detail-page [hidden] { display: none !important; }
+.customer-basic-form input:disabled, .customer-basic-form textarea:disabled, .customer-basic-form select:disabled { color: #334155; opacity: 1; background: #f8fafc; }
+.customer-child-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; color: #64748b; font-size: 13px; }
+.customer-detail-panel table { width: 100%; min-width: 900px; }
+.customer-detail-panel th { white-space: nowrap; }
+.customer-detail-panel td { max-width: 280px; overflow-wrap: anywhere; }
+.customer-child-editor .modal-body { max-height: 65vh; overflow: auto; }
+@media (max-width: 700px) {
+  .customer-basic-form .form-grid { grid-template-columns: minmax(0, 1fr); }
+  .customer-basic-form .span-2 { grid-column: auto; }
+}

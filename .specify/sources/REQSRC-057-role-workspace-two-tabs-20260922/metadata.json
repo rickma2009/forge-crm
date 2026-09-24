@@ -1,0 +1,10 @@
+{
+  "sourceId": "REQSRC-057",
+  "receivedAt": "2026-09-22",
+  "kind": "user-request-with-three-screenshots",
+  "scope": "current-crm-role-management-two-tab-refinement",
+  "authorization": "explicit-continuous-local-implementation-with-recommended-decisions",
+  "releaseApproved": false,
+  "sourceUrl": "https://scssit.gz.cvte.cn/settings/roles",
+  "targetUrl": "http://localhost:5173/#/showcase/system/roles"
+}

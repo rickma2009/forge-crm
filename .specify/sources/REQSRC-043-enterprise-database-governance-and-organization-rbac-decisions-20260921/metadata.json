@@ -1,0 +1,12 @@
+{
+  "sourceId": "REQSRC-043",
+  "title": "企业数据库治理与组织员工权限方案决策",
+  "sourceType": "user-requirement-and-design-decisions",
+  "sourceDate": "2026-09-21",
+  "originalPath": "Codex task user messages and grilling answers",
+  "managedCopy": "source.md",
+  "sha256": "acee0824d01e5116c1310296e7ae06942c15cddc2ef287115e3a5b06cd569858",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved-documentation-and-governance-implementation"
+}

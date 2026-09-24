@@ -1,0 +1,15 @@
+.document-workspace .document-body{padding:0 20px 20px;min-width:0}
+.document-workspace .document-fields{margin:0;padding:0;border:0;min-width:0}
+.document-workspace .document-fields label{display:grid;gap:6px;min-width:0;color:#64748b}
+.document-workspace .document-fields :is(input,select,textarea){width:100%;min-width:0}
+.document-workspace .document-fields input:read-only{background:#f8fafc;color:#334155}
+.document-workspace .document-grid{width:100%;border-collapse:collapse;min-width:1000px}
+.document-workspace .document-grid :is(input,select){width:100%;min-width:96px}
+.document-workspace .document-grid select{min-width:200px}
+.document-workspace .document-grid .document-line-remark{min-width:160px}
+.document-workspace .document-grid .document-line-actions{width:52px;min-width:52px;text-align:center}
+.document-workspace .document-error{margin:0 0 16px}
+@media(max-width:700px){.document-workspace .document-body{padding:0 12px 12px}}
+
+.document-workspace .document-fields :is(input,select,textarea):disabled{color:#334155;opacity:1;background:#f8fafc}
+@media(max-width:700px){.document-workspace .document-fields{grid-template-columns:minmax(0,1fr)}.document-workspace .document-fields .span-2{grid-column:auto}}

@@ -1,0 +1,14 @@
+{
+  "sourceId": "REQSRC-062",
+  "title": "商机需求增量：报价单与商品定价",
+  "sourceType": "external-business-requirement-with-user-adaptation-request",
+  "sourceDate": null,
+  "importedAt": "2026-09-23",
+  "originalPath": "/Users/malanjun/projects/mcrm/docs/business/quotation-and-pricing.md",
+  "managedCopy": "quotation-and-pricing.md",
+  "sha256": "90f7be50374623b657ba3262b1ac3ab893ef921d37ede42af09c58bf9315edac",
+  "sourceVersion": "正文标注：草案 / 待业务确认；未提供成文日期",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "imported-awaiting-target-project-business-gate"
+}

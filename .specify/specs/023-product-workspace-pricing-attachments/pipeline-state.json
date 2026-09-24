@@ -1,0 +1,26 @@
+{
+  "featureId": "023-product-workspace-pricing-attachments",
+  "status": "ui-audit-implemented-local-validation",
+  "currentStage": "ui-audit-verification",
+  "gates": {
+    "business": "approved-by-user-recommended-design-2026-09-23",
+    "specification": "approved-by-REQSRC-067",
+    "architecture": "approved-by-REQSRC-068",
+    "release": "awaiting-user-approval"
+  },
+  "reopens": [
+    "017-sales-master-data-foundation",
+    "022-opportunity-quotation-pricing"
+  ],
+  "executionDirection": "native-continuous-after-architecture-approval",
+  "verification": "local-migration-seed-tests-build-browser-rbac-pass",
+  "updatedAt": "2026-09-24",
+  "uiAudit": {
+    "source": "UIAUDIT-20260923",
+    "specification": "updated-under-user-recommended-decision-authorization",
+    "architecture": "existing-public-list-view-service-no-new-tables",
+    "implementation": "implemented-local-validation",
+    "evidence": ".specify/requirements/global-page-style/audit.md",
+    "release": "no-new-release-approval"
+  }
+}

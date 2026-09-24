@@ -178,15 +178,15 @@
         {
           "evidenceId": "EVID-VAL-010-MASTER-DETAIL",
           "state": "in-lab-candidate",
-          "sourceRefs": [
+          "archivedSourceRefs": [
             "interaction-pattern-lab/.specify/sources/REQSRC-029-sales-order-bom-template-research-20260905/source.md",
             "interaction-pattern-lab/.specify/sources/REQSRC-030-enterprise-workbench-master-detail-request-20260905/source.md",
             "interaction-pattern-lab/.specify/sources/REQSRC-034-master-detail-document-assets-architecture-gate-approval-20260905/source.md",
             "interaction-pattern-lab/.specify/sources/REQSRC-035-slice-010-release-gate-approval-20260906/source.md"
           ],
           "implementationRefs": [
-            "interaction-pattern-lab/packages/web/src/ui-assets/scenarios/sales-order/SalesOrderScenario.tsx",
-            "interaction-pattern-lab/packages/web/src/ui-assets/scenarios/bom/BomScenario.tsx"
+            "packages/web/src/ui-assets/scenarios/sales-order/SalesOrderScenario.tsx",
+            "packages/web/src/ui-assets/scenarios/bom/BomScenario.tsx"
           ],
           "artifactRefs": [
             "_methodology/templates/ui/master-detail-document/README.md",

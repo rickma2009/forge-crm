@@ -1,0 +1,10 @@
+{
+  "sourceId": "REQSRC-038",
+  "receivedAt": "2026-09-21",
+  "sourceType": "user-request-with-screenshot",
+  "title": "参考 supply 实现通用页签右键操作",
+  "original": "source.md",
+  "attachments": ["reference.png"],
+  "scope": "本项目公共页签组件与操作方法；supply 只读",
+  "traceability": "../../specs/005-unified-navigation-toolbar-tab-workspace/tab-context-menu-increment.md"
+}

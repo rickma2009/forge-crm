@@ -1,0 +1,1 @@
+在 supply 这个项目中 有一个系统管理下的菜单为：[https://scssit.gz.cvte.cn/settings/roles](https://scssit.gz.cvte.cn/settings/roles)  业务角色管理，请参考这里的功能，将页面的功能、样式照搬到  现在 sdd-forge 项目下的 角色管理的菜单中， 如果数据表和 supply 的不一致， 在保留 表 sys\_前缀的前提下，可参考 supply 表下的字段、表名；在照搬这里的功能时，需要将页面，子页面、按钮的功能等全部复制。

@@ -1,0 +1,23 @@
+.enterprise-page.product-detail-page { min-width: 0; display: flex; flex-direction: column; gap: 0; }
+.product-object-header { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: #fff; border: 1px solid #e2e8f0; border-bottom: 0; border-radius: 8px 8px 0 0; }
+.product-detail-page .product-back-button { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 28px; width: 28px; height: 22px; min-height: 22px; padding: 0; margin-top: 1px; line-height: 1; }
+.product-object-identity { flex: 1; min-width: 0; }
+.product-object-identity > div { display: flex; align-items: center; gap: 10px; }
+.product-object-identity h1 { margin: 0; overflow-wrap: anywhere; font-size: 19px; }
+.product-object-identity p { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 8px 0 0; color: #64748b; font-size: 13px; }
+.product-object-identity p span { overflow-wrap: anywhere; }
+.product-object-actions { display: flex; gap: 8px; }
+.product-inner-tabs { display: flex; padding: 0 16px; border: 1px solid #e2e8f0; border-top: 0; background: #fff; }
+.product-detail-page .product-inner-tabs button { padding: 12px 16px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: transparent; white-space: nowrap; }
+.product-detail-page .product-inner-tabs button[aria-selected='true'] { border-bottom-color: #2563eb; color: #2563eb; font-weight: 600; }
+.product-detail-panel { min-width: 0; padding: 20px; border: 1px solid #e2e8f0; border-top: 0; border-radius: 0 0 8px 8px; background: #fff; }
+.product-basic-form input:disabled, .product-basic-form textarea:disabled, .product-basic-form select:disabled { opacity: 1; background: #f8fafc; color: #334155; }
+.product-tab-content { min-width: 0; }
+.product-tab-summary { margin: 14px 0 0; color: #64748b; }
+.product-detail-panel > .enterprise-card { margin: 0; padding: 0; border: 0; border-radius: 0; box-shadow: none; }
+@media (max-width: 760px) {
+  .product-object-header { flex-wrap: wrap; }
+  .product-object-actions { width: 100%; justify-content: flex-end; }
+  .product-inner-tabs { overflow-x: auto; }
+  .product-detail-panel { padding: 12px; }
+}

@@ -1,0 +1,48 @@
+[
+  {
+    "object": "customer-directory",
+    "views": 3,
+    "selectedAccessible": true
+  },
+  {
+    "object": "product-directory",
+    "views": 1,
+    "selectedAccessible": true
+  },
+  {
+    "object": "product-directory",
+    "personalPersistedAndRestored": true
+  },
+  {
+    "object": "opportunity-directory",
+    "views": 1,
+    "selectedAccessible": true
+  },
+  {
+    "object": "opportunity-directory",
+    "personalPersistedAndRestored": true
+  },
+  {
+    "object": "quotation-directory",
+    "views": 1,
+    "selectedAccessible": true
+  },
+  {
+    "object": "quotation-directory",
+    "personalPersistedAndRestored": true
+  },
+  {
+    "object": "competitor-directory",
+    "views": 1,
+    "selectedAccessible": true
+  },
+  {
+    "object": "competitor-directory",
+    "personalPersistedAndRestored": true
+  },
+  {
+    "opportunityDetailsValidated": 2,
+    "testPersonalViewsRemoved": true,
+    "originalSelectionsRestored": true
+  }
+]

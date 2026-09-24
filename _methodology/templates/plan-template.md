@@ -23,8 +23,13 @@
 
 ## 4. 数据设计
 
+- 数据分层与表登记：{{data_classification_and_registry}}
+- 物理命名检查：表/字段使用批准的领域前缀和小写 `snake_case`，且均不超过 32 个字符；{{physical_identifier_validation}}
+- 唯一责任模块与共享方式：{{system_of_record_and_consumers}}
+- 数据库规范符合性：`_methodology/11-数据库设计与数据分层规范.md`；{{profile_database_conventions}}
 - 业务实体与关系：{{data_model}}
 - 所有权和权限：{{ownership}}
+- 租户/应用作用域与数据库不变量：{{scope_and_invariants}}
 - 兼容与迁移：{{migration}}
 - 回滚：{{rollback}}
 

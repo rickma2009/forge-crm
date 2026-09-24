@@ -1,0 +1,29 @@
+{
+  "featureId": "008-customer-directory-demo",
+  "status": "ui-audit-implemented-local-validation",
+  "currentStage": "ui-audit-verification",
+  "listActionRuleChange": {
+    "source": "UIRULE-20260923-list-record-actions",
+    "specification": "reopened-and-confirmed-by-explicit-user-rule-request",
+    "implementation": "not-audited-in-documentation-task",
+    "validation": "AC-810-pending",
+    "release": "no-new-release-approval",
+    "historicalGatesScope": "gates below describe the historical baseline only"
+  },
+  "gates": {
+    "business": "approved-by-REQSRC-023",
+    "specification": "approved-by-REQSRC-023-default-authorization",
+    "architecture": "approved-by-REQSRC-023-default-authorization",
+    "release": "approved-for-local-validation-lab-by-REQSRC-023"
+  },
+  "implementation": "implemented-local-validation-see-uiAudit",
+  "updatedAt": "2026-09-24",
+  "uiAudit": {
+    "source": "UIAUDIT-20260923",
+    "specification": "updated-under-user-recommended-decision-authorization",
+    "architecture": "existing-public-list-view-service-no-new-tables",
+    "implementation": "implemented-local-validation",
+    "evidence": ".specify/requirements/global-page-style/audit.md",
+    "release": "no-new-release-approval"
+  }
+}

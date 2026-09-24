@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "governanceDocument": "_methodology/11-数据库设计与数据分层规范.md",
+  "physicalIdentifierConvention": "lower_snake_case",
+  "maxIdentifierLength": 32,
+  "allowedPrefixes": [
+    { "prefix": "sys_", "classification": "system-platform" },
+    { "prefix": "org_", "classification": "organization-master-data" },
+    { "prefix": "md_", "classification": "enterprise-shared-master-data" },
+    { "prefix": "sd_", "classification": "sales-domain" },
+    { "prefix": "scm_", "classification": "supply-chain-manufacturing-domain" },
+    { "prefix": "rd_", "classification": "research-development-domain" },
+    { "prefix": "fin_", "classification": "finance-domain" },
+    { "prefix": "int_", "classification": "integration" },
+    { "prefix": "stg_", "classification": "staging" },
+    { "prefix": "dim_", "classification": "analytics-dimension" },
+    { "prefix": "fact_", "classification": "analytics-fact" }
+  ],
+  "approvedBusinessTables": [
+    "md_item",
+    "org_legal_entity",
+    "scm_warehouse",
+    "scm_inbound_order",
+    "scm_inbound_line",
+    "scm_inventory_balance",
+    "scm_inventory_txn",
+    "scm_inventory_event",
+    "scm_document_counter"
+  ],
+  "approvedAbbreviations": [
+    { "abbreviation": "opp", "meaning": "opportunity", "scope": "sd_" }
+  ],
+  "legacyExceptions": [
+    { "table": "ui_menu", "classification": "legacy-system-platform", "target": "sys_menu" },
+    { "table": "ui_menu_action", "classification": "legacy-system-platform", "target": "sys_menu_action" },
+    { "table": "iam_user", "classification": "legacy-system-platform", "target": "sys_user" },
+    { "table": "iam_role", "classification": "legacy-system-platform", "target": "sys_role" },
+    { "table": "iam_role_user", "classification": "legacy-system-platform", "target": "sys_role_user" },
+    { "table": "iam_role_permission", "classification": "legacy-system-platform", "target": "sys_role_permission" },
+    { "table": "ui_system_list_view", "classification": "legacy-system-platform", "target": "sys_system_list_view" },
+    { "table": "iam_role_list_view", "classification": "legacy-system-platform", "target": "sys_role_list_view" },
+    { "table": "ui_user_list_view", "classification": "legacy-system-platform", "target": "sys_user_list_view" },
+    { "table": "ui_user_list_view_preference", "classification": "legacy-system-platform", "target": "sys_user_list_view_preference" },
+    { "table": "crm_customer", "classification": "legacy-crm-validation-data", "target": "md_customer" },
+    { "table": "crm_customer_contact", "classification": "legacy-crm-validation-data", "target": "md_customer_contact" },
+    { "table": "crm_customer_address", "classification": "legacy-crm-validation-data", "target": "md_customer_address" },
+    { "table": "style_scene", "classification": "validation-tooling", "target": "remain-tooling-only" }
+  ]
+}

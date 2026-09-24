@@ -1,0 +1,115 @@
+{
+  "result": "PASS",
+  "writes": "none",
+  "measurements": [
+    {
+      "resource": "customers",
+      "width": 1440,
+      "boxes": [
+        {
+          "y": 211.5,
+          "height": 32
+        },
+        {
+          "y": 211.5,
+          "height": 32
+        },
+        {
+          "y": 211.5,
+          "height": 32
+        }
+      ]
+    },
+    {
+      "resource": "customers",
+      "width": 390,
+      "boxes": [
+        {
+          "y": 278,
+          "height": 32
+        },
+        {
+          "y": 278,
+          "height": 32
+        },
+        {
+          "y": 278,
+          "height": 32
+        }
+      ]
+    },
+    {
+      "resource": "opportunities",
+      "width": 1440,
+      "boxes": [
+        {
+          "y": 215.5,
+          "height": 32
+        },
+        {
+          "y": 215.5,
+          "height": 32
+        },
+        {
+          "y": 215.5,
+          "height": 32
+        }
+      ]
+    },
+    {
+      "resource": "opportunities",
+      "width": 390,
+      "boxes": [
+        {
+          "y": 303,
+          "height": 32
+        },
+        {
+          "y": 303,
+          "height": 32
+        },
+        {
+          "y": 303,
+          "height": 32
+        }
+      ]
+    },
+    {
+      "resource": "quotations",
+      "width": 1440,
+      "boxes": [
+        {
+          "y": 215.5,
+          "height": 32
+        },
+        {
+          "y": 215.5,
+          "height": 32
+        },
+        {
+          "y": 215.5,
+          "height": 32
+        }
+      ]
+    },
+    {
+      "resource": "quotations",
+      "width": 390,
+      "boxes": [
+        {
+          "y": 328,
+          "height": 32
+        },
+        {
+          "y": 328,
+          "height": 32
+        },
+        {
+          "y": 328,
+          "height": 32
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

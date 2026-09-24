@@ -1,0 +1,12 @@
+{
+  "sourceId": "REQSRC-042",
+  "title": "客户详情工作区增量设计确认与代码修改指令",
+  "sourceType": "user-design-approval-and-implementation-direction",
+  "sourceDate": "2026-09-21",
+  "originalPath": "Codex task user message, follows REQSRC-041 assessment and proposed design",
+  "managedCopy": "source.md",
+  "sha256": "68cca51d2b9ea9a9a715327fc571e1ca6493915ae5a6778b44e1d533bf72ed92",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved-presented-design-local-implementation-only"
+}

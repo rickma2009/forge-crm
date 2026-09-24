@@ -1,0 +1,67 @@
+{
+  "featureId": "022-opportunity-quotation-pricing",
+  "status": "ui-audit-implemented-local-validation",
+  "currentStage": "ui-audit-verification",
+  "gates": {
+    "business": "approved-by-REQSRC-063-continuous-implementation-delegation",
+    "specification": "revalidation-required-for-REQSRC-066-effective-dating",
+    "architecture": "revalidation-required-after-specification-gate",
+    "release": "not-approved"
+  },
+  "approvalInterpretation": "旧基线曾获连续本地实施授权；REQSRC-066 是新的架构级定价变更，按当前 SDD 门禁重新等待 Specification 评审，不授权静默覆盖旧实现。",
+  "knownRepositoryBlockers": [
+    "root-context-layout-conflict",
+    "historical-empty-database-migration-order"
+  ],
+  "updatedAt": "2026-09-24",
+  "quotationCreateRedesign": {
+    "source": "REQSRC-QUO-CREATE-20260924",
+    "specification": "reopened-explicit-user-change-authorized",
+    "architecture": "reopened-existing-schema-service-invariants",
+    "verification": "local-tests-build-api-and-browser-passed; repository-gates-remain-blocked",
+    "release": "not-approved",
+    "evidence": "creation-redesign-review.md",
+    "implementation": "complete-local-verification-passed"
+  },
+  "uiAudit": {
+    "source": "UIAUDIT-20260923",
+    "specification": "updated-under-user-recommended-decision-authorization",
+    "architecture": "existing-public-list-view-service-no-new-tables",
+    "implementation": "implemented-local-validation",
+    "evidence": ".specify/requirements/global-page-style/audit.md",
+    "release": "no-new-release-approval"
+  },
+  "opportunityQuotationEntry": {
+    "source": "REQSRC-QUO-ENTRY-20260924",
+    "specification": "reopened-and-authorized-by-three-round-user-confirmation",
+    "architecture": "existing-schema-version-check-authorized",
+    "verification": "48-tests-and-browser-build-lint-passed; repository-governance-blockers-remain",
+    "release": "not-approved",
+    "evidence": "opportunity-entry-review.md",
+    "implementation": "complete-local-verification-passed"
+  },
+  "quotationRadioStability": {
+    "source": "REQSRC-QUO-RADIO-20260924",
+    "implementation": "complete-local-verification-passed",
+    "verification": "23 tests, eslint, typecheck and two browser scripts passed; desktop/mobile dialog and footer geometry unchanged",
+    "release": "not-approved"
+  },
+  "detailWorkspace": {
+    "source": "UIRULE-20260924-detail-workspace",
+    "implementation": "complete-local-verification-passed",
+    "evidence": ".specify/requirements/global-page-style/detail-workspace-review.md",
+    "release": "not-approved"
+  },
+  "latestQuotationEntry": {
+    "source": "REQSRC-QUO-LATEST-20260924",
+    "implementation": "complete-local-verification-passed",
+    "verification": "22 tests, frontend typecheck, changed files eslint and browser passed",
+    "release": "not-approved"
+  },
+  "productLineEligibilityRemoved": {
+    "source": "REQSRC-QUO-NO-LINE-20260924",
+    "implementation": "complete-local-verification-passed",
+    "verification": "17 server and 12 web tests passed",
+    "release": "not-approved"
+  }
+}

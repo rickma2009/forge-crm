@@ -1,0 +1,10 @@
+{
+  "sourceId": "REQSRC-053",
+  "title": "业务角色工作区持续实施授权",
+  "sourceDate": "2026-09-22",
+  "managedCopy": "source.md",
+  "sha256": "9ba601fbcbdce99dc37d371f5395540184fda497d3e9413596dca06245d51751",
+  "contentPolicy": "immutable-source-copy",
+  "scope": "用户在015规格评审包后明确要求进入下一步，后续不再逐项确认，持续完成本地工作。",
+  "approvalBoundary": "接受已推荐规格；授权代理记录后续本地架构决策并执行，不伪称用户逐份审阅未来文档；不授权外部部署、参考项目写入或资产晋升。"
+}

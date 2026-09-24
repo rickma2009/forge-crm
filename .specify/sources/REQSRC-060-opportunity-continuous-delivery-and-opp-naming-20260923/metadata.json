@@ -1,0 +1,11 @@
+{
+  "sourceId": "REQSRC-060",
+  "title": "商机管理连续交付与统一 opp 命名授权",
+  "sourceType": "user-continuous-implementation-authorization",
+  "sourceDate": "2026-09-23",
+  "managedCopy": "source.md",
+  "sha256": "eb4823a3c01650c9304807bdc2b618f18e0a0e4e407414499db07d0ba2fc5b27",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved-continuous-local-implementation"
+}

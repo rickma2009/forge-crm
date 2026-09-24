@@ -1,0 +1,12 @@
+{
+  "sourceId": "REQSRC-047",
+  "title": "组织与访问管理连续实施授权",
+  "sourceType": "user-gate-and-continuation-approval",
+  "sourceDate": "2026-09-22",
+  "originalPath": "Codex task user message",
+  "managedCopy": "source.md",
+  "sha256": "3061cd59c833c780738b9d7ad94e0c27a80de3f9cc68735431d500d7c5750285",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved-architecture-and-continuous-local-implementation"
+}

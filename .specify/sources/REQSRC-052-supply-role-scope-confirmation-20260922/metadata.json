@@ -1,0 +1,12 @@
+{
+  "sourceId": "REQSRC-052",
+  "title": "确认业务角色迁移推荐范围",
+  "sourceType": "user-scope-confirmation",
+  "sourceDate": "2026-09-22",
+  "managedCopy": "source.md",
+  "sha256": "f449b78edf3805c05f297591a9593158d475b87f289b39f69c3f6eb813889ebe",
+  "contentPolicy": "immutable-source-copy",
+  "status": "scope-confirmed",
+  "context": "用户回复上一轮推荐范围：复刻完整布局和已实现功能，补齐无效按钮；保留 sys_ 及成员授权历史，不复制供服专属规则，普通角色管理员不可自行授予超管权限。",
+  "approvalBoundary": "仅确认推荐业务范围，继续完成详细 Specification 及架构评审；不代表尚未形成的 spec、plan、tasks、实现或 Release 获批。"
+}

@@ -1,0 +1,12 @@
+{
+  "sourceId": "REQSRC-046",
+  "title": "组织与访问管理基础 Specification Gate 批准",
+  "sourceType": "user-gate-approval",
+  "sourceDate": "2026-09-21",
+  "originalPath": "Codex task user message",
+  "managedCopy": "source.md",
+  "sha256": "3c9e24eb8a5bd896fe11f0626ff08176d94159d421fdf2e1f6f67b1a527a9140",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved-specification-gate"
+}

@@ -1,0 +1,9 @@
+{
+  "sourceId": "REQSRC-QUO-UI-001",
+  "sourceDate": "2026-09-23",
+  "managedCopy": "source.md",
+  "sha256": "973e9c2f1f10f499ee4f12a258b5393094edf9eb5937a512521e7b31c30c4bd9",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "user-requested-local-ui-adjustment"
+}

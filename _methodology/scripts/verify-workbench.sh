@@ -7,8 +7,22 @@ root_dir="$(cd "$script_dir/../.." && pwd)"
 cd "$root_dir"
 
 node _methodology/scripts/init-skills.mjs --check
+node _methodology/scripts/check-list-action-rule.mjs
+node _methodology/scripts/check-page-style.mjs
 node _methodology/scripts/check-matt-setup.mjs . --require-git
 node _methodology/scripts/test-forge-init.mjs
+node _methodology/scripts/check-database-governance.mjs .
+
+for requirement_rule_file in AGENTS.md _methodology/templates/AGENTS-template.md _methodology/project-init/templates/AGENTS.md; do
+  if ! rg -q "需求变更回写" "$requirement_rule_file"; then
+    echo "FAIL  $requirement_rule_file 未声明需求变更回写规则" >&2
+    exit 1
+  fi
+done
+if ! rg -q "当前完整需求" _methodology/examples/000-golden-slice-customer-lead/requirements/original.md; then
+  echo "FAIL  金标准案例未示范完整当前态需求" >&2
+  exit 1
+fi
 
 node --test _methodology/examples/000-golden-slice-customer-lead/implementation/customer-lead.test.mjs
 bash _methodology/scripts/check-sdd.sh _methodology/examples/000-golden-slice-customer-lead

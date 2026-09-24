@@ -1,0 +1,52 @@
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
+import type { Response } from 'express';
+import { productDeleteSchema, systemCodeSchema } from '@interaction-pattern-lab/contracts';
+import type { AuthenticatedRequest } from '../auth/auth.types';
+import { SessionGuard } from '../auth/session.guard';
+import { WriteRequestGuard } from '../auth/write-request.guard';
+import { AuthorizationService } from '../rbac/authorization.service';
+import { OpportunityService } from './opportunity.service';
+
+@Controller('api/systems/:systemCode/products')
+@UseGuards(SessionGuard)
+export class ProductController {
+  constructor(private readonly service: OpportunityService, private readonly authorization: AuthorizationService) {}
+  @Get() async list(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Query() query: Record<string, unknown>) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'item-directory', 'view'); return this.service.listProducts(systemCode, query); }
+  @Get(':id') async detail(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('id') id: string) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'item-directory', 'view'); return this.service.productDetail(systemCode, id); }
+  @Post() @UseGuards(WriteRequestGuard) async create(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Body() body: unknown) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'item-directory', 'create'); return this.service.createProduct(systemCode, request.currentUser.account, body); }
+  @Patch(':id') @UseGuards(WriteRequestGuard) async update(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('id') id: string, @Body() body: unknown) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'item-directory', 'update'); return this.service.updateProduct(systemCode, id, request.currentUser.account, body); }
+  @Delete(':id') @HttpCode(204) @UseGuards(WriteRequestGuard) async remove(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('id') id: string, @Body() body: unknown) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'item-directory', 'delete'); await this.service.deleteProduct(systemCode, id, request.currentUser.id, request.currentUser.account, productDeleteSchema.parse(body)); }
+}
+
+@Controller('api/systems/:systemCode/competitors')
+@UseGuards(SessionGuard)
+export class CompetitorController {
+  constructor(private readonly service: OpportunityService, private readonly authorization: AuthorizationService) {}
+  @Get() async list(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Query() query: Record<string, unknown>) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'competitor-directory', 'view'); return this.service.listCompetitors(systemCode, query); }
+  @Post() @UseGuards(WriteRequestGuard) async create(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Body() body: unknown) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'competitor-directory', 'manage'); return this.service.createCompetitor(systemCode, request.currentUser.account, body); }
+  @Patch(':id') @UseGuards(WriteRequestGuard) async update(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('id') id: string, @Body() body: unknown) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'competitor-directory', 'manage'); return this.service.updateCompetitor(systemCode, id, request.currentUser.account, body); }
+}
+
+@Controller('api/systems/:systemCode/opportunity-templates')
+@UseGuards(SessionGuard)
+export class OpportunityTemplateController {
+  constructor(private readonly service: OpportunityService, private readonly authorization: AuthorizationService) {}
+  @Get() async list(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'opportunity-directory', 'view'); return this.service.templates(systemCode); }
+  @Post(':templateId/stages') @UseGuards(WriteRequestGuard) async createStage(@Req() request: AuthenticatedRequest, @Res({ passthrough: true }) response: Response, @Param('systemCode') raw: string, @Param('templateId') templateId: string, @Body() body: unknown) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'opportunity-stage-admin', 'manage'); return this.service.createStage(systemCode, templateId, request.currentUser.id, request.currentUser.account, String(response.locals.requestId ?? 'unknown'), body); }
+  @Patch('stages/:stageId') @UseGuards(WriteRequestGuard) async updateStage(@Req() request: AuthenticatedRequest, @Res({ passthrough: true }) response: Response, @Param('systemCode') raw: string, @Param('stageId') stageId: string, @Body() body: unknown) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'opportunity-stage-admin', 'manage'); return this.service.updateStage(systemCode, stageId, request.currentUser.id, request.currentUser.account, String(response.locals.requestId ?? 'unknown'), body); }
+  @Delete('stages/:stageId') @UseGuards(WriteRequestGuard) async deleteStage(@Req() request: AuthenticatedRequest, @Res({ passthrough: true }) response: Response, @Param('systemCode') raw: string, @Param('stageId') stageId: string, @Body() body: unknown) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'opportunity-stage-admin', 'manage'); return this.service.deleteStage(systemCode, stageId, request.currentUser.id, request.currentUser.account, String(response.locals.requestId ?? 'unknown'), body); }
+}
+
+@Controller('api/systems/:systemCode/opportunities')
+@UseGuards(SessionGuard)
+export class OpportunityController {
+  constructor(private readonly service: OpportunityService, private readonly authorization: AuthorizationService) {}
+  @Get('user-options') async users(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'opportunity-directory', 'view'); return this.service.userOptions(systemCode); }
+  @Get() async list(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Query() query: Record<string, unknown>) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'opportunity-directory', 'view'); return this.service.listOpportunities(systemCode, query); }
+  @Get(':id') async detail(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('id') id: string) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'opportunity-directory', 'view'); return this.service.detail(systemCode, id); }
+  @Post() @UseGuards(WriteRequestGuard) async create(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Body() body: unknown) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'opportunity-directory', 'create'); return this.service.createOpportunity(systemCode, request.currentUser.id, request.currentUser.account, body); }
+  @Patch(':id') @UseGuards(WriteRequestGuard) async update(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('id') id: string, @Body() body: unknown) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'opportunity-directory', 'update'); return this.service.updateOpportunity(systemCode, id, request.currentUser.account, body); }
+  @Post(':id/follow-ups') @UseGuards(WriteRequestGuard) async addFollowUp(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('id') id: string, @Body() body: unknown) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'opportunity-directory', 'follow-up'); return this.service.createFollowUp(systemCode, id, request.currentUser.id, request.currentUser.account, body); }
+  @Patch(':id/follow-ups/:followUpId') @UseGuards(WriteRequestGuard) async updateFollowUp(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('id') id: string, @Param('followUpId') followUpId: string, @Body() body: unknown) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'opportunity-directory', 'follow-up'); return this.service.updateFollowUp(systemCode, id, followUpId, request.currentUser.account, body); }
+  @Post(':id/analyses') @UseGuards(WriteRequestGuard) async addAnalysis(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('id') id: string, @Body() body: unknown) { const systemCode = systemCodeSchema.parse(raw); await this.authorization.assertAction(request.currentUser.id, systemCode, 'opportunity-directory', 'analyze'); return this.service.createAnalysis(systemCode, id, request.currentUser.id, body); }
+}

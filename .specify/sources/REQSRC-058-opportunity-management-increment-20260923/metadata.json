@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-058",
+  "title": "商机、产品、竞争对象与分析记录增量需求",
+  "sourceType": "user-increment-plus-external-local-document",
+  "sourceDate": "2026-09-23",
+  "externalPath": "/Users/malanjun/projects/mcrm/docs/business/requirements.md",
+  "managedCopy": "source.md",
+  "sha256": "3f71e7f9c25135ccf68a1ae964944debb4807d8b8ec2548c1ce22cc4b8f30b24",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "managedFiles": ["source.md", "mcrm-business-requirements.md"],
+  "status": "archived-awaiting-business-gate"
+}

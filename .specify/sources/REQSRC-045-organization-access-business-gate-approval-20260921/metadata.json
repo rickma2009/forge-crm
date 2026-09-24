@@ -1,0 +1,12 @@
+{
+  "sourceId": "REQSRC-045",
+  "title": "组织与访问管理基础 Business Gate 批准",
+  "sourceType": "user-gate-approval",
+  "sourceDate": "2026-09-21",
+  "originalPath": "Codex task user message",
+  "managedCopy": "source.md",
+  "sha256": "9a9da8b4f1a0fa006bf8b7c219da57becbfe3f190d243c903d2b3f85b880e4e3",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "approved-business-gate"
+}

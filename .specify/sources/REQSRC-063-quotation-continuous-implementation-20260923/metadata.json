@@ -1,0 +1,9 @@
+{
+  "sourceId": "REQSRC-063",
+  "sourceDate": "2026-09-23",
+  "managedCopy": "source.md",
+  "sha256": "1b2dbd75ec8ccbcb57fb485a34ad29af197ac0ba81a17dd8119c4fca22daed55",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "authorized-continuous-local-implementation"
+}

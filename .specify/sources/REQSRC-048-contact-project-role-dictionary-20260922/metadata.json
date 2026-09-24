@@ -1,0 +1,12 @@
+{
+  "sourceId": "REQSRC-048",
+  "title": "联系人隐藏归属及项目角色字典初始化",
+  "sourceType": "user-field-change-request",
+  "sourceDate": "2026-09-22",
+  "originalPath": "Codex task user message",
+  "managedCopy": "source.md",
+  "sha256": "80f4a74f2ecade3b5492ce1a4c2b9e67275d1d63680b3005738b89429cd95809",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "requested-existing-architecture-increment"
+}

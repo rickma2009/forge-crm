@@ -1,0 +1,37 @@
+{
+  "featureId": "015-business-role-workspace",
+  "status": "ui-audit-implemented-local-validation",
+  "currentStage": "ui-audit-verification",
+  "gates": {
+    "business": "approved-scope-REQSRC-052",
+    "specification": "approved-to-proceed-REQSRC-053",
+    "architecture": "approved-by-user-delegation-REQSRC-053-not-individually-human-reviewed",
+    "release": "not-approved"
+  },
+  "sourceRefs": [
+    "REQSRC-051",
+    "REQSRC-052",
+    "REQSRC-053",
+    "REQSRC-057"
+  ],
+  "checks": {
+    "structure": "passed-20260922-check-sdd-spec",
+    "traceability": "passed-20260922-check-sdd-spec",
+    "implementation": "two-tab-scope-tested-170-web-35-server-9-role-api-not-release-approved"
+  },
+  "approvalBasis": {
+    "source": "REQSRC-053",
+    "mode": "user-authorized-recommended-decisions-and-continuous-local-implementation",
+    "individualHumanArchitectureReview": false,
+    "note": "批准状态仅表示用户明确授权代理按推荐决策连续本地实施；不表示用户逐份审阅技术计划，也不授权外部部署、资产晋升或 Release。"
+  },
+  "updatedAt": "2026-09-24",
+  "uiAudit": {
+    "source": "UIAUDIT-20260923",
+    "specification": "updated-under-user-recommended-decision-authorization",
+    "architecture": "existing-public-list-view-service-no-new-tables",
+    "implementation": "implemented-local-validation",
+    "evidence": ".specify/requirements/global-page-style/audit.md",
+    "release": "no-new-release-approval"
+  }
+}
