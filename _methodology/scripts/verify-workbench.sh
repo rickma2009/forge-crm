@@ -41,7 +41,7 @@ node _methodology/scripts/check-markdown-links.mjs .
 node _methodology/scripts/check-ui-adoption.mjs
 
 if [[ ! -d .git ]]; then
-  echo "FAIL  sdd-forge 根目录尚未初始化 Git" >&2
+  echo "FAIL  Forge CRM 根目录尚未初始化 Git" >&2
   exit 1
 fi
 

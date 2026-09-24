@@ -1,5 +1,5 @@
 {
-  "name": "@interaction-pattern-lab/tsconfig",
+  "name": "@forge-crm/tsconfig",
   "version": "0.0.0",
   "private": true,
   "files": ["base.json", "react.json", "nestjs.json"]

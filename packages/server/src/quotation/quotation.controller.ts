@@ -3,7 +3,7 @@ import type { Response } from 'express';
 import { quotePrintHtml, renderQuotePdf } from './quotation-pdf';
 import { ApiException } from '../http/api-exceptions';
 import { z } from 'zod';
-import { systemCodeSchema } from '@interaction-pattern-lab/contracts';
+import { systemCodeSchema } from '@forge-crm/contracts';
 import type { AuthenticatedRequest } from '../auth/auth.types';
 import { SessionGuard } from '../auth/session.guard';
 import { WriteRequestGuard } from '../auth/write-request.guard';

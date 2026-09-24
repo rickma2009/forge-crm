@@ -1,6 +1,6 @@
 import { RowActionButton } from '../common/RowActionButton';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { dataPolicySchema, type Condition, type DataPolicy } from '@interaction-pattern-lab/contracts';
+import { dataPolicySchema, type Condition, type DataPolicy } from '@forge-crm/contracts';
 import type { EnterpriseGateway, PolicyCatalog, PolicyPublish, PolicyResource, RolePolicyRecord, RoleViews } from './gateway';
 
 type Props = { systemCode: string; roleId: string; editable: boolean; gateway: EnterpriseGateway; onDirty: (value: boolean) => void; onSaved: () => Promise<void> };

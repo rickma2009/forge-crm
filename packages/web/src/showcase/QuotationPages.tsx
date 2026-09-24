@@ -1,7 +1,7 @@
 import { DetailWorkspace, DetailHeader } from '../common/DetailWorkspace';
 import { RowActionButton } from '../common/RowActionButton';
 import { useEffect, useRef, useState } from 'react';
-import { quotationDraftSchema, quotationLineAmount, quotationTotal, suggestedPrice, type Product, type ProductPrice, type QuotationRecord } from '@interaction-pattern-lab/contracts';
+import { quotationDraftSchema, quotationLineAmount, quotationTotal, suggestedPrice, type Product, type ProductPrice, type QuotationRecord } from '@forge-crm/contracts';
 import { httpNavigationGateway, type EnterpriseGateway } from './gateway';
 import { BusinessDirectory } from '../common/BusinessDirectory';
 import { quotationApi } from './quotation-api';

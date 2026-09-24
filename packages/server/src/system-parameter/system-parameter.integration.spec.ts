@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { InventoryDefaultsService } from '../inventory/inventory-defaults.service';
 import { randomUUID } from 'node:crypto';
-import { parameterListSchema, parameterUpdateSchema } from '@interaction-pattern-lab/contracts';
+import { parameterListSchema, parameterUpdateSchema } from '@forge-crm/contracts';
 import { DatabaseService } from '../database/database.service';
 import { initializeParameters } from './parameter-defaults';
 import { SystemParameterService } from './system-parameter.service';

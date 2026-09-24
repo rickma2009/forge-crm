@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { customerContactUpdateSchema, customerContactWriteSchema, customerUpdateSchema, customerAddressUpdateSchema, customerAddressWriteSchema, customerWriteSchema } from '@interaction-pattern-lab/contracts';
+import { customerContactUpdateSchema, customerContactWriteSchema, customerUpdateSchema, customerAddressUpdateSchema, customerAddressWriteSchema, customerWriteSchema } from '@forge-crm/contracts';
 import { z } from 'zod';
 import { DatabaseService } from '../database/database.service';
 import { DictionaryService } from '../dictionary/dictionary.service';

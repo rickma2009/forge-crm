@@ -1,7 +1,7 @@
 import { RowActionButton } from '../common/RowActionButton';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { IconPlus, IconTrash, IconSearch } from '@tabler/icons-react';
-import type { AccessUser, RoleTreeNode } from '@interaction-pattern-lab/contracts';
+import type { AccessUser, RoleTreeNode } from '@forge-crm/contracts';
 import type { AccessRoleMember, EnterpriseGateway } from './gateway';
 import { RoleDialog } from './RoleWorkspace';
 

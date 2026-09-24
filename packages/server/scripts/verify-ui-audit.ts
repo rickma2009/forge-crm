@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import { resolve } from 'node:path';
-import { businessListObjects, opportunityDetailSchema, resolvedListViewsSchema, type BusinessListObject } from '@interaction-pattern-lab/contracts';
+import { businessListObjects, opportunityDetailSchema, resolvedListViewsSchema, type BusinessListObject } from '@forge-crm/contracts';
 
 config({ path: resolve(__dirname, '../../../.env'), quiet: true });
 const origin = 'http://localhost:5173';

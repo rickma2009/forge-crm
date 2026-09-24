@@ -1,7 +1,7 @@
 import { TreeWorkspace } from '../common/TreeWorkspace';
 import { type TreeNodeAction } from '../common/useTreeNodeMenu';
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
-import { organizationUnitWriteSchema, type OrganizationUnit, type OrganizationUnitWrite } from '@interaction-pattern-lab/contracts';
+import { organizationUnitWriteSchema, type OrganizationUnit, type OrganizationUnitWrite } from '@forge-crm/contracts';
 import type { EnterpriseGateway } from './gateway';
 import { DialogSubmitError, useDialogSubmit } from './useDialogSubmit';
 import './organization-workspace.css';

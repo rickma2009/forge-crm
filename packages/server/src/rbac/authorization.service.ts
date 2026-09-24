@@ -1,5 +1,5 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
-import type { NavigationResponse } from '@interaction-pattern-lab/contracts';
+import type { NavigationResponse } from '@forge-crm/contracts';
 import type { Prisma } from '../generated/prisma/client';
 import { DatabaseService } from '../database/database.service';
 import { ApiException } from '../http/api-exceptions';

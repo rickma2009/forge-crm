@@ -6,7 +6,7 @@ import { spawnSync } from 'node:child_process';
 
 // Disposable source-copy rehearsal; never writes to an existing target project.
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const web = path.join(root, 'interaction-pattern-lab/packages/web');
+const web = path.join(root, 'packages/web');
 if (!fs.existsSync(path.join(web, 'node_modules/.bin/vitest'))) throw new Error('Install Lab dependencies before rehearsal.');
 const target = fs.mkdtempSync(path.join(os.tmpdir(), 'forge-ui-adoption-'));
 console.log(`Rehearsal directory: ${target}`);
@@ -20,7 +20,7 @@ for (const part of ['components', 'primitives', 'templates', 'scenarios', 'adopt
 for (const part of ['navigation-shell', 'record-workspace']) copy(`src/demos/${part}`);
 const sourcePackage = JSON.parse(fs.readFileSync(path.join(web, 'package.json'), 'utf8'));
 const dependencies = Object.fromEntries(Object.entries(sourcePackage.dependencies).filter(([name]) => ['react', 'react-dom'].includes(name)));
-const devDependencies = Object.fromEntries(Object.entries(sourcePackage.devDependencies).filter(([name]) => name !== '@interaction-pattern-lab/tsconfig'));
+const devDependencies = Object.fromEntries(Object.entries(sourcePackage.devDependencies).filter(([name]) => name !== '@forge-crm/tsconfig'));
 write('package.json', JSON.stringify({ name: 'disposable-ui-adoption', version: '0.0.0', private: true, type: 'module', scripts: { dev: 'vite --host 127.0.0.1', build: 'tsc --noEmit && vite build', test: 'vitest run' }, dependencies, devDependencies }, null, 2));
 write('tsconfig.json', JSON.stringify({ compilerOptions: { target: 'ES2022', lib: ['ES2022','DOM','DOM.Iterable'], module: 'ESNext', moduleResolution: 'Bundler', jsx: 'react-jsx', strict: true, skipLibCheck: true, noEmit: true, esModuleInterop: true, types: ['vitest/globals', '@testing-library/jest-dom'] }, include: ['src'] }));
 write('index.html', '<html lang="zh-CN"><meta charset="utf-8"><title>资产接入演练</title><div id="root"></div><script type="module" src="/src/main.tsx"></script></html>');

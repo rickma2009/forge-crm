@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
-import type { Customer } from '@interaction-pattern-lab/contracts';
+import type { Customer } from '@forge-crm/contracts';
 import { ShowcaseApp } from './ShowcaseApp';
 import { GatewayError, httpNavigationGateway, type EnterpriseGateway } from './gateway';
 

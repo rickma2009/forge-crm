@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
-import { systemCodeSchema } from '@interaction-pattern-lab/contracts';
+import { systemCodeSchema } from '@forge-crm/contracts';
 import { SessionGuard } from '../auth/session.guard';
 import { WriteRequestGuard } from '../auth/write-request.guard';
 import type { AuthenticatedRequest } from '../auth/auth.types';

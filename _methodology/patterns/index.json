@@ -197,7 +197,7 @@
             "_methodology/templates/ui/master-detail-document/master-detail-document.tokens.css"
           ],
           "validation": {
-            "project": "interaction-pattern-lab",
+            "project": ".",
             "slice": "010-master-detail-document-assets",
             "environment": "deterministic in-memory interaction validation lab",
             "versionPoint": "7243bb4 / REQSRC-035",

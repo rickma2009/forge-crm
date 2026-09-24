@@ -1,4 +1,4 @@
-import { systemCodeSchema } from '@interaction-pattern-lab/contracts';
+import { systemCodeSchema } from '@forge-crm/contracts';
 import { config as loadEnv } from 'dotenv';
 import { resolve } from 'node:path';
 

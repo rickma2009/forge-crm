@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
-import { parameterCodeSchema, parameterUpdateSchema, type ParameterCode, type SystemParameter } from '@interaction-pattern-lab/contracts';
+import { parameterCodeSchema, parameterUpdateSchema, type ParameterCode, type SystemParameter } from '@forge-crm/contracts';
 import type { Prisma, SysParameter } from '../generated/prisma/client';
 import { DatabaseService } from '../database/database.service';
 import { ApiException } from '../http/api-exceptions';

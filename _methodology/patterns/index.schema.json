@@ -37,11 +37,11 @@
             "type": "array",
             "items": {
               "type": "object",
-              "required": ["evidenceId", "state", "sourceRefs", "implementationRefs", "artifactRefs", "validation"],
+              "required": ["evidenceId", "state", "archivedSourceRefs", "implementationRefs", "artifactRefs", "validation"],
               "properties": {
                 "evidenceId": { "type": "string", "pattern": "^EVID-[A-Z0-9-]+$" },
                 "state": { "enum": ["in-lab-candidate"] },
-                "sourceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+                "archivedSourceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
                 "implementationRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
                 "artifactRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
                 "validation": {

@@ -1,7 +1,7 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
-import type { Customer, CustomerUpdate, CustomerAddress, CustomerAddressUpdate, Dictionary } from '@interaction-pattern-lab/contracts';
+import type { Customer, CustomerUpdate, CustomerAddress, CustomerAddressUpdate, Dictionary } from '@forge-crm/contracts';
 import { CustomerDetailPage } from './EnterprisePages';
 import type { EnterpriseGateway } from './gateway';
 

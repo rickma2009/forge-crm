@@ -1,5 +1,5 @@
 {
-  "extends": "@interaction-pattern-lab/tsconfig/nestjs.json",
+  "extends": "@forge-crm/tsconfig/nestjs.json",
   "compilerOptions": {
     "noEmit": true,
     "rootDir": "."

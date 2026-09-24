@@ -1,4 +1,4 @@
-import { businessListObjects, businessListDefaultConfig, type BusinessListObject } from '@interaction-pattern-lab/contracts';
+import { businessListObjects, businessListDefaultConfig, type BusinessListObject } from '@forge-crm/contracts';
 import type { Prisma } from '../generated/prisma/client';
 
 /** Explicit idempotent bootstrap. Never overwrites administrator configuration. */

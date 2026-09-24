@@ -1,4 +1,4 @@
-import { quotationExpired } from '@interaction-pattern-lab/contracts';
+import { quotationExpired } from '@forge-crm/contracts';
 import { ApiException } from '../http/api-exceptions';
 
 export function quoteObjectWhere(actorId: string, systemRole: boolean): { ownerUserId?: string } { return systemRole ? {} : { ownerUserId: actorId }; }

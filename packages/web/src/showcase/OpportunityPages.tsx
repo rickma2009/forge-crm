@@ -5,7 +5,7 @@ import type {
   Competitor, CompetitorWrite, Customer, Opportunity, OpportunityAnalysisWrite, OpportunityDetail,
   OpportunityFollowUpWrite, OpportunityProductWrite, OpportunityStageWrite, OpportunityTemplate, OpportunityWrite,
   Product, ProductWrite,
-} from '@interaction-pattern-lab/contracts';
+} from '@forge-crm/contracts';
 import { GatewayError, type EnterpriseGateway } from './gateway';
 import { QuotationCreateDialog } from './QuotationCreateDialog';
 import { quotationApi } from './quotation-api';

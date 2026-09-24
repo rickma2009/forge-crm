@@ -48,19 +48,19 @@ test('TC-1017: 主从单据候选资产保持 idea 且登记可定位的验证�
   assert.deepEqual(masterDetail.evidenceCards, [{
     evidenceId: 'EVID-VAL-010-MASTER-DETAIL',
     state: 'in-lab-candidate',
-    sourceRefs: [
+    archivedSourceRefs: [
       'interaction-pattern-lab/.specify/sources/REQSRC-029-sales-order-bom-template-research-20260905/source.md',
       'interaction-pattern-lab/.specify/sources/REQSRC-030-enterprise-workbench-master-detail-request-20260905/source.md',
       'interaction-pattern-lab/.specify/sources/REQSRC-034-master-detail-document-assets-architecture-gate-approval-20260905/source.md',
       'interaction-pattern-lab/.specify/sources/REQSRC-035-slice-010-release-gate-approval-20260906/source.md',
     ],
     implementationRefs: [
-      'interaction-pattern-lab/packages/web/src/ui-assets/scenarios/sales-order/SalesOrderScenario.tsx',
-      'interaction-pattern-lab/packages/web/src/ui-assets/scenarios/bom/BomScenario.tsx',
+      'packages/web/src/ui-assets/scenarios/sales-order/SalesOrderScenario.tsx',
+      'packages/web/src/ui-assets/scenarios/bom/BomScenario.tsx',
     ],
     artifactRefs: expectedArtifacts,
     validation: {
-      project: 'interaction-pattern-lab',
+      project: '.',
       slice: '010-master-detail-document-assets',
       environment: 'deterministic in-memory interaction validation lab',
       versionPoint: '7243bb4 / REQSRC-035',

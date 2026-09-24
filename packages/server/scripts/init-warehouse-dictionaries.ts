@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { config } from 'dotenv';
 import { resolve } from 'node:path';
-import { systemCodeSchema } from '@interaction-pattern-lab/contracts';
+import { systemCodeSchema } from '@forge-crm/contracts';
 import { DatabaseService } from '../src/database/database.service';
 import { initializeWarehouseDictionaries } from '../src/dictionary/warehouse-dictionaries.seed';
 config({ path: resolve(__dirname, '../../../.env'), quiet: true });

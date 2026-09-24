@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { employeeUpdateSchema, employeeWriteSchema } from '@interaction-pattern-lab/contracts';
+import { employeeUpdateSchema, employeeWriteSchema } from '@forge-crm/contracts';
 import { hash } from 'argon2';
 import { z } from 'zod';
 import { DatabaseService } from '../database/database.service';

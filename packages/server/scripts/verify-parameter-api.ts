@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import { resolve } from 'node:path';
-import { parameterListSchema } from '@interaction-pattern-lab/contracts';
+import { parameterListSchema } from '@forge-crm/contracts';
 config({ path: resolve(__dirname, '../../../.env'), quiet: true });
 const origin = 'http://localhost:5173', root = '/api/systems/demo-portal/parameters';
 const cookies = new Map<string, string>();

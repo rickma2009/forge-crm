@@ -7,14 +7,14 @@
 | 需要完成的任务 | 规范与契约入口 | 代码位置（仓库根目录起） | 交付方式与当前限制 |
 |---|---|---|---|
 | 开始一个工程 | [工程 Profile](../../profiles/typescript-enterprise-web/technology-profile.md) | `_methodology/scripts/forge.mjs` | 可生成最小工程；企业功能需另行接入 |
-| 统一颜色、字号、间距、焦点 | [主从令牌](master-detail-document/master-detail-document.tokens.css) | `interaction-pattern-lab/packages/web/src/ui-assets/adoption/adoption.css` | 独立演练样式入口，以 `.adoption-app` 隔离并允许覆盖 `--adopt-*`；不代表完整设计系统 |
-| 双层导航与搜索折叠 | [导航模板](enterprise-navigation-shell/README.md) | `interaction-pattern-lab/packages/web/src/demos/navigation-shell/` | 源码示例；支持 groups/title/activeId/onSelect/children/showOverview，默认保留原案例 |
-| 列表、查询、新增、详情 | [记录工作区](record-management-workspace/README.md) | `interaction-pattern-lab/packages/web/src/demos/record-workspace/` | 支持 records/columns/renderDetail/allowCreate；仍要求 DemoRecord 基础字段，默认新建不保存 |
-| 待办、提醒、主从工作区 | [工作台模板](enterprise-workbench/README.md) | `interaction-pattern-lab/packages/web/src/showcase/EnterpriseWorkbenchPrototype.tsx` | 候选示例；没有独立接入证明 |
-| 表头＋可编辑明细 | [主从模板](master-detail-document/README.md) | `interaction-pattern-lab/packages/web/src/ui-assets/templates/master-detail-document/` | 场景与 presentation 文案可注入；省略 presentation 时保持历史模拟提示 |
-| 字段与条件规则 | [字段示例](master-detail-document/schema-form.schema.example.json) | `interaction-pattern-lab/packages/web/src/ui-assets/components/schema-form/`、`primitives/` | 受控源码组件；需一起带入类型与规则 |
-| 新增、复制、删除、撤销明细 | [行表契约](master-detail-document/editable-line-grid.schema.example.json) | `interaction-pattern-lab/packages/web/src/ui-assets/components/editable-line-grid/` | 受控源码组件；目标项目提供行身份、字段及权限 |
-| 错误定位、异步结果 | [状态矩阵](master-detail-document/state-matrix.md) | `interaction-pattern-lab/packages/web/src/ui-assets/components/validation-summary/`、`async-state/` | 可组合源码组件；需适配业务错误分类 |
+| 统一颜色、字号、间距、焦点 | [主从令牌](master-detail-document/master-detail-document.tokens.css) | `packages/web/src/ui-assets/adoption/adoption.css` | 独立演练样式入口，以 `.adoption-app` 隔离并允许覆盖 `--adopt-*`；不代表完整设计系统 |
+| 双层导航与搜索折叠 | [导航模板](enterprise-navigation-shell/README.md) | `packages/web/src/demos/navigation-shell/` | 源码示例；支持 groups/title/activeId/onSelect/children/showOverview，默认保留原案例 |
+| 列表、查询、新增、详情 | [记录工作区](record-management-workspace/README.md) | `packages/web/src/demos/record-workspace/` | 支持 records/columns/renderDetail/allowCreate；仍要求 DemoRecord 基础字段，默认新建不保存 |
+| 待办、提醒、主从工作区 | [工作台模板](enterprise-workbench/README.md) | — | 仅保留候选契约；旧验证页已退出当前 CRM，不作为可复制源码 |
+| 表头＋可编辑明细 | [主从模板](master-detail-document/README.md) | `packages/web/src/ui-assets/templates/master-detail-document/` | 场景与 presentation 文案可注入；省略 presentation 时保持历史模拟提示 |
+| 字段与条件规则 | [字段示例](master-detail-document/schema-form.schema.example.json) | `packages/web/src/ui-assets/components/schema-form/`、`primitives/` | 受控源码组件；需一起带入类型与规则 |
+| 新增、复制、删除、撤销明细 | [行表契约](master-detail-document/editable-line-grid.schema.example.json) | `packages/web/src/ui-assets/components/editable-line-grid/` | 受控源码组件；目标项目提供行身份、字段及权限 |
+| 错误定位、异步结果 | [状态矩阵](master-detail-document/state-matrix.md) | `packages/web/src/ui-assets/components/validation-summary/`、`async-state/` | 可组合源码组件；需适配业务错误分类 |
 
 字典、可配置列表视图、数据库导航已有 Lab 实现，但目前作为参考切片评估，不承诺可独立安装。导入操作切片 011 仍为规格草案。
 
@@ -45,7 +45,7 @@ node _methodology/scripts/rehearse-ui-adoption.mjs --clean-install
 
 ## 最小组合的实际入口
 
-`interaction-pattern-lab/packages/web/src/ui-assets/adoption/ResourceWorkspace.tsx` 是接入示范：调用者维护资源集合，模板只通过注入的 save 回写；失败保留输入，放弃变更保留原对象，切换对象通过 key 重建编辑状态。该示范的新建入口明确关闭，避免显示未实现保存的按钮。
+`packages/web/src/ui-assets/adoption/ResourceWorkspace.tsx` 是接入示范：调用者维护资源集合，模板只通过注入的 save 回写；失败保留输入，放弃变更保留原对象，切换对象通过 key 重建编辑状态。该示范的新建入口明确关闭，避免显示未实现保存的按钮。
 
 当前选择源码模板交付，暂不独立发包。列表基础类型、分页、服务端查询、权限、事务、并发与审计仍是目标项目适配项。
 

@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { listViewConfigSchema, businessListObjects, isBusinessListObject } from '@interaction-pattern-lab/contracts';
+import { listViewConfigSchema, businessListObjects, isBusinessListObject } from '@forge-crm/contracts';
 import { z } from 'zod';
 import { DatabaseService } from '../database/database.service';
 import { ApiException } from '../http/api-exceptions';

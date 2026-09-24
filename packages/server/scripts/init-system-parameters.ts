@@ -1,7 +1,7 @@
 /** Additive setup: presets, menu and administrator grants; never overwrite existing configuration. */
 import { config } from 'dotenv';
 import { resolve } from 'node:path';
-import { systemCodeSchema } from '@interaction-pattern-lab/contracts';
+import { systemCodeSchema } from '@forge-crm/contracts';
 import { DatabaseService } from '../src/database/database.service';
 import { initializeParameters } from '../src/system-parameter/parameter-defaults';
 

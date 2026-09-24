@@ -1,4 +1,4 @@
-import { roleWriteSchema, roleUpdateSchema } from '@interaction-pattern-lab/contracts';
+import { roleWriteSchema, roleUpdateSchema } from '@forge-crm/contracts';
 
 describe('business role public write contracts', () => {
   it('rejects blank names and attempts to grant a super-administrator flag', () => {

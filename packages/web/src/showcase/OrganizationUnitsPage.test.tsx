@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, within, waitFor } from '@testing-library/react';
-import { organizationUnitWriteSchema } from '@interaction-pattern-lab/contracts';
+import { organizationUnitWriteSchema } from '@forge-crm/contracts';
 import { vi } from 'vitest';
 import { OrganizationUnitsPage } from './OrganizationUnitsPage';
 import type { EnterpriseGateway } from './gateway';

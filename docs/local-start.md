@@ -1,4 +1,4 @@
-# 本机一键启动
+# Forge CRM 本机一键启动
 
 在工程根目录执行：
 
@@ -11,7 +11,7 @@ bash start.sh
 ## 数据安全与适用边界
 
 - 本入口用于已初始化的当前 Mac 开发环境，不是新电脑安装器或生产部署脚本。
-- 2026-09-21 实际检查确认：容器 `interaction-pattern-lab-postgres-1` 使用数据卷 `interaction-pattern-lab_interaction-pattern-lab-postgres`。工程搬到根目录不等于数据库也已迁移，日常启动继续复用它。
+- 2026-09-21 实际检查确认：容器 `interaction-pattern-lab-postgres-1` 使用数据卷 `interaction-pattern-lab_interaction-pattern-lab-postgres`。Forge CRM 改名只改变产品和代码身份，日常启动继续复用原数据库；这是显式兼容配置，不是遗留遗漏。
 - 不执行 Compose 新建、迁移、seed、reset、删卷或强制结束占用端口的进程；容器缺失时停止，不猜测应使用哪个数据库。
 - 首次使用需准备 Node（package.json 要求 >=22.12.0）、pnpm（>=9.15.0）、OrbStack/Docker、根目录 `.env`、已安装依赖及已初始化数据库。更新代码带来的依赖或数据库结构变更仍需单独处理，不因启动自动获得迁移授权。
 - 默认前端 5173、后端 3000、数据库 55432；本入口按当前默认端口检查。改变 `.env` 端口或数据库目标时，也需相应调整启动入口，不应直接沿用。

@@ -1,7 +1,7 @@
 import { Injectable, OnModuleDestroy, OnModuleInit, Logger } from '@nestjs/common';
 import { createHash, randomUUID } from 'node:crypto';
 import { z } from 'zod';
-import { quotationCreateSchema, quotationDraftSchema, quotationCommandSchema, quotationLineAmount, quotationTotal, type QuotationCreate, type QuotationDraft } from '@interaction-pattern-lab/contracts';
+import { quotationCreateSchema, quotationDraftSchema, quotationCommandSchema, quotationLineAmount, quotationTotal, type QuotationCreate, type QuotationDraft } from '@forge-crm/contracts';
 import type { Prisma, SdQuotation, SdQuotationLine } from '../generated/prisma/client';
 import { DatabaseService } from '../database/database.service';
 import { ApiException } from '../http/api-exceptions';

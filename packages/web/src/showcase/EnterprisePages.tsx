@@ -5,7 +5,7 @@ import { RowActionButton } from '../common/RowActionButton';
 import { RecordQueryBar } from '../common/RecordQueryBar';
 import React, { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import ExcelJS from 'exceljs';
-import type { Customer, CustomerWrite, Dictionary, DictionaryImportRow, DictionaryItem, DictionaryValueWrite, ListViewConfig, ResolvedListView, SalesOption, StyleScene } from '@interaction-pattern-lab/contracts';
+import type { Customer, CustomerWrite, Dictionary, DictionaryImportRow, DictionaryItem, DictionaryValueWrite, ListViewConfig, ResolvedListView, SalesOption, StyleScene } from '@forge-crm/contracts';
 import { GatewayError, type EnterpriseGateway } from './gateway';
 
 const FIELD_LABELS: Record<string, string> = {

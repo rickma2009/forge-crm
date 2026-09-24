@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { createHash } from 'node:crypto';
-import { quotationCommandSchema } from '@interaction-pattern-lab/contracts';
+import { quotationCommandSchema } from '@forge-crm/contracts';
 import { DatabaseService } from '../database/database.service';
 import { AuthorizationService } from '../rbac/authorization.service';
 import { QuotationService } from '../quotation/quotation.service';

@@ -2,7 +2,7 @@ import { RowActionButton } from '../common/RowActionButton';
 import { RecordQueryBar } from '../common/RecordQueryBar';
 import { DialogSubmitError, useDialogSubmit } from './useDialogSubmit';
 import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
-import type { AccessPermission, AccessUser } from '@interaction-pattern-lab/contracts';
+import type { AccessPermission, AccessUser } from '@forge-crm/contracts';
 import type { AccessRoleList, EnterpriseGateway } from './gateway';
 
 const errorText = (reason: unknown) => reason instanceof Error ? reason.message : '服务暂时不可用';

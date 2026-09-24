@@ -3,7 +3,7 @@ import { initializeParameters } from '../src/system-parameter/parameter-defaults
 import { initializeBusinessListViews } from '../src/list-view/business-list-defaults';
 import { hash } from 'argon2';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { systemCodeSchema } from '@interaction-pattern-lab/contracts';
+import { systemCodeSchema } from '@forge-crm/contracts';
 import { config as loadEnv } from 'dotenv';
 import { fileURLToPath } from 'node:url';
 import { PrismaClient } from '../src/generated/prisma/client';

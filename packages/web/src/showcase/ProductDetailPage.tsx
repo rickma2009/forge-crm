@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
-import type { Product, ProductWrite } from '@interaction-pattern-lab/contracts';
+import type { Product, ProductWrite } from '@forge-crm/contracts';
 import { GatewayError, type EnterpriseGateway } from './gateway';
 import { PricingEditor } from './QuotationPages';
 import { AttachmentPanel } from './AttachmentPanel';

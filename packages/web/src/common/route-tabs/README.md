@@ -49,7 +49,7 @@ return <>
 
 本次确认六项操作、固定页和导航不变量；业务路由、身份策略不能跨项目原样复用。现有切片 005 的规格还描述页面状态缓存和 12 页限制，当前壳未实现；本次限于用户指定菜单公共操作，不将整个切片重新声明为完整通过。
 
-验证入口：`pnpm --filter @interaction-pattern-lab/web exec vitest run src/common/route-tabs src/showcase/ShowcaseApp.test.tsx`。测试覆盖纯函数边界、组件键盘与菜单行为、真实壳刷新与关闭导航。未来提升到方法论正式模式时，按来源证据 → 项目验证 → 模式/模板/案例 → 自动检查流程评审；当前模板和实例随公共模块交付。
+验证入口：`pnpm --filter @forge-crm/web exec vitest run src/common/route-tabs src/showcase/ShowcaseApp.test.tsx`。测试覆盖纯函数边界、组件键盘与菜单行为、真实壳刷新与关闭导航。未来提升到方法论正式模式时，按来源证据 → 项目验证 → 模式/模板/案例 → 自动检查流程评审；当前模板和实例随公共模块交付。
 
 
 UI-TAB-01 字体：工作区Tab标题和右键菜单共用 --ipl-font-family / --ipl-font-size（当前12px）；Portal容器显式应用同一令牌，菜单按钮 font: inherit，不得单独放大为14px。验收比较菜单普通/禁用/焦点项与Tab标题的计算字体族、字号。

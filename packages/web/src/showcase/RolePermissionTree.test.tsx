@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { RolePermissionTree } from './RolePermissionTree';
 import type { EnterpriseGateway } from './gateway';
-import type { RoleTreeNode } from '@interaction-pattern-lab/contracts';
+import type { RoleTreeNode } from '@forge-crm/contracts';
 
 const role = { id: 'role', roleName: '销售', version: 1, isSystem: false } as RoleTreeNode;
 const p = (id: string, name: string) => ({ id, permissionName: name, permissionCode: id, resourceCode: 'customer', actionCode: id, status: 'ACTIVE', source: 'MENU_ACTION' });

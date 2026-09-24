@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
-import type { Opportunity } from '@interaction-pattern-lab/contracts';
+import type { Opportunity } from '@forge-crm/contracts';
 import type { EnterpriseGateway } from './gateway';
 import { quotationApi } from './quotation-api';
 

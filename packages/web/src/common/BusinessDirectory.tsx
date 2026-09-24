@@ -2,7 +2,7 @@ import { ListViewSelector } from './ListViewSelector';
 import { RecordQueryBar } from './RecordQueryBar';
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { IconRefresh, IconPlus, IconArrowUp, IconArrowDown } from '@tabler/icons-react';
-import { businessListObjects, type BusinessListObject, type ListViewConfig, type ResolvedListViews, type ResolvedListView } from '@interaction-pattern-lab/contracts';
+import { businessListObjects, type BusinessListObject, type ListViewConfig, type ResolvedListViews, type ResolvedListView } from '@forge-crm/contracts';
 
 import './business-directory.css';
 

@@ -15,7 +15,7 @@ test('TC-1016 scans ui-assets scenarios for every prohibited boundary', () => {
     ['localStorage.getItem(\'probe\')', '浏览器持久化'],
     ['Math.random()', '随机数'],
     ['Date.now()', '当前时间'],
-    ["import value from '@interaction-pattern-lab/server';", '服务端导入'],
+    ["import value from '@forge-crm/server';", '服务端导入'],
   ];
 
   try {

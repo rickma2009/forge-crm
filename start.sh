@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 一键启动 sdd-forge CRM 开发环境
+# 一键启动 Forge CRM 开发环境
 # 用法: bash start.sh
 
 set -euo pipefail

@@ -1,6 +1,6 @@
 # AGENTS.md
 
-> sdd-forge 根即 CRM 应用工程的 AI 执行入口；`_methodology/` 是治理层。
+> Forge CRM 根目录即 CRM 应用工程的 AI 执行入口；`_methodology/` 是治理层。
 
 ## 仓库职责
 

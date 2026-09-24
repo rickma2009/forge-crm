@@ -41,8 +41,10 @@ for (const asset of registry.assets) {
   for (const card of asset.evidenceCards) {
     assert.ok(/^EVID-[A-Z0-9-]+$/.test(card.evidenceId), `${asset.assetId} 证据卡编号非法`);
     assert.equal(card.state, 'in-lab-candidate', `${asset.assetId}/${card.evidenceId} 证据状态越界`);
-    assert.ok(card.sourceRefs.some((ref) => ref.includes('/REQSRC-')), `${asset.assetId}/${card.evidenceId} 缺少 REQSRC 来源`);
-    for (const ref of card.sourceRefs) assertProjectRelativeExistingPath(asset.assetId, card.evidenceId, ref, 'sourceRef');
+    assert.ok(card.archivedSourceRefs.some((ref) => ref.includes('/REQSRC-')), `${asset.assetId}/${card.evidenceId} 缺少 REQSRC 来源`);
+    for (const ref of card.archivedSourceRefs) {
+      assert.ok(!path.isAbsolute(ref) && !ref.startsWith('../') && !ref.includes('/../'), `${asset.assetId}/${card.evidenceId} 的 archivedSourceRef 必须为历史项目相对路径: ${ref}`);
+    }
     for (const ref of card.implementationRefs) assertProjectRelativeExistingPath(asset.assetId, card.evidenceId, ref, 'implementationRef');
     for (const ref of card.artifactRefs) assertProjectRelativeExistingPath(asset.assetId, card.evidenceId, ref, 'artifactRef');
     assert.ok(fs.existsSync(path.join(root, card.validation.project)), `${asset.assetId}/${card.evidenceId} 验证项目不存在`);

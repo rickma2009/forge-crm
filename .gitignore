@@ -9,8 +9,10 @@ coverage/
 **/src/generated/
 
 # 独立仓库，不由工作台根仓库直接跟踪
-_ref/gf_scm/
-_ref/gscrm-sdd/
+mcrm
+supply
+_ref/gf_scm
+_ref/gscrm-sdd
 
 # 临时与生成物
 *.log

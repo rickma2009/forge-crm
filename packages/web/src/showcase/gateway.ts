@@ -1,11 +1,11 @@
-import { parameterListSchema, parameterSaveSchema, type ParameterList, type ParameterUpdate } from '@interaction-pattern-lab/contracts';
-import { accessPermissionListSchema, roleListSchema, type RoleTreeNode, type RoleWrite, type RoleUpdate, accessUserListSchema, apiErrorSchema, customerAddressSchema, customerAddressWriteSchema, customerContactSchema, customerContactWriteSchema, customerDetailSchema, customerListSchema, customerSchema, dictionaryImportResultSchema, dictionaryListSchema, navigationResponseSchema, resolvedListViewsSchema, salesOptionSchema, sessionUserSchema, styleSceneListSchema, styleSceneSchema, type Customer, type CustomerAddress, type CustomerAddressUpdate, type CustomerAddressWrite, type CustomerContact, type CustomerContactUpdate, type CustomerContactWrite, type CustomerDetail, type CustomerList, type CustomerUpdate, type CustomerWrite, type Dictionary, type DictionaryImportRow, type DictionaryValueUpdate, type DictionaryValueWrite, type ListViewConfig, type LoginRequest, type NavigationResponse, type ResolvedListViews, type SalesOption, type SessionUser, type StyleScene, type StyleSceneList, type StyleSceneUpdate, type StyleSceneWrite } from '@interaction-pattern-lab/contracts';
-import { organizationUnitListSchema, organizationUnitSchema, type OrganizationUnit, type OrganizationUnitList, type OrganizationUnitUpdate, type OrganizationUnitWrite } from '@interaction-pattern-lab/contracts';
-import { employeeDetailSchema, employeeListSchema, employeeOptionsSchema, type EmployeeDetail, type EmployeeList, type EmployeeOptions, type EmployeeUpdate, type EmployeeWrite } from '@interaction-pattern-lab/contracts';
-import { resourceButtonSchema, resourcePageListSchema, resourcePageSchema, resourceTabSchema, type NavigationMountWrite, type ResourceButton, type ResourceButtonWrite, type ResourcePage, type ResourcePageUpdate, type ResourcePageWrite, type ResourceTab, type ResourceTabWrite, type ResourceTreeMove } from '@interaction-pattern-lab/contracts';
+import { parameterListSchema, parameterSaveSchema, type ParameterList, type ParameterUpdate } from '@forge-crm/contracts';
+import { accessPermissionListSchema, roleListSchema, type RoleTreeNode, type RoleWrite, type RoleUpdate, accessUserListSchema, apiErrorSchema, customerAddressSchema, customerAddressWriteSchema, customerContactSchema, customerContactWriteSchema, customerDetailSchema, customerListSchema, customerSchema, dictionaryImportResultSchema, dictionaryListSchema, navigationResponseSchema, resolvedListViewsSchema, salesOptionSchema, sessionUserSchema, styleSceneListSchema, styleSceneSchema, type Customer, type CustomerAddress, type CustomerAddressUpdate, type CustomerAddressWrite, type CustomerContact, type CustomerContactUpdate, type CustomerContactWrite, type CustomerDetail, type CustomerList, type CustomerUpdate, type CustomerWrite, type Dictionary, type DictionaryImportRow, type DictionaryValueUpdate, type DictionaryValueWrite, type ListViewConfig, type LoginRequest, type NavigationResponse, type ResolvedListViews, type SalesOption, type SessionUser, type StyleScene, type StyleSceneList, type StyleSceneUpdate, type StyleSceneWrite } from '@forge-crm/contracts';
+import { organizationUnitListSchema, organizationUnitSchema, type OrganizationUnit, type OrganizationUnitList, type OrganizationUnitUpdate, type OrganizationUnitWrite } from '@forge-crm/contracts';
+import { employeeDetailSchema, employeeListSchema, employeeOptionsSchema, type EmployeeDetail, type EmployeeList, type EmployeeOptions, type EmployeeUpdate, type EmployeeWrite } from '@forge-crm/contracts';
+import { resourceButtonSchema, resourcePageListSchema, resourcePageSchema, resourceTabSchema, type NavigationMountWrite, type ResourceButton, type ResourceButtonWrite, type ResourcePage, type ResourcePageUpdate, type ResourcePageWrite, type ResourceTab, type ResourceTabWrite, type ResourceTreeMove } from '@forge-crm/contracts';
 
-import { rolePermissionCatalogSchema } from '@interaction-pattern-lab/contracts';
-import { attachmentListSchema, attachmentMetaSchema, type AttachmentMeta } from '@interaction-pattern-lab/contracts';
+import { rolePermissionCatalogSchema } from '@forge-crm/contracts';
+import { attachmentListSchema, attachmentMetaSchema, type AttachmentMeta } from '@forge-crm/contracts';
 import {
   competitorListSchema, competitorSchema, opportunityDetailSchema, opportunityListSchema,
   opportunityTemplateListSchema, productListSchema, productSchema,
@@ -14,14 +14,14 @@ import {
   type OpportunityFollowUpUpdate, type OpportunityFollowUpWrite, type OpportunityList,
   type OpportunityStageUpdate, type OpportunityStageWrite, type OpportunityTemplate, type OpportunityUpdate, type OpportunityWrite,
   type Product, type ProductList, type ProductUpdate, type ProductWrite,
-} from '@interaction-pattern-lab/contracts';
+} from '@forge-crm/contracts';
 import {
   inboundOrderListSchema, inboundOrderSchema, inventoryBalanceListSchema, itemListSchema, itemSchema,
   legalEntityListSchema, legalEntitySchema, warehouseListSchema, warehouseSchema,
   type InboundOrder, type InboundOrderList, type InboundOrderWrite, type InventoryBalanceList, type InventoryCommand,
   type Item, type ItemList, type ItemUpdate, type ItemWrite, type LegalEntity, type LegalEntityList, type LegalEntityUpdate,
   type LegalEntityWrite, type Warehouse, type WarehouseList, type WarehouseUpdate, type WarehouseWrite,
-} from '@interaction-pattern-lab/contracts';
+} from '@forge-crm/contracts';
 
 export class GatewayError extends Error {
   constructor(public readonly status: number, public readonly code: string, message: string, public readonly details?: Record<string, unknown>) { super(message); }
@@ -56,7 +56,7 @@ export interface EnterpriseGateway extends NavigationGateway {
   updateInboundOrder(systemCode: string, id: string, input: InboundOrderWrite): Promise<InboundOrder>;
   commandInboundOrder(systemCode: string, id: string, action: 'post' | 'reverse' | 'void', input: InventoryCommand): Promise<InboundOrder>;
   inventoryBalances(systemCode: string, query: URLSearchParams): Promise<InventoryBalanceList>;
-  rolePermissionCatalog(systemCode: string): Promise<import('@interaction-pattern-lab/contracts').RolePermissionCatalog>;
+  rolePermissionCatalog(systemCode: string): Promise<import('@forge-crm/contracts').RolePermissionCatalog>;
   roleSubjectCatalog(systemCode: string): Promise<RoleSubjectCatalog>;
   roleSubjectBindings(systemCode: string, roleId: string): Promise<RoleSubjectBinding[]>;
   bindRoleSubjects(systemCode: string, roleId: string, input: { kind: SubjectKind; subjectIds: string[]; includeDescendants: boolean; effectiveAt: string; expiresAt: string | null }): Promise<void>;
@@ -73,9 +73,9 @@ export interface EnterpriseGateway extends NavigationGateway {
   rollbackRolePolicy(systemCode: string, roleId: string, resourceId: string, action: string, revision: number, input: PolicyPublish): Promise<{ version: number; roleVersion: number }>;
   roleViews(systemCode: string, roleId: string): Promise<RoleViews>;
   saveRoleViews(systemCode: string, roleId: string, input: { version: number; viewIds: string[] }): Promise<void>;
-  accessUsers(systemCode: string, query: URLSearchParams): Promise<import('@interaction-pattern-lab/contracts').AccessUserList>;
+  accessUsers(systemCode: string, query: URLSearchParams): Promise<import('@forge-crm/contracts').AccessUserList>;
   accessRoles(systemCode: string, query: URLSearchParams): Promise<AccessRoleList>;
-  accessPermissions(systemCode: string, query: URLSearchParams): Promise<import('@interaction-pattern-lab/contracts').AccessPermissionList>;
+  accessPermissions(systemCode: string, query: URLSearchParams): Promise<import('@forge-crm/contracts').AccessPermissionList>;
   setAccessUserStatus(systemCode: string, userId: string, input: { status: 'ACTIVE' | 'DISABLED'; version: number }): Promise<void>;
   createAccessRole(systemCode: string, input: { roleCode: string; roleName: string; description?: string }): Promise<void>;
   accessRoleMembers(systemCode: string, roleId: string): Promise<AccessRoleMember[]>;
@@ -170,8 +170,8 @@ export interface SubjectMember extends AccessRoleMember { eligible: boolean }
 export interface RoleViews { version: number; items: Array<{ id: string; viewName: string; pageCode: string; actionCode: string; status: string; config: ListViewConfig; assigned: boolean; grantable: boolean }> }
 export interface PolicyResource { id: string; resourceName: string; bindingKey: string; enabled: boolean; version: number; fields: Array<{ id: string; fieldCode: string; fieldName: string; bindingKey: string; fieldType: string; source: string; status: string; groupName: string; version: number }> }
 export interface PolicyCatalog { resources: PolicyResource[]; availableBindings: Array<{ key: string; name: string; actions: string[] }> }
-export type PolicyPublish = import('@interaction-pattern-lab/contracts').DataPolicy & { version: number; roleVersion: number; viewIds: string[] };
-export interface RolePolicyRecord extends PolicyPublish { readOnly: boolean; resource: PolicyResource; history: Array<{ version: number; summary: string; createdAt: string; publishedBy: string; snapshot: import('@interaction-pattern-lab/contracts').DataPolicy & { viewIds: string[] } }> }
+export type PolicyPublish = import('@forge-crm/contracts').DataPolicy & { version: number; roleVersion: number; viewIds: string[] };
+export interface RolePolicyRecord extends PolicyPublish { readOnly: boolean; resource: PolicyResource; history: Array<{ version: number; summary: string; createdAt: string; publishedBy: string; snapshot: import('@forge-crm/contracts').DataPolicy & { viewIds: string[] } }> }
 
 export interface AccessRoleList { items: Array<{ id: string; roleCode: string; roleName: string; roleType: string; isSystem: boolean; description: string | null; status: 'ACTIVE' | 'DISABLED'; memberCount: number; permissionCount: number; version: number; updatedAt: string }>; pagination: { page: number; pageSize: number; total: number; totalPages: number } }
 export interface AccessRoleMember { id: string; userId: string; status: 'ACTIVE' | 'DISABLED'; effectiveAt: string; expiresAt: string | null; version: number; user: { account: string; displayName: string; status: string } }

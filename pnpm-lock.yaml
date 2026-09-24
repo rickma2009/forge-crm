@@ -33,7 +33,7 @@ importers:
         specifier: ^3.25.0
         version: 3.25.76
     devDependencies:
-      '@interaction-pattern-lab/tsconfig':
+      '@forge-crm/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
       typescript:
@@ -45,7 +45,7 @@ importers:
 
   packages/server:
     dependencies:
-      '@interaction-pattern-lab/contracts':
+      '@forge-crm/contracts':
         specifier: workspace:*
         version: link:../contracts
       '@nestjs/common':
@@ -85,7 +85,7 @@ importers:
         specifier: ^3.25.0
         version: 3.25.76
     devDependencies:
-      '@interaction-pattern-lab/tsconfig':
+      '@forge-crm/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
       '@nestjs/cli':
@@ -138,7 +138,7 @@ importers:
 
   packages/web:
     dependencies:
-      '@interaction-pattern-lab/contracts':
+      '@forge-crm/contracts':
         specifier: workspace:*
         version: link:../contracts
       '@tabler/icons-react':
@@ -154,7 +154,7 @@ importers:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
     devDependencies:
-      '@interaction-pattern-lab/tsconfig':
+      '@forge-crm/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
       '@testing-library/jest-dom':

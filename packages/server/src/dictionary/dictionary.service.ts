@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { createHash } from 'node:crypto';
-import { dictionaryImportRequestSchema, dictionaryValueUpdateSchema, dictionaryValueWriteSchema } from '@interaction-pattern-lab/contracts';
+import { dictionaryImportRequestSchema, dictionaryValueUpdateSchema, dictionaryValueWriteSchema } from '@forge-crm/contracts';
 import { z } from 'zod';
 import { DatabaseService } from '../database/database.service';
 import { ApiException } from '../http/api-exceptions';

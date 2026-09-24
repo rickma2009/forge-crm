@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { IconRefresh } from '@tabler/icons-react';
-import type { ParameterList, SystemParameter } from '@interaction-pattern-lab/contracts';
+import type { ParameterList, SystemParameter } from '@forge-crm/contracts';
 import { RecordQueryBar } from '../common/RecordQueryBar';
 import { RowActionButton } from '../common/RowActionButton';
 import type { EnterpriseGateway } from './gateway';

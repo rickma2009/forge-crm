@@ -1,6 +1,6 @@
 import { RowActionButton } from '../common/RowActionButton';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { AccessUser } from '@interaction-pattern-lab/contracts';
+import type { AccessUser } from '@forge-crm/contracts';
 import type { EnterpriseGateway, RoleSubjectBinding, RoleSubjectCatalog, SubjectKind, SubjectMember } from './gateway';
 
 const message = (e: unknown) => e instanceof Error ? e.message : '操作失败，请重试';

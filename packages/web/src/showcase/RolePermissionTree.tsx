@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { IconChevronDown, IconChevronRight, IconShieldCheck } from '@tabler/icons-react';
-import type { RolePermissionCatalog, RoleTreeNode } from '@interaction-pattern-lab/contracts';
+import type { RolePermissionCatalog, RoleTreeNode } from '@forge-crm/contracts';
 import type { EnterpriseGateway } from './gateway';
 import { RoleDialog } from './RoleWorkspace';
 

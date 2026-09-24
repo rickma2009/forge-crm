@@ -1,4 +1,4 @@
-import { businessListDefaultConfig, resolvedListViewsSchema } from '@interaction-pattern-lab/contracts';
+import { businessListDefaultConfig, resolvedListViewsSchema } from '@forge-crm/contracts';
 import { ListViewService } from './list-view.service';
 import type { DatabaseService } from '../database/database.service';
 import { resolveEffectiveRoleIds } from '../rbac/role-scope';

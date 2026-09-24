@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import type { InboundOrder } from '@interaction-pattern-lab/contracts';
+import type { InboundOrder } from '@forge-crm/contracts';
 import type { EnterpriseGateway } from './gateway';
 import { InboundOrderPage } from './InventoryPages';
 const entityId = '33333333-3333-4333-8333-333333333333', warehouseId = '44444444-4444-4444-8444-444444444444';

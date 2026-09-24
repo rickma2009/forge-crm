@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpCode, Inject, Post, Req, Res, UseGuards } from '@nestjs/common';
 import type { Response } from 'express';
-import { loginRequestSchema } from '@interaction-pattern-lab/contracts';
+import { loginRequestSchema } from '@forge-crm/contracts';
 import { AuthService } from './auth.service';
 import { WriteRequestGuard } from './write-request.guard';
 import { SESSION_COOKIE, SessionGuard } from './session.guard';

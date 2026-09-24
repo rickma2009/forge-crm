@@ -1,166 +1,58 @@
-# sdd-forge
+# Forge CRM
 
-本机日常启动：在根目录执行 `bash start.sh`。首次准备、原数据库保留策略及故障提示见 [本机一键启动](docs/local-start.md)。
+Forge CRM 是一个由 AI 辅助、持续迭代的企业客户与销售管理案例项目。当前仓库已从早期 SDD 方法论验证场演进为可运行的 CRM 应用；历史验证材料继续作为可追溯证据保留，但不再代表产品名称或代码包身份。
 
-当前运行入口为 CRM：[本地应用](http://localhost:5173/)，[角色管理](http://localhost:5173/#/showcase/system/roles)。旧“企业交互验证场”分类菜单与独占演示页面已按用户要求移除；旧 `?pattern=...` 链接进入 CRM，不再打开分类应用。历史方法论与验证材料保留为证据，不作为产品入口。清理与恢复说明见 [.specify/changes/20260922-retire-interaction-catalog.md](.specify/changes/20260922-retire-interaction-catalog.md)。
-
-> 面向企业应用 AI 工程的治理、创建、验证与资产复用工作台。
->
-> 目标不是复制某个历史项目，而是把业务目标稳定地转化为可追溯、可验证、可运营的数字化系统。
-
-## 1. 仓库定位
-
-`sdd-forge` 这个名称继续保留：SDD 是治理骨架，但工作台并不限于一种开发技法。Matt Pocock 工程 Skills 等外部方法作为探索和执行工具接入，不能替代 SDD 的事实源、Gate 与追溯。
-
-仓库包含以下边界，职责严格分离：
-
-| 区域 | 定位 | 是否是规范源 |
-|---|---|---|
-| `_methodology/` | 方法论、模板、门禁和金标准案例 | **是，唯一规范源** |
-| `_ref/` | 在建项目、历史代码和经验素材 | 否，只读参考 |
-| `interaction-pattern-lab/` | 企业交互模式验证场 | 否，只提供验证证据 |
-| `mcrm/` | 独立 Git 仓库中的真实实践项目 | 只对 MCRM 负责 |
-| `<project-name>/` | 未来由工作台创建的独立项目 | 只对本项目负责 |
-
-### 关于 `gf_scm`
-
-`_ref/gf_scm/` 是一个仍在建设和演进中的实际案例，不是最佳实践，也不是可直接复制的脚手架。它可能包含历史 Java 技术栈、旧目录、特定企业平台约束、过时模板和未完成设计。
-
-使用它时必须遵守：
-
-1. 只把它当作问题案例、实现素材和经验来源。
-2. 不直接复制其 `.specify/`、`AGENTS.md`、业务模块或技术约束。
-3. 任何复用内容都必须先与 `_methodology/` 的当前规范核对。
-4. 发现可复用经验时，先抽象、去业务化、验证，再沉淀到 `_methodology/`。
-
-## 2. 单一事实源
-
-- SDD 目录统一使用 `.specify/`，不再使用 `_spec/`。
-- 通用方法论只维护在 `_methodology/`。
-- 项目约束维护在项目自己的 `AGENTS.md` 和 `.specify/memory/constitution.md`。
-- 业务需求、验收标准、测试、计划和任务通过稳定 ID 追溯。
-- 阶段完成以可验证证据为准，不以 AI 自述或手工勾选为准。
-
-## 3. 标准工作流
-
-```text
-治理初始化 → 项目章程 → 业务发现 → Business Gate → 系统边界与架构
-       → Architecture Gate → 应用技术 Profile → Spec → Testcases → Plan → Tasks → Implement
-       → Review → Release → 运营反馈与方法论回流
-```
-
-四个人工决策门：
-
-| Gate | 人类确认内容 | AI 可以做什么 |
-|---|---|---|
-| Business Gate | 目标、范围、角色、成功指标 | 分析、归纳、提出澄清问题 |
-| Spec Gate | 业务语义、验收标准、优先级 | 生成规格和测试场景 |
-| Architecture Gate | 系统边界、数据、安全、重大 ADR | 提供方案、评估风险 |
-| Release Gate | 验收证据、上线、回滚 | 汇总证据、执行获授权的动作 |
-
-## 4. 目录结构
-
-```text
-sdd-forge/
-├── README.md
-├── _methodology/
-│   ├── 00-搭建指南.md
-│   ├── 01-技术规范清单.md
-│   ├── 02-参考资产复用指南.md
-│   ├── 03-SDD规范与质量门禁.md
-│   ├── 04-需求追溯规范.md
-│   ├── 05-v0.2整改闭环.md
-│   ├── 06-原始需求与转换管理规范.md
-│   ├── 07-Skills初始化与使用规范.md
-│   ├── 08-企业管理系统交互模式分类方法.md
-│   ├── 09-资产类型、成熟度与晋升规范.md
-│   ├── 10-SDD与Matt工程流程集成规范.md
-│   ├── project-init/              # 技术栈中立的项目初始化清单
-│   ├── profiles/                  # Architecture Gate 后显式应用的技术 Profile
-│   ├── skills/                    # 工作台级 Skills、清单与测试场景
-│   ├── templates/                 # 技术栈中立模板
-│   ├── examples/                  # 金标准切片
-│   ├── reference-cases/           # 有证据但尚待真实切片验证的 R1 萃取案例
-│   ├── patterns/                  # 经验证的可复用模式
-│   ├── decisions/                 # 工作台级 ADR
-│   └── scripts/                   # 自动校验工具
-├── _ref/
-│   └── gf_scm/                    # 在建案例，只读参考
-├── interaction-pattern-lab/       # 企业交互模式验证场（根仓库跟踪）
-├── mcrm/                          # 独立 Git 实践项目（根仓库不跟踪）
-└── <project-name>/
-    ├── AGENTS.md
-    ├── CLAUDE.md -> AGENTS.md
-    ├── .specify/
-    │   ├── memory/
-    │   └── specs/
-    ├── _build-log/
-    ├── docs/
-    └── packages/
-```
-
-## 5. 使用顺序
-
-需要选择样式、组件或页面时，先读 [企业 UI 资产采用入口](_methodology/templates/ui/ADOPTION.md)。可运行隔离接入演练，区分已验证源码与仍需适配的示例。
-
-1. 阅读 [`00-搭建指南.md`](_methodology/00-搭建指南.md)。
-2. 运行 `node _methodology/scripts/init-skills.mjs`，并阅读 [`07-Skills初始化与使用规范.md`](_methodology/07-Skills初始化与使用规范.md)。
-3. 使用治理初始化器建立项目最小事实源；Business/Architecture Gate 后再显式应用技术 Profile。进入企业系统页面规划时，先按 [`08-企业管理系统交互模式分类方法.md`](_methodology/08-企业管理系统交互模式分类方法.md) 识别页面、操作、展示、状态与特殊操作。
-4. 参考 CRUD 类 [`000-golden-slice-customer-lead`](_methodology/examples/000-golden-slice-customer-lead/)、工作流类 [`001-golden-slice-lead-review-workflow`](_methodology/examples/001-golden-slice-lead-review-workflow/)、导航交互类 [`002-golden-interaction-enterprise-navigation-shell`](_methodology/examples/002-golden-interaction-enterprise-navigation-shell/) 和记录管理交互类 [`003-golden-interaction-record-management-workspace`](_methodology/examples/003-golden-interaction-record-management-workspace/)。
-5. Spec 阶段运行 `bash _methodology/scripts/check-sdd.sh <功能目录> spec`，完整交付运行 `... full`。
-6. 通过对应人工 Gate 后才进入下一阶段。
-
-项目骨架还应运行：
+本机启动：
 
 ```bash
-node _methodology/scripts/forge.mjs init ./new-project --name "New Project"
-# 记录来源支持的 Business 与 Architecture Gate 后：
-node _methodology/scripts/forge.mjs apply-profile ./new-project typescript-enterprise-web
-cd ./new-project && pnpm install --frozen-lockfile && pnpm verify
-bash _methodology/scripts/check-project.sh <项目目录>
-node _methodology/scripts/check-matt-setup.mjs <项目目录>
-node _methodology/scripts/check-project-profile.mjs <项目目录>
+bash start.sh
 ```
 
-方法论核心验证与跨项目验证已拆分：
+启动后访问 [http://localhost:5173/](http://localhost:5173/)。首次准备、原数据库兼容策略及故障处理见 [docs/local-start.md](docs/local-start.md)。
+
+## 工程结构
+
+```text
+forge-crm/
+├── packages/
+│   ├── web/          # React + Vite 前端
+│   ├── server/       # NestJS + Prisma 服务端
+│   ├── contracts/    # 前后端共享 Zod 契约
+│   └── tsconfig/     # 共享 TypeScript 配置
+├── .specify/         # 当前需求、规格、Gate 与来源证据
+├── _methodology/     # SDD 治理、模板、模式与自动检查
+├── _ref/             # 只读参考素材
+├── docs/             # 架构、数据库和运行文档
+├── scripts/          # 工程验证与维护脚本
+├── compose.yaml
+└── start.sh
+```
+
+根目录是 CRM 应用工程，使用 pnpm workspace。`_methodology/` 是治理层和可复用资产的唯一规范源；`_ref/` 仅提供只读证据，不直接成为项目规则。
+
+## 开发与验证
 
 ```bash
-bash _methodology/scripts/verify-workbench.sh
-bash _methodology/scripts/verify-validation-projects.sh
-# 或同时执行
+pnpm install --frozen-lockfile
+pnpm dev
+pnpm verify
 bash _methodology/scripts/verify-all.sh
 ```
 
-## 6. 项目索引
+主要技术栈：React 19、Vite、NestJS、Prisma、PostgreSQL、TypeScript、Vitest/Jest。
 
-| 项目 | 状态 | 说明 |
-|---|---|---|
-| `mcrm` | 002 implementation-verified、Release pending；003/004 Spec 待重确认 | 独立实践项目；尚无生产发布、业务指标改善和 Release Gate 证据 |
-| `interaction-pattern-lab` | Business / Specification / Architecture approved；切片 002 review-complete-awaiting-release-gate | 企业交互模式验证场；103 项目录和 VAL-002 已本地验证，资产晋升、部署和 Release 仍未批准 |
+## SDD 工作方式
 
-## 7. 资产模型
+业务需求、验收标准、技术方案、测试和实现通过 `.specify/` 中的稳定 ID 追溯。工作流采用 Business、Specification、Architecture、Release 四类 Gate，AI 不虚构人工批准或发布状态。详细规则见：
 
-工作台管理五类资产：方法规则、项目起步包、交互模式、通用能力包、参考案例。成熟度统一使用：
+- [_methodology/00-搭建指南.md](_methodology/00-搭建指南.md)
+- [_methodology/03-SDD规范与质量门禁.md](_methodology/03-SDD规范与质量门禁.md)
+- [_methodology/04-需求追溯规范.md](_methodology/04-需求追溯规范.md)
+- [_methodology/11-数据库设计与数据分层规范.md](_methodology/11-数据库设计与数据分层规范.md)
+- [AGENTS.md](AGENTS.md)
 
-```text
-idea → candidate → implementation-verified → interaction-verified
-     → project-adopted → business-validated → released → deprecated
-```
+`sdd-forge-workflow`、`.sdd-forge.json` 等名称属于方法论协议和兼容接口，本次产品改名不改变这些治理标识。
 
-具体证据和晋升规则见 [`09-资产类型、成熟度与晋升规范.md`](_methodology/09-资产类型、成熟度与晋升规范.md)，SDD 与 Matt 的职责映射见 [`10-SDD与Matt工程流程集成规范.md`](_methodology/10-SDD与Matt工程流程集成规范.md)。
+## 改名兼容说明
 
-## 8. 方法论版本
-
-当前版本：**v0.3-draft**（2026-08-31）
-
-本版本完成：
-
-- 将 `_methodology/` 确立为唯一规范源；
-- 将 `gf_scm` 降级为在建参考案例；
-- 统一 `.specify/` 目录；
-- 引入项目发现、人类决策门、需求追溯和自动质量门禁；
-- 建立技术栈中立模板与独立金标准切片。
-- 建立工作台级 Skills 清单、初始化入口、阶段路由和自动检查。
-- 建立“参考源码萃取 → 真实项目验证 → UI 模式/模板/交互案例”的交互资产回流路径。
-- 完成 SDD 适配的 Matt per-repo Setup、默认 triage 词汇及自动检查。
-- 建立两阶段 `forge init` / `apply-profile`，并验证 `typescript-enterprise-web` v0.2 可安装、测试和构建。
+应用、仓库与 npm 包统一使用 `Forge CRM` / `forge-crm` / `@forge-crm/*`。为保护已有本地数据，Compose 项目名、PostgreSQL 容器、数据卷和数据库账号暂时保留早期 `interaction-pattern-lab` 身份；不要仅因产品改名而重建或删除数据卷。

@@ -73,7 +73,7 @@
 | `REQSRC-040` | UI 接入整改继续指令 | 用户执行指令 | 2026-09-18 | `REQSRC-040-ui-adoption-next-step-20260918/source.md` | active-local-adoption-refactoring |
 | `REQSRC-048` | 联系人隐藏归属及项目角色字典初始化 | 用户字段调整指令 | 2026-09-22 | `REQSRC-048-contact-project-role-dictionary-20260922/source.md` | requested-existing-architecture-increment |
 | `REQSRC-061` | 组织新增保存失败与弹窗错误归属修复 | 用户缺陷修复指令 | 2026-09-23 | `REQSRC-061-organization-dialog-save-feedback-20260923/source.md` | existing-function-defect-fix |
-| `REQSRC-070` | 库存与入库单需求及完整推荐决策 | 外部初稿、用户澄清与连续实施授权 | 2026-09-24 | `REQSRC-070-inventory-inbound-requirement-20260924/source.md` | approved-implementation-in-progress |
+| `REQSRC-070` | 库存与入库单需求及完整推荐决策 | 外部初稿、用户澄清与连续实施授权 | 2026-09-24 | `REQSRC-070-inventory-inbound-requirement-20260924/mcrm-inbound-stock.md` | approved-implementation-in-progress |
 | `REQSRC-071` | 商机阶段、物料产品、引用展示与查询区统一整改 | 用户增量需求与连续实施授权 | 2026-09-24 | `REQSRC-071-stage-item-reference-query-ui-refinement-20260924/source.md` | approved-continuous-implementation |
 | `REQSRC-072` | 物料产品详情动态路由修复 | 用户缺陷反馈与既有三页签需求确认 | 2026-09-24 | `REQSRC-072-item-detail-route-repair-20260924/source.md` | approved-continuous-implementation |
 | `REQSRC-073` | Forge CRM 项目身份迁移 | 用户项目治理变更与执行批准 | 2026-09-25 | `REQSRC-073-forge-crm-project-rename-20260925/source.md` | approved-for-implementation |

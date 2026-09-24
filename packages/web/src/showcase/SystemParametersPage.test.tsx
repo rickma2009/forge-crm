@@ -1,7 +1,7 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import type { SystemParameter } from '@interaction-pattern-lab/contracts';
+import type { SystemParameter } from '@forge-crm/contracts';
 import { SystemParametersPage } from './SystemParametersPage';
 
 const row: SystemParameter = { id: '00000000-0000-4000-8000-000000000001', parameterCode: 'DEFAULT_LEGAL_ENTITY', parameterName: '默认法人记录', value: null, usageNote: '请设置法人', sortNo: 10, status: 'ACTIVE', version: 1 };

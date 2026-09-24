@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { quotationLineWriteSchema, quotationLineAmount, suggestedPrice, type Product, type ProductPrice, type QuotationDraft } from '@interaction-pattern-lab/contracts';
+import { quotationLineWriteSchema, quotationLineAmount, suggestedPrice, type Product, type ProductPrice, type QuotationDraft } from '@forge-crm/contracts';
 import type { EnterpriseGateway } from './gateway';
 import { quotationApi } from './quotation-api';
 

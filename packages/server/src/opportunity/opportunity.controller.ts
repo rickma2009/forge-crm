@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
 import type { Response } from 'express';
-import { productDeleteSchema, systemCodeSchema } from '@interaction-pattern-lab/contracts';
+import { productDeleteSchema, systemCodeSchema } from '@forge-crm/contracts';
 import type { AuthenticatedRequest } from '../auth/auth.types';
 import { SessionGuard } from '../auth/session.guard';
 import { WriteRequestGuard } from '../auth/write-request.guard';

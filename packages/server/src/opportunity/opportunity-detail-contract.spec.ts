@@ -1,4 +1,4 @@
-import { opportunityDetailSchema } from '@interaction-pattern-lab/contracts';
+import { opportunityDetailSchema } from '@forge-crm/contracts';
 import { OpportunityService } from './opportunity.service';
 import type { DatabaseService } from '../database/database.service';
 

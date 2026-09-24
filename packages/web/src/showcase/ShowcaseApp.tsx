@@ -7,7 +7,7 @@ import {
   IconPointer, IconRoute, IconSearch, IconSettings, IconShieldLock, IconSitemap, IconSparkles, IconSpacingVertical,
   IconTable, IconTemplate, IconTypography, IconUser, IconUsers, IconX,
 } from '@tabler/icons-react';
-import type { Customer, NavigationNode, NavigationResponse, Opportunity, Product, SessionUser } from '@interaction-pattern-lab/contracts';
+import type { Customer, NavigationNode, NavigationResponse, Opportunity, Product, SessionUser } from '@forge-crm/contracts';
 import { initialResourceState, reduceResourceAction } from './domain/resource';
 import { parseRootRoute } from './domain/routes';
 import { showcaseRegistry } from './registry/registry';

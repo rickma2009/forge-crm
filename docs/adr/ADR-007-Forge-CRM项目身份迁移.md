@@ -1,7 +1,7 @@
 # ADR-007：Forge CRM 项目身份迁移
 
-状态：已批准实施  
-日期：2026-09-25  
+状态：本地工程迁移已实施；目录移动与远程发布待最后执行
+日期：2026-09-25
 来源：REQSRC-073
 
 ## 背景
@@ -30,3 +30,11 @@
 
 目录移动前可回滚改名提交；目录移动后先移回原目录，再回滚该提交。数据库身份未变，因此不需要数据回滚。
 
+## 实施证据
+
+- 改名前基线提交：`b4f3214`；
+- `@forge-crm/*` 身份约束、启动兼容测试与 Compose 配置检查通过；
+- `pnpm verify` 通过：contracts 37 项、web 252 项、server 107 项通过且 46 项按既有条件跳过；
+- `_methodology/scripts/verify-workbench.sh` 与迁移兼容的项目治理校验通过；36 个旧格式来源目录被明确报告为兼容跳过，不伪装成已补齐 metadata；
+- 原容器 `interaction-pattern-lab-postgres-1` 正在运行并挂载原数据卷，`pg_isready` 通过，public schema 可见 66 张表；
+- 已知非阻断告警保持不变：ResourceMenuPage 测试存在 React `act(...)` 警告，前端生产包存在大于 500 kB 的 chunk。

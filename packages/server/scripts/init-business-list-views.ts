@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import { resolve } from 'node:path';
-import { systemCodeSchema } from '@interaction-pattern-lab/contracts';
+import { systemCodeSchema } from '@forge-crm/contracts';
 import { DatabaseService } from '../src/database/database.service';
 import { initializeBusinessListViews } from '../src/list-view/business-list-defaults';
 

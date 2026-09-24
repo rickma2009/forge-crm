@@ -2,7 +2,7 @@ import { InboundOrderDetailPage } from './InboundOrderDetailPage';
 import { TreeWorkspace } from '../common/TreeWorkspace';
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react';
 import { IconPlus } from '@tabler/icons-react';
-import type { Dictionary, InboundOrder, InboundOrderWrite, Item, ItemWrite, LegalEntity, LegalEntityWrite, Warehouse, WarehouseWrite } from '@interaction-pattern-lab/contracts';
+import type { Dictionary, InboundOrder, InboundOrderWrite, Item, ItemWrite, LegalEntity, LegalEntityWrite, Warehouse, WarehouseWrite } from '@forge-crm/contracts';
 import { RowActionButton } from '../common/RowActionButton';
 import { RecordQueryBar } from '../common/RecordQueryBar';
 import { AttachmentPanel } from './AttachmentPanel';

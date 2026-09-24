@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { navigationMountWriteSchema, resourceButtonWriteSchema, resourcePageUpdateSchema, resourcePageWriteSchema, resourceTabWriteSchema, resourceTreeMoveSchema } from '@interaction-pattern-lab/contracts';
+import { navigationMountWriteSchema, resourceButtonWriteSchema, resourcePageUpdateSchema, resourcePageWriteSchema, resourceTabWriteSchema, resourceTreeMoveSchema } from '@forge-crm/contracts';
 import { z } from 'zod';
 import type { Prisma, SysPageButton, SysPageResource, SysPageTab } from '../generated/prisma/client';
 import { DatabaseService } from '../database/database.service';

@@ -1,9 +1,9 @@
-import { businessListDefaultConfig } from '@interaction-pattern-lab/contracts';
+import { businessListDefaultConfig } from '@forge-crm/contracts';
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { PricingEditor, QuotationDetailPage, QuotationListPage } from './QuotationPages';
 import { quotationApi } from './quotation-api';
-import type { QuotationRecord } from '@interaction-pattern-lab/contracts';
+import type { QuotationRecord } from '@forge-crm/contracts';
 
 afterEach(() => vi.restoreAllMocks());
 const fixture = { id: '00000000-0000-4000-8000-000000000001', quoteCode: 'Q20260923001', title: '测试报价', customerId: '00000000-0000-4000-8000-000000000002', customerName: '测试客户', contactId: null, contactName: null, opportunityId: null, quoteDate: '2026-09-23', validUntil: '2099-01-01', status: 'DRAFT', total: '5.00', terms: '', remark: '', version: 1, sourceQuoteId: null, lines: [{ id: '00000000-0000-4000-8000-000000000003', productId: '00000000-0000-4000-8000-000000000004', priceId: '00000000-0000-4000-8000-000000000005', productName: '测试产品', model: null, unit: '件', productCode: 'P1', quantity: '1', unitPrice: '5.00', suggestedPrice: '10.00', discount: '0', priceSource: 'STANDARD', lowerQty: null, upperQty: null, delivery: '', remark: '', amount: '5.00' }], ownerUserId: 'owner' } as QuotationRecord;

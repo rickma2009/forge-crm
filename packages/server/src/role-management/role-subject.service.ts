@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { z } from 'zod';
-import { roleMembershipWriteSchema } from '@interaction-pattern-lab/contracts';
+import { roleMembershipWriteSchema } from '@forge-crm/contracts';
 import { DatabaseService } from '../database/database.service';
 import type { Prisma } from '../generated/prisma/client';
 import { ApiException } from '../http/api-exceptions';

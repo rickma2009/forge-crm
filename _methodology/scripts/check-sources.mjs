@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const projectDir = path.resolve(process.argv[2] ?? '');
+const allowLegacyUnmanaged = process.argv.includes('--allow-legacy-unmanaged');
 const sourcesDir = path.join(projectDir, '.specify', 'sources');
 if (!projectDir || !fs.existsSync(sourcesDir)) {
   console.error(`来源目录不存在: ${sourcesDir}`);
@@ -13,11 +14,13 @@ const failures = [];
 const metadataFiles = [];
 const sourceDirectories = [];
 const sourceRecords = [];
+const legacyDirectories = [];
 for (const entry of fs.readdirSync(sourcesDir, { withFileTypes: true })) {
   if (!entry.isDirectory()) continue;
   sourceDirectories.push(entry.name);
   const metadataPath = path.join(sourcesDir, entry.name, 'metadata.json');
   if (fs.existsSync(metadataPath)) metadataFiles.push(metadataPath);
+  else if (allowLegacyUnmanaged) legacyDirectories.push(entry.name);
   else failures.push(`${entry.name} 缺少 metadata.json`);
 }
 
@@ -58,12 +61,19 @@ for (const metadataPath of metadataFiles) {
     continue;
   }
 
-  for (const field of ['sourceId', 'managedCopy', 'sha256', 'contentPolicy', 'instructionPolicy']) {
-    if (!metadata[field]) failures.push(`${metadata.sourceId ?? metadataPath} 缺少 ${field}`);
+  const missingFields = ['sourceId', 'managedCopy', 'sha256', 'contentPolicy', 'instructionPolicy']
+    .filter((field) => !metadata[field]);
+  if (missingFields.length > 0) {
+    if (allowLegacyUnmanaged) {
+      legacyDirectories.push(path.basename(path.dirname(metadataPath)));
+      continue;
+    }
+    for (const field of missingFields) failures.push(`${metadata.sourceId ?? metadataPath} 缺少 ${field}`);
+    continue;
   }
 
   const managedPath = path.join(path.dirname(metadataPath), metadata.managedCopy ?? '');
-  if (!fs.existsSync(managedPath)) {
+  if (!fs.existsSync(managedPath) || !fs.statSync(managedPath).isFile()) {
     failures.push(`${metadata.sourceId} 的管理副本不存在`);
     continue;
   }
@@ -87,11 +97,11 @@ const sourceById = new Map(sourceRecords.map((record) => [record.sourceId, recor
 const registryById = new Map(registryRecords.map((record) => [record.sourceId, record]));
 for (const source of sourceRecords) {
   const registry = registryById.get(source.sourceId);
-  if (!registry) {
+  if (!registry && !allowLegacyUnmanaged) {
     failures.push(`${source.sourceId} 的来源目录未在 REGISTRY.md 登记`);
     continue;
   }
-  if (registry.managedCopy !== null) {
+  if (registry?.managedCopy !== null && registry) {
     const expectedManagedCopy = path.posix.join(source.directoryName, source.managedCopy);
     if (registry.managedCopy !== expectedManagedCopy) {
       failures.push(`${source.sourceId} 的 REGISTRY managed-copy 与 metadata 不一致: ${registry.managedCopy}`);
@@ -109,7 +119,7 @@ for (const registry of registryRecords) {
       failures.push(`${registry.sourceId} 的 REGISTRY managed-copy 不存在: ${registry.managedCopy}`);
     }
   }
-  if (!source) {
+  if (!source && !allowLegacyUnmanaged) {
     failures.push(`${registry.sourceId} 的 REGISTRY 条目没有对应来源目录`);
   }
 }
@@ -119,4 +129,5 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log(`PASS  原始需求来源完整且哈希一致（${metadataFiles.length} 份，${sourceDirectories.length} 个来源目录）`);
+const legacySuffix = allowLegacyUnmanaged ? `；兼容跳过 ${new Set(legacyDirectories).size} 个旧格式目录` : '';
+console.log(`PASS  原始需求来源完整且哈希一致（${sourceRecords.length} 份受管来源，${sourceDirectories.length} 个来源目录${legacySuffix}）`);

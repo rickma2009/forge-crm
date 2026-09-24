@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor, within } from '@testing-library/rea
 import { describe, it, expect, vi } from 'vitest';
 import { RoleUserPanel } from './RoleUserPanel';
 import type { EnterpriseGateway, AccessRoleMember } from './gateway';
-import type { RoleTreeNode } from '@interaction-pattern-lab/contracts';
+import type { RoleTreeNode } from '@forge-crm/contracts';
 
 const role = { id: 'sales', roleName: '销售' } as RoleTreeNode;
 const member = (n: number): AccessRoleMember => ({ id: 'membership-' + n, userId: 'user-' + n, version: 1, status: 'ACTIVE', effectiveAt: '2020-01-01T00:00:00Z', expiresAt: null, user: { account: 'account' + n, displayName: '用户' + n, status: 'ACTIVE' } });

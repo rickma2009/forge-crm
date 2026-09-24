@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { organizationUnitUpdateSchema, organizationUnitWriteSchema } from '@interaction-pattern-lab/contracts';
+import { organizationUnitUpdateSchema, organizationUnitWriteSchema } from '@forge-crm/contracts';
 import { z } from 'zod';
 import { DatabaseService } from '../database/database.service';
 import { ApiException } from '../http/api-exceptions';

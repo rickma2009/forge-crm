@@ -1,7 +1,7 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import { businessListDefaultConfig, type ResolvedListView } from '@interaction-pattern-lab/contracts';
+import { businessListDefaultConfig, type ResolvedListView } from '@forge-crm/contracts';
 import { BusinessDirectory } from './BusinessDirectory';
 
 const base: ResolvedListView = { id: '11111111-1111-4111-8111-111111111111', baseViewId: '11111111-1111-4111-8111-111111111111', viewKey: 'system:base', viewCode: 'object-default', scope: 'SYSTEM', viewName: '产品默认视图', isDefault: true, allowPersonalOverride: true, readOnly: true, config: businessListDefaultConfig('product-directory'), version: 1 };

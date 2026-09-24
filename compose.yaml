@@ -1,3 +1,7 @@
+# Keep the pre-rename Compose project identity so Forge CRM reuses the existing
+# PostgreSQL container and named volume instead of silently creating an empty DB.
+name: interaction-pattern-lab
+
 services:
   postgres:
     image: postgres:16-alpine

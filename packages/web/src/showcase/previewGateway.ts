@@ -1,4 +1,4 @@
-import type { NavigationNode, NavigationResponse, SessionUser } from '@interaction-pattern-lab/contracts';
+import type { NavigationNode, NavigationResponse, SessionUser } from '@forge-crm/contracts';
 import { effectiveCapabilities, resolvePageAccess } from './domain/access';
 import { projectVisibleNavigation } from './domain/navigation';
 import { GatewayError, type NavigationGateway } from './gateway';

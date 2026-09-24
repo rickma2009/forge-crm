@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import type { NavigationNode, NavigationResponse } from '@interaction-pattern-lab/contracts';
+import type { NavigationNode, NavigationResponse } from '@forge-crm/contracts';
 
 export interface AuthorizationRow {
   menuId: string;

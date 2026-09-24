@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { NavigationNode, NavigationResponse, SessionUser } from '@interaction-pattern-lab/contracts';
+import type { NavigationNode, NavigationResponse, SessionUser } from '@forge-crm/contracts';
 import { ShowcaseApp } from './ShowcaseApp';
 import { GatewayError, type NavigationGateway } from './gateway';
 import { showcaseRegistry } from './registry/registry';

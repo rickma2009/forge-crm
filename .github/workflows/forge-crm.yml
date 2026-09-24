@@ -1,0 +1,22 @@
+name: forge-crm
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: corepack enable
+      - run: corepack prepare pnpm@9.15.0 --activate
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm verify
+      - name: Validate current project sources
+        run: node _methodology/scripts/check-sources.mjs .
+      - name: Validate project baseline
+        run: bash _methodology/scripts/check-project.sh .

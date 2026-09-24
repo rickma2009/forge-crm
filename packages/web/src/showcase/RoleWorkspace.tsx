@@ -1,6 +1,6 @@
 import { TreeWorkspace } from '../common/TreeWorkspace';
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
-import type { RoleTreeNode, RoleWrite } from '@interaction-pattern-lab/contracts';
+import type { RoleTreeNode, RoleWrite } from '@forge-crm/contracts';
 import type { EnterpriseGateway } from './gateway';
 import './role-workspace.css';
 import { type TreeNodeAction } from '../common/useTreeNodeMenu';

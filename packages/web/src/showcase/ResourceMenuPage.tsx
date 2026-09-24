@@ -4,7 +4,7 @@ import { type TreeNodeAction } from '../common/useTreeNodeMenu';
 import { RowActionButton } from '../common/RowActionButton';
 import { DialogSubmitError, useDialogSubmit } from './useDialogSubmit';
 import { useEffect, useState, type DragEvent, type FormEvent, type ReactNode } from 'react';
-import type { ResourceButton, ResourceButtonWrite, ResourcePage, ResourcePageType, ResourcePageWrite, ResourceTab, ResourceTabWrite } from '@interaction-pattern-lab/contracts';
+import type { ResourceButton, ResourceButtonWrite, ResourcePage, ResourcePageType, ResourcePageWrite, ResourceTab, ResourceTabWrite } from '@forge-crm/contracts';
 import type { EnterpriseGateway, NavigationMount } from './gateway';
 import { moveResourceNode, type ResourceDropPosition } from './domain/resource-menu-tree';
 import './resource-menu.css';

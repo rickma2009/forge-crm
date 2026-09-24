@@ -1,5 +1,5 @@
 import { quotationApi } from './quotation-api';
-import { businessListDefaultConfig, type BusinessListObject } from '@interaction-pattern-lab/contracts';
+import { businessListDefaultConfig, type BusinessListObject } from '@forge-crm/contracts';
 import { render, screen, waitFor, fireEvent, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';

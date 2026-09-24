@@ -1,4 +1,4 @@
-import type { QuotationCreate, ProductPrice, PricingWrite, QuotationCommand, QuotationDraft, QuotationRecord, Product } from '@interaction-pattern-lab/contracts';
+import type { QuotationCreate, ProductPrice, PricingWrite, QuotationCommand, QuotationDraft, QuotationRecord, Product } from '@forge-crm/contracts';
 import { call, write } from './gateway';
 const root = (code: string) => `/api/systems/${encodeURIComponent(code)}`;
 export const quotationApi = {

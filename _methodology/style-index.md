@@ -166,7 +166,7 @@
 
 ## 本轮实际页面落实
 
-规则的历史登记不代表页面完成。本轮要求见 `.specify/requirements/global-page-style/requirement.md`，代码与验证分别登记。产品、商机、报价、竞争对手采用公共 `BusinessDirectory`；客户继续使用既有列表视图服务。四个新增对象的设置范围为列显示、顺序、宽度和分页，标识列必须保留；固定关联条件不受个人配置覆盖。初始化命令为 `pnpm --filter @interaction-pattern-lab/server exec tsx scripts/init-business-list-views.ts`，仅补默认配置，不运行全量演示 seed。可复用的是组件和服务协议，业务对象注册表与权限不能不加审核复制。
+规则的历史登记不代表页面完成。本轮要求见 `.specify/requirements/global-page-style/requirement.md`，代码与验证分别登记。产品、商机、报价、竞争对手采用公共 `BusinessDirectory`；客户继续使用既有列表视图服务。四个新增对象的设置范围为列显示、顺序、宽度和分页，标识列必须保留；固定关联条件不受个人配置覆盖。初始化命令为 `pnpm --filter @forge-crm/server exec tsx scripts/init-business-list-views.ts`，仅补默认配置，不运行全量演示 seed。可复用的是组件和服务协议，业务对象注册表与权限不能不加审核复制。
 
 ## 页面样式场景索引
 

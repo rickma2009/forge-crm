@@ -3,7 +3,7 @@ import {
   competitorUpdateSchema, competitorWriteSchema, opportunityAnalysisWriteSchema, opportunityFollowUpUpdateSchema,
   opportunityFollowUpWriteSchema, opportunityStageUpdateSchema, opportunityStageWriteSchema, opportunityStageDeleteSchema, opportunityUpdateSchema, opportunityWriteSchema,
   productUpdateSchema, productWriteSchema,
-} from '@interaction-pattern-lab/contracts';
+} from '@forge-crm/contracts';
 import { z } from 'zod';
 import { DatabaseService } from '../database/database.service';
 import { ApiException } from '../http/api-exceptions';

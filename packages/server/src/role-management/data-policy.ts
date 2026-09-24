@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { ApiException } from '../http/api-exceptions';
-import { conditionSchema, fieldRuleSchema, type Condition, type Scalar } from '@interaction-pattern-lab/contracts';
-export { dataPolicySchema, type DataPolicy } from '@interaction-pattern-lab/contracts';
+import { conditionSchema, fieldRuleSchema, type Condition, type Scalar } from '@forge-crm/contracts';
+export { dataPolicySchema, type DataPolicy } from '@forge-crm/contracts';
 
 export interface PolicyField { code: string; type: 'string' | 'number' | 'boolean' | 'date'; filterable: boolean }
 type Where = Record<string, unknown>;

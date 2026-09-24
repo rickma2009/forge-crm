@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { accessRolePermissionReplaceSchema, accessRoleWriteSchema, roleMembershipWriteSchema } from '@interaction-pattern-lab/contracts';
+import { accessRolePermissionReplaceSchema, accessRoleWriteSchema, roleMembershipWriteSchema } from '@forge-crm/contracts';
 import { z } from 'zod';
 import { DatabaseService } from '../database/database.service';
 import { ApiException } from '../http/api-exceptions';

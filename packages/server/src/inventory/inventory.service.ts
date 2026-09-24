@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { createHash } from 'node:crypto';
 import { z } from 'zod';
-import { inboundOrderWriteSchema, inventoryCommandSchema, itemUpdateSchema, itemWriteSchema, legalEntityUpdateSchema, legalEntityWriteSchema, normalizeBatch, warehouseUpdateSchema, warehouseWriteSchema } from '@interaction-pattern-lab/contracts';
+import { inboundOrderWriteSchema, inventoryCommandSchema, itemUpdateSchema, itemWriteSchema, legalEntityUpdateSchema, legalEntityWriteSchema, normalizeBatch, warehouseUpdateSchema, warehouseWriteSchema } from '@forge-crm/contracts';
 import type { Prisma } from '../generated/prisma/client';
 import { DatabaseService } from '../database/database.service';
 import { ApiException } from '../http/api-exceptions';

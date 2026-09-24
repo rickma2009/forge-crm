@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type FormEvent } from 'react';
 import { IconPlus } from '@tabler/icons-react';
-import { inboundOrderWriteSchema, type InboundOrder, type InboundOrderWrite, type Item, type LegalEntity, type Warehouse } from '@interaction-pattern-lab/contracts';
+import { inboundOrderWriteSchema, type InboundOrder, type InboundOrderWrite, type Item, type LegalEntity, type Warehouse } from '@forge-crm/contracts';
 import { DocumentWorkspace } from '../common/DocumentWorkspace';
 import { DetailSection } from '../common/DetailWorkspace';
 import { RowActionButton } from '../common/RowActionButton';

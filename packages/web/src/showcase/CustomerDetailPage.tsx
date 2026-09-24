@@ -1,7 +1,7 @@
 import { DetailWorkspace, DetailHeader, DetailTabs, DetailPanel } from '../common/DetailWorkspace';
 import { RowActionButton } from '../common/RowActionButton';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { customerAddressWriteSchema, customerContactWriteSchema, customerUpdateSchema, type Customer, type CustomerAddress, type CustomerContact, type CustomerDetail, type CustomerWrite, type Dictionary, type SalesOption } from '@interaction-pattern-lab/contracts';
+import { customerAddressWriteSchema, customerContactWriteSchema, customerUpdateSchema, type Customer, type CustomerAddress, type CustomerContact, type CustomerDetail, type CustomerWrite, type Dictionary, type SalesOption } from '@forge-crm/contracts';
 import { GatewayError, type EnterpriseGateway } from './gateway';
 import './customer-detail.css';
 

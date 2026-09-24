@@ -1,6 +1,6 @@
 import { RowActionButton } from '../common/RowActionButton';
 import { useEffect, useState, type FormEvent } from 'react';
-import type { AttachmentMeta } from '@interaction-pattern-lab/contracts';
+import type { AttachmentMeta } from '@forge-crm/contracts';
 import type { EnterpriseGateway } from './gateway';
 
 export function AttachmentPanel({ systemCode, ownerType, ownerId, allowedActions, gateway }: {

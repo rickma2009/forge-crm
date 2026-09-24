@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
-import { attachmentOwnerTypeSchema, attachmentUpdateSchema } from '@interaction-pattern-lab/contracts';
+import { attachmentOwnerTypeSchema, attachmentUpdateSchema } from '@forge-crm/contracts';
 import { DatabaseService } from '../database/database.service';
 import { ApiException } from '../http/api-exceptions';
 import { RUNTIME_CONFIG, type RuntimeConfig } from '../config/runtime-config';
