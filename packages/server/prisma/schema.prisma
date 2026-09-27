@@ -1066,7 +1066,7 @@ model SdQuotationLine {
   tenantId String @map("tenant_id") @db.Uuid
   applicationId String @map("application_id") @db.Uuid
   productId String @map("product_id") @db.Uuid
-  priceId String @map("price_id") @db.Uuid
+  priceId String? @map("price_id") @db.Uuid
   productCode String @map("item_code") @db.VarChar(32)
   productName String @map("product_name") @db.VarChar(128)
   model String? @db.VarChar(128)
@@ -1078,7 +1078,7 @@ model SdQuotationLine {
   lowerQty Decimal? @map("lower_qty") @db.Decimal(18, 4)
   upperQty Decimal? @map("upper_qty") @db.Decimal(18, 4)
   unitPrice Decimal @map("unit_price") @db.Decimal(18, 2)
-  discount Decimal @default(0) @db.Decimal(5, 2)
+  discount Decimal @default(1) @db.Decimal(5, 2)
   amount Decimal @db.Decimal(18, 2)
   sortNo Int @map("sort_no")
   delivery String @default("") @db.VarChar(200)
@@ -1500,6 +1500,8 @@ model SdOppFollowUp {
 }
 
 model SdOppAnalysis {
+  aiTaskId         String?                   @unique @map("ai_task_id") @db.Uuid
+  aiResult         Json?                     @map("ai_result")
   id               String                    @id @default(uuid()) @db.Uuid
   opportunityId    String                    @map("opportunity_id") @db.Uuid
   opportunityName  String                    @map("opportunity_name") @db.VarChar(200)
@@ -1543,23 +1545,32 @@ enum SceneStatus {
 }
 
 model StyleScene {
-  id          String      @id @default(uuid()) @db.Uuid
-  systemCode  String      @map("system_code") @db.VarChar(64)
-  category    String      @db.VarChar(64)
-  subCategory String?     @map("sub_category") @db.VarChar(64)
-  sceneName   String      @map("scene_name") @db.VarChar(128)
-  description String?     @db.VarChar(512)
-  status      SceneStatus @default(TODO)
-  pagePath    String?     @map("page_path") @db.VarChar(256)
-  note        String?     @db.VarChar(512)
-  doneAt      DateTime?   @map("done_at") @db.Timestamptz(3)
-  sortNo      Int         @default(0) @map("sort_no")
-  version     Int         @default(1)
-  createdBy   String      @map("created_by") @db.VarChar(128)
-  updatedBy   String      @map("updated_by") @db.VarChar(128)
-  createdAt   DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt   DateTime    @updatedAt @map("updated_at") @db.Timestamptz(3)
+  id                String      @id @default(uuid()) @db.Uuid
+  systemCode        String      @map("system_code") @db.VarChar(64)
+  assetCode         String?     @map("asset_code") @db.VarChar(32)
+  category          String      @db.VarChar(64)
+  subCategory       String?     @map("sub_category") @db.VarChar(64)
+  sceneName         String      @map("scene_name") @db.VarChar(128)
+  description       String?     @db.VarChar(512)
+  maturity          String?     @db.VarChar(32)
+  definitionJson    Json?       @map("definition_json") @db.JsonB
+  definitionRefJson Json?       @map("definition_ref_json") @db.JsonB
+  artifactsJson     Json?       @map("artifacts_json") @db.JsonB
+  evidenceJson      Json?       @map("evidence_json") @db.JsonB
+  evidenceCardsJson Json?       @map("evidence_cards_json") @db.JsonB
+  nextEvidence      String?     @map("next_evidence") @db.VarChar(500)
+  status            SceneStatus @default(TODO)
+  pagePath          String?     @map("page_path") @db.VarChar(256)
+  note              String?     @db.VarChar(512)
+  doneAt            DateTime?   @map("done_at") @db.Timestamptz(3)
+  sortNo            Int         @default(0) @map("sort_no")
+  version           Int         @default(1)
+  createdBy         String      @map("created_by") @db.VarChar(128)
+  updatedBy         String      @map("updated_by") @db.VarChar(128)
+  createdAt         DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime    @updatedAt @map("updated_at") @db.Timestamptz(3)
 
+  @@unique([systemCode, assetCode], map: "style_scene_asset_uk")
   @@index([systemCode, status, category, sortNo], map: "style_scene_list_idx")
   @@map("style_scene")
 }
@@ -1584,4 +1595,37 @@ model SysParameter {
   @@unique([tenantId, applicationId, parameterCode], map: "sys_parameter_scope_code_key")
   @@index([tenantId, applicationId, sortNo, parameterCode], map: "sys_parameter_list_idx")
   @@map("sys_parameter")
+}
+
+model AiAnalysisTask {
+  id String @id @default(uuid()) @db.Uuid
+  applicationId String @map("application_id") @db.Uuid
+  tenantId String @map("tenant_id") @db.Uuid
+  systemCode String @map("system_code") @db.VarChar(64)
+  opportunityId String @map("opportunity_id") @db.Uuid
+  createdBy String @map("created_by") @db.Uuid
+  requestId String @map("request_id") @db.Uuid
+  parentTaskId String? @map("parent_task_id") @db.Uuid
+  status String @default("QUEUED") @db.VarChar(16)
+  snapshot Json
+  provider String @db.VarChar(32)
+  model String @db.VarChar(128)
+  templateVersion String @map("template_version") @db.VarChar(64)
+  schemaVersion String @map("schema_version") @db.VarChar(32)
+  result Json?
+  confirmedResult Json? @map("confirmed_result")
+  analysisId String? @unique @map("analysis_id") @db.Uuid
+  confirmedAt DateTime? @map("confirmed_at") @db.Timestamptz(3)
+  staleAtConfirmation Boolean @default(false) @map("stale_at_confirmation")
+  providerRequestId String? @map("provider_request_id") @db.VarChar(255)
+  usage Json?
+  error String? @db.VarChar(500)
+  startedAt DateTime? @map("started_at") @db.Timestamptz(3)
+  finishedAt DateTime? @map("finished_at") @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  @@unique([applicationId, createdBy, requestId])
+  @@index([applicationId, opportunityId, createdAt])
+  @@index([status, createdAt])
+  @@map("ai_analysis_task")
 }

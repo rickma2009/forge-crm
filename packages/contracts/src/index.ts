@@ -400,6 +400,7 @@ export const customerDetailSchema = z.strictObject({
 export type CustomerDetail = z.infer<typeof customerDetailSchema>;
 
 export const sceneStatusSchema = z.enum(['DONE', 'WIP', 'TODO']);
+export const interactionMaturitySchema = z.enum(['idea', 'candidate', 'implementation-verified', 'interaction-verified', 'project-adopted', 'business-validated', 'released', 'deprecated']);
 export const styleSceneSchema = z.strictObject({
   id: z.string().uuid(),
   category: z.string(),
@@ -413,8 +414,42 @@ export const styleSceneSchema = z.strictObject({
   sortNo: z.number().int(),
   version: z.number().int().positive(),
 });
+export const styleSceneSummarySchema = styleSceneSchema.extend({
+  assetCode: z.string().nullable(),
+  maturity: interactionMaturitySchema.nullable(),
+});
+export const interactionEvidenceCardSchema = z.strictObject({
+  evidenceId: z.string(),
+  state: z.string(),
+  archivedSourceRefs: z.array(z.string()),
+  implementationRefs: z.array(z.string()),
+  artifactRefs: z.array(z.string()),
+  validation: z.strictObject({
+    project: z.string(),
+    slice: z.string(),
+    environment: z.string(),
+    versionPoint: z.string(),
+    result: z.string(),
+    unknowns: z.array(z.string()),
+  }),
+});
+export const styleSceneDetailSchema = styleSceneSummarySchema.extend({
+  definition: z.array(z.string()),
+  definitionRef: z.strictObject({ path: z.string(), section: z.string() }).nullable(),
+  artifacts: z.array(z.string()),
+  evidence: z.array(z.string()),
+  evidenceCards: z.array(interactionEvidenceCardSchema),
+  nextEvidence: z.string().nullable(),
+});
+export const styleSceneTaxonomySchema = z.strictObject({
+  types: z.array(z.strictObject({
+    category: z.string(),
+    count: z.number().int().nonnegative(),
+    groups: z.array(z.strictObject({ subCategory: z.string(), count: z.number().int().nonnegative() })),
+  })),
+});
 export const styleSceneListSchema = z.strictObject({
-  items: z.array(styleSceneSchema),
+  items: z.array(styleSceneSummarySchema),
   pagination: z.strictObject({ page: z.number().int(), pageSize: z.number().int(), total: z.number().int(), totalPages: z.number().int() }),
 });
 export const styleSceneWriteSchema = z.strictObject({
@@ -501,6 +536,11 @@ export type CustomerWrite = z.infer<typeof customerWriteSchema>;
 export type CustomerUpdate = z.infer<typeof customerUpdateSchema>;
 export type SalesOption = z.infer<typeof salesOptionSchema>;
 export type StyleScene = z.infer<typeof styleSceneSchema>;
+export type InteractionMaturity = z.infer<typeof interactionMaturitySchema>;
+export type InteractionEvidenceCard = z.infer<typeof interactionEvidenceCardSchema>;
+export type StyleSceneSummary = z.infer<typeof styleSceneSummarySchema>;
+export type StyleSceneDetail = z.infer<typeof styleSceneDetailSchema>;
+export type StyleSceneTaxonomy = z.infer<typeof styleSceneTaxonomySchema>;
 export type StyleSceneList = z.infer<typeof styleSceneListSchema>;
 export type StyleSceneWrite = z.infer<typeof styleSceneWriteSchema>;
 export type StyleSceneUpdate = z.infer<typeof styleSceneUpdateSchema>;
@@ -557,3 +597,5 @@ export * from './quotation';
 export * from './inventory';
 
 export * from './system-parameter';
+
+export * from './ai-analysis';
