@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-export type ApiErrorCode = 'BAD_REQUEST' | 'UNAUTHENTICATED' | 'ACCOUNT_LOCKED' | 'FORBIDDEN' | 'NOT_FOUND' | 'SERVICE_UNAVAILABLE';
+export type ApiErrorCode = 'BAD_REQUEST' | 'UNAUTHENTICATED' | 'ACCOUNT_LOCKED' | 'FORBIDDEN' | 'NOT_FOUND' | 'SERVICE_UNAVAILABLE' | 'DATA_INVALID';
 
 export class ApiException extends HttpException {
   constructor(public readonly code: ApiErrorCode, status: HttpStatus | number, message: string, details?: Record<string, unknown>) {

@@ -18,6 +18,20 @@ export class StyleSceneController {
     return this.scenes.list(systemCode, query);
   }
 
+  @Get('taxonomy')
+  async taxonomy(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string) {
+    const systemCode = systemCodeSchema.parse(raw);
+    await this.authorization.navigation(request.currentUser.id, systemCode);
+    return this.scenes.taxonomy(systemCode);
+  }
+
+  @Get(':id')
+  async detail(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('id') id: string) {
+    const systemCode = systemCodeSchema.parse(raw);
+    await this.authorization.navigation(request.currentUser.id, systemCode);
+    return this.scenes.detail(systemCode, id);
+  }
+
   @Post()
   @UseGuards(WriteRequestGuard)
   async create(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Body() body: unknown) {
