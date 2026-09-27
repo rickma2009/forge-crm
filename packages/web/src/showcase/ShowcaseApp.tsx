@@ -9,11 +9,11 @@ import {
 } from '@tabler/icons-react';
 import type { Customer, NavigationNode, NavigationResponse, Opportunity, Product, SessionUser } from '@forge-crm/contracts';
 import { initialResourceState, reduceResourceAction } from './domain/resource';
-import { parseRootRoute } from './domain/routes';
+import { interactionIndexPath, parseRootRoute, retiredInteractionIndexPath } from './domain/routes';
 import { showcaseRegistry } from './registry/registry';
 import type { ShowcaseNavigationNode, ShowcasePage } from './registry/types';
 import { GatewayError, httpNavigationGateway, type EnterpriseGateway, type NavigationGateway } from './gateway';
-import { CustomerDetailPage, CustomerDirectoryPage, DictionaryAdminPage, ListViewAdminPage, RoleManagementPage, StyleSceneListPage } from './EnterprisePages';
+import { CustomerDetailPage, CustomerDirectoryPage, DictionaryAdminPage, ListViewAdminPage, RoleManagementPage } from './EnterprisePages';
 import { RouteTabs, useRouteTabs } from '../common/route-tabs';
 import { applyTabAction, type TabAction } from '../common/route-tabs/model';
 import type { CustomerMode, LeaveGuard } from './CustomerDetailPage';
@@ -25,8 +25,11 @@ import { CompetitorDirectoryPage, OpportunityDetailPage, OpportunityDirectoryPag
 import { QuotationListPage, QuotationDetailPage } from './QuotationPages';
 import { ProductDetailPage } from './ProductDetailPage';
 import { InboundOrderPage, InventoryBalancePage, ItemDetailPage, ItemDirectoryPage, LegalEntityPage, WarehousePage } from './InventoryPages';
+import { InteractionIndexPage } from './InteractionIndexPage';
 
-const systems = [{ code: 'demo-portal', label: 'CRM 工作台' }];
+const systems = [
+  { code: 'demo-portal', label: 'CRM 工作台' },
+];
 
 function currentShowcasePath() {
   const route = parseRootRoute(window.location.hash);
@@ -65,6 +68,9 @@ export function ShowcaseApp({ gateway = httpNavigationGateway }: { gateway?: Nav
   };
 
   useEffect(() => {
+    if (window.location.hash.split('?')[0] === `#${retiredInteractionIndexPath}`) {
+      window.history.replaceState(null, '', `#${interactionIndexPath}`);
+    }
     let active = true;
     gateway.session().then((session) => {
       if (!active) return;
@@ -97,7 +103,7 @@ export function ShowcaseApp({ gateway = httpNavigationGateway }: { gateway?: Nav
 
   const logout = async () => {
     try { await gateway.logout(); } catch { /* local state must still be cleared */ }
-    setUser(null); setNavigation(null); setAccount(''); setPassword(''); setError(''); setPhase('login');
+    setUser(null); setNavigation(null); setAccount(''); setPassword(''); setError(''); setPhase('login'); setSystemCode('demo-portal');
     navigate('/showcase/customers', setPath);
   };
 
@@ -149,6 +155,26 @@ function toNode(node: NavigationNode): ShowcaseNavigationNode {
   return { id: node.menuCode, label: node.label, iconKey: node.iconKey, routePath: node.routePath, allowedActions: node.allowedActions?.map((action) => action.actionCode), children: node.children.map(toNode) };
 }
 
+const interactionIndexNode: ShowcaseNavigationNode = {
+  id: 'interaction-index', label: '交互案例索引', iconKey: 'palette', routePath: interactionIndexPath, allowedActions: [], children: [],
+};
+
+function removeRetiredSceneRoute(nodes: ShowcaseNavigationNode[]): ShowcaseNavigationNode[] {
+  return nodes.flatMap((node): ShowcaseNavigationNode[] => {
+    if (node.routePath === interactionIndexPath) return [];
+    if (!node.children?.length) return [node];
+    const children = removeRetiredSceneRoute(node.children);
+    return children.length ? [{ ...node, children }] : [];
+  });
+}
+
+function withLoginOnlyInteractionIndex(nodes: ShowcaseNavigationNode[]): ShowcaseNavigationNode[] {
+  const cleaned = removeRetiredSceneRoute(nodes);
+  const systemIndex = cleaned.findIndex((node) => node.id === 'system');
+  const insertAt = systemIndex < 0 ? cleaned.length : systemIndex;
+  return [...cleaned.slice(0, insertAt), interactionIndexNode, ...cleaned.slice(insertAt)];
+}
+
 function PortalShell({ user, systemCode, navigation, path, gateway, onSystem: switchSystem, onNavigate: navigateTo, onExit: exit }: { user: SessionUser; systemCode: string; navigation: NavigationResponse; path: string; gateway: NavigationGateway; onSystem: (value: string) => void; onNavigate: (path: string) => void; onExit: () => void }) {
   const guards = useRef(new Map<string, LeaveGuard>());
   const previousPath = useRef(path);
@@ -181,7 +207,7 @@ function PortalShell({ user, systemCode, navigation, path, gateway, onSystem: sw
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [authorizedPath, setAuthorizedPath] = useState<string | null>(null);
   const [toolPanel, setToolPanel] = useState<'alerts' | 'messages' | 'user' | null>(null);
-  const visibleNavigation = useMemo(() => navigation.items.map(toNode), [navigation]);
+  const visibleNavigation = useMemo(() => withLoginOnlyInteractionIndex(navigation.items.map(toNode)), [navigation]);
   const filteredNavigation = useMemo(() => filterMenuItems(visibleNavigation, query), [visibleNavigation, query]);
   const quotePage = showcaseRegistry.pages.find((page) => page.id === 'quotation-directory');
   const productPage = showcaseRegistry.pages.find((page) => page.id === 'product-directory');
@@ -249,6 +275,10 @@ function PortalShell({ user, systemCode, navigation, path, gateway, onSystem: sw
 
   useEffect(() => {
     let active = true; setAccess('loading'); setAuthorizedPath(null);
+    if (pageAccessPath === interactionIndexPath) {
+      setAccess('allowed'); setAuthorizedPath(path);
+      return () => { active = false; };
+    }
     gateway.assertPage(systemCode, pageAccessPath).then(() => { if (active) { setAccess('allowed'); setAuthorizedPath(path); } }).catch((reason) => { if (active) setAccess(reason instanceof GatewayError && reason.status === 403 ? 'forbidden' : reason instanceof GatewayError && reason.status === 404 ? 'not-found' : 'error'); });
     return () => { active = false; };
   }, [gateway, pageAccessPath, path, systemCode, navigation.permissionVersion, accessAttempt]);
@@ -298,7 +328,7 @@ function PageAdapter({ page, user, systemCode, allowedActions, gateway, register
   if (page.rendererKey === 'customer-directory') return <CustomerDirectoryPage systemCode={systemCode} allowedActions={allowedActions} gateway={gateway as EnterpriseGateway} />;
   if (page.rendererKey === 'dictionary-admin') return <DictionaryAdminPage systemCode={systemCode} canManage={allowedActions.includes('manage')} gateway={gateway as EnterpriseGateway} />;
   if (page.rendererKey === 'access-roles') return <RoleManagementPage systemCode={systemCode} allowedActions={allowedActions} gateway={gateway as EnterpriseGateway} />;
-  if (page.rendererKey === 'style-scene-list') return <StyleSceneListPage systemCode={systemCode} allowedActions={allowedActions} gateway={gateway as EnterpriseGateway} />;
+  if (page.rendererKey === 'interaction-index') return <InteractionIndexPage systemCode={systemCode} gateway={gateway as EnterpriseGateway} />;
   if (page.rendererKey === 'list-view-admin') return <ListViewAdminPage systemCode={systemCode} gateway={gateway as EnterpriseGateway} />;
   if (page.rendererKey === 'access-users') return <AccessUsersPage systemCode={systemCode} canManage={allowedActions.includes('manage')} gateway={gateway as EnterpriseGateway} />;
   if (page.rendererKey === 'access-permissions') return <AccessPermissionsPage systemCode={systemCode} gateway={gateway as EnterpriseGateway} />;

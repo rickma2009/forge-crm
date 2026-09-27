@@ -59,6 +59,7 @@ describe('single CRM root route', () => {
     expect(parseRootRoute('#/showcase-preview')).toEqual({ kind: 'showcase', path: '/showcase/customers' });
     expect(parseRootRoute('#/showcase')).toEqual({ kind: 'showcase', path: '/showcase/customers' });
     expect(parseRootRoute('#/showcase/')).toEqual({ kind: 'showcase', path: '/showcase/customers' });
+    expect(parseRootRoute('#/showcase/interaction-index')).toEqual({ kind: 'showcase', path: '/showcase/style-scenes' });
     expect(parseRootRoute('#/showcase/system/users')).toEqual({ kind: 'showcase', path: '/showcase/system/users' });
   });
 });

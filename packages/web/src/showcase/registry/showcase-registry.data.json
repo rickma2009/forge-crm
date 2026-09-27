@@ -168,9 +168,7 @@
     ] },
     { "id": "system-dictionaries", "path": "/showcase/system/dictionaries", "title": "数据字典", "summary": "维护系统级字典类型、字典项与启停状态。", "coverage": "interactive-slice", "viewCapability": "showcase.dictionary.view", "rendererKey": "dictionary-admin", "iconKey": "data", "sourceRefs": ["UID-002"] },
     { "id": "system-list-views", "path": "/showcase/system/list-views", "title": "列表视图", "summary": "角色基线视图及个人视图的继承关系。", "coverage": "interactive-slice", "viewCapability": "showcase.list-view.view", "rendererKey": "list-view-admin", "iconKey": "table", "sourceRefs": ["UID-002"] },
-    { "id": "style-scene-list", "path": "/showcase/style-scenes", "title": "场景清单", "summary": "梳理样式场景的完成状态、对应业务页面与访问地址。", "coverage": "interactive-slice", "viewCapability": "showcase.style-scene.view", "rendererKey": "style-scene-list", "iconKey": "palette", "sourceRefs": ["UID-002"], "operations": [
-      { "id": "style-scene-manage", "label": "维护场景", "capability": "showcase.style-scene.manage" }
-    ] }
+    { "id": "interaction-index", "path": "/showcase/style-scenes", "title": "交互案例索引", "summary": "集中浏览可复用的页面、操作、状态与组合场景。", "coverage": "interactive-slice", "viewCapability": "showcase.style-scene.view", "rendererKey": "interaction-index", "iconKey": "palette", "sourceRefs": ["UID-002"] }
   ],
   "navigation": {
     "items": [
@@ -187,9 +185,6 @@
         { "id": "nav-opportunity-directory", "label": "商机信息", "iconKey": "list", "pageId": "opportunity-directory" },
         { "id": "nav-quotation-directory", "label": "报价管理", "iconKey": "table", "pageId": "quotation-directory" },
         { "id": "nav-opportunity-stage-admin", "label": "商机阶段", "iconKey": "settings", "pageId": "opportunity-stage-admin" }
-      ] },
-      { "id": "nav-style-scenes", "label": "样式场景", "iconKey": "palette", "children": [
-        { "id": "nav-style-scene-list", "label": "场景清单", "iconKey": "list", "pageId": "style-scene-list" }
       ] },
       {
       "id": "nav-system", "label": "系统管理", "iconKey": "settings", "children": [

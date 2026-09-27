@@ -5,7 +5,7 @@ import { RowActionButton } from '../common/RowActionButton';
 import { RecordQueryBar } from '../common/RecordQueryBar';
 import React, { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import ExcelJS from 'exceljs';
-import type { Customer, CustomerWrite, Dictionary, DictionaryImportRow, DictionaryItem, DictionaryValueWrite, ListViewConfig, ResolvedListView, SalesOption, StyleScene } from '@forge-crm/contracts';
+import type { Customer, CustomerWrite, Dictionary, DictionaryImportRow, DictionaryItem, DictionaryValueWrite, ListViewConfig, ResolvedListView, SalesOption } from '@forge-crm/contracts';
 import { GatewayError, type EnterpriseGateway } from './gateway';
 
 const FIELD_LABELS: Record<string, string> = {
@@ -233,87 +233,6 @@ export function ListViewAdminPage({ systemCode, gateway }: { systemCode: string;
   return <div className="enterprise-page"><header className="enterprise-title"><div><span>系统管理 / 页面配置</span><h1>列表视图</h1></div><span className="evidence-badge">角色基线 + 个人派生</span></header>{error && <div className="enterprise-alert">{error}</div>}<section className="enterprise-card view-admin"><div className="table-toolbar"><div><strong>客户列表 · view</strong><small>系统视图按角色分配，个人视图只能从可用基线派生。</small></div></div>{views.map((view) => <article key={view.viewKey}><div><span className={`scope-badge is-${view.scope.toLowerCase()}`}>{view.scope === 'SYSTEM' ? '系统视图' : '个人视图'}</span><strong>{view.viewName}</strong><small>{view.config.columns.filter((item) => item.visible).length} 个显示字段 · 每页 {view.config.pageSize} 条</small></div><div>{view.isDefault && <b>默认</b>}<span>{view.allowPersonalOverride ? '允许个人配置' : '锁定配置'}</span></div></article>)}</section></div>;
 }
 
-
-const SCENE_STATUS_LABEL: Record<string, string> = { DONE: '已完成', WIP: '梳理中', TODO: '待梳理' };
-const SCENE_STATUS_COLOR: Record<string, string> = { DONE: 'green', WIP: 'orange', TODO: 'gray' };
-const SCENE_COLUMNS = [
-  { key: 'category', label: '场景大类', width: 110 },
-  { key: 'subCategory', label: '场景小类', width: 100 },
-  { key: 'sceneName', label: '场景名称', width: 160 },
-  { key: 'description', label: '场景描述', width: 220 },
-  { key: 'status', label: '当前状态', width: 90 },
-  { key: 'pagePath', label: '演示地址', width: 160 },
-  { key: 'doneAt', label: '完成日期', width: 110 },
-  { key: 'note', label: '备注', width: 160 },
-];
-
-export function StyleSceneListPage({ systemCode, allowedActions, gateway }: { systemCode: string; allowedActions: string[]; gateway: EnterpriseGateway }) {
-  const [items, setItems] = useState<StyleScene[]>([]);
-  const [keyword, setKeyword] = useState('');
-  const [category, setCategory] = useState('');
-  const [subCategory, setSubCategory] = useState('');
-  const [status, setStatus] = useState('');
-  const [appliedKeyword, setAppliedKeyword] = useState('');
-  const [appliedFilters, setAppliedFilters] = useState({ category: '', subCategory: '', status: '' });
-  const [page, setPage] = useState(1);
-  const [total, setTotal] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [refreshVersion, setRefreshVersion] = useState(0);
-  const [editor, setEditor] = useState<StyleScene | 'new' | null>(null);
-  const canManage = allowedActions.includes('manage');
-
-  useEffect(() => {
-    let active = true; setLoading(true);
-    const query = new URLSearchParams({ page: String(page), pageSize: '50' });
-    if (appliedKeyword.trim()) query.set('keyword', appliedKeyword.trim());
-    if (appliedFilters.category) query.set('category', appliedFilters.category);
-    if (appliedFilters.status) query.set('status', appliedFilters.status);
-    gateway.styleScenes(systemCode, query).then((result) => { if (active) { setItems(result.items); setTotal(result.pagination.total); } }).catch((reason) => { if (active) setError(notice(reason)); }).finally(() => { if (active) setLoading(false); });
-    return () => { active = false; };
-  }, [systemCode, appliedKeyword, appliedFilters, page, refreshVersion]);
-
-  const allCategories = Array.from(new Set(items.map((item) => item.category)));
-  const allSubCategories = Array.from(new Set(items.filter((item) => !appliedFilters.category || item.category === appliedFilters.category).map((item) => item.subCategory).filter(Boolean)));
-
-  const search = () => { setAppliedKeyword(keyword); setAppliedFilters({ category, subCategory, status }); setPage(1); };
-  const reset = () => { setKeyword(''); setCategory(''); setSubCategory(''); setStatus(''); setAppliedKeyword(''); setAppliedFilters({ category: '', subCategory: '', status: '' }); setPage(1); };
-
-  return <div className="enterprise-page customer-directory"><h1 className="sr-only">场景清单</h1>
-    <RecordQueryBar onQuery={search} onReset={reset}><label>场景搜索<input value={keyword} onChange={(event) => setKeyword(event.target.value)} placeholder="场景名称 / 描述" /></label><label>场景大类<select value={category} onChange={(event) => setCategory(event.target.value)}><option value="">全部</option>{allCategories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}</select></label><label>场景小类<select value={subCategory} onChange={(event) => setSubCategory(event.target.value)}><option value="">全部</option>{allSubCategories.map((sub) => <option key={sub} value={sub!}>{sub}</option>)}</select></label><label>当前状态<select value={status} onChange={(event) => setStatus(event.target.value)}><option value="">全部</option>{Object.entries(SCENE_STATUS_LABEL).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label></RecordQueryBar>
-    {error && <div className="enterprise-alert" role="alert">{error}<button onClick={() => setError('')}>×</button></div>}
-    <section className="enterprise-card table-card"><div className="table-toolbar customer-list-toolbar"><button className="is-primary" type="button" disabled={!canManage} onClick={() => setEditor('new')}>＋ 新增</button><div className="view-controls"><span className="record-count">共 <strong>{total}</strong> 条</span><button className="refresh-list" type="button" aria-label="刷新" onClick={() => setRefreshVersion((value) => value + 1)}><ActionIcon name="reset" /></button></div></div><div className="enterprise-table-wrap"><table><thead><tr><th className="sequence-column">序号</th>{canManage && <th className="operation-column">操作</th>}{SCENE_COLUMNS.map((col) => <th key={col.key} style={{ width: col.width }}>{col.label}</th>)}</tr></thead><tbody>{!loading && items.length === 0 && <tr><td colSpan={SCENE_COLUMNS.length + (canManage ? 2 : 1)} className="empty-cell">没有符合当前条件的场景</td></tr>}{items.map((scene, index) => <tr key={scene.id}><td className="sequence-column">{(page - 1) * 50 + index + 1}</td>{canManage && <td className="operation-column"><RowActionButton label="编辑" onClick={() => setEditor(scene)} /></td>}<td>{scene.category}</td><td>{scene.subCategory ?? '—'}</td><td><button type="button" className="customer-code-link" onClick={() => setEditor(scene)}>{scene.sceneName}</button></td><td className="ellipsis">{scene.description ?? '—'}</td><td><span className={`status-pill is-${SCENE_STATUS_COLOR[scene.status]}`}>{SCENE_STATUS_LABEL[scene.status]}</span></td><td>{scene.pagePath ? <a href={scene.pagePath} target="_blank" rel="noreferrer">{scene.pagePath}</a> : '—'}</td><td>{scene.doneAt ? new Date(scene.doneAt).toLocaleDateString('zh-CN') : '—'}</td><td className="ellipsis">{scene.note ?? '—'}</td></tr>)}</tbody></table></div><footer className="pagination"><span>第 {page} 页</span><button disabled={page <= 1} onClick={() => setPage((value) => value - 1)}>上一页</button><button disabled={page * 50 >= total} onClick={() => setPage((value) => value + 1)}>下一页</button></footer></section>
-    {editor && <StyleSceneModal systemCode={systemCode} scene={editor} canEdit={canManage} gateway={gateway} onClose={() => setEditor(null)} onSaved={() => { setEditor(null); setPage(1); setRefreshVersion((value) => value + 1); }} />}
-  </div>;
-}
-
-function StyleSceneModal({ systemCode, scene, canEdit, gateway, onClose, onSaved }: { systemCode: string; scene: StyleScene | 'new'; canEdit: boolean; gateway: EnterpriseGateway; onClose: () => void; onSaved: () => void }) {
-  const isNew = scene === 'new';
-  const [form, setForm] = useState({
-    category: isNew ? '' : scene.category,
-    subCategory: isNew ? '' : scene.subCategory ?? '',
-    sceneName: isNew ? '' : scene.sceneName,
-    description: isNew ? '' : scene.description ?? '',
-    status: isNew ? 'TODO' as const : scene.status,
-    pagePath: isNew ? '' : scene.pagePath ?? '',
-    note: isNew ? '' : scene.note ?? '',
-    doneAt: isNew ? '' : scene.doneAt ? scene.doneAt.slice(0, 10) : '',
-    sortNo: isNew ? 0 : scene.sortNo,
-  });
-  const [error, setError] = useState('');
-  const [saving, setSaving] = useState(false);
-  const set = (key: string, value: string) => setForm((current) => ({ ...current, [key]: value }));
-  const submit = async (e: FormEvent) => {
-    e.preventDefault(); setError(''); setSaving(true);
-    const payload = { ...form, doneAt: form.doneAt ? new Date(form.doneAt).toISOString() : null };
-    try {
-      if (isNew) await gateway.createStyleScene(systemCode, payload);
-      else await gateway.updateStyleScene(systemCode, scene.id, { ...payload, version: scene.version });
-      onSaved();
-    } catch (reason) { setError(notice(reason)); } finally { setSaving(false); }
-  };
-  return <div className="enterprise-modal-backdrop"><form className="enterprise-modal" onSubmit={submit}><header><div><span>{isNew ? 'CREATE SCENE' : 'SCENE DETAIL'}</span><h2>{isNew ? '新增场景' : scene.sceneName}</h2></div><button type="button" onClick={onClose}>×</button></header><div className="modal-body form-grid">{error && <div className="enterprise-alert span-2">{error}</div>}<label>场景大类<input required disabled={!canEdit} value={form.category} onChange={(e) => set('category', e.target.value)} /></label><label>场景小类<input disabled={!canEdit} value={form.subCategory} onChange={(e) => set('subCategory', e.target.value)} /></label><label className="span-2">场景名称<input required disabled={!canEdit} value={form.sceneName} onChange={(e) => set('sceneName', e.target.value)} /></label><label className="span-2">场景描述<textarea disabled={!canEdit} rows={2} value={form.description} onChange={(e) => set('description', e.target.value)} /></label><label>当前状态<select disabled={!canEdit} value={form.status} onChange={(e) => set('status', e.target.value)}>{Object.entries(SCENE_STATUS_LABEL).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label><label>完成日期<input type="date" disabled={!canEdit} value={form.doneAt} onChange={(e) => set('doneAt', e.target.value)} /></label><label className="span-2">演示地址<input disabled={!canEdit} value={form.pagePath} onChange={(e) => set('pagePath', e.target.value)} placeholder="/showcase/xxx" /></label><label className="span-2">备注<textarea disabled={!canEdit} rows={2} value={form.note} onChange={(e) => set('note', e.target.value)} /></label></div><footer><button type="button" onClick={onClose}>关闭</button>{canEdit && <button className="is-primary" disabled={saving} type="submit">{saving ? '保存中…' : '保存'}</button>}</footer></form></div>;
-}
 
 export { CustomerDetailPage } from './CustomerDetailPage';
 

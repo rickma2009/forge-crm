@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { NavigationNode, NavigationResponse, SessionUser } from '@forge-crm/contracts';
+import type { NavigationNode, NavigationResponse, SessionUser, StyleSceneDetail, StyleSceneList, StyleSceneTaxonomy } from '@forge-crm/contracts';
 import { ShowcaseApp } from './ShowcaseApp';
 import { GatewayError, type NavigationGateway } from './gateway';
 import { showcaseRegistry } from './registry/registry';
@@ -12,8 +12,10 @@ class MemoryGateway implements NavigationGateway {
   role: ShowcaseRoleId | null = null;
   actionCalls: string[] = [];
   pageChecks: string[] = [];
+  navigationCalls: string[] = [];
   failActions = false;
   failPageChecks = 0;
+  failStyleScenes = false;
   extraManagementRoot = false;
   constructor(initialRole: ShowcaseRoleId | null = null) { this.role = initialRole; }
   async session(): Promise<SessionUser> { if (!this.role) throw new GatewayError(401, 'UNAUTHENTICATED', '请先登录'); return this.user(); }
@@ -25,6 +27,7 @@ class MemoryGateway implements NavigationGateway {
   }
   async logout(): Promise<void> { this.role = null; }
   async navigation(systemCode: string): Promise<NavigationResponse> {
+    this.navigationCalls.push(systemCode);
     if (!this.role) throw new GatewayError(401, 'UNAUTHENTICATED', '请先登录');
     if (systemCode !== 'demo-portal') throw new GatewayError(403, 'FORBIDDEN', '无权访问');
     const visible = projectVisibleNavigation(this.role, showcaseRegistry);
@@ -44,6 +47,16 @@ class MemoryGateway implements NavigationGateway {
     this.actionCalls.push(actionCode);
     if (this.failActions) throw new GatewayError(503, 'SERVICE_UNAVAILABLE', '服务暂时不可用');
     return {};
+  }
+  async styleSceneTaxonomy(): Promise<StyleSceneTaxonomy> {
+    return { types: [{ category: 'PAGE', count: 1, groups: [{ subCategory: '系统与任务入口类', count: 1 }] }] };
+  }
+  async styleScenes(): Promise<StyleSceneList> {
+    if (this.failStyleScenes) throw new GatewayError(503, 'SERVICE_UNAVAILABLE', '场景目录服务暂时不可用');
+    return { items: [{ id: '00000000-0000-4000-8000-000000000026', assetCode: 'EPM-PAGE-001', category: 'PAGE', subCategory: '系统与任务入口类', sceneName: '应用壳层', description: '导航、顶栏、内容区、账户区', maturity: 'interaction-verified', status: 'DONE', pagePath: null, note: null, doneAt: null, sortNo: 10, version: 1 }], pagination: { page: 1, pageSize: 20, total: 1, totalPages: 1 } };
+  }
+  async styleSceneDetail(): Promise<StyleSceneDetail> {
+    return { id: '00000000-0000-4000-8000-000000000026', assetCode: 'EPM-PAGE-001', category: 'PAGE', subCategory: '系统与任务入口类', sceneName: '应用壳层', description: '导航、顶栏、内容区、账户区', maturity: 'interaction-verified', status: 'DONE', pagePath: null, note: null, doneAt: null, sortNo: 10, version: 1, definition: ['多模块企业系统'], definitionRef: null, artifacts: [], evidence: [], evidenceCards: [], nextEvidence: null };
   }
   private user(): SessionUser { return { account: this.role!, displayName: this.role === 'admin' ? '系统管理员' : '受限演示用户' }; }
   private node(node: ShowcaseNavigationNode): NavigationNode {
@@ -99,6 +112,35 @@ describe('database-backed enterprise navigation showcase', () => {
     expect(within(tabs).queryByRole('button', { name: '资源目录' })).not.toBeInTheDocument();
   });
 
+  it('shows the interaction index inside the authenticated portal without page authorization', async () => {
+    window.location.hash = '#/showcase/style-scenes';
+    const gateway = new MemoryGateway();
+    await login('viewer', gateway);
+    expect(await screen.findByRole('heading', { name: '交互案例索引' })).toBeInTheDocument();
+    const portalMenu = screen.getByRole('navigation', { name: '演示门户菜单' });
+    expect(portalMenu).toBeInTheDocument();
+    expect(within(portalMenu).getByRole('button', { name: '交互案例索引' })).toHaveAttribute('aria-current', 'page');
+    expect(gateway.navigationCalls).toEqual(['demo-portal']);
+    expect(gateway.pageChecks).not.toContain('/showcase/style-scenes');
+    expect(screen.queryByRole('option', { name: '交互案例索引' })).not.toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'EPM-PAGE-001' })).toBeInTheDocument();
+  });
+
+  it('shows a database error instead of a bundled interaction fallback', async () => {
+    window.location.hash = '#/showcase/style-scenes';
+    const gateway = new MemoryGateway();
+    gateway.failStyleScenes = true;
+    await login('viewer', gateway);
+    expect(await screen.findByRole('alert')).toHaveTextContent('场景目录服务暂时不可用');
+    expect(screen.queryByRole('button', { name: 'EPM-PAGE-001' })).not.toBeInTheDocument();
+  });
+
+  it('canonicalizes the retired interaction-index route to the catalog route', async () => {
+    window.location.hash = '#/showcase/interaction-index';
+    await login('viewer');
+    expect(await screen.findByRole('button', { name: 'EPM-PAGE-001' })).toBeInTheDocument();
+    expect(window.location.hash).toBe('#/showcase/style-scenes');
+  });
   it('loads one authorized navigation tree after account/password login', async () => {
     window.location.hash = '#/showcase/customers';
     await login('admin');
