@@ -1,0 +1,23 @@
+packages/contracts/src/index.ts
+  43b7e3c0e68781af 600-601
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.9",
+  "base_commit_sha": "a3074070d6d10a94d0bc3e16bcbb2fae8b3c7993",
+  "prompts": {
+    "43b7e3c0e68781af": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0d915-6ffc-7bc2-8c0e-da8338518dcb",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 245,
+      "overriden_lines": 0
+    }
+  }
+}
