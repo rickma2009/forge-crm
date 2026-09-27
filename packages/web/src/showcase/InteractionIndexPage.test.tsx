@@ -81,8 +81,9 @@ describe('database-backed interaction catalog', () => {
     const historical = scene({ id: '00000000-0000-4000-8000-000000000099', assetCode: null, maturity: null, sceneName: '历史场景' });
     const api = gateway({ styleScenes: vi.fn().mockResolvedValue(list([historical])), styleSceneDetail: vi.fn().mockResolvedValue(detail({ ...historical, definition: [], definitionRef: null, artifacts: [], evidence: [], evidenceCards: [], nextEvidence: null })) });
     render(<InteractionIndexPage systemCode="demo-portal" gateway={api} />);
-    expect(await screen.findByText('历史场景')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: '查看 历史场景' }));
+    expect(await screen.findByRole('button', { name: '历史场景' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: '查看 历史场景' })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '历史场景' }));
     expect(await screen.findByRole('heading', { name: '历史场景', level: 1 })).toBeInTheDocument();
     expect(screen.getAllByText('暂无').length).toBeGreaterThan(0);
   });

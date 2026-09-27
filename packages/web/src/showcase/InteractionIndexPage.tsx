@@ -117,7 +117,7 @@ export function InteractionIndexPage({ systemCode, gateway }: { systemCode: stri
 }
 
 function CatalogRow({ item, index, onOpen }: { item: StyleSceneSummary; index: number; onOpen: () => void }) {
-  return <tr><td className="is-index">{index}</td><td>{item.assetCode ? <button className="interaction-catalog-link" type="button" onClick={onOpen}>{item.assetCode}</button> : <><span>—</span><button className="interaction-catalog-history-link" type="button" onClick={onOpen}>查看 {item.sceneName}</button></>}</td><td>{item.sceneName}</td><td>{item.category}</td><td>{item.subCategory ?? '—'}</td><td><span className={`interaction-index-maturity maturity-${item.maturity ?? 'unknown'}`}>{item.maturity ?? '—'}</span></td><td>{item.status}</td></tr>;
+  return <tr><td className="is-index">{index}</td><td>{item.assetCode ? <button className="interaction-catalog-link" type="button" onClick={onOpen}>{item.assetCode}</button> : '—'}</td><td>{item.assetCode ? item.sceneName : <button className="interaction-catalog-link" type="button" onClick={onOpen}>{item.sceneName}</button>}</td><td>{item.category}</td><td>{item.subCategory ?? '—'}</td><td><span className={`interaction-index-maturity maturity-${item.maturity ?? 'unknown'}`}>{item.maturity ?? '—'}</span></td><td>{item.status}</td></tr>;
 }
 
 function InteractionDetail({ detail, loading, error, onRetry, onBack }: { detail: StyleSceneDetail | null; loading: boolean; error: string; onRetry: () => void; onBack: () => void }) {

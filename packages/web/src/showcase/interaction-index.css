@@ -7,9 +7,8 @@
 .interaction-catalog-grid .table-toolbar span { color: var(--ipl-muted); }
 .interaction-catalog-grid .enterprise-table-wrap { overflow: auto; }
 .interaction-catalog-grid table { min-width: 920px; }
-.interaction-catalog-link, .interaction-catalog-history-link { padding: 0; border: 0; color: var(--ipl-primary); background: transparent; cursor: pointer; font: inherit; }
-.interaction-catalog-link:hover, .interaction-catalog-history-link:hover { text-decoration: underline; }
-.interaction-catalog-history-link { display: block; margin-top: 3px; color: var(--ipl-muted); }
+.interaction-catalog-link { padding: 0; border: 0; color: var(--ipl-primary); background: transparent; cursor: pointer; font: inherit; }
+.interaction-catalog-link:hover { text-decoration: underline; }
 .interaction-index-maturity { display: inline-flex; align-items: center; min-height: 24px; padding: 0 8px; border-radius: 4px; color: var(--ipl-muted); background: var(--ipl-surface-subtle); white-space: nowrap; }
 .maturity-interaction-verified, .maturity-business-validated, .maturity-released { color: #126b59; background: var(--ipl-success-wash); }
 .maturity-implementation-verified, .maturity-project-adopted { color: #2453a6; background: #eaf0ff; }
