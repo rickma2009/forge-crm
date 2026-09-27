@@ -1,0 +1,30 @@
+packages/web/src/showcase/InteractionIndexPage.tsx
+  5898f6aa23a8f29f 7-13,38,77-78,116-118,121-122,132-133,137,140,142
+packages/web/src/showcase/interaction-index.css
+  5898f6aa23a8f29f 32,38-39,41-42
+packages/web/src/showcase/InteractionIndexPage.test.tsx
+  5898f6aa23a8f29f 5-6,70,73,99-100,114-115
+packages/web/src/showcase/data/interaction-index.data.json
+  5898f6aa23a8f29f 1-1990
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.9",
+  "base_commit_sha": "1f738b2ba223f2c9a655b8bf6b955138486190c0",
+  "prompts": {
+    "5898f6aa23a8f29f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "88d4d955-73e2-4de1-a40a-bf60f3eee4e2",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 2041,
+      "overriden_lines": 166,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/968d6bcdad43dbf8b4e1ac4573532cb491c02bf602ca7e0ccf5530c353f4ae70"
+    }
+  }
+}
