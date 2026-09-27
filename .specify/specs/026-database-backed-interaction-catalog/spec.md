@@ -1,6 +1,6 @@
 # Specification：数据库驱动的交互案例目录
 
-状态：DESIGN APPROVED / WRITTEN SPEC REVIEW READY
+状态：IMPLEMENTED / RELEASE REVIEW READY
 
 来源：`REQSRC-079`
 
@@ -160,3 +160,11 @@
 - 不删除旧表、历史数据、方法论生成源。
 - 不改变其他菜单的角色权限规则。
 - 数据库迁移必须先执行，再运行 seed 和启动新服务；旧后端构建不能与新 contracts/schema 混用。
+
+## 12. 实施结果（2026-09-28）
+
+- 已应用迁移 `20260928090000_style_scene_asset_catalog`，并连续两次完成幂等 seed。
+- `demo-portal` 中交互资产编码非空记录为 103 条、唯一编码为 103 条；原 21 条空编码历史场景继续保留。
+- 正式页面运行时只调用 taxonomy、list、detail API；前端生成 JSON 仅保留为方法论一致性投影，没有运行时 import。
+- viewer 浏览器验收通过：二级树筛选、关键词查询、重置、覆盖式详情、确定性演示复位、返回状态恢复和旧地址规范化均符合本规格。
+- 完整 `pnpm verify` 通过；详细证据见 `testcases.md`、`traceability.md` 和 `review.md`。
