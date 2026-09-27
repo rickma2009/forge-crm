@@ -1,0 +1,28 @@
+packages/web/src/showcase/ShowcaseApp.tsx
+  5898f6aa23a8f29f 30-32,71-73,106
+packages/web/src/showcase/ShowcaseApp.test.tsx
+  5898f6aa23a8f29f 15,18,30,51-60,115-136
+packages/web/src/showcase/domain/routes.ts
+  5898f6aa23a8f29f 5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.9",
+  "base_commit_sha": "9b65265ad394a7e108c83c8263901c463dc35947",
+  "prompts": {
+    "5898f6aa23a8f29f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "88d4d955-73e2-4de1-a40a-bf60f3eee4e2",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 21,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/b98a16ce14f5b91909b0bdd8f5703c1964a0e033390cfd5d18c4a2797708336e"
+    }
+  }
+}
