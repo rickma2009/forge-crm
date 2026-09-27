@@ -101,7 +101,7 @@ export function InteractionIndexPage({ systemCode, gateway }: { systemCode: stri
       <label>成熟度<select aria-label="成熟度" value={form.maturity} onChange={(event) => setForm({ ...form, maturity: event.target.value })}><option value="">全部</option>{maturities.map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
     </RecordQueryBar>
     {taxonomyError && <div className="enterprise-alert interaction-taxonomy-error" role="alert">{taxonomyError}<button type="button" onClick={() => setTaxonomyVersion((value) => value + 1)}>重试分类</button></div>}
-    <TreeWorkspace title="交互案例分类" nodes={nodes} selectedId={selectedNode} onSelect={selectNode} onRefresh={() => setTaxonomyVersion((value) => value + 1)} loading={taxonomyLoading} total={taxonomy.types.reduce((sum, type) => sum + type.count, 0)} tools={<button type="button" onClick={reset}>全部分类</button>}>
+    <TreeWorkspace title="交互案例分类" nodes={nodes} selectedId={selectedNode} onSelect={selectNode} onRefresh={() => setTaxonomyVersion((value) => value + 1)} loading={taxonomyLoading} tools={<button type="button" onClick={reset}>全部分类</button>}>
       <section className="enterprise-card interaction-catalog-grid">
         <div className="table-toolbar"><strong>交互案例</strong><span>共 {result.pagination.total} 条</span></div>
         {listError && <div className="enterprise-alert" role="alert">{listError}<button type="button" onClick={() => setListVersion((value) => value + 1)}>重试列表</button></div>}

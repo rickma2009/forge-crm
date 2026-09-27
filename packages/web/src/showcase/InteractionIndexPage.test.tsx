@@ -36,6 +36,7 @@ describe('database-backed interaction catalog', () => {
     expect(await screen.findByRole('treeitem', { name: 'PAGE（2）' })).toHaveAttribute('aria-level', '1');
     expect(screen.getByRole('treeitem', { name: '系统与任务入口类（1）' })).toHaveAttribute('aria-level', '2');
     expect(screen.getByRole('treeitem', { name: 'SPECIAL（1）' })).not.toHaveAttribute('aria-expanded');
+    expect(screen.getByText('共 4 个节点')).toBeInTheDocument();
     expect(await screen.findByRole('button', { name: 'EPM-PAGE-001' })).toBeInTheDocument();
     for (const heading of ['序号', '案例编码', '案例名称', '类型', '分组', '成熟度', '当前状态']) expect(screen.getByRole('columnheader', { name: heading })).toBeInTheDocument();
 
