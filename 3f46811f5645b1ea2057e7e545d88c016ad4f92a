@@ -1,0 +1,61 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.9",
+  "base_commit_sha": "3f46811f5645b1ea2057e7e545d88c016ad4f92a",
+  "prompts": {
+    "43b7e3c0e68781af": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0d915-6ffc-7bc2-8c0e-da8338518dcb",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 280,
+      "total_deletions": 4,
+      "accepted_lines": 245,
+      "overriden_lines": 0
+    },
+    "5898f6aa23a8f29f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "88d4d955-73e2-4de1-a40a-bf60f3eee4e2",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 2291,
+      "total_deletions": 28,
+      "accepted_lines": 2241,
+      "overriden_lines": 11,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/38b028fb01ca01177e4b0839b6c1307c6643754a57e584f928396ef2b26ef68c"
+    },
+    "b726584997e2dfda": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0d6b7-efe8-7341-afeb-15d480930928",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 501,
+      "total_deletions": 86,
+      "accepted_lines": 499,
+      "overriden_lines": 0
+    },
+    "c26d7276e3d8ec47": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0d590-6f6b-7423-8d06-2869afb9989b",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 75,
+      "total_deletions": 4,
+      "accepted_lines": 75,
+      "overriden_lines": 0
+    }
+  }
+}
