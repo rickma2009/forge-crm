@@ -11,8 +11,10 @@ import { databaseRowsToSeedDefinition } from '../src/rbac/database-definition';
 import { validateSeedDefinition } from '../src/rbac/seed-definition';
 import { seedDefinition } from './seed-data';
 import { contactProjectRoleSeed } from '../src/dictionary/contact-project-role.seed';
+import { seedInteractionCatalog } from '../src/style-scene/style-scene.seed';
 
 loadEnv({ path: fileURLToPath(new URL('../../../.env', import.meta.url)), quiet: true });
+const projectRoot = fileURLToPath(new URL('../../..', import.meta.url));
 
 const required = (name: string): string => {
   const value = process.env[name];
@@ -536,37 +538,7 @@ async function main(): Promise<void> {
         await database.sdOppProduct.create({ data: { tenantId: tenant.id, opportunityId: sampleOpportunity.id, productId: sampleProductId, productCode: 'P2026090001', productName: '智能控制板', model: 'CB-100', quantity: 1000, unitPrice: 280, expectedAmount: 280000, requirement: '首批样机验证后分批交付', sortNo: 10, createdBy: 'seed', updatedBy: 'seed' } });
       }
 
-      const sceneSeeds: Array<[string, string, string, string, 'DONE' | 'WIP' | 'TODO', string | null, string | null, number]> = [
-        ['概览', null, '概览首页', '平台入口与导航总览', 'TODO', null, null, 10],
-        ['基础规范', null, '颜色与主题', '品牌色、语义色、暗色/亮色主题', 'DONE', null, null, 20],
-        ['基础规范', null, '字体与排版', '字号阶梯、行高、字重', 'DONE', null, null, 30],
-        ['基础规范', null, '间距与布局', '栅格、间距 token、容器', 'DONE', null, null, 40],
-        ['基础规范', null, '图标与状态色', '图标库、语义状态色', 'DONE', null, null, 50],
-        ['基础组件', null, '按钮与操作', '主/次/危险按钮、操作区', 'DONE', null, null, 60],
-        ['基础组件', null, '表单控件', '输入、选择、日期、校验', 'DONE', null, null, 70],
-        ['基础组件', null, '数据展示', '表格、标签、描述列表', 'DONE', null, null, 80],
-        ['基础组件', null, '反馈组件', '提示、对话框、抽屉', 'DONE', null, null, 90],
-        ['页面模板', null, '查询列表', '标准查询+表格+分页', 'DONE', null, null, 100],
-        ['页面模板', null, '高级筛选列表', '多条件折叠筛选', 'DONE', null, null, 110],
-        ['页面模板', null, '新增编辑表单', '表单弹层/独立页', 'DONE', null, null, 120],
-        ['页面模板', null, '业务详情', '详情页布局', 'DONE', null, null, 130],
-        ['页面模板', null, '主从工作区', '主表+子表左右分栏', 'DONE', null, null, 140],
-        ['页面模板', null, '工作台', '个人工作台卡片布局', 'DONE', null, null, 150],
-        ['交互模式', null, '交互模式总览', '通用交互模式汇编', 'WIP', null, null, 160],
-        ['页面状态', null, '页面状态', '空态/加载/错误/权限', 'WIP', null, null, 170],
-        ['组合场景', null, '组合场景', '多模式组合的完整业务场景', 'WIP', null, null, 180],
-        ['业务页面', '客户', '客户列表', '查询+表格+分页+视图切换', 'DONE', '/showcase/customers', null, 200],
-        ['业务页面', '系统管理', '数据字典', '左树右表+字典值维护', 'DONE', '/showcase/system/dictionaries', null, 210],
-        ['业务页面', '系统管理', '列表视图', '系统/个人视图配置', 'DONE', '/showcase/system/list-views', null, 220],
-      ];
-      for (const [category, subCategory, sceneName, description, status, pagePath, note, sortNo] of sceneSeeds) {
-        const existing = await database.styleScene.findFirst({ where: { systemCode: 'demo-portal', category, sceneName } });
-        if (existing) {
-          await database.styleScene.update({ where: { id: existing.id }, data: { subCategory, description, status, pagePath, note, sortNo, updatedBy: 'seed' } });
-        } else {
-          await database.styleScene.create({ data: { systemCode: 'demo-portal', category, subCategory, sceneName, description, status, pagePath, note, sortNo, createdBy: 'seed', updatedBy: 'seed' } });
-        }
-      }
+      await seedInteractionCatalog(database, 'demo-portal', projectRoot);
 
       const systemCodes = seedDefinition.systems;
       const [persistedMenus, persistedActions, persistedRoles, persistedGrants] = await Promise.all([
