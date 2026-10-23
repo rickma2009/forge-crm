@@ -1,0 +1,1739 @@
+packages/web/src/showcase/QuotationLineDialog.tsx
+  b726584997e2dfda 46-49,52,61,81,84,103-104,108
+.specify/sources/20261008-digital-employee-standalone-pages/source.md
+  049901757477350a 1-13
+packages/web/src/ui-assets/components/editable-line-grid/EditableLineGrid.test.tsx
+  6096cbc24c83521c 30,32-33,61,92,106,119,131
+packages/server/scripts/register-inventory-stock-pages.ts
+  14333dfb5711abba 1-38
+_methodology/scripts/enterprise-interaction-index.mjs
+  2e2b786becef3016 10,34-43,49-77,123,126,147
+_methodology/templates/README.md
+  fe65d30535c7e603 35-46
+  5a3930099b5106ed 5
+  12633e0363a0506e 1,7,9,11,17,19-25
+  6096cbc24c83521c 13,26-34
+  e2b8fa1d9b6d1f01 3,15
+  60644da72dac18d6 47-54
+.specify/specs/024-inventory-inbound-management/plan.md
+  6e84c573dc0d61cf 54-69
+  049901757477350a 45-53
+packages/server/prisma/apply-purchasing.ts
+  9d312f5673c613f2 1-121
+_methodology/templates/project-charter-template.md
+  14333dfb5711abba 18-26
+packages/web/src/showcase/CustomerWorkspace.test.tsx
+  0ce07bf6db3977c6 6,93-109
+  14333dfb5711abba 32,36,52
+packages/web/src/showcase/gateway.ts
+  57a3c698f3e0b667 99,148-149,206-208,270
+  049901757477350a 3,121,292
+packages/contracts/src/ai-analysis.ts
+  43b7e3c0e68781af 1-13
+packages/server/src/api.integration.spec.ts
+  049901757477350a 273-280,287-289,291,293,313-314,317,319,321,323-325
+packages/server/src/opportunity/opportunity-kanban.integration.spec.ts
+  57a3c698f3e0b667 1-129
+packages/web/src/showcase/InboundOrderDetailPage.test.tsx
+  48600bacad4c0446 8,10,12,18,22,32,38,41
+  6096cbc24c83521c 17,26
+docs/design-system.md
+  0de4794322f9faaa 33-40
+packages/server/scripts/verify-mail-automation.ts
+  3f55ad551bed01fb 1-32
+packages/web/src/showcase/registry/showcase-registry.data.json
+  5a3930099b5106ed 757,775
+  0de4794322f9faaa 6,105
+  9d312f5673c613f2 91-94,821-853,1064-1082
+  60644da72dac18d6 9,158-166,981-986
+  049901757477350a 89-90,157,167,345-347,798-819
+  48600bacad4c0446 8,10-13,83,98-100,124-156,168-246,277-316,318,321-330,332-334,348-750,787,854,859-879,886-922,948-960,967-969,971-980,987-1063,1083-1086
+  14333dfb5711abba 317,319-320,331,335-344,961-966,970
+  e47d100cfd39a83a 48-51,84-88,116-119,247-276,751-756,758-774,776-786,788-797,820,880-885,923-947
+.specify/specs/026-database-backed-interaction-catalog/review.md
+  2e2b786becef3016 16,29,32-39
+packages/web/src/showcase/OpportunityPages.test.tsx
+  fe65d30535c7e603 57-58,62-66
+  eb0cb8cac978b5b3 49,67-76
+scripts/test-business-scene-migration.mjs
+  1997bf5b94f932a6 1-24
+packages/server/src/http/api-exception.filter.ts
+  b726584997e2dfda 1,18-22
+packages/server/src/opportunity/opportunity-stage.service.spec.ts
+  eb0cb8cac978b5b3 13
+_methodology/templates/aggregate-drilldown-verification-template.md
+  0ce07bf6db3977c6 1-30
+packages/server/src/attachment/attachment.service.ts
+  57a3c698f3e0b667 1,4,19,28-38,40-46,78-85
+packages/web/src/common/DetailWorkspace.tsx
+  049901757477350a 17,20
+_methodology/style-index.md
+  e2b8fa1d9b6d1f01 153,318
+  6096cbc24c83521c 315-317,327,330-337,340
+  0de4794322f9faaa 348-351
+  c26d7276e3d8ec47 281-288
+  57a3c698f3e0b667 356-368
+  0ce07bf6db3977c6 338-339,344-345,352-355
+  5a3930099b5106ed 300-301
+  4928e55b9de190de 15-30,35-41,50
+  049901757477350a 31-34,325-326,375-384
+  14333dfb5711abba 319-324
+  43b7e3c0e68781af 289-293
+  12633e0363a0506e 294-297,299,302-314
+  fe65d30535c7e603 298,329,341-343,346-347
+  acbe58934c7da362 369-374
+packages/contracts/src/quotation.test.ts
+  b726584997e2dfda 6,8-13,17-18,53-69
+  2e2b786becef3016 70
+packages/web/src/ui-assets/scenarios/bom/BomScenario.test.tsx
+  6096cbc24c83521c 7,11
+packages/server/scripts/initialize-sales-enhancement.ts
+  acbe58934c7da362 1,3-4,6-7
+  049901757477350a 2,5
+packages/server/scripts/check-workflow-engine.ts
+  049901757477350a 1-7,9-26,29-38
+  6e84c573dc0d61cf 8,27-28
+scripts/test-purchasing-integration.mjs
+  9d312f5673c613f2 1-17
+.specify/销售交互增强能力-方案设计.md
+  0ce07bf6db3977c6 1-9
+  acbe58934c7da362 10
+.specify/specs/022-opportunity-quotation-pricing/requirements/original.md
+  b726584997e2dfda 12,17-23
+packages/web/src/showcase/domain/routes.ts
+  0de4794322f9faaa 7,10
+  eb0cb8cac978b5b3 14-27
+packages/contracts/src/sales.ts
+  5a3930099b5106ed 1-43
+packages/web/src/showcase/InventoryPages.test.tsx
+  c26d7276e3d8ec47 3,52-82
+  48600bacad4c0446 121
+  eb0cb8cac978b5b3 93
+  a7864ca22f7c49d1 10-12,94-114
+  049901757477350a 13-14,35-51
+  2e2b786becef3016 83
+  6096cbc24c83521c 1
+packages/server/prisma/apply-digital-employee-menus.ts
+  049901757477350a 1-18,20-119
+packages/server/prisma/apply-business-scene-workspaces.ts
+  1997bf5b94f932a6 1-111
+.specify/specs/022-opportunity-quotation-pricing/plan.md
+  b726584997e2dfda 23-44
+_methodology/11-数据库设计与数据分层规范.md
+  e2b8fa1d9b6d1f01 66-69,153-154
+  049901757477350a 101-103
+packages/web/src/showcase/Favorites.tsx
+  049901757477350a 1-74
+packages/web/src/common/drawer-workspace.css
+  0ce07bf6db3977c6 1
+packages/web/src/showcase/personal-agent.css
+  1997bf5b94f932a6 2-4
+  677358cbf7b50283 1
+packages/web/src/showcase/workbench.css
+  48600bacad4c0446 25
+  0de4794322f9faaa 1-24
+packages/server/src/workflow/sales-workflow.service.ts
+  049901757477350a 1-4,6-11,13-26,36-38,40,42-45,49,51-53,56-59,61-65,67-81,84-94,96-106
+  6e84c573dc0d61cf 5,12,27-35,39,41,46-48,50,54-55,60,66,82-83,95
+scripts/test-business-scenes-integration.mjs
+  1997bf5b94f932a6 1-14
+.specify/sources/UIRULE-20261009-default-agent/source.md
+  049901757477350a 1-5
+packages/web/src/showcase/BomPage.tsx
+  e47d100cfd39a83a 1-87
+packages/web/src/common/row-actions.css
+  4928e55b9de190de 15
+  14333dfb5711abba 9-13,21-24
+packages/web/src/common/ActivityTimeline.md
+  57a3c698f3e0b667 1-11
+packages/web/src/vite-env.d.ts
+  049901757477350a 1
+packages/web/src/showcase/InventoryStockPages.tsx
+  14333dfb5711abba 1-3,6-22,24-25,27-30,32,35-36,51-56,58-59,62-64
+  0ce07bf6db3977c6 4-5,23,26,31,33-34,37-49,57,60-61
+  e2b8fa1d9b6d1f01 50
+packages/web/src/showcase/interaction-index.css
+  6096cbc24c83521c 27-28
+  12633e0363a0506e 1-17,19-24,26
+  e2b8fa1d9b6d1f01 18
+  5a3930099b5106ed 25
+packages/server/scripts/verify-purchasing-demo.ts
+  9d312f5673c613f2 1-16
+packages/server/src/quotation/quotation-create.spec.ts
+  b726584997e2dfda 55,62-82,110,115-120
+  60644da72dac18d6 29,53
+packages/web/src/showcase/bom-api.ts
+  e47d100cfd39a83a 1-15
+_methodology/scripts/test-forge-init.mjs
+  14333dfb5711abba 64-69
+packages/web/src/showcase/OpportunityPages.tsx
+  eb0cb8cac978b5b3 3,36,57,62,216
+  fe65d30535c7e603 4-6,71,141,149,241-242
+  6096cbc24c83521c 7,239
+  57a3c698f3e0b667 1-2,21-22,60,69,72,138,142-146,215,217-218,223,226,228
+  acbe58934c7da362 133
+  48600bacad4c0446 68,135
+  14333dfb5711abba 185
+  43b7e3c0e68781af 8,73-74,147,150
+_methodology/examples/003-golden-interaction-record-management-workspace/styles.css
+  14333dfb5711abba 1-3
+.specify/sources/20261003-bounded-task-execution.md
+  0ce07bf6db3977c6 1-11
+packages/web/src/common/TreeWorkspace.test.tsx
+  eb0cb8cac978b5b3 19
+packages/web/src/common/RelatedRecordList.md
+  0ce07bf6db3977c6 1-16
+packages/web/src/showcase/numbering-api.ts
+  60644da72dac18d6 1-8
+packages/web/src/common/ListViewSelector.test.tsx
+  e2b8fa1d9b6d1f01 6-19
+packages/server/src/system-parameter/README.md
+  eb0cb8cac978b5b3 12
+_methodology/examples/003-golden-interaction-record-management-workspace/list-action-guideline.md
+  e2b8fa1d9b6d1f01 5-6,15
+  14333dfb5711abba 11-14
+packages/web/src/showcase/RoleWorkspace.tsx
+  3f55ad551bed01fb 78-80,86
+packages/web/src/showcase/OpportunityKanban.test.tsx
+  57a3c698f3e0b667 1-58,60-62
+  acbe58934c7da362 59
+packages/server/scripts/verify-screen-boms.ts
+  e47d100cfd39a83a 1-57
+_methodology/project-init/templates/AGENTS.md
+  14333dfb5711abba 14,18
+_methodology/scripts/verify-drawer-style-ownership.mjs
+  0ce07bf6db3977c6 1-42
+.specify/specs/005-unified-navigation-toolbar-tab-workspace/requirements/original.md
+  049901757477350a 13-16
+packages/web/src/showcase/AccessAdminPages.tsx
+  6096cbc24c83521c 1,47,60
+  14333dfb5711abba 38
+  fe65d30535c7e603 5,17-29,31
+_methodology/scripts/check-markdown-links.mjs
+  0ce07bf6db3977c6 8-9,44
+packages/web/src/common/RecordCommentPanel.tsx
+  57a3c698f3e0b667 1-6
+packages/server/src/style-scene/style-scene.service.spec.ts
+  5a3930099b5106ed 45-52
+  12633e0363a0506e 38-44
+.specify/specs/digital-employee/testcases.md
+  049901757477350a 1-36,40-67
+  4928e55b9de190de 37-39
+packages/server/src/inventory/inventory.service.ts
+  6e84c573dc0d61cf 7
+  60644da72dac18d6 1,10,23,89
+  14333dfb5711abba 15-16,94-140,143-153
+  049901757477350a 28,30,32-41,50-65,67
+  5a3930099b5106ed 142,154-156
+  6096cbc24c83521c 2,13
+packages/server/scripts/register-bom-page.ts
+  e47d100cfd39a83a 1-35
+packages/web/src/ui-assets/scenarios/sales-order/SalesOrderScenario.test.tsx
+  6096cbc24c83521c 14,38,58
+packages/server/src/opportunity/opportunity-detail-contract.spec.ts
+  57a3c698f3e0b667 33-39
+packages/server/package.json
+  049901757477350a 20-21,33
+  3f55ad551bed01fb 34-36,49,51,63-67,70-75
+.specify/specs/024-inventory-inbound-management/review.md
+  6e84c573dc0d61cf 14-30
+packages/server/src/style-scene/template-library.seed.ts
+  12633e0363a0506e 2-35,37-38,43-46,112
+  e2b8fa1d9b6d1f01 36,39-42,62,65-72,84,96,106-107
+  5a3930099b5106ed 1,47-61,63-64,73-83,85-89,93-95,108-110
+  0ce07bf6db3977c6 90-92,97-105,111
+_methodology/examples/000-golden-slice-customer-lead/memory/project-charter.md
+  14333dfb5711abba 16-19
+_methodology/scripts/check-rehearsal-source.mjs
+  e2b8fa1d9b6d1f01 1-39
+packages/contracts/src/workflow/index.ts
+  6e84c573dc0d61cf 1-40
+packages/contracts/src/quotation.ts
+  b726584997e2dfda 18,20,59-60
+packages/server/src/opportunity/opportunity-lifecycle.spec.ts
+  fe65d30535c7e603 1-22
+.specify/sources/REGISTRY.md
+  14333dfb5711abba 5,7,95
+  e2b8fa1d9b6d1f01 6
+  c26d7276e3d8ec47 87
+  4928e55b9de190de 152-154
+  7fa74f46ed8c2518 174-177
+  2e2b786becef3016 25-26
+  0ce07bf6db3977c6 110-113
+  049901757477350a 124-140,145-151,155-173
+  57a3c698f3e0b667 114-119
+  1997bf5b94f932a6 178-181
+  b726584997e2dfda 88-91
+  60644da72dac18d6 120-123
+  6e84c573dc0d61cf 141-144
+  e47d100cfd39a83a 92-93
+  5a3930099b5106ed 94
+  48600bacad4c0446 8-9
+packages/web/src/showcase/bom.css
+  e47d100cfd39a83a 1-14
+.specify/specs/digital-employee/review.md
+  049901757477350a 1-6
+.specify/sources/UIRULE-20261009-mail-action-layout/source.md
+  049901757477350a 1-5
+_methodology/scripts/check-database-governance.test.mjs
+  e2b8fa1d9b6d1f01 1-88
+packages/server/src/list-view/list-view.service.ts
+  57a3c698f3e0b667 25-27
+  fe65d30535c7e603 2,28-36
+  6096cbc24c83521c 46,49-50
+  e47d100cfd39a83a 62
+  48600bacad4c0446 63-68
+packages/web/src/showcase/SalesGuidancePanel.tsx
+  57a3c698f3e0b667 1-45
+.specify/requirements/009-opportunity-management/quotation-and-pricing/requirement.md
+  b726584997e2dfda 3,65,80-81,83,119-120,199,219,224,233,249,252-271
+  60644da72dac18d6 272-275
+packages/web/src/app/RootApp.test.tsx
+  eb0cb8cac978b5b3 16,25-33
+scripts/check-sales-enhancement-browser.mjs
+  acbe58934c7da362 1-22
+packages/web/src/showcase/NumberingRulesPage.test.tsx
+  60644da72dac18d6 1-13
+.specify/specs/005-unified-navigation-toolbar-tab-workspace/traceability.md
+  049901757477350a 12-15
+packages/contracts/src/index.ts
+  fe65d30535c7e603 643-644
+  0de4794322f9faaa 645-646
+  3f55ad551bed01fb 6
+  60644da72dac18d6 551,655-656
+  e47d100cfd39a83a 647-648
+  9d312f5673c613f2 661-662
+  5a3930099b5106ed 18,441-442,638
+  049901757477350a 502-503,508,513-514,518,520,528,538-539,545-546,588,657-658
+  0ce07bf6db3977c6 649-650
+  6096cbc24c83521c 265,272-273,438,440
+  1997bf5b94f932a6 660
+  57a3c698f3e0b667 268-270,651-654
+  12633e0363a0506e 424-437,439,443-445,449
+packages/server/src/system-parameter/parameter-defaults.ts
+  eb0cb8cac978b5b3 6,14
+packages/server/src/attachment/attachment.controller.ts
+  57a3c698f3e0b667 3-13
+packages/web/src/showcase/AgentKnowledgePanel.tsx
+  1997bf5b94f932a6 1-14
+packages/contracts/src/purchasing.ts
+  9d312f5673c613f2 1-13
+packages/server/src/system-parameter/system-parameter.integration.spec.ts
+  eb0cb8cac978b5b3 50-51
+packages/server/scripts/initialize-workflow.ts
+  049901757477350a 1-23
+packages/server/src/app.module.ts
+  60644da72dac18d6 9-10
+  43b7e3c0e68781af 27-29
+  57a3c698f3e0b667 11-16,54-56
+  0ce07bf6db3977c6 57,107
+  1997bf5b94f932a6 4-5,103
+  5a3930099b5106ed 85-87
+  e47d100cfd39a83a 88-89
+  3f55ad551bed01fb 92-94
+  9d312f5673c613f2 1-3,101-102
+  48600bacad4c0446 23-24
+  049901757477350a 6-8,90-91,95-96
+  fe65d30535c7e603 21-22,25-26
+  0de4794322f9faaa 17-20
+.specify/specs/024-inventory-inbound-management/README.md
+  049901757477350a 3-6
+_methodology/patterns/index.json
+  2e2b786becef3016 31-32,52-53,73-74,94-95,115-116,136-137,157-158,219-220,240-241,261-262,282-283,303-304,324-325,345-346,366-367,387-388,408-409,429-430,450-451,471-472,492-493,513-514,534-535,555-556,576-577,595-596,614-615,633-634,652-653,671-672,690-691,709-710,728-729,747-748,766-767,785-786,804-805,823-824,842-843,861-862,880-881,899-900,918-919,937-938,956-957,975-976,994-995,1013-1014,1032-1033,1051-1052,1070-1071,1089-1090,1108-1109,1127-1128,1146-1147,1165-1166,1184-1185,1203-1204,1222-1223,1241-1242,1260-1261,1279-1280,1298-1299,1317-1318,1336-1337,1355-1356,1374-1375,1393-1394,1412-1413,1431-1432,1450-1451,1469-1470,1488-1489,1507-1508,1526-1527,1545-1546,1564-1565,1583-1584,1602-1603,1621-1622,1640-1641,1659-1660,1678-1679,1697-1698,1716-1717,1735-1736,1755-1756,1775-1776,1795-1796,1815-1816,1835-1836,1855-1856,1875-1876,1895-1896,1915-1916,1935-2177,2204-2205,2225-2226,2246-2247,2267-2268,2288-2289,2309-2310,2330-2331
+packages/server/prisma/schema.prisma
+  1997bf5b94f932a6 2006-2007,2011,2839-2860,2863-2866,2868,2871-2872
+  48600bacad4c0446 814-830,997-1014,1023-1041,1048-1054,1060-1086,1096-1119,1125-1137,1144-1154,1327-1350,1358-1376,1641-1653,1717-1719,1859-1873,1881-1907,1915-1941,1946-1991,2010,2012-2013
+  3f55ad551bed01fb 2391-2392,2406-2408,2430-2433,2452-2454,2482-2484,2505-2507,2527-2529,2550-2552,2568
+  fe65d30535c7e603 1728,1912-1914,1942-1945
+  049901757477350a 123-126,140,149,171,178-192,414-431,938,1181-1203,1205-1207,1217-1221,1223-1232,1462-1496,1508-1531,1540-1569,1578-1595,1682-1716,1724,1758-1775,1992-2005,2008-2009,2017-2033,2040-2064,2068-2091,2095-2110,2114-2129,2133-2152,2156-2180,2184-2198,2202-2213,2217-2232,2236-2249,2253-2273,2275,2277-2285,2287,2289-2302,2304-2390,2393-2405,2409-2429,2434-2451,2455-2481,2485-2504,2508-2526,2530-2549,2553-2567,2569-2838
+  12633e0363a0506e 1835
+  5a3930099b5106ed 96-97,1204,1461,1497-1507,1532-1539,1570-1577,1596-1615
+  57a3c698f3e0b667 1720-1722,2014-2016,2034-2039,2065-2067,2092-2094,2111-2113,2130-2132,2153-2155,2181-2183,2199-2201,2214-2216,2233-2235
+  9d312f5673c613f2 1299,1322,2873-3044
+  e47d100cfd39a83a 169,1210,1216,1222,1233-1278
+  60644da72dac18d6 2251-2252,2274,2276,2286,2288,2303
+scripts/validate-shared-data-grids.mjs
+  6096cbc24c83521c 1-27
+.specify/specs/digital-employee/mail-action-layout-delivery.md
+  049901757477350a 1-9
+packages/web/src/app/RootApp.tsx
+  eb0cb8cac978b5b3 2,12
+packages/contracts/src/inventory.ts
+  049901757477350a 24
+  14333dfb5711abba 74
+packages/web/src/common/SalesActionDialog.tsx
+  57a3c698f3e0b667 12
+  acbe58934c7da362 1-4,7-11
+  3f55ad551bed01fb 5-6
+_methodology/templates/AGENTS-template.md
+  14333dfb5711abba 14,18-19,35
+packages/web/src/showcase/RecordCollaborationPanel.tsx
+  57a3c698f3e0b667 1-29,31-33,35-38
+  acbe58934c7da362 30,34
+packages/server/scripts/initialize-organization-business.ts
+  049901757477350a 1-13
+docs/reference-inventory.md
+  e2b8fa1d9b6d1f01 21
+  14333dfb5711abba 20
+packages/server/src/organization/employee.service.ts
+  60644da72dac18d6 1,35,120,130,134
+  049901757477350a 50,86,89,91,95,99-117,125,128,132,138,155,157,159-160,169
+scripts/test-ai-integration.mjs
+  43b7e3c0e68781af 1-15
+packages/server/src/customer/customer.service.ts
+  60644da72dac18d6 1,40,146,149,156
+  6096cbc24c83521c 2,18,25-26,49-51,56,65
+packages/web/src/ui-assets/adoption/ResourceWorkspace.test.tsx
+  6096cbc24c83521c 10,26
+.specify/sources/REQSRC-102-item-source-lifecycle-and-reference-codes-20261005/source.md
+  049901757477350a 1-17
+packages/web/src/showcase/RoleSubjects.tsx
+  6096cbc24c83521c 1
+  14333dfb5711abba 55,70
+packages/server/src/inventory/inventory.controller.ts
+  14333dfb5711abba 38-39
+  5a3930099b5106ed 40
+packages/server/scripts/smoke-bom-api.ts
+  e47d100cfd39a83a 1-57
+.specify/specs/016-organization-employee-directory/spec.md
+  049901757477350a 39-50
+  60644da72dac18d6 15,35-38
+.specify/specs/026-database-backed-interaction-catalog/traceability.md
+  60644da72dac18d6 20-29
+  2e2b786becef3016 11,14-17,19
+packages/server/scripts/seed-sales-demo.ts
+  5a3930099b5106ed 1-99
+packages/server/src/inventory/sales-posting.service.ts
+  5a3930099b5106ed 1-36
+scripts/check-customer-360-browser.mjs
+  0ce07bf6db3977c6 1-54
+packages/web/src/common/RowActionButton.test.tsx
+  4928e55b9de190de 1-17,22,24-32
+  049901757477350a 18-21,23
+.specify/specs/022-opportunity-quotation-pricing/creation-redesign-review.md
+  b726584997e2dfda 3-4
+packages/web/src/ui-assets/templates/master-detail-document/MasterDetailDocument.test.tsx
+  6096cbc24c83521c 47,53,121
+packages/server/src/workflow/sales-workflow-api.integration.spec.ts
+  049901757477350a 1-7,10-17,20
+  6e84c573dc0d61cf 8-9,18-19
+packages/web/src/common/DrawerWorkspace.test.tsx
+  0ce07bf6db3977c6 1-34
+.specify/数字员工邮件助手-方案设计.md
+  51c4f2a60f5c1ad6 1-148
+_methodology/patterns/index.schema.json
+  2e2b786becef3016 13-14,17,19-20,64-65
+packages/web/src/showcase/BomPage.test.tsx
+  6e84c573dc0d61cf 1-40
+packages/server/src/customer/customer-grid.spec.ts
+  6096cbc24c83521c 1-20
+packages/web/src/showcase/AgentKnowledgePanel.test.tsx
+  1997bf5b94f932a6 1-12
+_methodology/examples/003-golden-interaction-record-management-workspace/index.html
+  14333dfb5711abba 6
+_methodology/scripts/export-component-source.mjs
+  e2b8fa1d9b6d1f01 1-55
+scripts/test-sales-posting-integration.mjs
+  e2b8fa1d9b6d1f01 1-32,34-37
+  0ce07bf6db3977c6 33
+packages/web/src/showcase/RoleUserPanel.tsx
+  6096cbc24c83521c 1,46,70
+  14333dfb5711abba 48,53-54
+packages/web/src/showcase/OrganizationUnitsPage.test.tsx
+  049901757477350a 8-9,12,34,50,64,80-85
+.specify/requirements/010-product-management/requirement.md
+  6e84c573dc0d61cf 117-120
+_methodology/templates/training-case-template.md
+  e2b8fa1d9b6d1f01 1-52,54
+  0ce07bf6db3977c6 53
+_methodology/examples/ui-adoption-rehearsal/README.md
+  e2b8fa1d9b6d1f01 8-11
+scripts/test-activity-timeline-integration.mjs
+  57a3c698f3e0b667 1-43
+scripts/test-agent-integration.mjs
+  fe65d30535c7e603 1-13,15
+  48600bacad4c0446 14
+packages/server/scripts/verify-digital-task-closure.ts
+  049901757477350a 1-9
+scripts/test-component-library-integration.mjs
+  0ce07bf6db3977c6 1-28
+packages/server/src/inventory/purchase-posting.service.ts
+  9d312f5673c613f2 1-26
+packages/web/src/common/KanbanBoard.tsx
+  57a3c698f3e0b667 1-20
+packages/contracts/src/system-parameter.ts
+  eb0cb8cac978b5b3 3
+packages/server/scripts/initialize-mail-automation.ts
+  3f55ad551bed01fb 1-20
+_methodology/reference-cases/github-actions-workflow-reuse-candidate.md
+  e2b8fa1d9b6d1f01 1-34
+packages/server/scripts/verify-public-opinion.ts
+  049901757477350a 1-80
+packages/server/src/quotation/quotation.service.ts
+  60644da72dac18d6 1,27,123,158,190,195
+  b726584997e2dfda 115,135-137,178
+packages/server/src/organization/organization.service.spec.ts
+  049901757477350a 4
+.specify/requirements/008-organization-access-administration-foundation/requirement.md
+  60644da72dac18d6 84-87
+packages/server/src/inventory/item-reference-dictionary.spec.ts
+  049901757477350a 1-45
+packages/server/src/organization/organization-business.integration.spec.ts
+  049901757477350a 1-44
+_methodology/scripts/rehearse-query-bar.mjs
+  0ce07bf6db3977c6 8,16,18,30,40-46,55
+  e2b8fa1d9b6d1f01 1-7,9-15,17,19-29,31-39,47-54,56-89
+packages/web/src/common/product-picker-dialog.css
+  b726584997e2dfda 1-8
+.specify/specs/016-organization-employee-directory/traceability.md
+  049901757477350a 21-32
+packages/web/src/showcase/InteractionIndexPage.tsx
+  12633e0363a0506e 3-5,11-15,20,22-30,33-37,39-40,42,45-46,49-68,70,72-73,76-78,80-81,84,86-90,94,98,107,109,111,114,118-123,126
+  14333dfb5711abba 17-19,96,112,125
+  6096cbc24c83521c 104,113
+  e2b8fa1d9b6d1f01 115-116
+  eb0cb8cac978b5b3 1,105,124
+  5a3930099b5106ed 16,38,43-44,47-48,69,71,82-83,91-93,95,97,108,110,117
+scripts/quotation-browser-qa.mjs
+  b726584997e2dfda 48,58,63,99
+_methodology/scripts/check-markdown-links.test.mjs
+  0ce07bf6db3977c6 1-44
+packages/server/scripts/sync-component-library.ts
+  0ce07bf6db3977c6 1-29
+packages/web/src/showcase/InventoryPages.tsx
+  48600bacad4c0446 138
+  049901757477350a 86
+  6096cbc24c83521c 2-5,7,37-45,47-53,56-63,65
+  14333dfb5711abba 93,114
+  c26d7276e3d8ec47 19,71
+  eb0cb8cac978b5b3 1,54
+  5a3930099b5106ed 18,161-169
+  a7864ca22f7c49d1 6,124-125,129-137,139-144
+packages/server/src/inventory/item-grid.spec.ts
+  049901757477350a 1-12
+packages/server/src/inventory/inventory-summary.integration.spec.ts
+  0ce07bf6db3977c6 1-90
+packages/web/src/common/RelatedRecordList.tsx
+  0ce07bf6db3977c6 1-20
+_methodology/scripts/check-enterprise-interaction-index.mjs
+  2e2b786becef3016 22-23,25,68
+packages/web/src/showcase/PersonalAgentPage.test.tsx
+  48600bacad4c0446 1-36,42
+  1997bf5b94f932a6 37-41
+packages/contracts/src/digital-employee.test.ts
+  3f55ad551bed01fb 1,3-17,31-48,50-51
+  049901757477350a 2,18-23,29-30
+  4928e55b9de190de 24-28,49
+packages/web/package.json
+  6096cbc24c83521c 17-18
+packages/server/src/opportunity/configured-stage-template.ts
+  eb0cb8cac978b5b3 1-15
+_methodology/00-搭建指南.md
+  14333dfb5711abba 55-56
+packages/server/scripts/verify-inventory-flow.ts
+  14333dfb5711abba 44
+_methodology/templates/ui/record-management-workspace/README.md
+  14333dfb5711abba 8
+  e2b8fa1d9b6d1f01 7,13
+packages/web/src/showcase/ResourceMenuPage.tsx
+  14333dfb5711abba 68
+  6096cbc24c83521c 1,69-71
+.specify/requirements/009-opportunity-management/requirement.md
+  6e84c573dc0d61cf 207-210
+  60644da72dac18d6 203-206
+packages/server/src/config/runtime-config.ts
+  3f55ad551bed01fb 22,35-36,46
+packages/server/src/quotation/quotation-pdf.ts
+  b726584997e2dfda 12
+.specify/specs/026-database-backed-interaction-catalog/testcases.md
+  2e2b786becef3016 9,15-16,20-22,28
+  60644da72dac18d6 35-45
+packages/server/src/organization/organization-defaults.ts
+  049901757477350a 1-36
+packages/server/prisma/migrations/20261005110000_item_source_lifecycle/migration.sql
+  049901757477350a 1-22
+scripts/check-inventory-refresh-browser.mjs
+  0ce07bf6db3977c6 1-36
+packages/server/src/dictionary/item-reference-dictionaries.seed.ts
+  049901757477350a 1-27
+packages/server/src/opportunity/opportunity-lifecycle.integration.spec.ts
+  fe65d30535c7e603 1-40
+scripts/test-customer-360-integration.mjs
+  0ce07bf6db3977c6 1-30
+.specify/specs/016-organization-employee-directory/plan.md
+  049901757477350a 21-31
+packages/server/src/dictionary/organization-dictionaries.seed.ts
+  049901757477350a 1-13
+packages/web/src/showcase/OpportunityKanban.tsx
+  57a3c698f3e0b667 1-73
+packages/web/src/common/record-query-bar.css
+  e2b8fa1d9b6d1f01 2-7
+.specify/specs/digital-employee/tasks.md
+  4928e55b9de190de 20
+  049901757477350a 1-19,21-38
+.specify/specs/024-inventory-inbound-management/traceability.md
+  c26d7276e3d8ec47 47-48,55-56
+  14333dfb5711abba 49-50
+  049901757477350a 51
+  6e84c573dc0d61cf 52
+  0ce07bf6db3977c6 57-64
+packages/server/src/organization/organization.service.ts
+  049901757477350a 7-8,37-38,46,48,50,56-69,74,76-79,92-93,95-98
+.specify/sources/20261008-digital-employee-menu-labels/source.md
+  049901757477350a 1-28
+packages/contracts/src/numbering.ts
+  60644da72dac18d6 1-18
+packages/server/scripts/seed-purchasing-demo.ts
+  9d312f5673c613f2 1-92
+AGENTS.md
+  049901757477350a 166-169
+  14333dfb5711abba 5-10
+  0ce07bf6db3977c6 11-14
+packages/web/src/common/TreeWorkspace.tsx
+  eb0cb8cac978b5b3 20
+.specify/specs/024-inventory-inbound-management/evidence/item-reference-dictionaries.md
+  049901757477350a 1-28
+.specify/specs/005-unified-navigation-toolbar-tab-workspace/testcases.md
+  049901757477350a 15-18
+_methodology/templates/ui/component-adoption-prompt-template.md
+  e2b8fa1d9b6d1f01 1-27
+.specify/specs/digital-employee/clarification.md
+  049901757477350a 1-13
+packages/web/src/common/RecordQueryBar.test.tsx
+  e2b8fa1d9b6d1f01 1-42
+packages/server/scripts/seed-test-opportunities.ts
+  fe65d30535c7e603 1-18,22,24-27,29-31,33-83
+  eb0cb8cac978b5b3 19-21,23,28,32
+_methodology/scripts/verify-document-workspace-adoption.mjs
+  0ce07bf6db3977c6 1-57
+packages/contracts/src/favorites.ts
+  049901757477350a 1-14
+packages/server/src/inventory/sales-posting.service.spec.ts
+  e2b8fa1d9b6d1f01 1-62
+.specify/specs/digital-employee/pipeline-state.json
+  049901757477350a 1-17
+packages/server/src/workflow/sales-workflow.integration.spec.ts
+  6e84c573dc0d61cf 10,30-31,34
+  049901757477350a 1-9,11-29,32-33,35-40
+packages/web/src/showcase/Favorites.test.tsx
+  049901757477350a 1-32
+packages/web/src/showcase/CustomerDetailPage.test.tsx
+  6096cbc24c83521c 33,97
+  0ce07bf6db3977c6 21
+  57a3c698f3e0b667 26
+_methodology/scripts/check-database-governance.mjs
+  e2b8fa1d9b6d1f01 6-11,51-58,95-110,141
+  049901757477350a 48-50
+packages/contracts/src/list-view-objects.ts
+  9d312f5673c613f2 3-5,21
+  fe65d30535c7e603 10
+  a7864ca22f7c49d1 12
+  049901757477350a 6
+  e47d100cfd39a83a 8
+_methodology/scripts/inspect-component-dependencies.test.mjs
+  e2b8fa1d9b6d1f01 1-31
+packages/server/scripts/update-test-opportunity-lifecycle.ts
+  fe65d30535c7e603 1-53
+packages/server/prisma/seed-data.ts
+  14333dfb5711abba 55-56,157
+  1997bf5b94f932a6 28
+  9d312f5673c613f2 35-37,40,106-127
+  60644da72dac18d6 70,89
+  5a3930099b5106ed 138-152
+  43b7e3c0e68781af 164
+  acbe58934c7da362 1,90
+  049901757477350a 33,58,83-88
+  0de4794322f9faaa 46
+  4928e55b9de190de 81-82
+  e47d100cfd39a83a 42,49-52,103-105
+  48600bacad4c0446 34
+packages/web/src/showcase/workflow/WorkflowSettings.tsx
+  c29c394d42b224b6 2,8,44
+  049901757477350a 4-5,54
+  6e84c573dc0d61cf 1,3,6-7,9-43,45-53
+_methodology/scripts/enterprise-interaction-index.test.mjs
+  2e2b786becef3016 9,12-13,16,20-28
+packages/web/src/showcase/activity-api.ts
+  57a3c698f3e0b667 1-8
+packages/web/src/showcase/digital-employee/MailAutomationCenter.tsx
+  049901757477350a 3-7,9,11,13-15,17-21,23,25-26,29-37,39-41,50-51,70-73
+  1997bf5b94f932a6 8,10,24,27,43,45,52,58
+  4928e55b9de190de 1-2,12,16,22,28,38,42,44,46-49,53-57,59-69
+.specify/specs/022-opportunity-quotation-pricing/tasks.md
+  b726584997e2dfda 18-25
+packages/web/src/showcase/QuotationPages.tsx
+  6096cbc24c83521c 2,57,135
+  049901757477350a 5,67
+  eb0cb8cac978b5b3 1,68,119
+  b726584997e2dfda 14,80,85-86,89-90,92,106-115,134,136-137,140
+packages/server/src/customer/customer-related.integration.spec.ts
+  0ce07bf6db3977c6 1-96
+_methodology/templates/transactional-posting-review-template.md
+  e2b8fa1d9b6d1f01 1-33,35-39
+  0ce07bf6db3977c6 34
+packages/server/src/rbac/authorization.service.ts
+  e47d100cfd39a83a 36
+.specify/specs/digital-employee/spec.md
+  049901757477350a 1-84
+packages/web/src/ui-assets/components/editable-line-grid/EditableLineGrid.tsx
+  6096cbc24c83521c 1,178,239
+_methodology/templates/ui/adoption-record-template.md
+  e2b8fa1d9b6d1f01 9-10,13,21,23,33
+  0ce07bf6db3977c6 11-12,19-20,22,26,28-29
+_methodology/scripts/verify-tree-workspace-adoption.mjs
+  e2b8fa1d9b6d1f01 1-104
+.specify/specs/016-organization-employee-directory/testcases.md
+  049901757477350a 16-31
+packages/contracts/src/customer-related.ts
+  0ce07bf6db3977c6 1-16
+.specify/specs/024-inventory-inbound-management/tasks.md
+  049901757477350a 15-16
+  6e84c573dc0d61cf 18-21
+packages/web/src/showcase/workflow/ApprovalPages.tsx
+  049901757477350a 1,3-14,16-33,35-42,44-49
+  3f55ad551bed01fb 2,15,34,43
+packages/web/src/showcase/agent-api.ts
+  fe65d30535c7e603 1-11
+packages/web/src/showcase/registry/registry.ts
+  9d312f5673c613f2 5
+.specify/sources/20261008-digital-employee-forms/source.md
+  049901757477350a 1-13
+_methodology/09-资产类型、成熟度与晋升规范.md
+  e2b8fa1d9b6d1f01 3-4,55-62
+packages/server/scripts/audit-sales-demo.ts
+  5a3930099b5106ed 1-50
+packages/server/src/dictionary/dictionary.service.ts
+  049901757477350a 78
+_methodology/scripts/check-rehearsal-source.test.mjs
+  e2b8fa1d9b6d1f01 1-33
+packages/contracts/src/employee-contracts.spec.ts
+  049901757477350a 9,13
+  60644da72dac18d6 6
+packages/server/src/quotation/quotation-pdf.spec.ts
+  b726584997e2dfda 5,9
+packages/web/src/common/SalesActionDialog.test.tsx
+  3f55ad551bed01fb 1-15
+packages/server/src/opportunity/opportunity-configured-template.spec.ts
+  eb0cb8cac978b5b3 1-20,22-37
+  60644da72dac18d6 21
+_methodology/templates/testcases-template.md
+  e2b8fa1d9b6d1f01 20-21
+packages/web/src/showcase/sales-interaction.css
+  57a3c698f3e0b667 1-33
+scripts/capture-component-previews.mjs
+  6e84c573dc0d61cf 2-3,5-9,13-16,19,21-22,24-25,27-29,31,34-35,43,50-53,58-59,78-79,89-91,93,112-113,191,205,209-211
+  c29c394d42b224b6 1,4,10-12,17-18,20,23,26,30,32-33,36-42,44-49,54-57,60-77,80-88,92,94-111,114-190,192-204,206-208
+scripts/validate-showcase-registry.mjs
+  9d312f5673c613f2 11
+packages/web/src/showcase/AiAnalysisDialog.test.tsx
+  43b7e3c0e68781af 1-29
+packages/server/scripts/probe-pg-query-warning.ts
+  e2b8fa1d9b6d1f01 1-30
+packages/server/prisma/seed.ts
+  60644da72dac18d6 4,423
+  049901757477350a 3,278,293,315,322-323,345-353,368-369,375,378,384,394
+  5a3930099b5106ed 17,560-563
+packages/web/src/showcase/QuotationCreateDialog.tsx
+  6096cbc24c83521c 1,102
+packages/web/src/showcase/domain/domain.test.ts
+  eb0cb8cac978b5b3 4,55-61
+  0de4794322f9faaa 67-71
+packages/server/scripts/audit-organization-scope.ts
+  049901757477350a 1-16
+packages/web/src/showcase/InboundOrderDetailPage.tsx
+  a7864ca22f7c49d1 10,16,25-34,44,56,72-73
+  6096cbc24c83521c 1,91,102
+packages/web/src/common/BusinessDirectory.tsx
+  57a3c698f3e0b667 13,16,18-19,32,57,78-91,103-104,106,109,129,134
+  6096cbc24c83521c 1,108
+  fe65d30535c7e603 24,61,71,96
+packages/contracts/src/opportunity-analysis.ts
+  0de4794322f9faaa 1-14
+.specify/specs/024-inventory-inbound-management/requirements/original.md
+  c26d7276e3d8ec47 44-45
+  6e84c573dc0d61cf 11-12
+  049901757477350a 47-49
+  14333dfb5711abba 3-10,17-18
+packages/web/src/showcase/ai-analysis-api.ts
+  43b7e3c0e68781af 1-11
+_methodology/templates/ui/record-management-workspace/record-workspace.tokens.css
+  14333dfb5711abba 6
+packages/web/src/showcase/SystemParametersPage.test.tsx
+  14333dfb5711abba 19
+packages/web/src/showcase/EnterprisePages.tsx
+  6096cbc24c83521c 1-3,8,11,57,64-65,67,71-87,113,180,241-242,244
+  14333dfb5711abba 176
+packages/server/scripts/init-sales-prototype.ts
+  e47d100cfd39a83a 1-39
+docs/database/business-document-numbering.md
+  60644da72dac18d6 1,3,5,7,9-11,13-16,19-44,47-63,65,67,69
+  9d312f5673c613f2 12,17-18,71,73
+packages/contracts/src/workbench.ts
+  57a3c698f3e0b667 3
+  0de4794322f9faaa 1-2,4-9,11-13
+  48600bacad4c0446 10
+.specify/specs/024-inventory-inbound-management/testcases.md
+  c26d7276e3d8ec47 51-53
+  0ce07bf6db3977c6 56-60
+  e2b8fa1d9b6d1f01 62-63
+  14333dfb5711abba 54-55,61
+  6e84c573dc0d61cf 32
+  049901757477350a 28-31
+_methodology/scripts/check-ui-adoption.mjs
+  e2b8fa1d9b6d1f01 11-17
+packages/web/src/showcase/resource-menu.css
+  e2b8fa1d9b6d1f01 3-5
+scripts/validate-pattern-projection.mjs
+  2e2b786becef3016 11-12
+packages/web/src/showcase/organization-workspace.css
+  e2b8fa1d9b6d1f01 3-5
+  049901757477350a 6
+packages/server/scripts/initialize-numbering.ts
+  049901757477350a 2,5
+  60644da72dac18d6 1,3-4,6-7
+packages/web/src/common/ProductPickerDialog.test.tsx
+  14333dfb5711abba 55
+  b726584997e2dfda 1-43,45-52,56-60
+  6096cbc24c83521c 44,53-54
+packages/server/src/quotation/quotation-discount-migration.spec.ts
+  b726584997e2dfda 1-13
+_methodology/scripts/check-project.sh
+  c26d7276e3d8ec47 58-65
+packages/web/src/showcase/InteractionIndexPage.test.tsx
+  fe65d30535c7e603 44,46,49
+  eb0cb8cac978b5b3 51,53,78
+  14333dfb5711abba 119-120
+  5a3930099b5106ed 31,66,109,111-118,121-126
+  12633e0363a0506e 1,3,7-11,13,24-30,32-42,57-64,67,70,72-77,79-85,87-99,101-103,105-108,128-135
+  e2b8fa1d9b6d1f01 14-23
+  6096cbc24c83521c 43,45,47-48,50,52,54-56
+packages/contracts/src/agent.ts
+  fe65d30535c7e603 1-9
+packages/web/src/showcase/SalesInteraction.test.tsx
+  acbe58934c7da362 1-53
+packages/contracts/src/digital-employee.ts
+  3f55ad551bed01fb 1-2,4,7-11,20-24,29-31,39-56,70-82,84,110-111,113-125
+  4928e55b9de190de 15,34,37,57-69
+  049901757477350a 3,5-6,12-14,16-19,25-28,32-33,35-36,38,85-100,112,126-132
+  1997bf5b94f932a6 83
+_methodology/scripts/sync-enterprise-interaction-index.mjs
+  5898f6aa23a8f29f 7,12-13,20-22
+packages/web/src/common/DrawerWorkspace.tsx
+  0ce07bf6db3977c6 10,12
+  fe65d30535c7e603 1-9,11,13-14
+packages/server/src/quotation/quotation-item-reference-migration.spec.ts
+  b726584997e2dfda 1-15
+packages/web/src/showcase/AttachmentPanel.tsx
+  6096cbc24c83521c 1,49
+  57a3c698f3e0b667 39
+  acbe58934c7da362 3,7-8,14-16,33,40,50
+  14333dfb5711abba 2,20,42-44,47-48
+packages/contracts/tsconfig.build.json
+  9d312f5673c613f2 3
+packages/web/src/showcase/ai-analysis.css
+  43b7e3c0e68781af 1-29
+packages/web/src/showcase/WorkbenchPage.test.tsx
+  acbe58934c7da362 5
+  48600bacad4c0446 7
+  0de4794322f9faaa 1-4,6,8-28
+packages/web/src/showcase/QuotationPages.test.tsx
+  eb0cb8cac978b5b3 177
+  b726584997e2dfda 9,15,23,70,73,78,93,99,101-105,109-111,113-115,117-153
+  6096cbc24c83521c 19
+packages/web/src/showcase/AiAnalysisDialog.tsx
+  43b7e3c0e68781af 1-31,33-113
+  3f55ad551bed01fb 32
+packages/web/src/showcase/ActivityPanel.tsx
+  3f55ad551bed01fb 43-44
+  57a3c698f3e0b667 1-42,45-57
+_methodology/project-init/templates/project-charter.md
+  14333dfb5711abba 14-17
+_methodology/scripts/check-page-style.mjs
+  14333dfb5711abba 32-33,40-44
+  e2b8fa1d9b6d1f01 34-39,45-48
+_methodology/scripts/verify-route-tabs-adoption.mjs
+  0ce07bf6db3977c6 1-69
+packages/web/src/showcase/data/interaction-index.data.json
+  2e2b786becef3016 31-32,52-53,73-74,94-95,115-116,136-137,157-158,219-220,240-241,261-262,282-283,303-304,324-325,345-346,366-367,387-388,408-409,429-430,450-451,471-472,492-493,513-514,534-535,555-556,576-577,595-596,614-615,633-634,652-653,671-672,690-691,709-710,728-729,747-748,766-767,785-786,804-805,823-824,842-843,861-862,880-881,899-900,918-919,937-938,956-957,975-976,994-995,1013-1014,1032-1033,1051-1052,1070-1071,1089-1090,1108-1109,1127-1128,1146-1147,1165-1166,1184-1185,1203-1204,1222-1223,1241-1242,1260-1261,1279-1280,1298-1299,1317-1318,1336-1337,1355-1356,1374-1375,1393-1394,1412-1413,1431-1432,1450-1451,1469-1470,1488-1489,1507-1508,1526-1527,1545-1546,1564-1565,1583-1584,1602-1603,1621-1622,1640-1641,1659-1660,1678-1679,1697-1698,1716-1717,1735-1736,1755-1756,1775-1776,1795-1796,1815-1816,1835-1836,1855-1856,1875-1876,1895-1896,1915-1916,1935-2177,2204-2205,2225-2226,2246-2247,2267-2268,2288-2289,2309-2310,2330-2331
+_methodology/scripts/check-list-action-rule.mjs
+  049901757477350a 56-65
+packages/server/scripts/seed-bom-demo.ts
+  e47d100cfd39a83a 1-53
+packages/web/src/showcase/customer-detail.css
+  0ce07bf6db3977c6 13-16
+forge-crm.code-workspace
+  4c9c30717e67f899 2-11
+packages/server/src/opportunity/opportunity-domain.ts
+  fe65d30535c7e603 15-25
+_methodology/scripts/rehearse-csv-export.mjs
+  0ce07bf6db3977c6 1-37
+packages/web/src/common/TreeWorkspace.md
+  eb0cb8cac978b5b3 16
+packages/server/src/style-scene/style-scene.seed.spec.ts
+  2e2b786becef3016 19,21,33-36,57-58
+packages/web/src/showcase/PersonalAgentPage.tsx
+  48600bacad4c0446 1-4,8-12,15-19,21-33,41-42,44-65,67-70,74-81,83,87-89,93
+  1997bf5b94f932a6 5-7,13-14,20,34-40,43,66,71-73,82,84-86,90-92
+packages/server/scripts/seed-test-customers-products.ts
+  6096cbc24c83521c 1-87
+packages/web/src/common/ActivityTimeline.tsx
+  57a3c698f3e0b667 1-11
+packages/web/src/showcase/ActivityPanel.test.tsx
+  57a3c698f3e0b667 1-39,41-45
+  3f55ad551bed01fb 40
+_methodology/scripts/component-evidence-inventory.mjs
+  0ce07bf6db3977c6 1-43
+packages/server/src/auth/auth.controller.ts
+  5a3930099b5106ed 21,26
+_methodology/scripts/export-component-source.test.mjs
+  e2b8fa1d9b6d1f01 1-6,8-47,79
+  0ce07bf6db3977c6 7,48-78
+scripts/test-opportunity-kanban-integration.mjs
+  57a3c698f3e0b667 1-43
+packages/web/src/common/tree-workspace.css
+  eb0cb8cac978b5b3 1
+packages/web/src/showcase/opportunity-analytics.css
+  0de4794322f9faaa 1-14
+packages/web/src/common/ScoreBreakdown.tsx
+  57a3c698f3e0b667 1-4
+scripts/test-agent-scenario-migration.mjs
+  1997bf5b94f932a6 1-27
+.specify/specs/022-opportunity-quotation-pricing/review.md
+  b726584997e2dfda 46-59
+packages/server/scripts/seed-template-library.ts
+  12633e0363a0506e 1-5,7-15,18-21
+  5a3930099b5106ed 6,16-17
+.specify/specs/022-opportunity-quotation-pricing/traceability.md
+  b726584997e2dfda 35-38
+packages/web/src/showcase/WarehousePage.test.tsx
+  6096cbc24c83521c 42
+packages/web/src/showcase/ShowcaseApp.tsx
+  14333dfb5711abba 41-42,419-420
+  9d312f5673c613f2 1,262,264,280,298,431
+  049901757477350a 2-5,11,81,83,86-91,103,124,136,142,202-203,205-206,210-212,214-216,240,261,265,367-371,422-423
+  48600bacad4c0446 12,250-251,259-260,266,354,356,381,393,404
+  6096cbc24c83521c 13,454
+  fc6e858ecbf1ba71 357-364
+  0de4794322f9faaa 9-10,18,54,131,300,403,405
+  60644da72dac18d6 14,424
+  de6454bc8aceb9ef 21-22,345
+  5a3930099b5106ed 45,271,432
+  a7864ca22f7c49d1 277,384
+  3f55ad551bed01fb 6-7,207,339
+  0ce07bf6db3977c6 378
+  12633e0363a0506e 182
+  2e2b786becef3016 223-224,348,373
+  e47d100cfd39a83a 44,46,255-256,258,272-273,279,285,287-288,295-297,386,417
+  eb0cb8cac978b5b3 26,353,365,437
+_methodology/examples/000-golden-slice-customer-lead/plan.md
+  e2b8fa1d9b6d1f01 43-44
+  049901757477350a 16-17
+packages/web/src/showcase/RolePolicyPanel.tsx
+  6096cbc24c83521c 1,80,82
+_methodology/profiles/typescript-enterprise-web/database-conventions.md
+  e2b8fa1d9b6d1f01 64-65
+  049901757477350a 22
+packages/server/src/opportunity/configured-stage-template.spec.ts
+  eb0cb8cac978b5b3 1-24
+packages/server/src/style-scene/template-library.seed.spec.ts
+  fe65d30535c7e603 47-51,54
+  6096cbc24c83521c 2,52,89-94
+  5a3930099b5106ed 3,99-106,113-118
+  60644da72dac18d6 41-45,53,55-76
+  0ce07bf6db3977c6 112
+  e2b8fa1d9b6d1f01 7-37,107-111
+  12633e0363a0506e 1,4-6,38-40,46,77-88,95-98,119-120
+packages/contracts/src/bom.ts
+  e47d100cfd39a83a 1-31
+packages/web/src/demos/record-workspace/RecordWorkspaceConfig.test.tsx
+  6096cbc24c83521c 10
+packages/server/src/style-scene/style-scene.seed.ts
+  2e2b786becef3016 13,23,40,64
+_methodology/templates/index.json
+  fe65d30535c7e603 8,12,15-16,18,21-24,27-30,34,40-41,44,49-50,55,61-62,64,72,74,79-80,82,85-88,91-94,98,100,104-107,109-110,115-116,120,122,125-128,130-131,1032,1034,1044-1046,1049-1051,1053-1056,1061-1062,1064-1066,1069-1070,1074-1078,1081-1082,1904,1906-1946,1948-1950,1953-1954,1957-1962,1965-1966,1976,1978-1979,1983-1984,1988-1989,1993-1995,1997-2003,2007-2009,2012-2013,2016-2018,2393-2432
+  0de4794322f9faaa 1470,1475-1477,1480-1482,1485-1493,1501-1502,1504-1515,1517,1524-1527,1529-1530,1537,1539-1567,1569-1570,1572-1578,1580-1587,1589-1590
+  c29c394d42b224b6 63,129,298,357,420,491,582,759,904,959,1023,1080,1194,1364,1528,1588,1672,1732,1790,1964,2023-2024
+  12633e0363a0506e 1-7,9,11,13-14,19-20,25-26,31-33,35-38,43,46,54,56-58,66-71,73,75-78,83-84,89-90,95-97,99,101-103,108,111-114,117-119,121,123-124,132-223,226-228,231-233,236-249,251,253,255-256,260-261,265-266,270-273,276-281,284-287,290-292,301-308,310-336,339-342,345-352,360-365,367,369,371-372,376-377,381-382,386-395,398,411,413-415,423-428,430,432,434-435,439-440,444-445,449-453,456-461,464-467,470-471,475-477,480-482,484-486,494-521,523,525,527-528,532-533,537-538,542-546,548-554,557-559,563-564,568-570,572-577,585-590,592-593,616-619,627,629-635,637-648,652-653,657-673,676-678,681-683,685-716,718,742,745,753,762-811,813-814,836-839,847,849-855,857,859,861-862,866-867,871-872,876,880-884,887,895,897-899,907-912,914,937,940,953,962-967,969,971,973-974,978-979,983-984,988-998,1001-1004,1007-1008,1012-1014,1016-1018,1026-1031,1033,1035-1043,1047-1048,1052,1057-1060,1063,1071,1073,1083-1088,1090-1092,1094-1095,1099-1100,1104-1105,1109,1114-1120,1128,1130-1139,1141,1143,1145-1146,1150-1151,1155-1156,1160,1165-1169,1172,1185,1187-1189,1197-1202,1204-1206,1208-1209,1213-1214,1218-1219,1223-1233,1241,1243-1316,1318,1350,1358,1367-1372,1374-1376,1378-1379,1383-1384,1388-1389,1393,1398-1404,1412,1414-1423,1425-1426,1448-1451,1459,1461-1469,1471-1474,1478-1479,1483-1484,1494-1500,1503,1516,1518-1523,1531-1536,1538,1568,1571,1579,1591-1618,1620,1622,1624-1625,1629-1630,1634-1635,1639,1644-1647,1650,1663,1665-1667,1675-1680,1682,1684,1686-1687,1691-1692,1696-1697,1701,1707-1712,1715,1723,1725-1727,1735-1740,1742,1744,1746-1747,1751-1752,1756-1757,1761,1765-1769,1772,1780,1782-1785,1793-1798,1800-1802,1804-1805,1809-1810,1814-1815,1819,1824-1831,1839,1841-1851,1853-1855,1857-1858,1862-1863,1867-1868,1872,1877-1884,1892,1894-1903,1905,1947,1955,1967-1972,1974,2006,2014,2026-2053,2055-2057,2059-2060,2064-2065,2069-2070,2074,2079-2090,2094-2096,2098-2392,2433-2437
+  6096cbc24c83521c 10,39,42,45,47-48,51-53,59-60,65
+  60644da72dac18d6 224-225,229-230,234-235,250,252,254,257-259,262-264,267-269,274-275,282-283,288-289,293-297,299-300,309,337-338,343-344,353-356,358-359,366,368,370,373-375,378-380,383-385,396-397,399-410,412,416-419,421-422,429,431,433,436-438,441-443,446-448,454-455,462-463,468-469,472-474,478-479,483,487-490,492-493,522,524,526,529-531,534-536,539-541,547,555-556,560-562,565-567,571,578-581,583-584,591,594-615,620-626,628,636,649-651,654-656,674-675,679-680,684,717,719-741,743-744,746-752,754-758,760-761,812,815-835,840-846,848,856,858,860,863-865,868-870,873-875,877-879,885-886,888-894,896,900-903,905-906,913,915-936,938-939,941-952,954-958,960-961,968,970,972,975-977,980-982,985-987,999-1000,1005-1006,1009-1011,1015,1019-1022,1024-1025,1067-1068,1072,1079,1089,1093,1096-1098,1101-1103,1106-1108,1110-1113,1121-1127,1129,1140,1142,1144,1147-1149,1152-1154,1157-1159,1161-1164,1170-1171,1173-1184,1186,1190-1193,1195-1196,1203,1207,1210-1212,1215-1217,1220-1222,1234-1240,1242,1317,1319-1349,1351-1357,1359-1363,1365-1366,1373,1377,1380-1382,1385-1387,1390-1392,1394-1397,1405-1411,1413,1424,1427-1447,1452-1458,1460,1619,1621,1623,1626-1628,1631-1633,1636-1638,1640-1643,1648-1649,1651-1662,1664,1668-1671,1673-1674,1681,1683,1685,1688-1690,1693-1695,1698-1700,1702-1706,1713-1714,1716-1722,1724,1728-1731,1733-1734,1741,1743,1745,1748-1750,1753-1755,1758-1760,1762-1764,1770-1771,1773-1779,1781,1786-1789,1791-1792,1799,1803,1806-1808,1811-1813,1816-1818,1820-1823,1832-1838,1840,1852,1856,1859-1861,1864-1866,1869-1871,1873-1876,1885-1891,1893,1951-1952,1956,1963,1973,1975,1977,1980-1982,1985-1987,1990-1992,1996,2004-2005,2010-2011,2015,2019-2022,2025,2054,2058,2061-2063,2066-2068,2071-2073,2075-2078,2091-2093,2097
+  e2b8fa1d9b6d1f01 17,81
+scripts/test-numbering-integration.mjs
+  60644da72dac18d6 1-52
+.specify/specs/006-database-backed-data-dictionary/spec.md
+  6e84c573dc0d61cf 41-44
+scripts/test-sales-enhancement-integration.mjs
+  acbe58934c7da362 1-52
+packages/web/src/showcase/useDialogSubmit.test.tsx
+  b726584997e2dfda 19
+packages/server/scripts/verify-mail-task-actions.ts
+  4928e55b9de190de 1-32
+scripts/test-sales-workflow-integration.mjs
+  049901757477350a 1-34,36-39
+.specify/specs/digital-employee/plan.md
+  049901757477350a 1-47
+  1997bf5b94f932a6 48-51
+README.md
+  e2b8fa1d9b6d1f01 37-38
+  14333dfb5711abba 5-6,35
+packages/web/src/showcase/InventoryStockPages.test.tsx
+  e2b8fa1d9b6d1f01 2,15,89-100,102-108
+  14333dfb5711abba 3-14,109-131
+  0ce07bf6db3977c6 1,16-88,101
+_methodology/scripts/verify-list-view-adoption.mjs
+  e2b8fa1d9b6d1f01 1-50
+packages/web/src/showcase/SystemParametersPage.tsx
+  6096cbc24c83521c 1,37,42
+  3f55ad551bed01fb 54
+  14333dfb5711abba 40
+packages/contracts/src/attachment.ts
+  57a3c698f3e0b667 3
+packages/web/src/common/RecordQueryBar.tsx
+  e2b8fa1d9b6d1f01 5,13,15
+packages/server/src/http/api-exception.filter.spec.ts
+  b726584997e2dfda 1-22
+.specify/specs/022-opportunity-quotation-pricing/spec.md
+  b726584997e2dfda 27,45-51,56
+  60644da72dac18d6 94-97
+_methodology/scripts/component-evidence-inventory.test.mjs
+  0ce07bf6db3977c6 1-36
+packages/server/src/customer/customer-related.service.ts
+  0ce07bf6db3977c6 1-62
+.specify/specs/024-inventory-inbound-management/spec.md
+  60644da72dac18d6 9,120-123
+  049901757477350a 19-21,25-34,72-76,83
+  48600bacad4c0446 108-111
+  6e84c573dc0d61cf 22,77-78
+  c26d7276e3d8ec47 104-107
+  14333dfb5711abba 112-117
+  0ce07bf6db3977c6 118-119
+packages/web/src/showcase/RoleUserPanel.test.tsx
+  6096cbc24c83521c 24
+packages/contracts/src/opportunity.ts
+  43b7e3c0e68781af 1,109
+  b726584997e2dfda 22-26
+  fe65d30535c7e603 66-67,72,82
+  57a3c698f3e0b667 69,77,84,90-91,94,97,104,142-156
+packages/web/src/showcase/opportunity-board-api.ts
+  57a3c698f3e0b667 1-6
+scripts/check-opportunity-kanban-browser.mjs
+  57a3c698f3e0b667 1-65
+.specify/specs/digital-employee/README.md
+  1997bf5b94f932a6 21-24
+  049901757477350a 1-18
+  7fa74f46ed8c2518 19-20
+packages/server/scripts/init-item-reference-dictionaries.ts
+  049901757477350a 1-29
+.specify/memory/project-charter.md
+  0ce07bf6db3977c6 13-18
+  14333dfb5711abba 1-12,19
+scripts/test-opportunity-analytics.mjs
+  0de4794322f9faaa 1-15
+_methodology/scripts/rehearsal-recipe.mjs
+  0ce07bf6db3977c6 1-22
+packages/web/src/common/RowActionButton.tsx
+  4928e55b9de190de 7-9,14-37,42-43,49-50
+  049901757477350a 3,10-13
+  14333dfb5711abba 1,5-6,38,46-48,51
+packages/web/src/common/SuggestionPanel.tsx
+  57a3c698f3e0b667 1-6
+.specify/requirements/011-inventory-inbound-management/requirement.md
+  6e84c573dc0d61cf 149-152
+  60644da72dac18d6 56,141-144
+  14333dfb5711abba 8
+  049901757477350a 44,100,145-148
+_methodology/scripts/rehearsal-recipe.test.mjs
+  0ce07bf6db3977c6 1-43
+packages/web/src/showcase/favorites.css
+  049901757477350a 1-21
+packages/server/src/style-scene/component-library-maintenance.spec.ts
+  0ce07bf6db3977c6 1-39
+packages/server/scripts/seed-screen-boms.ts
+  e47d100cfd39a83a 1-150
+_methodology/templates/ui/interaction-pattern-candidate-template.md
+  e2b8fa1d9b6d1f01 6,91
+_methodology/templates/plan-template.md
+  e2b8fa1d9b6d1f01 27-28,37
+  049901757477350a 33
+packages/server/src/customer/customer.controller.ts
+  0ce07bf6db3977c6 8,14,36-43
+scripts/showcase-registry-validation.mjs
+  2e2b786becef3016 96
+_methodology/reference-cases/forge-crm-inventory-summary-drilldown-candidate.md
+  e2b8fa1d9b6d1f01 18
+  0ce07bf6db3977c6 48,64,66
+  14333dfb5711abba 1-17,19-47,49-63,65
+packages/web/src/common/kanban-board.css
+  57a3c698f3e0b667 1-16
+packages/server/src/opportunity/opportunity.service.ts
+  eb0cb8cac978b5b3 15,96-100,253-255,258
+  57a3c698f3e0b667 12-14,173-248,274-276,284-290,304-321,325-337,355-356,365-368,407-408
+  43b7e3c0e68781af 409
+  fe65d30535c7e603 6,11,18,168,259-260,278-279
+  60644da72dac18d6 1,22,251,256
+  b726584997e2dfda 34-37,404
+packages/server/scripts/initialize-digital-employee.ts
+  3f55ad551bed01fb 1-18
+packages/web/src/showcase/registry/types.ts
+  9d312f5673c613f2 3
+packages/web/src/showcase/EmployeeDirectoryPage.tsx
+  049901757477350a 10,34,40-42
+  fe65d30535c7e603 5,16-29,33
+  6096cbc24c83521c 1
+scripts/check-workspace-width-browser.mjs
+  e2b8fa1d9b6d1f01 1-69
+packages/contracts/src/opportunity-contracts.spec.ts
+  b726584997e2dfda 8,27-32
+packages/web/src/demos/record-workspace/RecordWorkspaceDemo.tsx
+  6096cbc24c83521c 1,91,102
+packages/web/src/showcase/AdministrativePagination.test.tsx
+  fe65d30535c7e603 1-45
+packages/web/src/showcase/customer-related-api.ts
+  0ce07bf6db3977c6 1-9
+packages/web/src/showcase/NumberingRulesPage.tsx
+  3f55ad551bed01fb 33
+  60644da72dac18d6 1-24,26-32,34-48
+packages/web/src/showcase/sales-interaction-api.ts
+  57a3c698f3e0b667 2-3,5-9,11-13,15-20,22-24
+  acbe58934c7da362 1,4,10,14,21
+packages/web/src/showcase/WorkbenchPage.tsx
+  57a3c698f3e0b667 4,41
+  48600bacad4c0446 9,18,44,46
+  acbe58934c7da362 1-3,17,38,42
+  0de4794322f9faaa 5-8,10-16,19-37,39-40,43,45,47
+packages/contracts/src/bom.test.ts
+  e47d100cfd39a83a 1-21
+packages/contracts/src/style-scene.test.ts
+  12633e0363a0506e 2,44-46,51-53
+  6096cbc24c83521c 47-48,50
+  5a3930099b5106ed 49
+.specify/specs/005-unified-navigation-toolbar-tab-workspace/spec.md
+  049901757477350a 32-35
+packages/server/src/customer/customer-related.service.spec.ts
+  0ce07bf6db3977c6 1-53
+.specify/requirements/global-page-style/requirement.md
+  4928e55b9de190de 15
+  6096cbc24c83521c 93-95
+  eb0cb8cac978b5b3 65
+  12633e0363a0506e 88-92
+  14333dfb5711abba 3,16
+  049901757477350a 17
+  3f55ad551bed01fb 96-99
+  e2b8fa1d9b6d1f01 14
+  c26d7276e3d8ec47 80-87
+packages/server/src/organization/organization.controller.ts
+  049901757477350a 16
+_methodology/scripts/verify-workbench.sh
+  e2b8fa1d9b6d1f01 15-18
+  0ce07bf6db3977c6 19-21
+.env.example
+  43b7e3c0e68781af 13,17-20,22-25
+  3f55ad551bed01fb 14-16
+  049901757477350a 26-29
+  48600bacad4c0446 21
+packages/web/src/showcase/OpportunityAnalyticsPage.tsx
+  0de4794322f9faaa 1-87
+packages/web/src/common/SalesInteractionComponents.md
+  acbe58934c7da362 1-50
+_methodology/database-table-registry.json
+  e47d100cfd39a83a 61-63
+  60644da72dac18d6 80,82-83
+  57a3c698f3e0b667 7-50,69-70,106-110,113-200
+  049901757477350a 81,84-96,201-216
+  9d312f5673c613f2 97-103
+  acbe58934c7da362 71-79
+  5a3930099b5106ed 64-68
+packages/web/src/showcase/CustomerRelatedPanel.tsx
+  0ce07bf6db3977c6 1-43
+packages/web/src/showcase/EmployeeDirectoryPage.test.tsx
+  049901757477350a 6,25-28
+packages/server/src/opportunity/product-selection.spec.ts
+  b726584997e2dfda 1-16
+packages/server/src/list-view/list-view.service.spec.ts
+  48600bacad4c0446 15,46-53
+  6096cbc24c83521c 61-67
+packages/server/src/opportunity/opportunity.controller.ts
+  57a3c698f3e0b667 46-47,51-52
+.specify/requirements/005-enterprise-workspace-configurable-customer-directory/requirement.md
+  6e84c573dc0d61cf 188-191
+  60644da72dac18d6 184-187
+package.json
+  6096cbc24c83521c 23,25
+packages/server/src/style-scene/component-library.integration.spec.ts
+  0ce07bf6db3977c6 1-116
+packages/web/src/common/KanbanBoard.md
+  57a3c698f3e0b667 1-11
+packages/web/src/showcase/inventory-stock.css
+  e2b8fa1d9b6d1f01 2
+  14333dfb5711abba 1,3-5
+.specify/specs/016-organization-employee-directory/README.md
+  049901757477350a 4-5
+packages/web/src/showcase/EnterprisePages.test.tsx
+  6096cbc24c83521c 62-63,67
+packages/web/src/showcase/sales-live/SalesLivePage.tsx
+  049901757477350a 1-39
+packages/web/src/showcase/OrganizationUnitsPage.tsx
+  049901757477350a 4,20,24-25,28,31-32,36,42-45,55,58,70-72
+.specify/specs/008-customer-directory-demo/spec.md
+  60644da72dac18d6 53-56
+scripts/check-numbering-browser.mjs
+  60644da72dac18d6 1-25
+packages/web/src/showcase/CustomerDetailPage.tsx
+  6096cbc24c83521c 3,133,136,138,141
+  57a3c698f3e0b667 1-2,11,35,38,59,109,112-114
+  48600bacad4c0446 23,108
+  3f55ad551bed01fb 170
+  0ce07bf6db3977c6 10,12,20,22,37,115-116
+.specify/specs/026-database-backed-interaction-catalog/spec.md
+  12633e0363a0506e 1-4
+  60644da72dac18d6 188-199
+  2e2b786becef3016 7,9,29-32,40,68,115-116,152,155-158,164,169,182-184,186
+_methodology/scripts/verify-drawer-workspace-adoption.mjs
+  0ce07bf6db3977c6 1-46
+packages/web/src/catalog/patterns.data.json
+  2e2b786becef3016 4251-4702
+.specify/specs/016-organization-employee-directory/requirements/original.md
+  049901757477350a 11-14
+packages/contracts/src/organization-contracts.spec.ts
+  049901757477350a 7-8,15,18-22
+_methodology/templates/training-submission-template.md
+  049901757477350a 1-48
+packages/contracts/src/activity.ts
+  57a3c698f3e0b667 1-20
+packages/web/src/common/README.md
+  6096cbc24c83521c 36-42,44,46
+  3f55ad551bed01fb 8
+  e2b8fa1d9b6d1f01 9,43,45
+  b726584997e2dfda 7
+  049901757477350a 3
+  fe65d30535c7e603 47-53
+_methodology/08-企业管理系统交互模式分类方法.md
+  2e2b786becef3016 44,65,271-318
+_methodology/project-init/README.md
+  6e84c573dc0d61cf 12-15
+.specify/specs/026-database-backed-interaction-catalog/requirements/original.md
+  2e2b786becef3016 6,14-15
+  60644da72dac18d6 7,16-17
+packages/web/src/styles/index.css
+  0de4794322f9faaa 5,185-189
+packages/web/src/showcase/ShowcaseApp.test.tsx
+  fc6e858ecbf1ba71 84-100
+  eb0cb8cac978b5b3 188,209,211-214
+  2e2b786becef3016 63-64,184-185
+  0de4794322f9faaa 164-165
+  12633e0363a0506e 58,173,176,179-183,186-187,189-190,199,205
+  a7864ca22f7c49d1 208,210
+  48600bacad4c0446 112-133
+packages/server/src/style-scene/style-scene.service.ts
+  5a3930099b5106ed 15,29-33,36-38
+  12633e0363a0506e 19,120-121
+packages/web/src/showcase/CustomerRelatedPanel.test.tsx
+  0ce07bf6db3977c6 1-47
+.specify/specs/digital-employee/traceability.md
+  049901757477350a 1-74
+packages/web/src/common/ProductPickerDialog.tsx
+  b726584997e2dfda 2-56,58-62
+  6096cbc24c83521c 1,57
+.specify/specs/022-opportunity-quotation-pricing/testcases.md
+  b726584997e2dfda 35,39-43
+packages/contracts/src/business-scenes.ts
+  1997bf5b94f932a6 1-21
+packages/web/src/showcase/RoleViews.tsx
+  14333dfb5711abba 29
+  6096cbc24c83521c 1
+packages/server/src/rbac/seed-data.spec.ts
+  4928e55b9de190de 1-2,24
+  049901757477350a 3-23,25-41
+_methodology/scripts/verify-detail-workspace-adoption.mjs
+  0ce07bf6db3977c6 1-50
+packages/server/src/style-scene/component-library-maintenance.ts
+  0ce07bf6db3977c6 1-33
+packages/web/src/common/activity-timeline.css
+  57a3c698f3e0b667 1-3
+.specify/specs/024-inventory-inbound-management/pipeline-state.json
+  049901757477350a 21-26,34
+  6e84c573dc0d61cf 9,27-33
+packages/web/src/showcase/OpportunityAnalyticsPage.test.tsx
+  0de4794322f9faaa 1-15,17-36
+  eb0cb8cac978b5b3 16
+_methodology/scripts/inspect-component-dependencies.mjs
+  e2b8fa1d9b6d1f01 1-61
+packages/web/src/showcase/NotificationPanel.tsx
+  57a3c698f3e0b667 1-11
+packages/web/src/showcase/registry/showcase-registry.schema.json
+  9d312f5673c613f2 6-13,15-17,20-24,26-37,41-56,59-62,64-70
+packages/contracts/src/sales-enhancement.ts
+  57a3c698f3e0b667 1-36
+  acbe58934c7da362 37-38
+packages/web/src/showcase/showcase.css
+  3f55ad551bed01fb 92-93
+  e2b8fa1d9b6d1f01 84,381-383
+  14333dfb5711abba 192
+  48600bacad4c0446 45-47,53
+docs/database/ai-task-ownership.md
+  e2b8fa1d9b6d1f01 1-31
+packages/server/src/quotation/quotation.integration.spec.ts
+  b726584997e2dfda 33,83
+scripts/check-activity-timeline-browser.mjs
+  57a3c698f3e0b667 1-47
+.specify/specs/digital-employee/requirements/original.md
+  049901757477350a 1-36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.8.1",
+  "base_commit_sha": "35df53a8c54fbc8bb96c590112bec470e87f88d7",
+  "prompts": {
+    "049901757477350a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a109bf-56d7-7862-b644-340c918e3add",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 3693,
+      "total_deletions": 1177,
+      "accepted_lines": 3154,
+      "overriden_lines": 9,
+      "token_usage": {
+        "input_tokens": 3670183,
+        "output_tokens": 410799,
+        "cache_read_tokens": 92100864,
+        "cache_creation_tokens": null,
+        "total_cost": null
+      }
+    },
+    "0ce07bf6db3977c6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a10191-fe18-7842-9ec1-e2360cc34e68",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 1657,
+      "total_deletions": 46,
+      "accepted_lines": 1653,
+      "overriden_lines": 0
+    },
+    "0de4794322f9faaa": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0ecf5-898f-77a0-9794-c4719d98e5b0",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 417,
+      "total_deletions": 56,
+      "accepted_lines": 392,
+      "overriden_lines": 0
+    },
+    "12633e0363a0506e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e65e-f044-71c0-8e5c-5e1fec652ae9",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 2269,
+      "total_deletions": 338,
+      "accepted_lines": 1753,
+      "overriden_lines": 0
+    },
+    "14333dfb5711abba": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0f9f1-2257-7511-8a6a-be0d9e047cf3",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 473,
+      "total_deletions": 69,
+      "accepted_lines": 433,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/484784dca576196b1a8c4ec2007589d3d3fd43875b21219a19955aadd9880017",
+      "token_usage": {
+        "input_tokens": 1788521,
+        "output_tokens": 102279,
+        "cache_read_tokens": 30927488,
+        "cache_creation_tokens": null,
+        "total_cost": null
+      }
+    },
+    "1997bf5b94f932a6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12110-bbff-7c50-a974-e30c1f155ab7",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 320,
+      "total_deletions": 20,
+      "accepted_lines": 319,
+      "overriden_lines": 0
+    },
+    "2e2b786becef3016": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e4f9-a93e-7151-a112-e98f28107177",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 1575,
+      "total_deletions": 262,
+      "accepted_lines": 1734,
+      "overriden_lines": 0
+    },
+    "3f55ad551bed01fb": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a11911-82cb-72c2-8456-b9005aae708a",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 438,
+      "total_deletions": 34,
+      "accepted_lines": 264,
+      "overriden_lines": 8
+    },
+    "43b7e3c0e68781af": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0d915-6ffc-7bc2-8c0e-da8338518dcb",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 235,
+      "overriden_lines": 0
+    },
+    "48600bacad4c0446": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0f516-d6e0-71a3-ac9a-a85dbeece4fa",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 1350,
+      "total_deletions": 455,
+      "accepted_lines": 1249,
+      "overriden_lines": 0
+    },
+    "4928e55b9de190de": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a11b5f-c1b4-79a2-a5d3-2069317becd5",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 189,
+      "total_deletions": 25,
+      "accepted_lines": 179,
+      "overriden_lines": 0
+    },
+    "4c9c30717e67f899": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1541f-0f6a-7e10-b821-7172f5bfd4d6",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 10,
+      "total_deletions": 10,
+      "accepted_lines": 10,
+      "overriden_lines": 0
+    },
+    "51c4f2a60f5c1ad6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a111d6-55a6-79b0-a2ba-36ee71391049",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 148,
+      "total_deletions": 0,
+      "accepted_lines": 148,
+      "overriden_lines": 0
+    },
+    "57a3c698f3e0b667": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a103e5-7258-7ad0-bb94-328a52e36f22",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 1577,
+      "total_deletions": 91,
+      "accepted_lines": 1345,
+      "overriden_lines": 0
+    },
+    "5898f6aa23a8f29f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "88d4d955-73e2-4de1-a40a-bf60f3eee4e2",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 6,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/23bce14b9a6834487b8f35cc2ebb02ce27457b8334407872667e30a120603e80"
+    },
+    "5a3930099b5106ed": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0fee7-ecbd-7923-bd79-c24b5ed2c15a",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 696,
+      "total_deletions": 50,
+      "accepted_lines": 453,
+      "overriden_lines": 0
+    },
+    "60644da72dac18d6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a106d9-415e-7b12-9bf4-94aad37bab8e",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 1199,
+      "total_deletions": 458,
+      "accepted_lines": 1123,
+      "overriden_lines": 1
+    },
+    "6096cbc24c83521c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e84a-36b3-75f0-b1c7-a7326710e6e8",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 453,
+      "total_deletions": 137,
+      "accepted_lines": 375,
+      "overriden_lines": 4
+    },
+    "677358cbf7b50283": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0f7ff-2049-7a01-af14-6d8f1f2739eb",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "6e84c573dc0d61cf": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a10981-2015-7861-9eb2-2c5ebf39f012",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 1721,
+      "total_deletions": 70,
+      "accepted_lines": 302,
+      "overriden_lines": 0,
+      "token_usage": {
+        "input_tokens": 1711883,
+        "output_tokens": 221072,
+        "cache_read_tokens": 43240192,
+        "cache_creation_tokens": null,
+        "total_cost": null
+      }
+    },
+    "7fa74f46ed8c2518": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a11f45-7030-7720-af78-6f50b1ca1df8",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 6,
+      "total_deletions": 0,
+      "accepted_lines": 6,
+      "overriden_lines": 0
+    },
+    "9d312f5673c613f2": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12833-02f8-7692-b360-9801d58edd7d",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 631,
+      "total_deletions": 25,
+      "accepted_lines": 631,
+      "overriden_lines": 0
+    },
+    "a7864ca22f7c49d1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0f238-b022-7aa1-95ed-a144b372fd73",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 67,
+      "total_deletions": 53,
+      "accepted_lines": 63,
+      "overriden_lines": 0
+    },
+    "acbe58934c7da362": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a10507-eed3-7e21-9793-cb902ec137f9",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 244,
+      "total_deletions": 34,
+      "accepted_lines": 236,
+      "overriden_lines": 0
+    },
+    "b726584997e2dfda": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0d6b7-efe8-7341-afeb-15d480930928",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 489,
+      "overriden_lines": 0
+    },
+    "c26d7276e3d8ec47": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0d590-6f6b-7423-8d06-2869afb9989b",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 72,
+      "overriden_lines": 2
+    },
+    "c29c394d42b224b6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a10fce-b80c-7211-8ce2-1911594c45c7",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 194,
+      "total_deletions": 96,
+      "accepted_lines": 194,
+      "overriden_lines": 0
+    },
+    "de6454bc8aceb9ef": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1148e-8188-7fb2-90ea-5a1215ea5e01",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 14,
+      "total_deletions": 10,
+      "accepted_lines": 3,
+      "overriden_lines": 2
+    },
+    "e2b8fa1d9b6d1f01": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a10014-3516-7a60-8640-b7f95aec48d3",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 1315,
+      "total_deletions": 39,
+      "accepted_lines": 1244,
+      "overriden_lines": 0
+    },
+    "e47d100cfd39a83a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0f9b7-a22c-77a0-8157-24d9ef1af091",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 841,
+      "total_deletions": 14,
+      "accepted_lines": 766,
+      "overriden_lines": 1
+    },
+    "eb0cb8cac978b5b3": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0f0ef-d14d-7e33-a3b7-404edd06e592",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 224,
+      "total_deletions": 49,
+      "accepted_lines": 181,
+      "overriden_lines": 0
+    },
+    "fc6e858ecbf1ba71": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a12d82-bbe8-7d20-97f0-0627c965a1c1",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 25,
+      "total_deletions": 1,
+      "accepted_lines": 25,
+      "overriden_lines": 0
+    },
+    "fe65d30535c7e603": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0ebcd-7198-7e71-bd81-df99fdc17dc0",
+        "model": "unknown"
+      },
+      "human_author": "malanjun <malanjun@cvte.com>",
+      "messages": [],
+      "total_additions": 701,
+      "total_deletions": 125,
+      "accepted_lines": 616,
+      "overriden_lines": 2
+    }
+  }
+}
