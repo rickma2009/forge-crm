@@ -1,10 +1,11 @@
 import { parameterListSchema, parameterSaveSchema, type ParameterList, type ParameterUpdate } from '@forge-crm/contracts';
 import { accessPermissionListSchema, roleListSchema, type RoleTreeNode, type RoleWrite, type RoleUpdate, accessUserListSchema, apiErrorSchema, customerAddressSchema, customerAddressWriteSchema, customerContactSchema, customerContactWriteSchema, customerDetailSchema, customerListSchema, customerSchema, dictionaryImportResultSchema, dictionaryListSchema, navigationResponseSchema, resolvedListViewsSchema, salesOptionSchema, sessionUserSchema, styleSceneDetailSchema, styleSceneListSchema, styleSceneSchema, styleSceneTaxonomySchema, type Customer, type CustomerAddress, type CustomerAddressUpdate, type CustomerAddressWrite, type CustomerContact, type CustomerContactUpdate, type CustomerContactWrite, type CustomerDetail, type CustomerList, type CustomerUpdate, type CustomerWrite, type Dictionary, type DictionaryImportRow, type DictionaryValueUpdate, type DictionaryValueWrite, type ListViewConfig, type LoginRequest, type NavigationResponse, type ResolvedListViews, type SalesOption, type SessionUser, type StyleScene, type StyleSceneDetail, type StyleSceneList, type StyleSceneTaxonomy, type StyleSceneUpdate, type StyleSceneWrite } from '@forge-crm/contracts';
-import { organizationUnitListSchema, organizationUnitSchema, type OrganizationUnit, type OrganizationUnitList, type OrganizationUnitUpdate, type OrganizationUnitWrite } from '@forge-crm/contracts';
+import { organizationManagerOptionsSchema, organizationUnitListSchema, organizationUnitSchema, type OrganizationManagerOptions, type OrganizationUnit, type OrganizationUnitList, type OrganizationUnitUpdate, type OrganizationUnitWrite } from '@forge-crm/contracts';
 import { employeeDetailSchema, employeeListSchema, employeeOptionsSchema, type EmployeeDetail, type EmployeeList, type EmployeeOptions, type EmployeeUpdate, type EmployeeWrite } from '@forge-crm/contracts';
 import { resourceButtonSchema, resourcePageListSchema, resourcePageSchema, resourceTabSchema, type NavigationMountWrite, type ResourceButton, type ResourceButtonWrite, type ResourcePage, type ResourcePageUpdate, type ResourcePageWrite, type ResourceTab, type ResourceTabWrite, type ResourceTreeMove } from '@forge-crm/contracts';
 
 import { rolePermissionCatalogSchema } from '@forge-crm/contracts';
+import { favoriteCreateSchema, favoriteListSchema, type Favorite, type FavoriteCreate } from '@forge-crm/contracts';
 import { attachmentListSchema, attachmentMetaSchema, type AttachmentMeta } from '@forge-crm/contracts';
 import {
   competitorListSchema, competitorSchema, opportunityDetailSchema, opportunityListSchema,
@@ -19,7 +20,7 @@ import {
   inboundOrderListSchema, inboundOrderSchema, inventoryBalanceListSchema, itemListSchema, itemSchema,
   legalEntityListSchema, legalEntitySchema, warehouseListSchema, warehouseSchema,
   type InboundOrder, type InboundOrderList, type InboundOrderWrite, type InventoryBalanceList, type InventoryCommand,
-  type Item, type ItemList, type ItemUpdate, type ItemWrite, type LegalEntity, type LegalEntityList, type LegalEntityUpdate,
+  type Item, type ItemCreate, type ItemList, type ItemUpdate, type ItemWrite, type LegalEntity, type LegalEntityList, type LegalEntityUpdate,
   type LegalEntityWrite, type Warehouse, type WarehouseList, type WarehouseUpdate, type WarehouseWrite,
 } from '@forge-crm/contracts';
 
@@ -34,6 +35,9 @@ export interface NavigationGateway {
   navigation(systemCode: string): Promise<NavigationResponse>;
   assertPage(systemCode: string, routePath: string): Promise<void>;
   performResourceAction(systemCode: string, actionCode: 'manage' | 'export'): Promise<unknown>;
+  favorites?(systemCode: string): Promise<Favorite[]>;
+  addFavorite?(systemCode: string, input: FavoriteCreate): Promise<void>;
+  removeFavorite?(systemCode: string, id: string): Promise<void>;
 }
 
 export interface EnterpriseGateway extends NavigationGateway {
@@ -42,7 +46,7 @@ export interface EnterpriseGateway extends NavigationGateway {
 
   items(systemCode: string, query: URLSearchParams): Promise<ItemList>;
   itemDetail(systemCode: string, id: string): Promise<Item>;
-  createItem(systemCode: string, input: ItemWrite): Promise<Item>;
+  createItem(systemCode: string, input: ItemCreate): Promise<Item>;
   updateItem(systemCode: string, id: string, input: ItemUpdate): Promise<Item>;
   legalEntities(systemCode: string, query: URLSearchParams): Promise<LegalEntityList>;
   createLegalEntity(systemCode: string, input: LegalEntityWrite): Promise<LegalEntity>;
@@ -92,6 +96,7 @@ export interface EnterpriseGateway extends NavigationGateway {
   importDictionaryItems(systemCode: string, dictionaryId: string, rows: DictionaryImportRow[]): Promise<{ imported: number }>;
   listViews(systemCode: string, pageCode?: string): Promise<ResolvedListViews>;
   selectListView(systemCode: string, viewKey: string, pageCode?: string): Promise<void>;
+  updatePersonalListView?(systemCode: string, id: string, input: { version: number; viewName: string; isDefault: boolean; config: ListViewConfig }, pageCode?: string): Promise<void>;
   createPersonalListView(systemCode: string, input: { baseViewId: string; viewName: string; isDefault: boolean; config: ListViewConfig }, pageCode?: string): Promise<void>;
   customers(systemCode: string, query: URLSearchParams): Promise<CustomerList>;
   customerDetail(systemCode: string, id: string): Promise<CustomerDetail>;
@@ -113,6 +118,7 @@ export interface EnterpriseGateway extends NavigationGateway {
   createStyleScene(systemCode: string, input: StyleSceneWrite): Promise<StyleScene>;
   updateStyleScene(systemCode: string, id: string, input: StyleSceneUpdate): Promise<StyleScene>;
   organizationUnits(systemCode: string, query: URLSearchParams): Promise<OrganizationUnitList>;
+  organizationManagerOptions(systemCode: string): Promise<OrganizationManagerOptions>;
   createOrganizationUnit(systemCode: string, input: OrganizationUnitWrite): Promise<OrganizationUnit>;
   updateOrganizationUnit(systemCode: string, id: string, input: OrganizationUnitUpdate): Promise<OrganizationUnit>;
   employees(systemCode: string, query: URLSearchParams): Promise<EmployeeList>;
@@ -139,8 +145,8 @@ export interface EnterpriseGateway extends NavigationGateway {
   updateProduct(systemCode: string, id: string, input: ProductUpdate): Promise<Product>;
   productDetail(systemCode: string, id: string): Promise<Product>;
   deleteProduct(systemCode: string, id: string, version: number): Promise<void>;
-  attachments(systemCode: string, ownerType: 'PRODUCT', ownerId: string): Promise<AttachmentMeta[]>;
-  uploadAttachment(systemCode: string, input: { ownerType: 'PRODUCT'; ownerId: string; file: File; description: string; fileVersion: string }): Promise<AttachmentMeta>;
+  attachments(systemCode: string, ownerType: AttachmentMeta['ownerType'], ownerId: string): Promise<AttachmentMeta[]>;
+  uploadAttachment(systemCode: string, input: { ownerType: AttachmentMeta['ownerType']; ownerId: string; file: File; description: string; fileVersion: string }): Promise<AttachmentMeta>;
   updateAttachment(systemCode: string, id: string, input: { version: number; description: string | null; fileVersion: string | null }): Promise<AttachmentMeta>;
   deleteAttachment(systemCode: string, id: string, version: number): Promise<void>;
   competitors(systemCode: string, query: URLSearchParams): Promise<CompetitorList>;
@@ -197,6 +203,9 @@ export async function write(path: string, body?: unknown, method = 'POST'): Prom
 }
 
 export const httpNavigationGateway: EnterpriseGateway = {
+  async favorites(code) { return favoriteListSchema.parse(await (await call(`/api/systems/${encodeURIComponent(code)}/favorites`)).json()); },
+  async addFavorite(code, input) { await write(`/api/systems/${encodeURIComponent(code)}/favorites`, favoriteCreateSchema.parse(input)); },
+  async removeFavorite(code, id) { await write(`/api/systems/${encodeURIComponent(code)}/favorites/${encodeURIComponent(id)}`, undefined, 'DELETE'); },
   async parameters(code, query) { return parameterListSchema.parse(await (await call(`/api/systems/${encodeURIComponent(code)}/parameters?${query}`)).json()); },
   async updateParameter(code, id, input) { return parameterSaveSchema.parse(await (await write(`/api/systems/${encodeURIComponent(code)}/parameters/${encodeURIComponent(id)}`, input, 'PATCH')).json()); },
 
@@ -258,6 +267,7 @@ export const httpNavigationGateway: EnterpriseGateway = {
   async importDictionaryItems(systemCode, dictionaryId, rows) { return dictionaryImportResultSchema.parse(await (await write(`/api/systems/${encodeURIComponent(systemCode)}/dictionaries/${encodeURIComponent(dictionaryId)}/items/import`, { rows })).json()); },
   async listViews(systemCode, pageCode = 'customer-directory') { return resolvedListViewsSchema.parse(await (await call(`/api/systems/${encodeURIComponent(systemCode)}/list-views/${encodeURIComponent(pageCode)}/view`)).json()); },
   async selectListView(systemCode, viewKey, pageCode = 'customer-directory') { await write(`/api/systems/${encodeURIComponent(systemCode)}/list-views/${encodeURIComponent(pageCode)}/view/selection`, { viewKey }); },
+  async updatePersonalListView(systemCode, id, input, pageCode = 'customer-directory') { await write(`/api/systems/${encodeURIComponent(systemCode)}/list-views/${encodeURIComponent(pageCode)}/view/personal/${encodeURIComponent(id)}`, input, 'PATCH'); },
   async createPersonalListView(systemCode, input, pageCode = 'customer-directory') { await write(`/api/systems/${encodeURIComponent(systemCode)}/list-views/${encodeURIComponent(pageCode)}/view/personal`, input); },
   async customers(systemCode, query) { return customerListSchema.parse(await (await call(`/api/systems/${encodeURIComponent(systemCode)}/customers?${query.toString()}`)).json()); },
   async customerDetail(systemCode, id) { return customerDetailSchema.parse(await (await call(`/api/systems/${encodeURIComponent(systemCode)}/customers/${encodeURIComponent(id)}`)).json()); },
@@ -279,6 +289,7 @@ export const httpNavigationGateway: EnterpriseGateway = {
   async createStyleScene(systemCode, input) { return styleSceneSchema.parse(await (await write(`/api/systems/${encodeURIComponent(systemCode)}/style-scenes`, input)).json()); },
   async updateStyleScene(systemCode, id, input) { return styleSceneSchema.parse(await (await write(`/api/systems/${encodeURIComponent(systemCode)}/style-scenes/${id}`, input, 'PATCH')).json()); },
   async organizationUnits(systemCode, query) { return organizationUnitListSchema.parse(await (await call(`/api/systems/${encodeURIComponent(systemCode)}/organization/units?${query.toString()}`)).json()); },
+  async organizationManagerOptions(systemCode) { return organizationManagerOptionsSchema.parse(await (await call(`/api/systems/${encodeURIComponent(systemCode)}/organization/units/manager-options`)).json()); },
   async createOrganizationUnit(systemCode, input) { return organizationUnitSchema.parse(await (await write(`/api/systems/${encodeURIComponent(systemCode)}/organization/units`, input)).json()); },
   async updateOrganizationUnit(systemCode, id, input) { return organizationUnitSchema.parse(await (await write(`/api/systems/${encodeURIComponent(systemCode)}/organization/units/${encodeURIComponent(id)}`, input, 'PATCH')).json()); },
   async employees(systemCode, query) { return employeeListSchema.parse(await (await call(`/api/systems/${encodeURIComponent(systemCode)}/organization/employees?${query.toString()}`)).json()); },

@@ -16,6 +16,7 @@ describe('TreeWorkspace', () => {
     const select = vi.fn(), edit = vi.fn(); const { container } = render(<TreeWorkspace title="组织" nodes={nodes} selectedId="a" onSelect={select} onRefresh={vi.fn()} actions={() => [{ key: 'edit', label: '编辑', run: edit }]}><input aria-label="详情内容" defaultValue="未保存内容" /></TreeWorkspace>);
     const root = screen.getByRole('treeitem', { name: '总部' }); root.focus(); fireEvent.keyDown(root, { key: 'ArrowDown' }); expect(document.activeElement).toBe(screen.getByRole('treeitem', { name: '销售部' })); fireEvent.keyDown(document.activeElement!, { key: 'Enter' }); expect(select).toHaveBeenCalledWith('b');
     fireEvent.click(screen.getByLabelText('总部操作')); fireEvent.click(screen.getByRole('menuitem', { name: '编辑' })); expect(edit).toHaveBeenCalledOnce();
+    expect((container.firstChild as HTMLElement).style.getPropertyValue('--tree-width')).toBe('282px');
     expect(screen.getByText('共 3 个节点')).toBeTruthy(); fireEvent.change(screen.getByLabelText('面板宽度'), { target: { value: '400' } }); expect((container.firstChild as HTMLElement).style.getPropertyValue('--tree-width')).toBe('400px');
     fireEvent.click(screen.getByLabelText('收起组织树')); expect(screen.queryByRole('tree')).toBeNull(); expect((screen.getByLabelText('详情内容') as HTMLInputElement).value).toBe('未保存内容'); fireEvent.click(screen.getByLabelText('展开组织树')); expect(screen.getAllByRole('treeitem')).toHaveLength(3);
   });

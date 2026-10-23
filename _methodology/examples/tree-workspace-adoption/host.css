@@ -1,0 +1,13 @@
+/* Independent host baseline; intentionally no CRM stylesheet or selectors. */
+:root { font-family:system-ui,sans-serif; font-size:12px; color:#334155; background:#f5f7fb; }
+* { box-sizing:border-box; }
+body { margin:0; }
+main { max-width:1200px; margin:auto; padding:20px; }
+h1 { font-size:20px; }
+h2 { font-size:16px; }
+button,input,select { font:inherit; color:inherit; }
+button,select { min-height:32px; border:1px solid #cbd3df; border-radius:5px; background:white; padding:4px 10px; }
+button:disabled { opacity:.5; }
+.scenario { display:flex; align-items:center; gap:12px; margin:16px 0; }
+.detail-content { padding:20px; }
+output { display:block; overflow-wrap:anywhere; }

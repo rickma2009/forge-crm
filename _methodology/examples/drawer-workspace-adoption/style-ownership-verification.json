@@ -1,0 +1,69 @@
+{
+  "createdAt": "2026-10-03T06:49:44.400Z",
+  "component": "CMP-11",
+  "sources": [
+    {
+      "source": "packages/web/src/common/DrawerWorkspace.tsx",
+      "sha256": "82f41f9dea06d373b5feb2a0083a0299fc3be954f66ba23ff145fbdba64b7cbf"
+    },
+    {
+      "source": "packages/web/src/common/drawer-workspace.css",
+      "sha256": "7f6d82326a566cc3d0a3771843bbe13f357e65fe0b0306a7abb1dae8f3621f5a"
+    },
+    {
+      "source": "packages/web/src/common/agent/AgentAssistantDrawer.tsx",
+      "sha256": "7da9dab5cd0a43d7be7961425891cbafa5c1c6caf1b5504cf6ed09120fd037e4"
+    },
+    {
+      "source": "packages/web/src/common/agent/agent-assistant-drawer.css",
+      "sha256": "0de82b02184241432ba842396e5e8ff6a466be065d399933c50ef406525ee851"
+    },
+    {
+      "source": "_methodology/scripts/verify-drawer-style-ownership.mjs",
+      "sha256": "d565defe115e01f783a6deaba9da843be3dc545b74fc4bd0f68235514c4a669d"
+    },
+    {
+      "source": "_methodology/scripts/export-component-source.test.mjs",
+      "sha256": "2b0528863821e2b82bf6a6f69fa68171f65aa48ac97ecc6b7d7ef47c8f77f9eb"
+    }
+  ],
+  "browser": {
+    "browserVersion": "154.0.8037.95",
+    "baselineSha256": "7dc0b82d2cd67a8a2e8c50b5b1702fe7091740d4fdd4055bfb26288cf67e657f",
+    "commonSha256": "7f6d82326a566cc3d0a3771843bbe13f357e65fe0b0306a7abb1dae8f3621f5a",
+    "businessSha256": "0de82b02184241432ba842396e5e8ff6a466be065d399933c50ef406525ee851",
+    "results": [
+      {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "touch": false,
+        "comparedElements": 27,
+        "computedStylesAndGeometryEqual": true,
+        "screenshot": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/drawer-style-ownership-nNClSX/desktop.png"
+      },
+      {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "touch": true,
+        "comparedElements": 27,
+        "computedStylesAndGeometryEqual": true,
+        "screenshot": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/drawer-style-ownership-nNClSX/touch.png"
+      }
+    ],
+    "limitation": "Synthetic DOM computed-style comparison; not an Agent API, full page, interaction or accessibility verification."
+  },
+  "tests": {
+    "componentTests": 6,
+    "exportTests": 6
+  },
+  "limitations": [
+    "Synthetic DOM style equality and component tests only; no full Agent page screenshot or backend/model requests.",
+    "No fresh installation or production build in this style-only verification.",
+    "Historical dist record preserved and expected STALE after CSS extraction."
+  ],
+  "fixtureCorrection": "Initial style comparison lacked a viewport meta tag. Screenshot review found mobile scale-down; added viewport and innerWidth equality assertion, then reran both viewports successfully."
+}

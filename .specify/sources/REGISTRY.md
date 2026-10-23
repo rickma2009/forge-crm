@@ -2,6 +2,11 @@
 
 | 来源 ID | 标题 | 来源类型 | 来源日期 | 管理副本 | 状态 |
 |---|---|---|---|---|---|
+| `REQSRC-090` | Forge CRM 可复用资产与团队赋能长期目标 | 用户明确项目目标 | 2026-10-03 | `REQSRC-090-forge-crm-reuse-and-team-enablement-goal-20261003/source.md` | active-project-goal |
+| `REQSRC-091` | 公共网格内容上下居中核查 | 用户规范确认与全系统检查要求 | 2026-10-03 | `REQSRC-091-grid-vertical-centering-audit-20261003/source.md` | implemented-and-verified |
+| `REQSRC-089` | 当前库存双表联动与库存事务明细 | 用户明确开发要求 | 2026-10-03 | `REQSRC-089-current-inventory-transaction-pages-20261003/source.md` | implemented-local-verification |
+| `REQSRC-084` | 个人 CRM Web Agent 首版开发授权 | 用户明确开发指令 | 2026-09-30 | `REQSRC-084-personal-crm-agent-development-20260930/source.md` | approved-implementation |
+| `REQSRC-083` | 个人 CRM Web Agent 需求与首版共识 | 用户需求与三轮推荐确认 | 2026-09-30 | `REQSRC-083-personal-crm-web-agent-plan-20260930/source.md` | superseded-by-REQSRC-084 |
 | `REQSRC-069` | 产品详情与客户详情交互样式对齐 | 用户增量需求与截图 | 2026-09-23 | `REQSRC-069-product-detail-customer-pattern-alignment-20260923/source.md` | approved-existing-slice-ui-increment |
 | `REQSRC-068` | 切片 023 Architecture Gate 批准 | 用户 Gate 批准 | 2026-09-23 | `REQSRC-068-product-workspace-architecture-approval-20260923/source.md` | architecture-approved-continuous-implementation |
 | `REQSRC-067` | 切片 023 Specification 批准与持续实施意图 | 用户 Gate 批准与执行方向 | 2026-09-23 | `REQSRC-067-product-workspace-specification-approval-20260923/source.md` | specification-approved-architecture-review |
@@ -17,6 +22,8 @@
 | `REQSRC-056` | 组织架构修复、树形工作区与员工管理 | 用户增量需求及连续实施授权 | 2026-09-22 | `REQSRC-056-organization-employee-directory-20260922/source.md` | approved-continuous-local-implementation |
 | `REQSRC-049` | 组织架构页面与访问管理查询区调整 | 用户增量实施请求 | 2026-09-22 | `REQSRC-049-organization-hierarchy-page-and-query-layout-20260922/source.md` | implemented-local-verification |
 | `REQSRC-050` | Supply 资源菜单萃取与本地实现 | 用户参考萃取与实施请求 | 2026-09-22 | `REQSRC-050-supply-resource-menu-implementation-20260922/source.md` | approved-continuous-local-implementation |
+| `REQSRC-079` | 数据库驱动的交互案例目录 | 用户增量需求与连续实施授权 | 2026-09-27 | `REQSRC-079-database-backed-interaction-catalog-20260927/source.md` | implemented-and-verified |
+| `REQSRC-080` | 交互目录组件资产与真实演示入口 | 用户增量需求与截图反馈 | 2026-09-28 | `REQSRC-080-interaction-catalog-components-and-live-demos-20260928/source.md` | implemented-and-verified |
 | `REQSRC-054` | 资源菜单树展示、滚动与停用数据清理优化 | 用户增量需求 | 2026-09-22 | `REQSRC-054-resource-menu-tree-and-disabled-data-refinement-20260922/source.md` | implemented-and-verified |
 | `REQSRC-055` | 停用资源及全部关联数据永久删除确认 | 用户明确删除授权 | 2026-09-22 | `REQSRC-055-obsolete-resource-permanent-deletion-approval-20260922/source.md` | implemented-and-verified |
 | `REQSRC-047` | 组织与访问管理连续实施授权 | 用户 Gate 与连续实施授权 | 2026-09-22 | `REQSRC-047-organization-access-continuous-implementation-approval-20260922/source.md` | approved-architecture-and-continuous-local-implementation |
@@ -77,6 +84,15 @@
 | `REQSRC-071` | 商机阶段、物料产品、引用展示与查询区统一整改 | 用户增量需求与连续实施授权 | 2026-09-24 | `REQSRC-071-stage-item-reference-query-ui-refinement-20260924/source.md` | approved-continuous-implementation |
 | `REQSRC-072` | 物料产品详情动态路由修复 | 用户缺陷反馈与既有三页签需求确认 | 2026-09-24 | `REQSRC-072-item-detail-route-repair-20260924/source.md` | approved-continuous-implementation |
 | `REQSRC-073` | Forge CRM 项目身份迁移 | 用户项目治理变更与执行批准 | 2026-09-25 | `REQSRC-073-forge-crm-project-rename-20260925/source.md` | approved-for-implementation |
+| `REQSRC-074` | 物料详情浏览编辑同构与返回按钮规范化 | 用户界面整改与全局规范要求 | 2026-09-25 | `REQSRC-074-item-detail-view-edit-parity-20260925/source.md` | implemented-and-verified |
+| `REQSRC-075` | 报价明细允许加入未配置售价的产品 | 用户业务规则变更与缺陷修复要求 | 2026-09-25 | `REQSRC-075-quotation-unpriced-product-20260925/source.md` | implemented-and-verified |
+| `REQSRC-076` | 报价单价文案与批量产品选择组件 | 用户界面与公共组件需求 | 2026-09-25 | `REQSRC-076-quotation-product-picker-20260925/source.md` | implemented-and-verified |
+| `REQSRC-077` | 报价折扣系数与紧凑产品选择网格 | 用户业务规则与界面变更 | 2026-09-25 | `REQSRC-077-quotation-discount-factor-compact-picker-20260925/source.md` | implemented-and-verified |
+| `REQSRC-078` | 报价选择产品后保存失败 | 用户缺陷反馈与截图 | 2026-09-25 | `REQSRC-078-quotation-md-item-legacy-fk-defect-20260925/source.md` | implemented-and-verified |
+| `REQSRC-085` | BOM 多层结构与页面交互演示 | 用户需求与多轮确认 | 2026-10-01 | `REQSRC-085-bom-interaction-20261001/source.md` | implemented-pending-browser-review |
+| `REQSRC-086` | 大屏物料与多层演示 BOM 补充 | 用户连续实施授权 | 2026-10-02 | `REQSRC-086-screen-bom-demo-20261002/source.md` | implemented-and-verified |
+| `REQSRC-087` | 交互模板库收录可复用插件组件 | 用户开发指令 | 2026-10-03 | `REQSRC-087-reusable-component-library-20261003/source.md` | implemented-and-verified |
+| `REQSRC-088` | 表格行高、列顺序、图标与文本截断规范 | 用户开发指令 | 2026-10-03 | `REQSRC-088-table-layout-conventions-20261003/source.md` | implemented-and-verified |
 
 - REQSRC-QUO-CREATE-20260924：[报价创建与详情重设计](quotation-create-redesign-20260924/source.md)。
 
@@ -91,3 +107,75 @@
 - REQSRC-QUO-NO-LINE-20260924：[取消报价产品线限制](quotation-product-line-unlinked-20260924/source.md)。
 
 - UIRULE-20260924-view-selector：[视图组合控件高度统一及组件化](UIRULE-20260924-view-selector/source.md)。
+
+- REQSRC-092：[销售交互增强原始需求与方案整理授权](REQSRC-092-sales-interaction-plan-20261003/source.md)。当前方案：`docs/design/sales-interaction-enhancement-solution.md`；仅方案授权，未实施。
+
+- REQSRC-093：[开始客户360第一包开发](REQSRC-093-customer-360-start-20261003/source.md)。
+
+- REQSRC-094：[继续下一包开发](REQSRC-094-opportunity-kanban-start-20261003/source.md)，授权P2商机看板。
+
+- REQSRC-095：[继续P3活动时间轴](REQSRC-095-activity-timeline-start-20261003/source.md)。
+
+- REQSRC-096：[销售交互剩余三包连续实施](REQSRC-096-sales-enhancements-complete-20261004/source.md)，2026-10-04。
+
+- REQSRC-097：2026-10-04 [编码规则管理与统一取号](REQSRC-097-numbering-rules-20261004/source.md)。
+
+- REQSRC-098：2026-10-04 [已有页面与交互模板映射补全](REQSRC-098-existing-page-template-mapping-20261004/source.md)。
+
+- REQSRC-099：2026-10-05 [统一审批与事件流程方案规划](REQSRC-099-approval-workflow-plan-20261005/source.md)。方案：`docs/design/approval-workflow/solution.md`；仅方案，待评审。
+
+- REQSRC-100：2026-10-05 [组织架构业务字段、负责人和员工岗位职位](REQSRC-100-organization-business-fields-20261005/source.md)。
+
+- REQSRC-101：2026-10-05 [审批工作流P1原型授权](REQSRC-101-approval-prototype-20261005/source.md)。
+
+- 2026-10-05：[统一原型目录要求](20261005-unified-prototype-directory/source.md)。约定见 `prototypes/README.md` 与根 `AGENTS.md`。
+- REQSRC-102：2026-10-05 [物料来源、生命周期与引用值存储规则](REQSRC-102-item-source-lifecycle-and-reference-codes-20261005/source.md)。
+
+- REQSRC-103：[审批原型确认与主框架预览接入](REQSRC-103-approval-shell-20261005/source.md)。
+
+- REQSRC-104：2026-10-05 [物料编码允许点号](REQSRC-104-item-code-dot-20261005/source.md)。
+
+- REQSRC-105：2026-10-05 [物料产品自动编码与既有数据停用](REQSRC-105-item-code-generation-disable-existing-20261005/source.md)。
+
+- 20261005-approval-development：用户授权正式审批开发；[原文](20261005-approval-development/source.md) → 014审批需求 / 039引擎基础切片。
+
+- REQSRC-106：2026-10-06 [全量演示数据库重建](REQSRC-106-full-demo-database-rebuild-20261006/source.md)。已完成备份、旧业务演示数据清理、跨模块场景重建和 L3 数据一致性验证。
+
+- REQSRC-107：2026-10-06 [清理非 00 开头物料类别字典值](REQSRC-107-remove-non00-material-categories-20261006/source.md)。删除前检查物料引用和父子层级，按小类、中类、大类事务性清理。
+
+- REQSRC-108：2026-10-06 [我的收藏功能](REQSRC-108-personal-favorites-20261006/source.md)。收藏客户、产品、物料产品、商机、报价和销售订单；提供全局工具栏入口与列表取消确认。
+- 20261008-digital-employee-navigation：数字员工分类导航与专属场景工作区需求，按公共、营销、供应链、研发、财务等分类，保留工具栏及现有工作台入口；[不可改写来源](20261008-digital-employee-navigation/source.md)。
+- 20261008-digital-employee-submenu-display：补充要求将数字员工下级菜单实际展示在系统侧栏；[不可改写来源](20261008-digital-employee-submenu-display/source.md)。
+- 20261008-digital-employee-menu-labels：数字员工场景菜单名称、暂缓菜单项及邮件处理入口变更；[不可改写来源](20261008-digital-employee-menu-labels/source.md)。
+- 20261008-digital-employee-standalone-pages：数字员工独立菜单页面移除返回控件，原集成内嵌邮件页保留返回；[不可改写来源](20261008-digital-employee-standalone-pages/source.md)。
+- 20261008-digital-employee-forms：数字员工邮件明细页编辑、修改、保存控件采用项目统一样式；[不可改写来源](20261008-digital-employee-forms/source.md)。
+- 20261008-global-row-action-icons：邮件关注并入操作列，不同任务操作使用不同图标并形成全局约定；[不可改写来源](20261008-global-row-action-icons/source.md)。
+- 20261008-mail-task-actions-complete：邮件任务操作真实持久化、即时刷新、失败保留弹窗及逐项状态机；[不可改写来源](20261008-mail-task-actions-complete/source.md)。
+- 20261008-digital-employee-scene-strategy：每个数字员工使用独立的分派、处理、监控和预警策略；本期实现邮件数字员工闭环；[不可改写来源](20261008-digital-employee-scene-strategy/source.md)。
+- 20261008-digital-employee-forms：数字员工邮件明细页编辑、修改、保存控件采用项目统一样式；[不可改写来源](20261008-digital-employee-forms/source.md)。
+# 2026-10-08 · MAXHUB舆情监控数字员工
+
+- 来源：[`20261008-public-opinion-digital-employee/source.md`](./20261008-public-opinion-digital-employee/source.md)
+- 状态：已确认并进入开发
+
+# 2026-10-08 · 舆情列表可读性与操作图标
+
+- 来源：[`20261008-opinion-grid-readability/source.md`](./20261008-opinion-grid-readability/source.md)
+- 状态：已实施并验证
+
+# 2026-10-08 · 大宗商品监控月度免费来源
+
+- 来源：[`20261008-commodity-monitoring-monthly-free/source.md`](./20261008-commodity-monitoring-monthly-free/source.md)
+- 状态：已归档并实施；使用世界银行 Pink Sheet 月度价格及 Frankfurter 无 Key USD/CNY 汇率
+
+- UIRULE-20261009-mail-action-layout：[用户原始要求](UIRULE-20261009-mail-action-layout/source.md)，2026-10-09，邮件操作列双行与间距缩小20%；当前规格见digital-employee及global-page-style。
+
+- UIRULE-20261009-default-agent：[用户原始要求](UIRULE-20261009-default-agent/source.md)，登录默认Agent，数字员工菜单默认收起。
+
+- 20261009-enterprise-ai-planning-review：7000 多人科技企业 AI 转型及现有 Agent/数字员工方案评审；[原始要求](20261009-enterprise-ai-planning-review/source.md)。状态：规划文档已整理，建议待业务评审；未授权新增功能实现。
+
+- 20261009-role-ai-industry-cases：岗位 AI 场景及国内外企业/GitHub 案例补充；[原始要求](20261009-role-ai-industry-cases/source.md)。状态：蓝图 v1.1 与研究笔记已整理；候选建议待评审，未进入实现。
+
+- 20261009-ai-scenario-enhancement-plan：行业场景提炼补入数字员工/Agent 方案，并编制分阶段开发计划；[原文](20261009-ai-scenario-enhancement-plan/source.md)。状态：方案与 plan 已整理，实施任务未启动。
+
+| `REQSRC-20261009-BUSINESS-SCENES` | 后续场景无需等待接口，先做页面和10–20条模拟数据 | 用户明确开发指令 | 2026-10-09 | `20261009-business-scenes-demo/source.md` | implemented-demo-pages-live-integration-pending |

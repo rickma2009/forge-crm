@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-078",
+  "title": "报价选择产品后保存失败",
+  "sourceType": "user-defect-report-and-screenshot",
+  "sourceDate": "2026-09-25",
+  "importedAt": "2026-09-25T10:45:00+08:00",
+  "originalPath": "current-codex-task:user-message-and-attached-screenshot",
+  "managedCopy": "source.md",
+  "sha256": "e8915902413b7ab01439743ebf7e5afc4a27f9381e343c46edcd45e709100128",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "implemented-and-verified"
+}

@@ -1,0 +1,54 @@
+.sales-prototype-banner{display:flex;align-items:center;gap:12px;margin:0 0 16px;padding:10px 14px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:7px;color:#475569;font-size:13px}
+.sales-prototype-banner strong{color:#1d4ed8;white-space:nowrap}
+.document-workspace .sales-prototype-banner{margin:18px 0 4px}
+.sales-placeholder{padding:32px;min-height:220px}
+.sales-placeholder h1{margin:0 0 12px;font-size:22px}
+.sales-placeholder p{color:#64748b;max-width:720px;line-height:1.7}
+.sales-placeholder div{display:flex;gap:10px;margin-top:24px}
+.sales-directory .sales-prototype-banner{margin-top:-2px}
+.sales-actions{white-space:nowrap}
+.sales-actions .row-action-button{margin-right:3px}
+.sales-text-link{border:0;background:transparent;color:#2563eb;cursor:pointer;font:inherit;padding:0;text-align:left}
+.sales-text-link:hover{text-decoration:underline}
+.sales-source-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}
+.sales-source-options label,.sales-source-list label{border:1px solid #cbd5e1;border-radius:8px;padding:16px;display:flex;gap:12px;cursor:pointer;background:#fff}
+.sales-source-options label{flex-direction:column;align-items:flex-start;min-height:130px}
+.sales-source-options label.selected,.sales-source-list label.selected{border-color:#2563eb;background:#eff6ff;box-shadow:0 0 0 1px #2563eb}
+.sales-source-options strong{font-size:16px;color:#1e293b}
+.sales-source-options span,.sales-source-list small{font-size:13px;color:#64748b;line-height:1.5}
+.sales-source-list{display:grid;gap:10px;max-height:330px;overflow:auto;margin:16px 0}
+.sales-source-list label{align-items:flex-start}
+.sales-source-list label span{display:grid;gap:5px}
+.sales-wizard{width:min(760px,calc(100vw - 32px))}
+.sales-wizard .modal-body{min-height:230px}
+.sales-wizard-field{display:grid;gap:8px;max-width:450px}
+.sales-wizard-field select{width:100%}
+.sales-section-note{margin:0 0 14px;color:#64748b;font-size:13px}
+.document-workspace .document-grid input[type=number]{min-width:80px}
+.document-workspace .document-grid select{min-width:150px}
+.sales-status-approved{background:#e5f7ee;color:#047857}
+.sales-status-submitted{background:#eff6ff;color:#1d4ed8}
+.sales-status-reversed,.sales-status-cancelled{background:#f1f5f9;color:#64748b}
+.sales-create-options{display:flex;align-items:center;flex-wrap:wrap;gap:12px 28px;margin:0;padding:16px 20px;border-bottom:1px solid #e2e8f0}
+.sales-create-options-title{color:#64748b;font-size:14px;font-weight:600;line-height:24px}
+.sales-create-options label{display:inline-flex;align-items:center;gap:8px;color:#334155;font-size:14px;line-height:24px;cursor:pointer}
+.sales-create-options input[type=radio]{width:17px;height:17px;margin:0;accent-color:#2563eb;cursor:pointer}
+.sales-create-options label:has(input:checked){color:#1d4ed8;font-weight:600}
+.sales-create-content{padding:20px}
+.sales-create-help{margin:0 0 18px;color:#64748b;line-height:1.7}
+.sales-create-page .record-query-bar{border:0;border-radius:0;box-shadow:none;padding:0 0 18px;background:transparent}
+.sales-create-page .record-query-fields{grid-template-columns:minmax(240px,520px)}
+.sales-create-list-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid #e2e8f0}
+.sales-create-list-heading h2{margin:0;font-size:14px;color:#1e293b}
+.sales-create-list-heading span{font-size:12px;color:#64748b}
+.sales-create-select-column{width:64px}
+.sales-create-page tbody tr{cursor:pointer}
+.sales-create-page tbody tr.sales-create-selected{background:#eff6ff}
+.sales-create-page tbody tr:hover{background:#f8fafc}
+.sales-create-page tbody tr.sales-create-selected:hover{background:#eff6ff}
+.sales-create-page tbody input[type=radio]{width:16px;height:16px;cursor:pointer}
+.sales-create-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:20px;padding-top:18px;border-top:1px solid #e2e8f0;color:#64748b}
+.sales-create-footer>div{display:flex;gap:8px}
+.sales-create-footer button{min-width:72px}
+@media(max-width:700px){.sales-source-options{grid-template-columns:1fr}.sales-source-options label{min-height:auto}.sales-prototype-banner{align-items:flex-start}}
+@media(max-width:700px){.sales-create-options{padding:12px;gap:8px 18px}.sales-create-options-title{width:100%}.sales-create-content{padding:12px}.sales-create-page .record-query-fields{grid-template-columns:1fr}.sales-create-footer{align-items:stretch;flex-direction:column}.sales-create-footer>div{justify-content:flex-end}}

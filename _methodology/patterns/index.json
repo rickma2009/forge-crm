@@ -28,7 +28,8 @@
         "mcrm:003-enterprise-navigation-shell"
       ],
       "evidenceCards": [],
-      "nextEvidence": "在第二个独立真实项目采用并复核边界"
+      "nextEvidence": "在第二个独立真实项目采用并复核边界",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-002",
@@ -48,7 +49,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-003",
@@ -68,7 +70,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-004",
@@ -88,7 +91,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-010",
@@ -108,7 +112,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": "/showcase/items"
     },
     {
       "assetId": "EPM-PAGE-011",
@@ -128,7 +133,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": "/showcase/products"
     },
     {
       "assetId": "EPM-PAGE-012",
@@ -148,7 +154,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-013",
@@ -209,7 +216,8 @@
           }
         }
       ],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": "/showcase/inbound-orders"
     },
     {
       "assetId": "EPM-PAGE-014",
@@ -229,7 +237,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": "/showcase/items"
     },
     {
       "assetId": "EPM-PAGE-015",
@@ -249,7 +258,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-020",
@@ -269,7 +279,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-021",
@@ -289,7 +300,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-022",
@@ -309,7 +321,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-023",
@@ -329,7 +342,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-030",
@@ -349,7 +363,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": "/showcase/system/parameters"
     },
     {
       "assetId": "EPM-PAGE-031",
@@ -369,7 +384,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-032",
@@ -389,7 +405,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": "/showcase/system/roles"
     },
     {
       "assetId": "EPM-PAGE-033",
@@ -409,7 +426,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-040",
@@ -429,7 +447,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-041",
@@ -449,7 +468,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-042",
@@ -469,7 +489,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-043",
@@ -489,7 +510,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-050",
@@ -509,7 +531,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-051",
@@ -529,7 +552,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-PAGE-052",
@@ -549,7 +573,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-001",
@@ -567,7 +592,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": "/showcase/items"
     },
     {
       "assetId": "EPM-ACT-002",
@@ -585,7 +611,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": "/showcase/items"
     },
     {
       "assetId": "EPM-ACT-003",
@@ -603,7 +630,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-004",
@@ -621,7 +649,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": "/showcase/customers"
     },
     {
       "assetId": "EPM-ACT-005",
@@ -639,7 +668,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-006",
@@ -657,7 +687,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-010",
@@ -675,7 +706,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-011",
@@ -693,7 +725,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-012",
@@ -711,7 +744,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-013",
@@ -729,7 +763,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-014",
@@ -747,7 +782,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-015",
@@ -765,7 +801,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-016",
@@ -783,7 +820,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-017",
@@ -801,7 +839,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-018",
@@ -819,7 +858,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-019",
@@ -837,7 +877,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-020",
@@ -855,7 +896,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-021",
@@ -873,7 +915,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-022",
@@ -891,7 +934,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-023",
@@ -909,7 +953,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-024",
@@ -927,7 +972,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-025",
@@ -945,7 +991,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-026",
@@ -963,7 +1010,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-030",
@@ -981,7 +1029,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-031",
@@ -999,7 +1048,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-032",
@@ -1017,7 +1067,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-033",
@@ -1035,7 +1086,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-034",
@@ -1053,7 +1105,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-040",
@@ -1071,7 +1124,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-041",
@@ -1089,7 +1143,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-042",
@@ -1107,7 +1162,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-ACT-043",
@@ -1125,7 +1181,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": "/showcase/quotations"
     },
     {
       "assetId": "EPM-ACT-044",
@@ -1143,7 +1200,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-VIEW-001",
@@ -1161,7 +1219,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-VIEW-002",
@@ -1179,7 +1238,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": "/showcase/customers"
     },
     {
       "assetId": "EPM-VIEW-003",
@@ -1197,7 +1257,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-VIEW-004",
@@ -1215,7 +1276,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-VIEW-005",
@@ -1233,7 +1295,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": "/showcase/quotations"
     },
     {
       "assetId": "EPM-VIEW-006",
@@ -1251,7 +1314,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-VIEW-007",
@@ -1269,7 +1333,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-VIEW-010",
@@ -1287,7 +1352,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": "/showcase/customers"
     },
     {
       "assetId": "EPM-VIEW-011",
@@ -1305,7 +1371,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-VIEW-012",
@@ -1323,7 +1390,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-VIEW-013",
@@ -1341,7 +1409,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": "/showcase/items"
     },
     {
       "assetId": "EPM-VIEW-014",
@@ -1359,7 +1428,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-VIEW-015",
@@ -1377,7 +1447,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-VIEW-016",
@@ -1395,7 +1466,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-VIEW-017",
@@ -1413,7 +1485,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-VIEW-018",
@@ -1431,7 +1504,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-STATE-001",
@@ -1449,7 +1523,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-STATE-002",
@@ -1467,7 +1542,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-STATE-003",
@@ -1485,7 +1561,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-STATE-004",
@@ -1503,7 +1580,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-STATE-005",
@@ -1521,7 +1599,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-STATE-006",
@@ -1539,7 +1618,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-STATE-007",
@@ -1557,7 +1637,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-STATE-008",
@@ -1575,7 +1656,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-STATE-009",
@@ -1593,7 +1675,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-STATE-010",
@@ -1611,7 +1694,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-STATE-011",
@@ -1629,7 +1713,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-STATE-012",
@@ -1647,7 +1732,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SPECIAL-001",
@@ -1666,7 +1752,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SPECIAL-002",
@@ -1685,7 +1772,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SPECIAL-003",
@@ -1704,7 +1792,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SPECIAL-004",
@@ -1723,7 +1812,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SPECIAL-005",
@@ -1742,7 +1832,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SPECIAL-006",
@@ -1761,7 +1852,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SPECIAL-007",
@@ -1780,7 +1872,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SPECIAL-008",
@@ -1799,7 +1892,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SPECIAL-009",
@@ -1818,7 +1912,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SPECIAL-010",
@@ -1837,7 +1932,249 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
+    },
+    {
+      "assetId": "EPM-COMPONENT-001",
+      "kind": "COMPONENT",
+      "group": "查询与筛选",
+      "name": "统一查询栏",
+      "maturity": "implementation-verified",
+      "definition": [
+        "统一查询条件、查询、重置与更多条件",
+        "业务页传入真实条件与查询行为"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "查询与筛选"
+      },
+      "artifacts": [
+        "packages/web/src/common/RecordQueryBar.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "evidenceCards": [],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "demoPath": "/showcase/items"
+    },
+    {
+      "assetId": "EPM-COMPONENT-002",
+      "kind": "COMPONENT",
+      "group": "列表与视图",
+      "name": "列表视图选择器",
+      "maturity": "implementation-verified",
+      "definition": [
+        "统一当前视图、下拉选择和设置入口",
+        "视图数据及权限仍由业务页与服务端提供"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "列表与视图"
+      },
+      "artifacts": [
+        "packages/web/src/common/ListViewSelector.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "evidenceCards": [],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "demoPath": "/showcase/customers"
+    },
+    {
+      "assetId": "EPM-COMPONENT-003",
+      "kind": "COMPONENT",
+      "group": "树与层级",
+      "name": "树形工作区",
+      "maturity": "implementation-verified",
+      "definition": [
+        "左树右内容、搜索、展开、收起和宽度调整",
+        "节点数据、操作权限和业务详情由调用方提供"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "树与层级"
+      },
+      "artifacts": [
+        "packages/web/src/common/TreeWorkspace.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "evidenceCards": [],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "demoPath": "/showcase/items"
+    },
+    {
+      "assetId": "EPM-COMPONENT-004",
+      "kind": "COMPONENT",
+      "group": "详情与页签",
+      "name": "详情工作区",
+      "maturity": "implementation-verified",
+      "definition": [
+        "统一返回、对象标题、摘要、分区与内层 Tab",
+        "查看/编辑模式、权限与未保存保护由业务页控制"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "详情与页签"
+      },
+      "artifacts": [
+        "packages/web/src/common/DetailWorkspace.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "evidenceCards": [],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "demoPath": "/showcase/products"
+    },
+    {
+      "assetId": "EPM-COMPONENT-005",
+      "kind": "COMPONENT",
+      "group": "详情与页签",
+      "name": "路由页签",
+      "maturity": "implementation-verified",
+      "definition": [
+        "保留多个可切换的业务页面上下文",
+        "页面授权、离开保护与内容挂载由宿主处理"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "详情与页签"
+      },
+      "artifacts": [
+        "packages/web/src/common/route-tabs/RouteTabs.tsx",
+        "packages/web/src/common/route-tabs/useRouteTabs.ts"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "evidenceCards": [],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "demoPath": "/showcase/customers"
+    },
+    {
+      "assetId": "EPM-COMPONENT-006",
+      "kind": "COMPONENT",
+      "group": "表单与编辑",
+      "name": "模式化表单",
+      "maturity": "implementation-verified",
+      "definition": [
+        "按 schema 渲染字段、必填、只读与校验",
+        "业务校验和提交不可只存在前端"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "表单与编辑"
+      },
+      "artifacts": [
+        "packages/web/src/ui-assets/components/schema-form/SchemaForm.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "evidenceCards": [],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "demoPath": "/showcase/inbound-orders"
+    },
+    {
+      "assetId": "EPM-COMPONENT-007",
+      "kind": "COMPONENT",
+      "group": "表单与编辑",
+      "name": "可编辑明细网格",
+      "maturity": "implementation-verified",
+      "definition": [
+        "新增、选择、复制、删除、撤销明细行",
+        "行标识、精度、联动与保存原子性由业务规则确定"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "表单与编辑"
+      },
+      "artifacts": [
+        "packages/web/src/ui-assets/components/editable-line-grid/EditableLineGrid.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "evidenceCards": [],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "demoPath": "/showcase/inbound-orders"
+    },
+    {
+      "assetId": "EPM-COMPONENT-008",
+      "kind": "COMPONENT",
+      "group": "选择与引用",
+      "name": "产品选择器",
+      "maturity": "implementation-verified",
+      "definition": [
+        "可查询、分页、单选或多选并回传标准物料产品",
+        "候选范围、数据权限和提交校验由业务单据控制"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "选择与引用"
+      },
+      "artifacts": [
+        "packages/web/src/common/ProductPickerDialog.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "evidenceCards": [],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "demoPath": "/showcase/quotations"
+    },
+    {
+      "assetId": "EPM-COMPONENT-009",
+      "kind": "COMPONENT",
+      "group": "状态与反馈",
+      "name": "校验汇总",
+      "maturity": "implementation-verified",
+      "definition": [
+        "汇总字段与行级错误并支持定位",
+        "错误码、文案和可修复路径由业务定义"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "状态与反馈"
+      },
+      "artifacts": [
+        "packages/web/src/ui-assets/components/validation-summary/ValidationSummary.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "evidenceCards": [],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "demoPath": "/showcase/inbound-orders"
+    },
+    {
+      "assetId": "EPM-COMPONENT-010",
+      "kind": "COMPONENT",
+      "group": "状态与反馈",
+      "name": "异步结果反馈",
+      "maturity": "implementation-verified",
+      "definition": [
+        "统一加载、成功、失败、重试和部分成功反馈",
+        "只表达真实任务状态，不伪造进度"
+      ],
+      "definitionRef": {
+        "path": "_methodology/08-企业管理系统交互模式分类方法.md",
+        "section": "状态与反馈"
+      },
+      "artifacts": [
+        "packages/web/src/ui-assets/components/async-state/AsyncOutcome.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "evidenceCards": [],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "demoPath": "/showcase/inbound-orders"
     },
     {
       "assetId": "EPM-SCENE-001",
@@ -1864,7 +2201,8 @@
         "mcrm:004-customer-record-workspace"
       ],
       "evidenceCards": [],
-      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界"
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "demoPath": "/showcase/customers"
     },
     {
       "assetId": "EPM-SCENE-002",
@@ -1884,7 +2222,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SCENE-003",
@@ -1904,7 +2243,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SCENE-004",
@@ -1924,7 +2264,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SCENE-005",
@@ -1944,7 +2285,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SCENE-006",
@@ -1964,7 +2306,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     },
     {
       "assetId": "EPM-SCENE-007",
@@ -1984,7 +2327,8 @@
       "artifacts": [],
       "evidence": [],
       "evidenceCards": [],
-      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案"
+      "nextEvidence": "形成候选卡，明确适用边界、失败行为与验收草案",
+      "demoPath": null
     }
   ]
 }

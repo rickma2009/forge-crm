@@ -1,0 +1,5 @@
+.inventory-stock-page { display: grid; gap: 16px; min-width: 0; }
+.inventory-stock-page .inventory-period { --record-query-field-width: 150px; }
+.inventory-stock-page .enterprise-table-wrap { min-width: 0; overflow-x: auto; }
+.inventory-item-link { background: none; border: 0; padding: 0; font: inherit; cursor: pointer; }
+.inventory-item-link:hover { text-decoration: underline; }

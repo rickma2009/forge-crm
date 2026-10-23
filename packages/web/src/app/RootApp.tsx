@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { parseRootRoute } from '../showcase/domain/routes';
+import { parseRootRoute, stripInteractionSelection } from '../showcase/domain/routes';
 import { ShowcaseApp } from '../showcase/ShowcaseApp';
 import { previewNavigationGateway } from '../showcase/previewGateway';
 
@@ -9,6 +9,7 @@ export function RootApp() {
       const next = parseRootRoute(window.location.hash);
       const url = new URL(window.location.href);
       url.searchParams.delete('pattern');
+      stripInteractionSelection(url, next.path);
       const businessDeepLink = url.hash.startsWith('#/showcase/') && url.hash !== '#/showcase/';
       if (!businessDeepLink) url.hash = '#' + next.path;
       if (url.href !== window.location.href) window.history.replaceState(window.history.state, '', url.pathname + url.search + url.hash);

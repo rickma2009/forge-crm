@@ -12,10 +12,11 @@ const querySchema = z.object({
   subCategory: z.string().max(64).optional(),
   maturity: interactionMaturitySchema.optional(),
   status: z.enum(['DONE', 'WIP', 'TODO']).optional(),
+  catalog: z.enum(['templates', 'library']).optional(),
 });
 
 const summarySelect = {
-  id: true, assetCode: true, category: true, subCategory: true, sceneName: true, description: true, maturity: true,
+  templateJson: true, id: true, assetCode: true, category: true, subCategory: true, sceneName: true, description: true, maturity: true,
   status: true, pagePath: true, note: true, doneAt: true, sortNo: true, version: true, createdAt: true,
 } as const;
 
@@ -25,13 +26,16 @@ export class StyleSceneService {
 
   async list(systemCode: string, raw: Record<string, unknown>) {
     const query = querySchema.parse(raw);
+    const keywordFilter = query.keyword ? [
+      { assetCode: { contains: query.keyword, mode: 'insensitive' as const } },
+      { sceneName: { contains: query.keyword, mode: 'insensitive' as const } },
+      { description: { contains: query.keyword, mode: 'insensitive' as const } },
+    ] : null;
     const where = {
       systemCode,
-      ...(query.keyword ? { OR: [
-        { assetCode: { contains: query.keyword, mode: 'insensitive' as const } },
-        { sceneName: { contains: query.keyword, mode: 'insensitive' as const } },
-        { description: { contains: query.keyword, mode: 'insensitive' as const } },
-      ] } : {}),
+      ...(query.catalog === 'templates' ? { assetCode: { startsWith: 'TPL-' } } : {}),
+      ...(query.catalog === 'library' ? { OR: [{ assetCode: { startsWith: 'TPL-' } }, { assetCode: { startsWith: 'CMP-' } }] } : {}),
+      ...(keywordFilter ? query.catalog === 'library' ? { AND: [{ OR: keywordFilter }] } : { OR: keywordFilter } : {}),
       ...(query.category ? { category: query.category } : {}),
       ...(query.subCategory ? { subCategory: query.subCategory } : {}),
       ...(query.maturity ? { maturity: query.maturity } : {}),
@@ -113,7 +117,7 @@ export class StyleSceneService {
     return { id: row.id, category: row.category, subCategory: row.subCategory, sceneName: row.sceneName, description: row.description, status: row.status, pagePath: row.pagePath, note: row.note, doneAt: row.doneAt ? row.doneAt.toISOString() : null, sortNo: row.sortNo, version: row.version };
   }
 
-  private serializeSummary(row: { id: string; assetCode: string | null; category: string; subCategory: string | null; sceneName: string; description: string | null; maturity: string | null; status: 'DONE' | 'WIP' | 'TODO'; pagePath: string | null; note: string | null; doneAt: Date | null; sortNo: number; version: number }) {
-    return styleSceneSummarySchema.parse({ ...this.serialize(row), assetCode: row.assetCode, maturity: row.maturity });
+  private serializeSummary(row: { templateJson?: unknown; id: string; assetCode: string | null; category: string; subCategory: string | null; sceneName: string; description: string | null; maturity: string | null; status: 'DONE' | 'WIP' | 'TODO'; pagePath: string | null; note: string | null; doneAt: Date | null; sortNo: number; version: number }) {
+    return styleSceneSummarySchema.parse({ ...this.serialize(row), assetCode: row.assetCode, maturity: row.maturity, ...(row.templateJson !== undefined ? { template: row.templateJson } : {}) });
   }
 }

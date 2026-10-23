@@ -1,0 +1,14 @@
+.opportunity-analytics { min-width: 0; }
+.analytics-workspace { padding: 0; overflow: hidden; }
+.analytics-workspace .detail-panel { display: grid; gap: 16px; }
+.analytics-scope { margin: 0; color: var(--ipl-muted); }
+.analytics-funnel-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.analytics-funnel-heading span { color: var(--ipl-muted); }
+.analytics-funnels { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+.opportunity-analytics .sales-funnel-stages button { color: #fff; border: 0; border-radius: 0; }
+.opportunity-analytics .sales-funnel-stages button:hover { border: 0; }
+.analytics-records .bdg-grid { height: 390px; }
+.analytics-total .ag-cell { background: #edf3ff; }
+.opportunity-analytics .text-link { border: 0; color: var(--ipl-primary); padding: 0; background: transparent; min-height: 24px; }
+@media(max-width: 700px) { .analytics-funnel-heading { flex-direction: column; align-items: start; } .analytics-funnels { grid-template-columns: 1fr; } }
+@media(min-width:981px) { .opportunity-analytics .record-query-fields { grid-template-columns: repeat(4, minmax(120px, 1fr)); } }

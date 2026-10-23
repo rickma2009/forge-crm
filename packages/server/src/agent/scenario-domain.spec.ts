@@ -1,0 +1,6 @@
+import {actionDrafts,scenarioReplySchema,knowledgeWriteSchema,validKnowledgeDate} from './scenario-domain';
+describe('scenario validation',()=>{
+ it('preserves legacy drafts and validates multiple independent actions',()=>{const draft={title:'联系客户',description:'核查',dueDate:null};expect(actionDrafts(draft)).toEqual([draft]);expect(actionDrafts([draft,{...draft,title:'准备材料'}])).toHaveLength(2);expect(()=>actionDrafts(Array(13).fill(draft))).toThrow();expect(actionDrafts(null)).toEqual([]);});
+ it('requires reviewed bounded knowledge and rejects impossible dates',()=>{const input={title:'FAQ',kind:'FAQ',content:'内容',status:'ACTIVE',validUntil:null,reviewed:true};expect(knowledgeWriteSchema.parse(input).revision).toBe(0);expect(()=>knowledgeWriteSchema.parse({...input,reviewed:false})).toThrow();expect(()=>validKnowledgeDate('2026-02-30')).toThrow();expect(validKnowledgeDate('2026-02-28')?.toISOString()).toContain('2026-02-28');});
+ it('rejects unexpected output instructions and unbounded actions',()=>{expect(()=>scenarioReplySchema.parse({answer:'说明',executeSql:'DELETE'})).toThrow();expect(()=>scenarioReplySchema.parse({answer:'说明',todoDrafts:Array(13).fill({title:'行动',dueDate:null})})).toThrow();});
+});

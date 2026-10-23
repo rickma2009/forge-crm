@@ -55,7 +55,14 @@ if [[ -d "$project_dir/.specify/sources" ]]; then
   if [[ "${CHECK_SOURCES_ALLOW_LEGACY:-0}" == "1" ]]; then
     source_check_args+=(--allow-legacy-unmanaged)
   fi
-  if node "$script_dir/check-sources.mjs" "$project_dir" "${source_check_args[@]}"; then
+  if [[ ${#source_check_args[@]} -gt 0 ]]; then
+    source_check_status=0
+    node "$script_dir/check-sources.mjs" "$project_dir" "${source_check_args[@]}" || source_check_status=$?
+  else
+    source_check_status=0
+    node "$script_dir/check-sources.mjs" "$project_dir" || source_check_status=$?
+  fi
+  if [[ $source_check_status -eq 0 ]]; then
     :
   else
     failed=1

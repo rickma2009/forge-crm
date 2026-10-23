@@ -10,7 +10,7 @@ function fixture() {
     sdOppStage: { findFirst: jest.fn().mockResolvedValue(existing), count: jest.fn().mockResolvedValue(1), create: jest.fn().mockResolvedValue({ id: stageId }), updateMany: jest.fn().mockResolvedValue({ count: 1 }), deleteMany: jest.fn().mockResolvedValue({ count: 1 }) },
     sdOpp: { count: jest.fn().mockResolvedValue(0) }, sdOppAnalysis: { count: jest.fn().mockResolvedValue(0) }, sysAuditLog: { create: jest.fn() },
   };
-  const db = { sysApplication: { findFirst: jest.fn().mockResolvedValue({ id: 'app', tenantId: 'tenant' }) }, sdOppTemplate: { findMany: jest.fn().mockResolvedValue([]) }, $transaction: jest.fn((work: (client: typeof tx) => Promise<unknown>) => work(tx)) };
+  const db = { sysApplication: { findFirst: jest.fn().mockResolvedValue({ id: 'app', tenantId: 'tenant' }) }, sysParameter: { findFirst: jest.fn().mockResolvedValue({ value: null }) }, sdOppTemplate: { findMany: jest.fn().mockResolvedValue([]) }, $transaction: jest.fn((work: (client: typeof tx) => Promise<unknown>) => work(tx)) };
   return { tx, service: new OpportunityService(db as unknown as DatabaseService) };
 }
 describe('opportunity stage writes', () => {

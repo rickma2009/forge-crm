@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import type { Customer } from '@forge-crm/contracts';
 import { ShowcaseApp } from './ShowcaseApp';
+import { customerRelatedApi } from './customer-related-api';
 import { GatewayError, httpNavigationGateway, type EnterpriseGateway } from './gateway';
 
 const customer: Customer = { id: '00000000-0000-4000-8000-000000000002', customerCode: 'C2026090001', customerName: '客户甲有限公司', shortName: '客户甲', categoryValue: 'direct', address: '', statusValue: 'active', industryValue: null, levelValue: null, salesOwnerKey: null, salesOwnerName: null, remark: null, version: 1, createdAt: '2026-09-04T00:00:00.000Z', updatedAt: '2026-09-04T00:00:00.000Z' };
@@ -28,10 +29,11 @@ describe('customer container workspace', () => {
     api.customers = async () => ({ items: [customer, other], pagination: { page: 1, pageSize: 20, total: 2, totalPages: 1 } });
     api.customerDetail = async (_system, id) => ({ customer: id === other.id ? other : customer, contacts: [], addresses: [] });
     render(<ShowcaseApp gateway={api} />);
+    await screen.findByRole('grid', { name: '客户列表' });
     await user.click(await screen.findByRole('button', { name: 'C2026090001' }));
     await screen.findByRole('heading', { name: '客户甲' });
     const tabs = screen.getByRole('navigation', { name: '已打开页面' });
-    await user.click(within(tabs).getByRole('button', { name: '概览' }));
+    await user.click(within(tabs).getByRole('button', { name: '客户管理' }));
     await user.click(await screen.findByRole('button', { name: 'C2026090002' }));
     expect(await screen.findByRole('heading', { name: '客户乙' })).toBeVisible();
     await user.click(within(tabs).getByRole('button', { name: '客户 · 客户甲' }));
@@ -47,7 +49,7 @@ describe('customer container workspace', () => {
     expect(await screen.findByLabelText('客户名称')).toBeDisabled();
     const tabs = screen.getByRole('navigation', { name: '已打开页面' });
     expect(await within(tabs).findByRole('button', { name: '客户 · 客户甲' })).toHaveAttribute('aria-current', 'page');
-    await user.click(within(tabs).getByRole('button', { name: '概览' }));
+    await user.click(within(tabs).getByRole('button', { name: '客户管理' }));
     expect(await screen.findByLabelText('客户搜索')).toHaveValue('甲');
     await user.click(screen.getByRole('button', { name: '修改客户 C2026090001' }));
     await waitFor(() => expect(screen.getByLabelText('客户名称')).toBeEnabled());
@@ -88,4 +90,21 @@ describe('customer container workspace', () => {
       expect(fetchMock).toHaveBeenCalledWith(`/api/systems/demo-portal/customers/${customer.id}`, expect.objectContaining({ method: 'PATCH', body: expect.stringContaining('"version":1') }));
     } finally { vi.unstubAllGlobals(); document.cookie = 'ipl_csrf=; Max-Age=0'; }
   });
+  it('guards related document navigation once and preserves cancelled customer edits', async () => {
+    window.location.hash = '#/showcase/customers'; const user = userEvent.setup();
+    const api = workspaceGateway(), baseNavigation = api.navigation;
+    api.navigation = async code => { const value = await baseNavigation(code); return { ...value, items: [...value.items, { menuCode: 'sales-order-directory', label: '销售订单', nodeType: 'PAGE', routePath: '/showcase/sales-orders', iconKey: 'table', children: [], allowedActions: [{ actionCode: 'view', actionName: '查看', actionType: 'READ' }] }] } as Awaited<ReturnType<typeof baseNavigation>>; };
+    const rows = vi.spyOn(customerRelatedApi, 'list').mockResolvedValue({ items: [{ id: customer.id, code: 'SO-GUARD', name: '', status: 'DRAFT', amount: '10.00', currency: 'CNY', date: null, owner: null, stage: null }], pagination: { page: 1, pageSize: 20, total: 1, totalPages: 1 } });
+    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
+    try {
+      render(<ShowcaseApp gateway={api} />);
+      await user.click(await screen.findByRole('button', { name: '修改客户 C2026090001' }));
+      const input = await screen.findByLabelText('客户简称'); await user.clear(input); await user.type(input, '保留草稿');
+      await user.click(screen.getByRole('tab', { name: '销售订单' }));
+      await user.click(await screen.findByRole('link', { name: 'SO-GUARD' }));
+      expect(confirm).toHaveBeenCalledTimes(1); expect(window.location.hash).toBe(`#/showcase/customers/${customer.id}`);
+      await user.click(screen.getByRole('tab', { name: '客户基本信息' })); expect(screen.getByLabelText('客户简称')).toHaveValue('保留草稿');
+    } finally { rows.mockRestore(); confirm.mockRestore(); }
+  });
+
 });

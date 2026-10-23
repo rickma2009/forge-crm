@@ -4248,6 +4248,459 @@
       ]
     },
     {
+      "id": "EPM-COMPONENT-001",
+      "kind": "COMPONENT",
+      "category": "查询与筛选",
+      "name": "统一查询栏",
+      "maturity": "implementation-verified",
+      "keywords": [
+        "统一查询栏",
+        "查询与筛选",
+        "COMPONENT",
+        "统一查询条件",
+        "查询",
+        "重置与更多条件",
+        "业务页传入真实条件与查询行为"
+      ],
+      "summary": {
+        "problem": "统一查询条件、查询、重置与更多条件",
+        "appliesWhen": [
+          "统一查询条件、查询、重置与更多条件"
+        ],
+        "avoidWhen": [
+          "适用边界尚未形成候选卡，采用前必须在目标项目 Spec 中确认"
+        ],
+        "behaviors": [
+          "业务页传入真实条件与查询行为"
+        ],
+        "states": [
+          "初始、加载、空、成功与失败状态需按目标项目 Spec 补齐"
+        ],
+        "risks": [
+          "当前仅为分类项，不应直接当作成熟模式或模板采用"
+        ]
+      },
+      "sources": [
+        "_methodology/08-企业管理系统交互模式分类方法.md",
+        "packages/web/src/common/RecordQueryBar.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "coveredBy": [],
+      "demos": []
+    },
+    {
+      "id": "EPM-COMPONENT-002",
+      "kind": "COMPONENT",
+      "category": "列表与视图",
+      "name": "列表视图选择器",
+      "maturity": "implementation-verified",
+      "keywords": [
+        "列表视图选择器",
+        "列表与视图",
+        "COMPONENT",
+        "统一当前视图",
+        "下拉选择和设置入口",
+        "视图数据及权限仍由业务页与服务端提供"
+      ],
+      "summary": {
+        "problem": "统一当前视图、下拉选择和设置入口",
+        "appliesWhen": [
+          "统一当前视图、下拉选择和设置入口"
+        ],
+        "avoidWhen": [
+          "适用边界尚未形成候选卡，采用前必须在目标项目 Spec 中确认"
+        ],
+        "behaviors": [
+          "视图数据及权限仍由业务页与服务端提供"
+        ],
+        "states": [
+          "初始、加载、空、成功与失败状态需按目标项目 Spec 补齐"
+        ],
+        "risks": [
+          "当前仅为分类项，不应直接当作成熟模式或模板采用"
+        ]
+      },
+      "sources": [
+        "_methodology/08-企业管理系统交互模式分类方法.md",
+        "packages/web/src/common/ListViewSelector.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "coveredBy": [],
+      "demos": []
+    },
+    {
+      "id": "EPM-COMPONENT-003",
+      "kind": "COMPONENT",
+      "category": "树与层级",
+      "name": "树形工作区",
+      "maturity": "implementation-verified",
+      "keywords": [
+        "树形工作区",
+        "树与层级",
+        "COMPONENT",
+        "左树右内容",
+        "搜索",
+        "展开",
+        "收起和宽度调整",
+        "节点数据",
+        "操作权限和业务详情由调用方提供"
+      ],
+      "summary": {
+        "problem": "左树右内容、搜索、展开、收起和宽度调整",
+        "appliesWhen": [
+          "左树右内容、搜索、展开、收起和宽度调整"
+        ],
+        "avoidWhen": [
+          "适用边界尚未形成候选卡，采用前必须在目标项目 Spec 中确认"
+        ],
+        "behaviors": [
+          "节点数据、操作权限和业务详情由调用方提供"
+        ],
+        "states": [
+          "初始、加载、空、成功与失败状态需按目标项目 Spec 补齐"
+        ],
+        "risks": [
+          "当前仅为分类项，不应直接当作成熟模式或模板采用"
+        ]
+      },
+      "sources": [
+        "_methodology/08-企业管理系统交互模式分类方法.md",
+        "packages/web/src/common/TreeWorkspace.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "coveredBy": [],
+      "demos": []
+    },
+    {
+      "id": "EPM-COMPONENT-004",
+      "kind": "COMPONENT",
+      "category": "详情与页签",
+      "name": "详情工作区",
+      "maturity": "implementation-verified",
+      "keywords": [
+        "详情工作区",
+        "详情与页签",
+        "COMPONENT",
+        "统一返回",
+        "对象标题",
+        "摘要",
+        "分区与内层",
+        "Tab",
+        "查看",
+        "编辑模式",
+        "权限与未保存保护由业务页控制"
+      ],
+      "summary": {
+        "problem": "统一返回、对象标题、摘要、分区与内层 Tab",
+        "appliesWhen": [
+          "统一返回、对象标题、摘要、分区与内层 Tab"
+        ],
+        "avoidWhen": [
+          "适用边界尚未形成候选卡，采用前必须在目标项目 Spec 中确认"
+        ],
+        "behaviors": [
+          "查看/编辑模式、权限与未保存保护由业务页控制"
+        ],
+        "states": [
+          "初始、加载、空、成功与失败状态需按目标项目 Spec 补齐"
+        ],
+        "risks": [
+          "当前仅为分类项，不应直接当作成熟模式或模板采用"
+        ]
+      },
+      "sources": [
+        "_methodology/08-企业管理系统交互模式分类方法.md",
+        "packages/web/src/common/DetailWorkspace.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "coveredBy": [],
+      "demos": []
+    },
+    {
+      "id": "EPM-COMPONENT-005",
+      "kind": "COMPONENT",
+      "category": "详情与页签",
+      "name": "路由页签",
+      "maturity": "implementation-verified",
+      "keywords": [
+        "路由页签",
+        "详情与页签",
+        "COMPONENT",
+        "保留多个可切换的业务页面上下文",
+        "页面授权",
+        "离开保护与内容挂载由宿主处理"
+      ],
+      "summary": {
+        "problem": "保留多个可切换的业务页面上下文",
+        "appliesWhen": [
+          "保留多个可切换的业务页面上下文"
+        ],
+        "avoidWhen": [
+          "适用边界尚未形成候选卡，采用前必须在目标项目 Spec 中确认"
+        ],
+        "behaviors": [
+          "页面授权、离开保护与内容挂载由宿主处理"
+        ],
+        "states": [
+          "初始、加载、空、成功与失败状态需按目标项目 Spec 补齐"
+        ],
+        "risks": [
+          "当前仅为分类项，不应直接当作成熟模式或模板采用"
+        ]
+      },
+      "sources": [
+        "_methodology/08-企业管理系统交互模式分类方法.md",
+        "packages/web/src/common/route-tabs/RouteTabs.tsx",
+        "packages/web/src/common/route-tabs/useRouteTabs.ts"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "coveredBy": [],
+      "demos": []
+    },
+    {
+      "id": "EPM-COMPONENT-006",
+      "kind": "COMPONENT",
+      "category": "表单与编辑",
+      "name": "模式化表单",
+      "maturity": "implementation-verified",
+      "keywords": [
+        "模式化表单",
+        "表单与编辑",
+        "COMPONENT",
+        "按",
+        "schema",
+        "渲染字段",
+        "必填",
+        "只读与校验",
+        "业务校验和提交不可只存在前端"
+      ],
+      "summary": {
+        "problem": "按 schema 渲染字段、必填、只读与校验",
+        "appliesWhen": [
+          "按 schema 渲染字段、必填、只读与校验"
+        ],
+        "avoidWhen": [
+          "适用边界尚未形成候选卡，采用前必须在目标项目 Spec 中确认"
+        ],
+        "behaviors": [
+          "业务校验和提交不可只存在前端"
+        ],
+        "states": [
+          "初始、加载、空、成功与失败状态需按目标项目 Spec 补齐"
+        ],
+        "risks": [
+          "当前仅为分类项，不应直接当作成熟模式或模板采用"
+        ]
+      },
+      "sources": [
+        "_methodology/08-企业管理系统交互模式分类方法.md",
+        "packages/web/src/ui-assets/components/schema-form/SchemaForm.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "coveredBy": [],
+      "demos": []
+    },
+    {
+      "id": "EPM-COMPONENT-007",
+      "kind": "COMPONENT",
+      "category": "表单与编辑",
+      "name": "可编辑明细网格",
+      "maturity": "implementation-verified",
+      "keywords": [
+        "可编辑明细网格",
+        "表单与编辑",
+        "COMPONENT",
+        "新增",
+        "选择",
+        "复制",
+        "删除",
+        "撤销明细行",
+        "行标识",
+        "精度",
+        "联动与保存原子性由业务规则确定"
+      ],
+      "summary": {
+        "problem": "新增、选择、复制、删除、撤销明细行",
+        "appliesWhen": [
+          "新增、选择、复制、删除、撤销明细行"
+        ],
+        "avoidWhen": [
+          "适用边界尚未形成候选卡，采用前必须在目标项目 Spec 中确认"
+        ],
+        "behaviors": [
+          "行标识、精度、联动与保存原子性由业务规则确定"
+        ],
+        "states": [
+          "初始、加载、空、成功与失败状态需按目标项目 Spec 补齐"
+        ],
+        "risks": [
+          "当前仅为分类项，不应直接当作成熟模式或模板采用"
+        ]
+      },
+      "sources": [
+        "_methodology/08-企业管理系统交互模式分类方法.md",
+        "packages/web/src/ui-assets/components/editable-line-grid/EditableLineGrid.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "coveredBy": [],
+      "demos": []
+    },
+    {
+      "id": "EPM-COMPONENT-008",
+      "kind": "COMPONENT",
+      "category": "选择与引用",
+      "name": "产品选择器",
+      "maturity": "implementation-verified",
+      "keywords": [
+        "产品选择器",
+        "选择与引用",
+        "COMPONENT",
+        "可查询",
+        "分页",
+        "单选或多选并回传标准物料产品",
+        "候选范围",
+        "数据权限和提交校验由业务单据控制"
+      ],
+      "summary": {
+        "problem": "可查询、分页、单选或多选并回传标准物料产品",
+        "appliesWhen": [
+          "可查询、分页、单选或多选并回传标准物料产品"
+        ],
+        "avoidWhen": [
+          "适用边界尚未形成候选卡，采用前必须在目标项目 Spec 中确认"
+        ],
+        "behaviors": [
+          "候选范围、数据权限和提交校验由业务单据控制"
+        ],
+        "states": [
+          "初始、加载、空、成功与失败状态需按目标项目 Spec 补齐"
+        ],
+        "risks": [
+          "当前仅为分类项，不应直接当作成熟模式或模板采用"
+        ]
+      },
+      "sources": [
+        "_methodology/08-企业管理系统交互模式分类方法.md",
+        "packages/web/src/common/ProductPickerDialog.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "coveredBy": [],
+      "demos": []
+    },
+    {
+      "id": "EPM-COMPONENT-009",
+      "kind": "COMPONENT",
+      "category": "状态与反馈",
+      "name": "校验汇总",
+      "maturity": "implementation-verified",
+      "keywords": [
+        "校验汇总",
+        "状态与反馈",
+        "COMPONENT",
+        "汇总字段与行级错误并支持定位",
+        "错误码",
+        "文案和可修复路径由业务定义"
+      ],
+      "summary": {
+        "problem": "汇总字段与行级错误并支持定位",
+        "appliesWhen": [
+          "汇总字段与行级错误并支持定位"
+        ],
+        "avoidWhen": [
+          "适用边界尚未形成候选卡，采用前必须在目标项目 Spec 中确认"
+        ],
+        "behaviors": [
+          "错误码、文案和可修复路径由业务定义"
+        ],
+        "states": [
+          "初始、加载、空、成功与失败状态需按目标项目 Spec 补齐"
+        ],
+        "risks": [
+          "当前仅为分类项，不应直接当作成熟模式或模板采用"
+        ]
+      },
+      "sources": [
+        "_methodology/08-企业管理系统交互模式分类方法.md",
+        "packages/web/src/ui-assets/components/validation-summary/ValidationSummary.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "coveredBy": [],
+      "demos": []
+    },
+    {
+      "id": "EPM-COMPONENT-010",
+      "kind": "COMPONENT",
+      "category": "状态与反馈",
+      "name": "异步结果反馈",
+      "maturity": "implementation-verified",
+      "keywords": [
+        "异步结果反馈",
+        "状态与反馈",
+        "COMPONENT",
+        "统一加载",
+        "成功",
+        "失败",
+        "重试和部分成功反馈",
+        "只表达真实任务状态",
+        "不伪造进度"
+      ],
+      "summary": {
+        "problem": "统一加载、成功、失败、重试和部分成功反馈",
+        "appliesWhen": [
+          "统一加载、成功、失败、重试和部分成功反馈"
+        ],
+        "avoidWhen": [
+          "适用边界尚未形成候选卡，采用前必须在目标项目 Spec 中确认"
+        ],
+        "behaviors": [
+          "只表达真实任务状态，不伪造进度"
+        ],
+        "states": [
+          "初始、加载、空、成功与失败状态需按目标项目 Spec 补齐"
+        ],
+        "risks": [
+          "当前仅为分类项，不应直接当作成熟模式或模板采用"
+        ]
+      },
+      "sources": [
+        "_methodology/08-企业管理系统交互模式分类方法.md",
+        "packages/web/src/ui-assets/components/async-state/AsyncOutcome.tsx"
+      ],
+      "evidence": [
+        "forge-crm:implemented-and-automated"
+      ],
+      "nextEvidence": "补真实浏览器关键路径证据并复核交互边界",
+      "coveredBy": [],
+      "demos": []
+    },
+    {
       "id": "EPM-SCENE-001",
       "kind": "SCENE",
       "category": "组合场景",

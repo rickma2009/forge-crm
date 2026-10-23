@@ -21,7 +21,7 @@ describe('role user management', () => {
     fireEvent.click(screen.getByRole('button', { name: /批量移除/ }));
     await screen.findByText('已移除 1 个用户的角色授权');
     expect(gateway.batchRoleMembers).toHaveBeenCalledWith('demo-portal', 'sales', { action: 'end', members: [{ id: 'membership-20', version: 1 }] });
-    expect(screen.queryByText('用户20')).not.toBeInTheDocument();
+    await waitFor(() => expect(screen.queryByText('用户20')).not.toBeInTheDocument());
     expect(screen.getByText('用户0')).toBeInTheDocument();
   });
   it('adds users from a paginated picker and prevents duplicate selections', async () => {

@@ -10,14 +10,14 @@
     "generatedBy": { "type": "string", "minLength": 1 },
     "assets": {
       "type": "array",
-      "minItems": 103,
-      "maxItems": 103,
+      "minItems": 113,
+      "maxItems": 113,
       "items": {
         "type": "object",
-        "required": ["assetId", "kind", "group", "name", "maturity", "definition", "definitionRef", "artifacts", "evidence", "evidenceCards", "nextEvidence"],
+        "required": ["assetId", "kind", "group", "name", "maturity", "definition", "definitionRef", "artifacts", "evidence", "evidenceCards", "nextEvidence", "demoPath"],
         "properties": {
-          "assetId": { "type": "string", "pattern": "^EPM-(PAGE|ACT|VIEW|STATE|SPECIAL|SCENE)-[0-9]{3}$" },
-          "kind": { "enum": ["PAGE", "ACT", "VIEW", "STATE", "SPECIAL", "SCENE"] },
+          "assetId": { "type": "string", "pattern": "^EPM-(PAGE|ACT|VIEW|STATE|SPECIAL|COMPONENT|SCENE)-[0-9]{3}$" },
+          "kind": { "enum": ["PAGE", "ACT", "VIEW", "STATE", "SPECIAL", "COMPONENT", "SCENE"] },
           "group": { "type": "string", "minLength": 1 },
           "name": { "type": "string", "minLength": 1 },
           "maturity": { "enum": ["idea", "candidate", "implementation-verified", "interaction-verified", "project-adopted", "business-validated", "released", "deprecated"] },
@@ -61,7 +61,8 @@
               "additionalProperties": false
             }
           },
-          "nextEvidence": { "type": "string", "minLength": 1 }
+          "nextEvidence": { "type": "string", "minLength": 1 },
+          "demoPath": { "type": ["string", "null"], "pattern": "^/showcase/" }
         },
         "additionalProperties": false
       }

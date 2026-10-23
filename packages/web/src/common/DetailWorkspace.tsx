@@ -14,10 +14,10 @@ export function DetailBackButton({ label, onBack, disabled = false }: { label: s
 
 export function DetailHeader({ title, status, fields, actions, onBack, backLabel }: {
   title: ReactNode; status?: ReactNode; fields: { label: string; value: ReactNode }[];
-  actions?: ReactNode; onBack: () => void; backLabel: string;
+  actions?: ReactNode; onBack?: () => void; backLabel?: string;
 }) {
   return <header className="detail-header">
-    <DetailBackButton label={backLabel} onBack={onBack} />
+    {onBack && backLabel && <DetailBackButton label={backLabel} onBack={onBack} />}
     <div className="detail-identity"><div className="detail-title"><h1>{title}</h1>{status}</div>
       <div className="detail-summary">{fields.map(({ label, value }) => <span key={label}>{label}：{value ?? '—'}</span>)}</div>
     </div>

@@ -1,11 +1,11 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../../projects/mycrm"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "../../../../projects/mycrm"
+    }
+  ],
+  "settings": {}
 }

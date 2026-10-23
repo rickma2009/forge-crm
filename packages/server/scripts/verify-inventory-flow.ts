@@ -41,7 +41,7 @@ async function main() {
   if (Number(quantity(afterPost.items)) !== Number(quantity(before.items)) + 1) throw new Error('过账后库存未增加');
   if (Number(quantity(afterReverse.items)) !== Number(quantity(before.items))) throw new Error('冲销后库存未恢复');
   const menuCodes = navigation.items.flatMap((row) => [row.menuCode, ...row.children.map((child) => child.menuCode)]);
-  for (const required of ['item-directory', 'inbound-order-directory', 'inventory-balance-directory', 'legal-entity-admin', 'warehouse-admin']) if (!menuCodes.includes(required)) throw new Error(`数据库导航缺少 ${required}`);
+  for (const required of ['item-directory', 'inbound-order-directory', 'current-inventory-directory', 'inventory-balance-directory', 'legal-entity-admin', 'warehouse-admin']) if (!menuCodes.includes(required)) throw new Error(`数据库导航缺少 ${required}`);
   console.log(JSON.stringify({ orderNo: created.orderNo, posted: posted.status, reversed: reversed.status, before: quantity(before.items), afterPost: quantity(afterPost.items), afterReverse: quantity(afterReverse.items), databaseMenus: true }));
 }
 

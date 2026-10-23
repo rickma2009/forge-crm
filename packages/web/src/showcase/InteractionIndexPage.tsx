@@ -1,142 +1,127 @@
+import { showcaseHref } from './domain/routes';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { InteractionMaturity, StyleSceneDetail, StyleSceneList, StyleSceneSummary, StyleSceneTaxonomy } from '@forge-crm/contracts';
-import { DetailHeader, DetailSection, DetailWorkspace } from '../common/DetailWorkspace';
+import { IconCopy, IconExternalLink } from '@tabler/icons-react';
+import type { InteractionTemplate, StyleSceneSummary } from '@forge-crm/contracts';
+import { DetailBackButton } from '../common/DetailWorkspace';
 import { RecordQueryBar } from '../common/RecordQueryBar';
 import { TreeWorkspace, type WorkspaceTreeNode } from '../common/TreeWorkspace';
 import type { EnterpriseGateway } from './gateway';
 import './interaction-index.css';
 
-const maturities: InteractionMaturity[] = ['idea', 'candidate', 'implementation-verified', 'interaction-verified', 'project-adopted', 'business-validated', 'released', 'deprecated'];
-const pageSize = 20;
-type Filters = { keyword: string; category: string; subCategory: string; maturity: string };
-const emptyFilters: Filters = { keyword: '', category: '', subCategory: '', maturity: '' };
+type Filters = { keyword: string; category: string; availability: string };
+const emptyFilters: Filters = { keyword: '', category: '', availability: '' };
+const availabilityLabels = { pending: '待提炼', preview: '可预览', interactive: '可交互', reusable: '可复用' } as const;
+const feedbackLabels: Record<string, string> = { loading: '加载', processing: '处理中', success: '成功', failure: '失败', empty: '空数据', forbidden: '权限不足' };
+const categoryId = (category: string) => `category:${category}`;
+const isComponent = (item: StyleSceneSummary) => item.assetCode?.startsWith('CMP-') ?? false;
+const availabilityLabel = (item: StyleSceneSummary) => isComponent(item) && item.template?.availability === 'reusable'
+  ? '项目内可复用'
+  : availabilityLabels[item.template?.availability ?? 'pending'];
+const message = (reason: unknown) => reason instanceof Error ? reason.message : '模板库服务暂时不可用';
 
-const message = (reason: unknown) => reason instanceof Error ? reason.message : '服务暂时不可用';
-const typeId = (category: string) => `type:${encodeURIComponent(category)}`;
-const groupId = (category: string, subCategory: string) => `group:${encodeURIComponent(category)}:${encodeURIComponent(subCategory)}`;
-
-export function InteractionIndexPage({ systemCode, gateway }: { systemCode: string; gateway: EnterpriseGateway }) {
-  const [taxonomy, setTaxonomy] = useState<StyleSceneTaxonomy>({ types: [] });
-  const [taxonomyLoading, setTaxonomyLoading] = useState(true);
-  const [taxonomyError, setTaxonomyError] = useState('');
-  const [taxonomyVersion, setTaxonomyVersion] = useState(0);
-  const [form, setForm] = useState<Filters>(emptyFilters);
-  const [applied, setApplied] = useState<Filters>(emptyFilters);
-  const [selectedNode, setSelectedNode] = useState<string | null>(null);
-  const [result, setResult] = useState<StyleSceneList>({ items: [], pagination: { page: 1, pageSize, total: 0, totalPages: 0 } });
-  const [page, setPage] = useState(1);
-  const [listLoading, setListLoading] = useState(true);
-  const [listError, setListError] = useState('');
-  const [listVersion, setListVersion] = useState(0);
-  const listRequest = useRef(0);
-  const [detailId, setDetailId] = useState<string | null>(null);
-  const [detail, setDetail] = useState<StyleSceneDetail | null>(null);
-  const [detailLoading, setDetailLoading] = useState(false);
-  const [detailError, setDetailError] = useState('');
-  const [detailVersion, setDetailVersion] = useState(0);
-
+export function InteractionIndexPage({ systemCode, gateway, demoPages = new Map() }: {
+  systemCode: string; gateway: EnterpriseGateway; demoPages?: ReadonlyMap<string, string>; onOpenDemo?: (path: string) => void;
+}) {
+  const [records, setRecords] = useState<StyleSceneSummary[]>([]);
+  const [loading, setLoading] = useState(true), [error, setError] = useState(''), [revision, setRevision] = useState(0);
+  const [form, setForm] = useState<Filters>(emptyFilters), [applied, setApplied] = useState<Filters>(emptyFilters);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [notice, setNotice] = useState('');
+  const detailPanel = useRef<HTMLElement>(null);
   useEffect(() => {
     let active = true;
-    setTaxonomyLoading(true); setTaxonomyError('');
-    gateway.styleSceneTaxonomy(systemCode).then((value) => { if (active) setTaxonomy(value); }).catch((reason) => { if (active) { setTaxonomy({ types: [] }); setTaxonomyError(message(reason)); } }).finally(() => { if (active) setTaxonomyLoading(false); });
-    return () => { active = false; };
-  }, [gateway, systemCode, taxonomyVersion]);
-
-  useEffect(() => {
-    const request = ++listRequest.current;
-    const query = new URLSearchParams({ page: String(page), pageSize: String(pageSize) });
-    if (applied.keyword) query.set('keyword', applied.keyword);
-    if (applied.category) query.set('category', applied.category);
-    if (applied.subCategory) query.set('subCategory', applied.subCategory);
-    if (applied.maturity) query.set('maturity', applied.maturity);
-    setListLoading(true); setListError('');
-    gateway.styleScenes(systemCode, query).then((value) => { if (request === listRequest.current) setResult(value); }).catch((reason) => {
-      if (request === listRequest.current) { setResult({ items: [], pagination: { page, pageSize, total: 0, totalPages: 0 } }); setListError(message(reason)); }
-    }).finally(() => { if (request === listRequest.current) setListLoading(false); });
-  }, [applied, gateway, listVersion, page, systemCode]);
-
-  useEffect(() => {
-    if (!detailId) return;
-    let active = true;
-    setDetail(null); setDetailLoading(true); setDetailError('');
-    gateway.styleSceneDetail(systemCode, detailId).then((value) => { if (active) setDetail(value); }).catch((reason) => { if (active) setDetailError(message(reason)); }).finally(() => { if (active) setDetailLoading(false); });
-    return () => { active = false; };
-  }, [detailId, detailVersion, gateway, systemCode]);
-
-  const { nodes, nodeFilters } = useMemo(() => {
-    const values: WorkspaceTreeNode[] = [];
-    const filters = new Map<string, Pick<Filters, 'category' | 'subCategory'>>();
-    for (const type of taxonomy.types) {
-      const parent = typeId(type.category);
-      values.push({ id: parent, parentId: null, label: `${type.category}（${type.count}）`, searchText: type.category });
-      filters.set(parent, { category: type.category, subCategory: '' });
-      for (const group of type.groups) {
-        const id = groupId(type.category, group.subCategory);
-        values.push({ id, parentId: parent, label: `${group.subCategory}（${group.count}）`, searchText: `${type.category} ${group.subCategory}` });
-        filters.set(id, { category: type.category, subCategory: group.subCategory });
+    setLoading(true); setError('');
+    async function load() {
+      const all: StyleSceneSummary[] = [];
+      // Fetch every server page so the tree never omits templates beyond the first hundred.
+      for (let page = 1, totalPages = 1; page <= totalPages; page++) {
+        const result = await gateway.styleScenes(systemCode, new URLSearchParams({ catalog: 'library', page: String(page), pageSize: '100' }));
+        if (!active) return;
+        all.push(...result.items); totalPages = result.pagination.totalPages;
+      }
+      if (active) {
+        const assets = all.filter((item) => item.assetCode?.startsWith('TPL-') || item.assetCode?.startsWith('CMP-'));
+        setRecords(assets);
+        if (window.location.hash === '#/showcase/style-scenes') {
+          const params = new URLSearchParams(window.location.search);
+          const code = params.get('interactionComponent') ?? params.get('interactionTemplate'), category = params.get('interactionCategory');
+          setSelectedId((current) => current ?? assets.find((item) => item.assetCode === code)?.id ?? (category && assets.some((item) => item.category === category) ? categoryId(category) : null));
+        }
       }
     }
-    return { nodes: values, nodeFilters: filters };
-  }, [taxonomy]);
-  const groups = useMemo(() => {
-    const types = form.category ? taxonomy.types.filter((type) => type.category === form.category) : taxonomy.types;
-    return [...new Set(types.flatMap((type) => type.groups.map((group) => group.subCategory)))];
-  }, [form.category, taxonomy]);
-  const selectNode = (id: string) => {
-    const selected = nodeFilters.get(id);
-    if (!selected) return;
-    const next = { ...form, ...selected };
-    setSelectedNode(id); setForm(next); setApplied(next); setPage(1);
+    void load().catch((reason) => { if (active) { setError(message(reason)); setRecords([]); } }).finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [gateway, systemCode, revision]);
+  const categories = useMemo(() => [...new Set(records.map((item) => item.category))], [records]);
+  const nodes = useMemo<WorkspaceTreeNode[]>(() => categories.flatMap((category) => [
+    { id: categoryId(category), parentId: null, label: category },
+    ...records.filter((item) => item.category === category).map((item) => ({ id: item.id, parentId: categoryId(category), label: item.sceneName, searchText: `${item.assetCode} ${item.template?.tags.join(' ') ?? ''} ${item.template?.aliases?.join(' ') ?? ''}` })),
+  ]), [categories, records]);
+  const selected = records.find((item) => item.id === selectedId);
+  const selectedCategory = selected?.category ?? categories.find((category) => categoryId(category) === selectedId) ?? '';
+  const visible = records.filter((item) => (!selectedCategory || item.category === selectedCategory) && (!applied.category || item.category === applied.category)
+    && (!applied.availability || (item.template?.availability ?? 'pending') === applied.availability)
+    && (!applied.keyword || [item.assetCode, item.sceneName, item.description, ...(item.template?.tags ?? []), ...(item.template?.aliases ?? [])].join(' ').toLocaleLowerCase().includes(applied.keyword.toLocaleLowerCase())));
+  const select = (id: string | null) => {
+    setSelectedId(id); setNotice(''); detailPanel.current?.parentElement?.scrollTo?.({ top: 0 });
+    if (window.location.hash === '#/showcase/style-scenes') {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('interactionTemplate'); url.searchParams.delete('interactionComponent'); url.searchParams.delete('interactionCategory');
+      const item = records.find((record) => record.id === id);
+      if (item?.assetCode) url.searchParams.set(isComponent(item) ? 'interactionComponent' : 'interactionTemplate', item.assetCode);
+      else if (id?.startsWith('category:')) url.searchParams.set('interactionCategory', id.slice('category:'.length));
+      window.history.replaceState(null, '', url);
+    }
   };
-  const reset = () => { setForm(emptyFilters); setApplied(emptyFilters); setSelectedNode(null); setPage(1); };
-
-  if (detailId) return <InteractionDetail detail={detail} loading={detailLoading} error={detailError} onRetry={() => setDetailVersion((value) => value + 1)} onBack={() => { setDetailId(null); setDetail(null); setDetailError(''); }} />;
-
+  const reset = () => { setForm(emptyFilters); setApplied(emptyFilters); select(null); };
+  const query = () => { setApplied({ ...form, keyword: form.keyword.trim() }); select(form.category ? categoryId(form.category) : null); };
+  useEffect(() => { if (!loading && !error && selectedId && !nodes.some((node) => node.id === selectedId)) setSelectedId(null); }, [loading, error, nodes, selectedId]);
   return <main className="enterprise-page interaction-catalog-page">
-    <h1 className="sr-only">交互案例索引</h1>
-    <RecordQueryBar onQuery={() => { setApplied({ ...form, keyword: form.keyword.trim() }); setPage(1); }} onReset={reset}>
-      <label>关键词<input aria-label="关键词" value={form.keyword} onChange={(event) => setForm({ ...form, keyword: event.target.value })} placeholder="案例编码 / 名称 / 定义" /></label>
-      <label>类型<select aria-label="类型" value={form.category} onChange={(event) => setForm({ ...form, category: event.target.value, subCategory: '' })}><option value="">全部</option>{taxonomy.types.map((type) => <option key={type.category} value={type.category}>{type.category}</option>)}</select></label>
-      <label>分组<select aria-label="分组" value={form.subCategory} onChange={(event) => setForm({ ...form, subCategory: event.target.value })}><option value="">全部</option>{groups.map((group) => <option key={group} value={group}>{group}</option>)}</select></label>
-      <label>成熟度<select aria-label="成熟度" value={form.maturity} onChange={(event) => setForm({ ...form, maturity: event.target.value })}><option value="">全部</option>{maturities.map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
+    <h1 className="sr-only">交互模板库</h1>
+    <RecordQueryBar onQuery={query} onReset={reset}>
+      <label>关键词<input aria-label="关键词" value={form.keyword} onChange={(e) => setForm({ ...form, keyword: e.target.value })} placeholder="模板或组件编码 / 名称 / 用途" /></label>
+      <label>资产分类<select aria-label="资产分类" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}><option value="">全部</option>{categories.map((category) => <option key={category}>{category}</option>)}</select></label>
+      <label>可用程度<select aria-label="可用程度" value={form.availability} onChange={(e) => setForm({ ...form, availability: e.target.value })}><option value="">全部</option>{Object.entries(availabilityLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
     </RecordQueryBar>
-    {taxonomyError && <div className="enterprise-alert interaction-taxonomy-error" role="alert">{taxonomyError}<button type="button" onClick={() => setTaxonomyVersion((value) => value + 1)}>重试分类</button></div>}
-    <TreeWorkspace title="交互案例分类" nodes={nodes} selectedId={selectedNode} onSelect={selectNode} onRefresh={() => setTaxonomyVersion((value) => value + 1)} loading={taxonomyLoading} tools={<button type="button" onClick={reset}>全部分类</button>}>
-      <section className="enterprise-card interaction-catalog-grid">
-        <div className="table-toolbar"><strong>交互案例</strong><span>共 {result.pagination.total} 条</span></div>
-        {listError && <div className="enterprise-alert" role="alert">{listError}<button type="button" onClick={() => setListVersion((value) => value + 1)}>重试列表</button></div>}
-        <div className="enterprise-table-wrap"><table><thead><tr><th>序号</th><th>案例编码</th><th>案例名称</th><th>类型</th><th>分组</th><th>成熟度</th><th>当前状态</th></tr></thead><tbody>
-          {!listLoading && result.items.map((item, index) => <CatalogRow key={item.id} item={item} index={(page - 1) * pageSize + index + 1} onOpen={() => setDetailId(item.id)} />)}
-          {listLoading && <tr><td className="empty-cell" colSpan={7} role="status">加载中…</td></tr>}
-          {!listLoading && !listError && result.items.length === 0 && <tr><td className="empty-cell" colSpan={7}>没有匹配的交互案例，请调整筛选条件。</td></tr>}
-        </tbody></table></div>
-        <footer className="interaction-catalog-pagination"><span>第 {result.pagination.totalPages ? page : 0} / {result.pagination.totalPages} 页</span><button type="button" disabled={page <= 1 || listLoading} onClick={() => setPage((value) => value - 1)}>上一页</button><button type="button" disabled={page >= result.pagination.totalPages || listLoading} onClick={() => setPage((value) => value + 1)}>下一页</button></footer>
+    <TreeWorkspace title="模板目录" nodes={nodes} selectedId={selectedId} onSelect={select} loading={loading} onRefresh={() => setRevision((value) => value + 1)} tools={<button type="button" onClick={reset}>全部模板</button>}>
+      <section className="template-library-content" ref={detailPanel}>
+        {loading ? <p className="template-library-empty" role="status">加载模板库…</p> : error ? <div className="enterprise-alert" role="alert">{error}<button type="button" onClick={() => setRevision((value) => value + 1)}>重试模板库</button></div> : selected ? <TemplateDetail item={selected} records={records} onOpen={select} demoPages={demoPages} notice={notice} onBack={() => select(categoryId(selected.category))} onCopy={async () => {
+          try { await navigator.clipboard.writeText(selected.template?.referencePrompt ?? `请参考“${selected.sceneName}”模板（${selected.assetCode}）设计本页面。`); setNotice('参考指令已复制'); }
+          catch { setNotice('未能自动复制，请选中下方参考指令复制。'); }
+        }} onCopySnippet={async () => {
+          try { await navigator.clipboard.writeText(selected.template?.usageSnippet ?? ''); setNotice('接入示例已复制'); }
+          catch { setNotice('未能自动复制，请选中下方示例复制。'); }
+        }} /> : <>
+          <header className="template-library-heading"><div><p className="template-library-breadcrumb">交互模板库{selectedCategory ? ` / ${selectedCategory}` : ''}</p><h2>{selectedCategory || '全部资产'}</h2><p>点击{selectedCategory === '插件组件' ? '组件' : '模板'}查看效果、使用边界和接入方式。共 {visible.length} 个{selectedCategory === '插件组件' ? '组件' : '资产'}</p></div><span className="template-library-badge">{categories.length} 类 · {records.length} 个资产</span></header>
+          <div className="template-library-cards">{visible.map((item) => <button type="button" className="template-library-card" key={item.id} aria-label={`查看${isComponent(item) ? '组件' : '模板'}：${item.sceneName}`} onClick={() => select(item.id)}><TemplatePreview template={item.template} name={item.sceneName} /><div className="template-library-card-info"><span>{item.assetCode}</span><h3>{item.sceneName}</h3><p>{item.description}</p><span className="template-library-badge">{availabilityLabel(item)}</span></div></button>)}</div>
+          {!visible.length && <p className="template-library-empty">{records.length ? '没有匹配的资产，请调整查询条件。' : '尚未登记模板或组件。'}</p>}
+        </>}
       </section>
     </TreeWorkspace>
   </main>;
 }
 
-function CatalogRow({ item, index, onOpen }: { item: StyleSceneSummary; index: number; onOpen: () => void }) {
-  return <tr><td className="is-index">{index}</td><td>{item.assetCode ? <button className="interaction-catalog-link" type="button" onClick={onOpen}>{item.assetCode}</button> : '—'}</td><td>{item.assetCode ? item.sceneName : <button className="interaction-catalog-link" type="button" onClick={onOpen}>{item.sceneName}</button>}</td><td>{item.category}</td><td>{item.subCategory ?? '—'}</td><td><span className={`interaction-index-maturity maturity-${item.maturity ?? 'unknown'}`}>{item.maturity ?? '—'}</span></td><td>{item.status}</td></tr>;
+function TemplatePreview({ template, name, showSource = false }: { template: InteractionTemplate | null | undefined; name: string; showSource?: boolean }) {
+  return <div className="template-library-preview">{template?.thumbnail ? <><img src={template.thumbnail} alt={`${name}布局${template.previewKind === 'diagram' ? '示意' : '效果'}图`} loading="lazy" /><span>{template.previewKind === 'diagram' ? '布局示意 · 非实际页面截图' : '页面效果图'}</span>{showSource && template.previewSource && <p className="template-library-preview-source">来源：{template.previewSource.name} · 截图更新：{template.previewSource.capturedAt}<br />{template.previewSource.scope}<br /><a href={showcaseHref(template.previewSource.path)} target="_blank" rel="noopener noreferrer">打开实际页面<IconExternalLink size={14} /></a></p>}</> : <p>效果资产待建设</p>}</div>;
 }
-
-function InteractionDetail({ detail, loading, error, onRetry, onBack }: { detail: StyleSceneDetail | null; loading: boolean; error: string; onRetry: () => void; onBack: () => void }) {
-  if (!detail) return <DetailWorkspace className="interaction-catalog-detail"><DetailHeader title="交互案例详情" fields={[]} onBack={onBack} backLabel="返回交互案例目录" />{loading && <div className="interaction-detail-state" role="status">加载中…</div>}{error && <div className="enterprise-alert interaction-detail-state" role="alert">{error}<button type="button" onClick={onRetry}>重试详情</button></div>}</DetailWorkspace>;
-  return <DetailWorkspace className="interaction-catalog-detail">
-    <DetailHeader title={detail.sceneName} status={<span className={`interaction-index-maturity maturity-${detail.maturity ?? 'unknown'}`}>{detail.maturity ?? '—'}</span>} fields={[{ label: '案例编码', value: detail.assetCode ?? '—' }, { label: '类型', value: detail.category }, { label: '分组', value: detail.subCategory ?? '—' }]} onBack={onBack} backLabel="返回交互案例目录" />
-    <DetailSection title="案例定义"><ReferenceList values={detail.definition} /></DetailSection>
-    <DetailSection title="来源与产物"><dl className="interaction-detail-grid"><div><dt>定义来源</dt><dd>{detail.definitionRef ? <><code>{detail.definitionRef.path}</code><span>章节：{detail.definitionRef.section}</span></> : '暂无'}</dd></div><div><dt>产物</dt><dd><ReferenceList values={detail.artifacts} /></dd></div></dl></DetailSection>
-    <DetailSection title="验证证据"><dl className="interaction-detail-grid"><div><dt>证据</dt><dd><ReferenceList values={detail.evidence} /></dd></div><div><dt>下一步证据</dt><dd>{detail.nextEvidence || '暂无'}</dd></div></dl>{detail.evidenceCards.length ? <div className="interaction-evidence-cards">{detail.evidenceCards.map((card) => <article key={card.evidenceId}><strong>{card.evidenceId}</strong><span>{card.state}</span><p>{card.validation.result}</p><small>{card.validation.unknowns.length ? `未知：${card.validation.unknowns.join('、')}` : '无未决项'}</small></article>)}</div> : <p className="interaction-none">暂无证据卡</p>}</DetailSection>
-    <DetailSection title="交互演示"><InteractionAssetDemo category={detail.category} name={detail.sceneName} /></DetailSection>
-  </DetailWorkspace>;
-}
-
-function ReferenceList({ values }: { values: string[] }) {
-  return values.length ? <ul className="interaction-reference-list">{values.map((value) => <li key={value}><code>{value}</code></li>)}</ul> : <span>暂无</span>;
-}
-
-function InteractionAssetDemo({ category, name }: { category: string; name: string }) {
-  const labels = category === 'STATE' ? ['初始', '成功', '失败'] : category === 'SPECIAL' ? ['预览影响', '确认操作'] : category === 'VIEW' ? ['表格', '详情', '卡片'] : ['入口', '处理中', '完成'];
-  const [active, setActive] = useState(0);
-  return <div className="interaction-index-demo"><div className="interaction-index-demo-heading"><div><p>可运行演示</p><h3>{name}</h3></div><span>{labels[active]}</span></div><div className="interaction-index-demo-stage"><strong>{active === 0 ? '准备开始' : active === 1 ? '交互已执行' : '当前状态已更新'}</strong><p>这是纯本地确定性演示，不读取业务数据或调用服务端写接口。</p></div><div className="interaction-index-demo-actions">{labels.map((label, index) => <button type="button" key={label} className={index === active ? 'is-active' : undefined} onClick={() => setActive(index)}>{label}</button>)}<button type="button" onClick={() => setActive(0)}>重置演示</button></div></div>;
+function TextList({ values }: { values: string[] | undefined }) { return values?.length ? <ul>{values.map((value) => <li key={value}>{value}</li>)}</ul> : <p className="template-library-muted">待提炼，尚无完整开发资产。</p>; }
+function TemplateDetail({ item, records, onOpen, demoPages, onBack, onCopy, onCopySnippet, notice }: { item: StyleSceneSummary; records: StyleSceneSummary[]; onOpen: (id: string) => void; demoPages: ReadonlyMap<string, string>; onBack: () => void; onCopy: () => void; onCopySnippet: () => void; notice: string }) {
+  const template = item.template;
+  const component = isComponent(item);
+  return <article className="template-library-detail">
+    <header className="template-library-detail-heading"><div className="template-library-return"><DetailBackButton label={`返回${item.category}`} onBack={onBack} /><span>返回{item.category}</span></div><p className="template-library-breadcrumb">{item.category} / {item.sceneName}</p><div className="template-library-heading"><div><h2>{item.sceneName}</h2><p>{item.description}</p></div><span className="template-library-badge">{availabilityLabel(item)}</span></div><div className="template-library-tags"><span>{item.assetCode}</span>{template?.tags.map((tag) => <span key={tag}>{tag}</span>)}</div><div className="template-library-actions">{template?.demoPath ? <a className="template-library-demo" href={template.demoPath} target="_blank" rel="noopener noreferrer"><IconExternalLink size={16} />打开示例交互</a> : !component && <span className="template-library-muted">独立演示待建设</span>}<button type="button" onClick={onCopy}><IconCopy size={16} />复制参考指令</button></div>{notice && <p role="status">{notice}</p>}</header>
+    <section><h3>效果预览</h3><TemplatePreview template={template} name={item.sceneName} showSource />{template?.demoPath && <p className="template-library-muted">示例仅使用内存数据；正式可复用骨架及接入说明仍待提炼。</p>}</section>
+    <section><h3>适用场景</h3><TextList values={template?.suitableFor} /></section>
+    {(!component || Boolean(template?.regions.length || template?.steps.length)) && <section className="template-library-columns">{(!component || Boolean(template?.regions.length)) && <div><h3>页面结构</h3><TextList values={template?.regions} /></div>}<div><h3>{component ? '使用步骤' : '主要交互'}</h3><TextList values={template?.steps} /></div></section>}
+    <section className="template-library-columns"><div><h3>{component ? '接入配置与边界' : '配置内容'}</h3><TextList values={template?.config} /></div>{(!component || Boolean(template?.components.length)) && <div><h3>{component ? '依赖组件' : '公共组件参考'}</h3><TextList values={template?.components} />{!component && <p className="template-library-muted">组件引用不代表模板骨架已提炼完成。</p>}</div>}</section>
+    {component && <><section><h3>源码入口</h3><ul className="template-library-sources">{template?.sourcePaths?.map((path) => <li key={path}><code>{path}</code></li>)}</ul></section>{template?.usageSnippet && <section><div className="template-library-section-heading"><h3>接入示例</h3><button type="button" onClick={onCopySnippet}><IconCopy size={16} />复制示例</button></div><pre className="template-library-code"><code>{template.usageSnippet}</code></pre></section>}</>}
+    {template?.behaviorRules && <>
+      <section className="template-library-columns"><div><h3>查看与编辑</h3><TextList values={template.behaviorRules.viewEdit} /></div><div><h3>保存与离开保护</h3><TextList values={template.behaviorRules.saving} /></div></section>
+      <section><h3>过程反馈</h3><dl className="template-library-feedback">{Object.entries(template.behaviorRules.feedback).map(([state, rule]) => <div key={state}><dt>{feedbackLabels[state]}</dt><dd>{rule}</dd></div>)}</dl></section>
+    </>}
+    {template?.relatedTemplates.length ? <section><h3>关联模板</h3><div className="template-library-related">{template.relatedTemplates.map((code) => { const related = records.find((record) => record.assetCode === code); return related ? <button key={code} type="button" onClick={() => onOpen(related.id)}>{related.sceneName}（{code}）</button> : <span key={code}>{code}</span>; })}</div></section> : null}
+    <section><h3>参考指令</h3><p className="template-library-prompt">{template?.referencePrompt ?? `请参考“${item.sceneName}”模板（${item.assetCode}）设计本页面。`}</p></section>
+    <section><h3>应用案例</h3>{template?.applications.length ? <ul>{template.applications.map((app) => <li key={app.path}><a href={showcaseHref(app.path)} target="_blank" rel="noopener noreferrer">{demoPages.get(app.path) ?? app.name}<IconExternalLink size={14} /></a>{app.pageType && <span className="template-library-muted"> · {app.pageType}</span>}</li>)}</ul> : <p className="template-library-muted">尚未登记应用案例。</p>}<p className="template-library-muted">实际业务页面需登录及相应权限。</p></section>
+    <section><h3>建设与维护</h3><p>{component ? '组件登记版本' : '模板版本'}：{template?.version ?? '待登记'} · 可用程度：{availabilityLabel(item)}</p><p className="template-library-muted">{component ? `可在本项目内按源码与接口复用；跨项目采用仍需独立项目的接入、回归与边界证据。当前资产成熟度：${item.maturity}。` : '效果图、独立演示、组件骨架和接入说明齐备并验证后，才标为“可复用”。'}</p></section>
+  </article>;
 }

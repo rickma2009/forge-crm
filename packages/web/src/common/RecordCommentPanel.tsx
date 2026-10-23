@@ -1,0 +1,6 @@
+import type { ReactNode } from 'react';
+import type { RecordComment } from '@forge-crm/contracts';
+import { RowActionButton } from './RowActionButton';
+export function RecordCommentPanel({items,onReply,onEdit,onWithdraw,onHide,renderExtra}:{items:RecordComment[];onReply?:(item:RecordComment)=>void;onEdit:(item:RecordComment)=>void;onWithdraw:(item:RecordComment)=>void;onHide:(item:RecordComment)=>void;renderExtra?:(item:RecordComment)=>ReactNode}){
+ return <ol className="record-comment-list">{items.map(item=><li key={item.id}><header><strong>{item.authorName}</strong><time dateTime={item.createdAt}>{new Date(item.createdAt).toLocaleString('zh-CN')}</time><span>版本 {item.version}</span><div className="row-actions">{onReply&&!item.rootCommentId&&['PUBLISHED','WITHDRAWN'].includes(item.state)&&<RowActionButton label="回复评论" onClick={()=>onReply(item)}/>} {item.canEdit&&<><RowActionButton label="修改评论" onClick={()=>onEdit(item)}/><RowActionButton label="撤回评论" onClick={()=>onWithdraw(item)}/></>}{item.canModerate&&<RowActionButton label="隐藏评论" onClick={()=>onHide(item)}/>}</div></header><p className="comment-body">{item.body}</p>{item.mentions.length>0&&<p className="sales-note">提及：{item.mentions.map(m=>`@${m.displayName}`).join('、')}</p>}{renderExtra?.(item)}</li>)}</ol>;
+}

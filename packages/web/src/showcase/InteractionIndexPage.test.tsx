@@ -1,117 +1,137 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import type { StyleSceneDetail, StyleSceneList, StyleSceneSummary, StyleSceneTaxonomy } from '@forge-crm/contracts';
+import type { InteractionTemplate, StyleSceneSummary } from '@forge-crm/contracts';
 import type { EnterpriseGateway } from './gateway';
 import { InteractionIndexPage } from './InteractionIndexPage';
 
-const scene = (overrides: Partial<StyleSceneSummary> = {}): StyleSceneSummary => ({
-  id: '00000000-0000-4000-8000-000000000026', assetCode: 'EPM-PAGE-001', category: 'PAGE', subCategory: '系统与任务入口类',
-  sceneName: '应用壳层', description: '导航、顶栏、内容区、账户区', maturity: 'interaction-verified', status: 'DONE', pagePath: null, note: null,
-  doneAt: null, sortNo: 10, version: 1, ...overrides,
-});
-const detail = (overrides: Partial<StyleSceneDetail> = {}): StyleSceneDetail => ({
-  ...scene(), definition: ['多模块企业系统', '菜单可见性不能代替授权'],
-  definitionRef: { path: '_methodology/08-企业管理系统交互模式分类方法.md', section: '系统与任务入口类' },
-  artifacts: ['packages/web/src/showcase/ShowcaseApp.tsx'], evidence: ['slice-003'], evidenceCards: [], nextEvidence: '独立项目验证', ...overrides,
-});
-const taxonomy: StyleSceneTaxonomy = { types: [
-  { category: 'PAGE', count: 2, groups: [{ subCategory: '系统与任务入口类', count: 1 }, { subCategory: '目录类', count: 1 }] },
-  { category: 'SPECIAL', count: 1, groups: [] },
-] };
-const list = (items: StyleSceneSummary[] = [scene()], page = 1, total = items.length): StyleSceneList => ({ items, pagination: { page, pageSize: 20, total, totalPages: Math.ceil(total / 20) } });
+const metadata: InteractionTemplate = { availability: 'pending', suitableFor: ['分类管理'], regions: ['顶部查询', '左树右明细'], steps: ['选择分类刷新列表'], config: ['树字段'], components: ['TreeWorkspace'], tags: ['分类联动'], thumbnail: '/template-previews/TPL-02-01.svg', previewKind: 'diagram', demoPath: '/template-demos/workspace.html?template=TPL-02-01', applications: [{ name: '物料产品管理', path: '/showcase/items' }], referencePrompt: '请参考树状分类明细模板', version: '2026-09-28', relatedTemplates: [] };
+const scene = (overrides: Partial<StyleSceneSummary> = {}): StyleSceneSummary => ({ id: '00000000-0000-4000-8000-000000000026', assetCode: 'TPL-02-01', category: '树形联动', subCategory: null, sceneName: '树状分类明细', description: '顶部查询、左侧分类、右侧记录', maturity: 'candidate', status: 'TODO', pagePath: null, note: null, doneAt: null, sortNo: 10, version: 1, template: metadata, ...overrides });
+const records = [scene(), scene({ id: '00000000-0000-4000-8000-000000000027', assetCode: 'TPL-02-02', sceneName: '树节点维护', template: { ...metadata, thumbnail: null, demoPath: null, tags: ['节点维护'] } })];
+const list = (items = records, page = 1, totalPages = 1) => ({ items, pagination: { page, pageSize: 100, total: records.length, totalPages } });
+const gateway = (styleScenes = vi.fn().mockResolvedValue(list())) => ({ styleScenes } as unknown as EnterpriseGateway);
 
-function gateway(overrides: Partial<EnterpriseGateway> = {}): EnterpriseGateway {
-  return {
-    styleSceneTaxonomy: vi.fn().mockResolvedValue(taxonomy),
-    styleScenes: vi.fn().mockResolvedValue(list()),
-    styleSceneDetail: vi.fn().mockResolvedValue(detail()),
-    ...overrides,
-  } as unknown as EnterpriseGateway;
-}
-
-describe('database-backed interaction catalog', () => {
-  it('renders a counted two-level tree, filters the grid, and resets every directory filter', async () => {
-    const api = gateway();
-    render(<InteractionIndexPage systemCode="demo-portal" gateway={api} />);
-    expect(await screen.findByRole('treeitem', { name: 'PAGE（2）' })).toHaveAttribute('aria-level', '1');
-    expect(screen.getByRole('treeitem', { name: '系统与任务入口类（1）' })).toHaveAttribute('aria-level', '2');
-    expect(screen.getByRole('treeitem', { name: 'SPECIAL（1）' })).not.toHaveAttribute('aria-expanded');
-    expect(screen.getByText('共 4 个节点')).toBeInTheDocument();
-    expect(await screen.findByRole('button', { name: 'EPM-PAGE-001' })).toBeInTheDocument();
-    for (const heading of ['序号', '案例编码', '案例名称', '类型', '分组', '成熟度', '当前状态']) expect(screen.getByRole('columnheader', { name: heading })).toBeInTheDocument();
-
-    fireEvent.click(screen.getByRole('treeitem', { name: '系统与任务入口类（1）' }));
-    await waitFor(() => expect(api.styleScenes).toHaveBeenLastCalledWith('demo-portal', expect.any(URLSearchParams)));
-    expect((api.styleScenes as ReturnType<typeof vi.fn>).mock.calls.at(-1)?.[1].toString()).toContain('subCategory=%E7%B3%BB%E7%BB%9F%E4%B8%8E%E4%BB%BB%E5%8A%A1%E5%85%A5%E5%8F%A3%E7%B1%BB');
-
-    fireEvent.change(screen.getByLabelText('关键词'), { target: { value: '壳层' } });
-    fireEvent.change(screen.getByLabelText('成熟度'), { target: { value: 'released' } });
+describe('interaction template library', () => {
+  it('omits empty component regions and dependencies without rendering a numeric zero', async () => {
+    const component = scene({ assetCode: 'CMP-01', category: '插件组件', sceneName: '查询栏组件', template: { ...metadata, regions: [], components: [], steps: ['运行独立接入演练'] } });
+    render(<InteractionIndexPage systemCode="demo-portal" gateway={gateway(vi.fn().mockResolvedValue(list([component])))} />);
+    fireEvent.click(await screen.findByRole('treeitem', { name: '查询栏组件' }));
+    const detail = screen.getByRole('heading', { name: '使用步骤' }).closest('article')!;
+    expect(within(detail).queryByText('0')).not.toBeInTheDocument();
+    expect(within(detail).queryByRole('heading', { name: '页面结构' })).not.toBeInTheDocument();
+    expect(within(detail).queryByRole('heading', { name: '依赖组件' })).not.toBeInTheDocument();
+    expect(within(detail).getByText('运行独立接入演练')).toBeInTheDocument();
+  });
+  it('uses a two-level tree and cards, then keeps query and tree when showing template detail', async () => {
+    const api = gateway(); render(<InteractionIndexPage systemCode="demo-portal" gateway={api} />);
+    const category = await screen.findByRole('treeitem', { name: '树形联动' });
+    expect(category).toHaveAttribute('aria-level', '1');
+    expect(screen.getByRole('treeitem', { name: '树状分类明细' })).toHaveAttribute('aria-level', '2');
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
+    fireEvent.click(category);
+    expect(screen.getByText('点击模板查看效果、使用边界和接入方式。共 2 个资产')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('treeitem', { name: '树状分类明细' }));
+    expect(screen.getByRole('heading', { name: '树状分类明细', level: 2 })).toBeInTheDocument();
+    expect(screen.getByRole('form', { name: '查询条件' })).toBeInTheDocument();
+    expect(screen.getByRole('treeitem', { name: '树状分类明细' })).toHaveAttribute('aria-selected', 'true');
+    fireEvent.click(screen.getByRole('button', { name: '收起模板目录树' }));
+    expect(screen.getByRole('heading', { name: '树状分类明细', level: 2 })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '展开模板目录树' }));
+    fireEvent.change(screen.getByRole('textbox', { name: '搜索模板目录' }), { target: { value: 'TPL-02-01' } });
+    expect(screen.getByRole('heading', { name: '树状分类明细', level: 2 })).toBeInTheDocument();
+    expect(screen.queryByRole('treeitem', { name: '树节点维护' })).not.toBeInTheDocument();
+  });
+  it('shows real screenshot provenance and a list application without nesting links inside template cards', async () => {
+    const actual = scene({ assetCode: 'TPL-01-02', sceneName: '带表格视图的列表', template: { ...metadata, availability: 'preview', thumbnail: '/template-previews/TPL-01-02-customers.png', previewKind: 'screenshot', demoPath: null, previewSource: { name: '客户管理', path: '/showcase/customers', capturedAt: '2026-09-28', scope: '仅查询、网格和分页' }, applications: [{ name: '客户管理', path: '/showcase/customers', pageType: '列表页面' }] } });
+    render(<InteractionIndexPage systemCode="demo-portal" gateway={gateway(vi.fn().mockResolvedValue(list([actual])))} />);
+    const card = await screen.findByRole('button', { name: '查看模板：带表格视图的列表' });
+    expect(within(card).queryByRole('link')).not.toBeInTheDocument();
+    fireEvent.click(card);
+    expect(screen.getByRole('img', { name: '带表格视图的列表布局效果图' })).toHaveAttribute('src', actual.template!.thumbnail);
+    expect(screen.getByText(/截图更新：2026-09-28/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: '打开实际页面' })).toHaveAttribute('href', '/#/showcase/customers');
+    expect(screen.getByRole('link', { name: '打开实际页面' })).toHaveAttribute('target', '_blank');
+    expect(screen.getByRole('link', { name: '客户管理' })).toHaveAttribute('href', '/#/showcase/customers');
+    expect(screen.getByText('· 列表页面')).toBeInTheDocument();
+    expect(screen.queryByText('布局示意 · 非实际页面截图')).not.toBeInTheDocument();
+  });
+  it('applies keyword, category and availability on query, and resets without losing the directory', async () => {
+    render(<InteractionIndexPage systemCode="demo-portal" gateway={gateway()} />);
+    await screen.findByRole('treeitem', { name: '树形联动' });
+    fireEvent.change(screen.getByLabelText('关键词'), { target: { value: '分类联动' } });
+    expect(screen.getAllByRole('button', { name: /^查看模板：/ })).toHaveLength(2);
     fireEvent.click(screen.getByRole('button', { name: '查询' }));
-    await waitFor(() => expect((api.styleScenes as ReturnType<typeof vi.fn>).mock.calls.at(-1)?.[1].toString()).toContain('keyword=%E5%A3%B3%E5%B1%82'));
+    expect(screen.getAllByRole('button', { name: /^查看模板：/ })).toHaveLength(1);
+    fireEvent.change(screen.getByLabelText('可用程度'), { target: { value: 'reusable' } });
+    fireEvent.click(screen.getByRole('button', { name: '查询' }));
+    expect(screen.getByText('没有匹配的资产，请调整查询条件。')).toBeInTheDocument();
+    expect(screen.getByRole('treeitem', { name: '树节点维护' })).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: '重置' }));
     expect(screen.getByLabelText('关键词')).toHaveValue('');
-    expect(screen.getByLabelText('成熟度')).toHaveValue('');
-    expect(screen.getByRole('treeitem', { name: '系统与任务入口类（1）' })).toHaveAttribute('aria-selected', 'false');
-    await waitFor(() => expect(screen.getByRole('button', { name: 'EPM-PAGE-001' })).toBeEnabled());
-
-    fireEvent.click(screen.getByRole('treeitem', { name: 'SPECIAL（1）' }));
-    await waitFor(() => expect((api.styleScenes as ReturnType<typeof vi.fn>).mock.calls.at(-1)?.[1].toString()).toContain('category=SPECIAL'));
+    expect(screen.getAllByRole('button', { name: /^查看模板：/ })).toHaveLength(2);
   });
-
-  it('replaces the directory with detail and restores query, tree, and page on return', async () => {
-    const api = gateway({ styleScenes: vi.fn().mockImplementation(async (_system, query: URLSearchParams) => list([scene()], Number(query.get('page') ?? 1), 41)) });
-    render(<InteractionIndexPage systemCode="demo-portal" gateway={api} />);
-    await screen.findByRole('button', { name: 'EPM-PAGE-001' });
-    fireEvent.change(screen.getByLabelText('关键词'), { target: { value: '应用' } });
+  it('opens independent demos and business examples in new browser tabs, labels diagrams and copies the reference', async () => {
+    const copy = vi.fn().mockResolvedValue(undefined); Object.defineProperty(navigator, 'clipboard', { value: { writeText: copy }, configurable: true });
+    render(<InteractionIndexPage systemCode="demo-portal" gateway={gateway()} />);
+    fireEvent.click(await screen.findByRole('button', { name: '查看模板：树状分类明细' }));
+    const demo = screen.getByRole('link', { name: '打开示例交互' });
+    expect(demo).toHaveAttribute('href', metadata.demoPath); expect(demo).toHaveAttribute('target', '_blank');
+    expect(screen.getByRole('link', { name: '物料产品管理' })).toHaveAttribute('href', '/#/showcase/items');
+    expect(screen.getByText('布局示意 · 非实际页面截图')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '复制参考指令' }));
+    await waitFor(() => expect(copy).toHaveBeenCalledWith(metadata.referencePrompt));
+    expect(await screen.findByRole('status')).toHaveTextContent('参考指令已复制');
+    fireEvent.click(screen.getByRole('button', { name: '返回树形联动' }));
+    fireEvent.click(screen.getByRole('button', { name: '查看模板：树节点维护' }));
+    expect(screen.queryByRole('link', { name: '打开示例交互' })).not.toBeInTheDocument();
+  });
+  it('searches retained aliases, shows all three behavior groups and navigates related templates', async () => {
+    const behaviorRules = { viewEdit: ['默认查看后授权编辑'], saving: ['手动保存，离开保护'], feedback: { loading: '载入说明', processing: '处理说明', success: '成功说明', failure: '失败说明', empty: '空数据说明', forbidden: '授权说明' } };
+    render(<InteractionIndexPage systemCode="demo-portal" gateway={gateway(vi.fn().mockResolvedValue(list([scene({ template: { ...metadata, aliases: ['旧模板名称'], behaviorRules, relatedTemplates: ['TPL-02-02'] } }), records[1]])))} />);
+    await screen.findByRole('treeitem', { name: '树形联动' });
+    fireEvent.change(screen.getByLabelText('关键词'), { target: { value: '旧模板名称' } });
     fireEvent.click(screen.getByRole('button', { name: '查询' }));
-    fireEvent.click(screen.getByRole('treeitem', { name: 'PAGE（2）' }));
-    await waitFor(() => expect(screen.getByRole('button', { name: '下一页' })).toBeEnabled());
-    fireEvent.click(screen.getByRole('button', { name: '下一页' }));
-    await waitFor(() => expect(screen.getByText('第 2 / 3 页')).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: 'EPM-PAGE-001' }));
-    expect(await screen.findByRole('heading', { name: '应用壳层', level: 1 })).toBeInTheDocument();
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    expect(screen.getByText('_methodology/08-企业管理系统交互模式分类方法.md')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: '返回交互案例目录' }));
-    expect(screen.getByLabelText('关键词')).toHaveValue('应用');
-    expect(screen.getByRole('treeitem', { name: 'PAGE（2）' })).toHaveAttribute('aria-selected', 'true');
-    expect(screen.getByText('第 2 / 3 页')).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /^查看模板：/ })).toHaveLength(1);
+    fireEvent.click(screen.getByRole('button', { name: '查看模板：树状分类明细' }));
+    for (const name of ['查看与编辑', '保存与离开保护', '过程反馈']) expect(screen.getByRole('heading', { name })).toBeInTheDocument();
+    for (const text of ['载入说明', '处理说明', '成功说明', '失败说明', '空数据说明', '授权说明']) expect(screen.getByText(text)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '树节点维护（TPL-02-02）' }));
+    expect(screen.getByRole('heading', { name: '树节点维护', level: 2 })).toBeInTheDocument();
+    expect(screen.getByRole('treeitem', { name: '树节点维护' })).toHaveAttribute('aria-selected', 'true');
   });
-
-  it('renders historical null detail fields as placeholders', async () => {
-    const historical = scene({ id: '00000000-0000-4000-8000-000000000099', assetCode: null, maturity: null, sceneName: '历史场景' });
-    const api = gateway({ styleScenes: vi.fn().mockResolvedValue(list([historical])), styleSceneDetail: vi.fn().mockResolvedValue(detail({ ...historical, definition: [], definitionRef: null, artifacts: [], evidence: [], evidenceCards: [], nextEvidence: null })) });
-    render(<InteractionIndexPage systemCode="demo-portal" gateway={api} />);
-    expect(await screen.findByRole('button', { name: '历史场景' })).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: '查看 历史场景' })).not.toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: '历史场景' }));
-    expect(await screen.findByRole('heading', { name: '历史场景', level: 1 })).toBeInTheDocument();
-    expect(screen.getAllByText('暂无').length).toBeGreaterThan(0);
-  });
-
-  it('shows retryable API errors and never falls back to a bundled asset', async () => {
-    const styleScenes = vi.fn().mockRejectedValueOnce(new Error('数据库不可用')).mockResolvedValueOnce(list([]));
-    const api = gateway({ styleScenes });
-    render(<InteractionIndexPage systemCode="demo-portal" gateway={api} />);
+  it('loads every database page and retries failures without static fallback', async () => {
+    const load = vi.fn().mockRejectedValueOnce(new Error('数据库不可用')).mockResolvedValueOnce(list([records[0]], 1, 2)).mockResolvedValueOnce(list([records[1]], 2, 2));
+    render(<InteractionIndexPage systemCode="demo-portal" gateway={gateway(load)} />);
     expect(await screen.findByRole('alert')).toHaveTextContent('数据库不可用');
-    expect(screen.queryByText('应用壳层')).not.toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: '重试列表' }));
-    await waitFor(() => expect(styleScenes).toHaveBeenCalledTimes(2));
-    expect(await screen.findByText('没有匹配的交互案例，请调整筛选条件。')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /^查看模板：/ })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '重试模板库' }));
+    expect(await screen.findByRole('treeitem', { name: '树节点维护' })).toBeInTheDocument();
+    expect(load.mock.calls.at(-1)?.[1].get('page')).toBe('2');
+    expect(load.mock.calls.at(-1)?.[1].get('catalog')).toBe('library');
   });
-
-  it('ignores an older list response that resolves after a newer query', async () => {
-    let resolveOld!: (value: StyleSceneList) => void;
-    let resolveNew!: (value: StyleSceneList) => void;
-    const styleScenes = vi.fn()
-      .mockImplementationOnce(() => new Promise<StyleSceneList>((resolve) => { resolveOld = resolve; }))
-      .mockImplementationOnce(() => new Promise<StyleSceneList>((resolve) => { resolveNew = resolve; }));
-    render(<InteractionIndexPage systemCode="demo-portal" gateway={gateway({ styleScenes })} />);
-    await screen.findByRole('treeitem', { name: 'PAGE（2）' });
-    fireEvent.click(screen.getByRole('treeitem', { name: 'PAGE（2）' }));
-    resolveNew(list([scene({ assetCode: 'NEW-RESULT', sceneName: '新结果' })]));
-    expect(await screen.findByText('新结果')).toBeInTheDocument();
-    resolveOld(list([scene({ assetCode: 'OLD-RESULT', sceneName: '旧结果' })]));
-    await waitFor(() => expect(screen.queryByText('旧结果')).not.toBeInTheDocument());
+  it('shows reusable components as direct children with source, usage, and actual screenshot', async () => {
+    const copy = vi.fn().mockResolvedValue(undefined); Object.defineProperty(navigator, 'clipboard', { value: { writeText: copy }, configurable: true });
+    const component = scene({ id: '00000000-0000-4000-8000-000000000028', assetCode: 'CMP-07', category: '插件组件', sceneName: 'TreeWorkspace 树形工作区', template: { ...metadata, availability: 'reusable', thumbnail: '/template-previews/CMP-07-tree-workspace.png', previewKind: 'screenshot', previewSource: { name: '物料产品管理', path: '/showcase/items', capturedAt: '2026-10-03', scope: '实际页面左树右明细' }, sourcePaths: ['packages/web/src/common/TreeWorkspace.tsx'], usageSnippet: '<TreeWorkspace nodes={nodes} />' } });
+    render(<InteractionIndexPage systemCode="demo-portal" gateway={gateway(vi.fn().mockResolvedValue(list([component])))} />);
+    const category = await screen.findByRole('treeitem', { name: '插件组件' });
+    expect(category).toHaveAttribute('aria-level', '1');
+    expect(screen.getByRole('treeitem', { name: 'TreeWorkspace 树形工作区' })).toHaveAttribute('aria-level', '2');
+    fireEvent.click(screen.getByRole('treeitem', { name: 'TreeWorkspace 树形工作区' }));
+    expect(screen.getByText('项目内可复用')).toBeInTheDocument();
+    expect(screen.getByText(/跨项目采用仍需独立项目的接入、回归与边界证据/)).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'TreeWorkspace 树形工作区布局效果图' })).toHaveAttribute('src', component.template!.thumbnail);
+    expect(screen.getByRole('heading', { name: '源码入口' })).toBeInTheDocument();
+    expect(screen.getByText('packages/web/src/common/TreeWorkspace.tsx')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '接入示例' })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '复制示例' }));
+    await waitFor(() => expect(copy).toHaveBeenCalledWith('<TreeWorkspace nodes={nodes} />'));
+  });
+  it('ignores stale responses after switching systems', async () => {
+    let resolveOld!: (value: ReturnType<typeof list>) => void;
+    const load = vi.fn().mockImplementationOnce(() => new Promise((resolve) => { resolveOld = resolve; })).mockResolvedValueOnce(list([scene({ sceneName: '新系统模板' })]));
+    const api = gateway(load); const view = render(<InteractionIndexPage systemCode="old" gateway={api} />);
+    view.rerender(<InteractionIndexPage systemCode="new" gateway={api} />);
+    expect(await screen.findByRole('treeitem', { name: '新系统模板' })).toBeInTheDocument();
+    resolveOld(list());
+    await waitFor(() => expect(within(screen.getByRole('tree', { name: '模板目录树' })).queryByText('树状分类明细')).not.toBeInTheDocument());
   });
 });

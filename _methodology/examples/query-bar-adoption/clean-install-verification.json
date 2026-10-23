@@ -1,0 +1,101 @@
+{
+  "createdAt": "2026-10-03T02:08:25.497Z",
+  "cleanInstall": true,
+  "nodeVersion": "v24.16.0",
+  "architecture": "x64",
+  "platform": "darwin",
+  "installedVersions": {
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "@tabler/icons-react": "3.48.0",
+    "typescript": "5.7.3",
+    "vite": "5.4.20",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9"
+  },
+  "lockSha256": "34e7594b0877c9a1187178754912b4de116d3523e96d7f28f9e3d8030331a10a",
+  "sources": [
+    {
+      "source": "packages/web/src/common/RecordQueryBar.tsx",
+      "sha256": "7675e5e8abb44ddc7bee2447e2afc04488d1b4ab97347840d384bb5e291022c8"
+    },
+    {
+      "source": "packages/web/src/common/record-query-bar.css",
+      "sha256": "78b56d218b5778d4171d22be75a85c6092e1e561053e9a58192721dc204f1566"
+    },
+    {
+      "source": "_methodology/examples/query-bar-adoption/main.tsx",
+      "sha256": "0736f38fd28721d2746fff26864e3eeacaaa4a1d0e3648434a3a133ca108056e"
+    },
+    {
+      "source": "_methodology/examples/query-bar-adoption/host.css",
+      "sha256": "bd770aa563f1c9ab6f1f1a9bf3a980fa3f79a3e4c74ec69323c12eb261b2f728"
+    }
+  ],
+  "results": [
+    {
+      "command": "npm install --ignore-scripts --no-audit --no-fund --cache /var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/forge-query-bar-fINtj3/.npm-cache",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 14686,
+      "timeoutMs": 60000,
+      "errorCode": null
+    },
+    {
+      "command": "tsc --noEmit",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 1518,
+      "timeoutMs": 60000,
+      "errorCode": null
+    },
+    {
+      "command": "vite build",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 112603,
+      "timeoutMs": 180000,
+      "errorCode": null
+    }
+  ],
+  "limitations": [
+    "Fresh installation requested with lifecycle scripts disabled; inspect npm exit status and recorded versions. This is not a dependency security audit.",
+    "Only the component and its CSS are copied; host styles are supplied by this fixture.",
+    "Browser checks cover Chrome at 1440x900 and 390x900 in the isolated fixture. Backend integration and independent business adoption remain unverified."
+  ],
+  "browserVerification": {
+    "checkedAt": "2026-10-03T02:13:17.512Z",
+    "url": "http://127.0.0.1:4187/",
+    "browser": "154.0.8037.95",
+    "checks": [
+      {
+        "width": 1440,
+        "height": 900,
+        "identity": true,
+        "notBlank": true,
+        "noOverlay": true,
+        "singleRow": true,
+        "actionsVisible": true,
+        "keyboard": true,
+        "queryReset": true,
+        "defaultWrap": true
+      },
+      {
+        "width": 390,
+        "height": 900,
+        "identity": true,
+        "notBlank": true,
+        "noOverlay": true,
+        "singleRow": true,
+        "actionsVisible": true,
+        "keyboard": true,
+        "queryReset": true,
+        "defaultWrap": true
+      }
+    ],
+    "errors": [],
+    "evidenceDirectory": "/tmp/forge-query-bar-clean-browser-20261003",
+    "script": "/tmp/forge-query-bar-clean-browser-qa.mjs",
+    "scope": "Isolated fixture using the same installed versions and lock hash; no CRM page or production adoption claim."
+  }
+}

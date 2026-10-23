@@ -1,0 +1,818 @@
+{
+  "version": 1,
+  "components": [
+    {
+      "code": "CMP-01",
+      "name": "RecordQueryBar 查询条件栏",
+      "summary": "统一承载列表查询字段、重置、查询和可选的更多条件；支持指定单行滚动布局。",
+      "sourcePaths": [
+        "packages/web/src/common/RecordQueryBar.tsx",
+        "packages/web/src/common/record-query-bar.css"
+      ],
+      "usageSnippet": "<RecordQueryBar onQuery={load} onReset={reset}>\n  <label>关键词<input value={keyword} onChange={onKeywordChange} /></label>\n</RecordQueryBar>",
+      "suitableFor": [
+        "业务列表、树形明细和分析页顶部的查询区域"
+      ],
+      "steps": [
+        "调用方管理输入状态；查询提交触发 onQuery，重置触发 onReset。",
+        "需要扩展条件时传 onToggleMore、expanded 和 moreCount。",
+        "业务明确要求所有条件同排时传 layout=\"singleRow\"；字段区可横向滚动，操作按钮保持可见。",
+        "跨项目接入先阅读 _methodology/examples/query-bar-adoption/README.md，再按 _methodology/components/quickstart.md 检查依赖与宿主责任。",
+        "在 Forge CRM 根目录运行 node _methodology/scripts/rehearse-query-bar.mjs --component CMP-01 --clean-install，生成新的隔离宿主并安装、检查、构建；命令输出临时目录。",
+        "实际复制可运行 node _methodology/scripts/export-component-source.mjs CMP-01 /absolute/new-output-directory；父目录须存在，目标目录须不存在，按 manifest 保留相对引用。"
+      ],
+      "config": [
+        "查询字段、查询参数和服务端请求由页面提供；queryDisabled 可阻止处理中重复提交；较宽字段可设置 --record-query-field-width。",
+        "接入演练通过不等于真实业务项目采用；目标项目仍需自己的数据、权限、状态和浏览器验收，并使用 _methodology/templates/ui/adoption-record-template.md 记录适配结果。",
+        "验证结果按源码版本保留；先阅读演练 README 的当前与历史证据范围。哈希 MATCH 只说明记录文件未变化，不证明当前环境已运行；STALE 不应通过覆盖旧记录消除。"
+      ],
+      "dependencies": [
+        "React（含 JSX runtime）",
+        "@tabler/icons-react"
+      ],
+      "tags": [
+        "查询",
+        "表单",
+        "公共组件"
+      ],
+      "thumbnail": "/template-previews/TPL-01-02-customers.png",
+      "previewSource": {
+        "name": "客户管理",
+        "path": "/showcase/customers",
+        "capturedAt": "2026-10-06",
+        "scope": "实际客户列表内容截图，顶部白色查询区使用 RecordQueryBar。"
+      },
+      "applications": [
+        {
+          "name": "客户管理",
+          "path": "/showcase/customers",
+          "pageType": "查询条件"
+        },
+        {
+          "name": "商机分析",
+          "path": "/showcase/opportunity-analysis",
+          "pageType": "分析查询"
+        },
+        {
+          "name": "当前库存",
+          "path": "/showcase/inventory-balances",
+          "pageType": "单行条件查询"
+        },
+        {
+          "name": "库存事务明细",
+          "path": "/showcase/inventory-transactions",
+          "pageType": "单行条件查询"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-01-01",
+        "TPL-01-02"
+      ]
+    },
+    {
+      "code": "CMP-02",
+      "name": "BusinessDataGrid 公共业务网格",
+      "summary": "承载可配置列、表头拖动、列对齐、固定、筛选、排序、分页和导出的通用数据网格。",
+      "sourcePaths": [
+        "packages/web/src/common/data-grid/BusinessDataGrid.tsx",
+        "packages/web/src/common/data-grid/LazyBusinessDataGrid.tsx",
+        "packages/web/src/common/data-grid/business-data-grid.css",
+        "packages/web/src/common/data-grid/grid-export.ts"
+      ],
+      "usageSnippet": "<BusinessDataGrid name=\"客户列表\" columns={columns} config={viewConfig} onConfigChange={setViewConfig} rows={rows} rowKey={row => row.id} total={total} page={page} onPageChange={setPage} exportAll={loadAllRows} />",
+      "suitableFor": [
+        "客户、产品、库存等需要灵活列设置的记录网格"
+      ],
+      "steps": [
+        "调用方传入列定义与真实数据；按业务要求开启高级列功能。",
+        "详情入口放在业务编码或名称列，编辑等动作使用图标按钮。"
+      ],
+      "config": [
+        "默认隐藏列筛选、排序箭头、列设置与导出；需要时由具体页面显式开启。",
+        "分页接口和导出范围须与服务端数据口径一致。"
+      ],
+      "dependencies": [
+        "React",
+        "ag-grid-react / ag-grid-community",
+        "@forge-crm/contracts：ListViewConfig 类型",
+        "grid-export.ts；Excel 导出动态加载 exceljs"
+      ],
+      "tags": [
+        "网格",
+        "列设置",
+        "分页"
+      ],
+      "thumbnail": "/template-previews/TPL-01-02-customers.png",
+      "previewSource": {
+        "name": "客户管理",
+        "path": "/showcase/customers",
+        "capturedAt": "2026-10-06",
+        "scope": "客户列表实际网格区域，展示表头、行分隔和编码详情链接。"
+      },
+      "applications": [
+        {
+          "name": "客户管理",
+          "path": "/showcase/customers",
+          "pageType": "列表网格"
+        },
+        {
+          "name": "物料产品管理",
+          "path": "/showcase/items",
+          "pageType": "分类明细网格"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-01-02",
+        "TPL-02-01"
+      ]
+    },
+    {
+      "code": "CMP-03",
+      "name": "DeclarativeDataGrid 声明式表格",
+      "summary": "保持项目网格边框、表头和行高样式，同时保留调用方自行定义的表格单元格。",
+      "sourcePaths": [
+        "packages/web/src/common/data-grid/DeclarativeDataGrid.tsx"
+      ],
+      "usageSnippet": "<DeclarativeDataGrid><thead><tr><th>编码</th></tr></thead><tbody>{rows.map(row => <tr key={row.id}><td>{row.code}</td></tr>)}</tbody></DeclarativeDataGrid>",
+      "suitableFor": [
+        "字段固定的管理列表、单据明细、弹窗选择表格"
+      ],
+      "steps": [
+        "传入标准 thead/tbody；在单元格中使用真实链接和行操作组件。"
+      ],
+      "config": [
+        "数据加载、分页、权限和空态由调用页面负责；动态列与高级排序可改用 BusinessDataGrid。"
+      ],
+      "dependencies": [
+        "React",
+        "@forge-crm/contracts：ListViewConfig 类型"
+      ],
+      "tags": [
+        "网格",
+        "表格",
+        "固定列"
+      ],
+      "thumbnail": "/template-previews/TPL-01-01-employees.png",
+      "previewSource": {
+        "name": "员工管理",
+        "path": "/showcase/system/employees",
+        "capturedAt": "2026-10-06",
+        "scope": "员工列表实际截图，表头和数据行采用声明式公共表格。"
+      },
+      "applications": [
+        {
+          "name": "员工管理",
+          "path": "/showcase/system/employees",
+          "pageType": "列表网格"
+        },
+        {
+          "name": "BOM管理",
+          "path": "/showcase/boms",
+          "pageType": "组件明细"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-01-01",
+        "TPL-03-01"
+      ]
+    },
+    {
+      "code": "CMP-04",
+      "name": "BusinessDirectory 业务列表工作区",
+      "summary": "组合查询栏、对象视图、工具栏、声明式网格及分页，业务只提供数据和单元格渲染。",
+      "sourcePaths": [
+        "packages/web/src/common/BusinessDirectory.tsx",
+        "packages/contracts/src/list-view-objects.ts",
+        "packages/web/src/common/business-directory.css"
+      ],
+      "usageSnippet": "<BusinessDirectory objectCode=\"bom-directory\" systemCode={systemCode} gateway={gateway} loadRows={api.list} rowKey={row => row.id} render={renderCell} />",
+      "suitableFor": [
+        "需要系统默认视图与个人视图的业务对象列表"
+      ],
+      "steps": [
+        "先在对象视图登记字段与默认配置；页面传入 loadRows、rowKey 和 render。",
+        "组件负责查询、视图选择、总数和分页；页面负责业务详情路由与授权动作。"
+      ],
+      "config": [
+        "必须登记对象 code 与服务端视图权限；可传状态选项、固定过滤条件、新增回调和行操作。"
+      ],
+      "dependencies": [
+        "RecordQueryBar",
+        "ListViewSelector",
+        "DeclarativeDataGrid",
+        "React",
+        "@tabler/icons-react",
+        "@forge-crm/contracts：businessListObjects 运行时登记及视图类型"
+      ],
+      "tags": [
+        "查询",
+        "视图",
+        "列表工作区"
+      ],
+      "thumbnail": "/template-previews/CMP-04-business-directory.png",
+      "previewSource": {
+        "name": "BOM 管理",
+        "path": "/showcase/boms",
+        "capturedAt": "2026-10-06",
+        "scope": "BOM 列表真实页面，包含顶部查询、工具栏、表格和分页。"
+      },
+      "applications": [
+        {
+          "name": "BOM管理",
+          "path": "/showcase/boms",
+          "pageType": "业务列表"
+        },
+        {
+          "name": "商机管理",
+          "path": "/showcase/opportunities",
+          "pageType": "业务列表"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-01-02"
+      ]
+    },
+    {
+      "code": "CMP-05",
+      "name": "ListViewSelector 视图选择器",
+      "summary": "统一显示当前视图、视图下拉选择和设置入口。",
+      "sourcePaths": [
+        "packages/web/src/common/ListViewSelector.tsx",
+        "packages/web/src/common/list-view-selector.css"
+      ],
+      "usageSnippet": "<ListViewSelector value={selectedKey} options={views} onChange={selectView} onSettings={openSettings} />",
+      "suitableFor": [
+        "客户、商机、物料及其他支持个人列表视图的页面"
+      ],
+      "steps": [
+        "接收当前视图 key 和可用视图选项；用户选择后调用 onChange。",
+        "设置入口由 onSettings 打开调用方提供的配置界面。",
+        "跨项目接入先阅读 _methodology/examples/list-view-selector-adoption/README.md，再按 _methodology/components/quickstart.md 检查依赖与宿主责任。",
+        "在 Forge CRM 根目录运行 node _methodology/scripts/rehearse-query-bar.mjs --component CMP-05 --clean-install，生成新的隔离宿主并安装、检查、构建；命令输出临时目录。",
+        "实际复制可运行 node _methodology/scripts/export-component-source.mjs CMP-05 /absolute/new-output-directory；父目录须存在，目标目录须不存在，按 manifest 保留相对引用。"
+      ],
+      "config": [
+        "个人视图解析与持久化由服务端管理；组件只控制选择展示和交互状态。",
+        "接入演练通过不等于真实业务项目采用；目标项目仍需自己的数据、权限、状态和浏览器验收，并使用 _methodology/templates/ui/adoption-record-template.md 记录适配结果。",
+        "验证结果按源码版本保留；先阅读演练 README 的当前与历史证据范围。哈希 MATCH 只说明记录文件未变化，不证明当前环境已运行；STALE 不应通过覆盖旧记录消除。"
+      ],
+      "dependencies": [
+        "React JSX runtime",
+        "@tabler/icons-react"
+      ],
+      "tags": [
+        "列表视图",
+        "个人配置",
+        "工具栏"
+      ],
+      "thumbnail": "/template-previews/TPL-01-02-customers.png",
+      "previewSource": {
+        "name": "客户管理",
+        "path": "/showcase/customers",
+        "capturedAt": "2026-10-06",
+        "scope": "客户列表工具栏右侧的“当前视图 / 下拉 / 设置”组合控件。"
+      },
+      "applications": [
+        {
+          "name": "客户管理",
+          "path": "/showcase/customers",
+          "pageType": "视图工具栏"
+        },
+        {
+          "name": "物料产品管理",
+          "path": "/showcase/items",
+          "pageType": "视图工具栏"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-01-02"
+      ]
+    },
+    {
+      "code": "CMP-06",
+      "name": "RowActionButton 行操作图标",
+      "summary": "为编辑、删除、审核等行级操作统一提供图标、尺寸、提示和可访问名称。",
+      "sourcePaths": [
+        "packages/web/src/common/RowActionButton.tsx",
+        "packages/web/src/common/row-actions.css"
+      ],
+      "usageSnippet": "<RowActionButton label=\"编辑客户\" onClick={() => edit(row)} />",
+      "suitableFor": [
+        "列表、子表和弹窗网格的行级动作"
+      ],
+      "steps": [
+        "传入明确的中文 label 和动作回调；点击仅执行当前记录的授权动作。"
+      ],
+      "config": [
+        "调用方负责权限、状态、二次确认和 API；查看应使用编码或名称链接，不添加查看图标。"
+      ],
+      "dependencies": [
+        "React",
+        "@tabler/icons-react"
+      ],
+      "tags": [
+        "图标",
+        "操作列",
+        "无障碍"
+      ],
+      "thumbnail": "/template-previews/TPL-01-01-employees.png",
+      "previewSource": {
+        "name": "员工管理",
+        "path": "/showcase/system/employees",
+        "capturedAt": "2026-10-06",
+        "scope": "员工网格操作列的编辑图标按钮。"
+      },
+      "applications": [
+        {
+          "name": "员工管理",
+          "path": "/showcase/system/employees",
+          "pageType": "操作列"
+        },
+        {
+          "name": "客户管理",
+          "path": "/showcase/customers",
+          "pageType": "操作列"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-01-01",
+        "TPL-01-02"
+      ]
+    },
+    {
+      "code": "CMP-07",
+      "name": "TreeWorkspace 树形工作区",
+      "summary": "统一左侧搜索、多级树、节点菜单、宽度与收放控制，以及右侧详情或明细区域。",
+      "sourcePaths": [
+        "packages/web/src/common/TreeWorkspace.tsx",
+        "packages/web/src/common/useTreeNodeMenu.tsx",
+        "packages/web/src/common/TreeWorkspace.md",
+        "packages/web/src/common/tree-workspace.css",
+        "packages/web/src/common/tree-node-menu.css"
+      ],
+      "usageSnippet": "<TreeWorkspace title=\"物料分类\" nodes={nodes} selectedId={id} onSelect={selectNode} actions={nodeActions}>\n  <ItemGrid categoryId={id} />\n</TreeWorkspace>",
+      "suitableFor": [
+        "物料分类、组织、角色、资源菜单等左树右明细页面"
+      ],
+      "steps": [
+        "将节点映射为 id、parentId、label；选择节点后由调用方刷新右侧。",
+        "维护树传 actions，同一节点菜单通过右键和省略号打开。",
+        "跨项目接入先阅读 _methodology/examples/tree-workspace-adoption/README.md，再按 _methodology/components/quickstart.md 检查依赖与宿主责任。",
+        "在 Forge CRM 根目录运行 node _methodology/scripts/rehearse-query-bar.mjs --component CMP-07 --clean-install，生成新的隔离宿主并安装、检查、构建；命令输出临时目录。",
+        "实际复制可运行 node _methodology/scripts/export-component-source.mjs CMP-07 /absolute/new-output-directory；父目录须存在，目标目录须不存在，按 manifest 保留相对引用。"
+      ],
+      "config": [
+        "支持搜索、刷新、新增、菜单、宽度调整和收放；只读树不传维护动作。",
+        "权限、内置节点保护和数据持久化由业务页面负责。",
+        "接入演练通过不等于真实业务项目采用；目标项目仍需自己的数据、权限、状态和浏览器验收，并使用 _methodology/templates/ui/adoption-record-template.md 记录适配结果。",
+        "验证结果按源码版本保留；先阅读演练 README 的当前与历史证据范围。哈希 MATCH 只说明记录文件未变化，不证明当前环境已运行；STALE 不应通过覆盖旧记录消除。",
+        "树结构样式归组件，右侧业务内容样式归页面，字体与主题归宿主。节点菜单经 ReactDOM Portal 渲染到 body；需要同时检查独立宿主与真实工作区的可用宽度。"
+      ],
+      "dependencies": [
+        "useTreeNodeMenu",
+        "React / ReactDOM（Portal）",
+        "@tabler/icons-react"
+      ],
+      "tags": [
+        "树",
+        "左右分栏",
+        "节点操作"
+      ],
+      "thumbnail": "/template-previews/CMP-07-tree-workspace.png",
+      "previewSource": {
+        "name": "物料产品管理",
+        "path": "/showcase/items",
+        "capturedAt": "2026-10-06",
+        "scope": "物料产品管理真实页面，左侧分类树与右侧记录联动。"
+      },
+      "applications": [
+        {
+          "name": "物料产品管理",
+          "path": "/showcase/items",
+          "pageType": "树状分类明细"
+        },
+        {
+          "name": "组织架构",
+          "path": "/showcase/system/organizations",
+          "pageType": "左树右详情"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-02-01",
+        "TPL-02-02"
+      ]
+    },
+    {
+      "code": "CMP-08",
+      "name": "RouteTabs 工作区页签",
+      "summary": "管理多页面工作区的固定首页、切换、刷新、批量关闭与右键菜单。",
+      "sourcePaths": [
+        "packages/web/src/common/route-tabs/index.ts",
+        "packages/web/src/common/route-tabs/RouteTabs.tsx",
+        "packages/web/src/common/route-tabs/model.ts",
+        "packages/web/src/common/route-tabs/README.md",
+        "packages/web/src/common/route-tabs/route-tabs.css"
+      ],
+      "usageSnippet": "import { RouteTabs, useRouteTabs } from './route-tabs';\nconst { tabs, execute, refreshKey } = useRouteTabs({ home, current, activePath: path, onNavigate });\n<RouteTabs tabs={tabs} activePath={path} onNavigate={onNavigate} onAction={execute} getHref={hrefFor} />",
+      "suitableFor": [
+        "企业系统顶部多页面工作区"
+      ],
+      "steps": [
+        "宿主以路由 path 作为页签唯一标识；右键或键盘打开菜单。",
+        "刷新仅重建目标页面，关闭按邻近页选择，固定首页受到保护。",
+        "通过 route-tabs/index.ts 公共入口导入 RouteTabs 与 useRouteTabs；保留 Hook、model 和 CSS 相对目录，不能只复制 RouteTabs.tsx。",
+        "接入说明：_methodology/examples/route-tabs-adoption/README.md；独立演练：node _methodology/scripts/rehearse-query-bar.mjs --component CMP-08 --clean-install。"
+      ],
+      "config": [
+        "宿主负责授权、URL 构造、页面渲染和未保存内容离开保护。",
+        "接入演练通过不等于真实业务项目采用；合成状态宿主不证明真实路由、原生长按或弹窗策略。MATCH/STALE 仅反映记录的源码字节。"
+      ],
+      "dependencies": [
+        "useRouteTabs",
+        "applyTabAction",
+        "React / ReactDOM（Portal）",
+        "route-tabs/model.ts"
+      ],
+      "tags": [
+        "多页签",
+        "右键菜单",
+        "导航"
+      ],
+      "thumbnail": "/template-previews/CMP-08-route-tabs.png",
+      "previewSource": {
+        "name": "多页签工作区",
+        "path": "/showcase/items",
+        "capturedAt": "2026-10-06",
+        "scope": "实际工作区页签及右键操作菜单。"
+      },
+      "applications": [
+        {
+          "name": "交互演示门户",
+          "path": "/showcase/workbench",
+          "pageType": "全局页面页签"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-05-01"
+      ]
+    },
+    {
+      "code": "CMP-09",
+      "name": "DetailWorkspace 对象详情容器",
+      "summary": "统一对象详情的返回、名称与状态、只读摘要、页内 Tab 和分区内容。",
+      "sourcePaths": [
+        "packages/web/src/common/DetailWorkspace.tsx",
+        "packages/web/src/common/detail-workspace.css"
+      ],
+      "usageSnippet": "<DetailWorkspace><DetailHeader title={name} fields={summary} onBack={back} backLabel=\"返回列表\" />\n  <DetailTabs id=\"record\" label=\"详情分区\" tabs={tabs} active={active} onChange={setActive} />\n  <DetailPanel id=\"record\" active={active}>内容</DetailPanel>\n</DetailWorkspace>",
+      "suitableFor": [
+        "客户、商机、产品等对象详情"
+      ],
+      "steps": [
+        "默认以只读查看进入；点击授权编辑后复用同一字段布局。",
+        "返回调用方提供的列表路由，并处理未保存内容。",
+        "先阅读 _methodology/examples/detail-workspace-adoption/README.md 与 _methodology/components/quickstart.md，确认宿主状态及样式边界。",
+        "独立演练：node _methodology/scripts/rehearse-query-bar.mjs --component CMP-09 --clean-install；浏览器复验：node _methodology/scripts/verify-detail-workspace-adoption.mjs <本机演练URL>。",
+        "源码导出：node _methodology/scripts/export-component-source.mjs CMP-09 <新的输出目录>；保留 manifest，在目标项目填写采用记录并验证真实详情页面。"
+      ],
+      "config": [
+        "DetailHeader、DetailBackButton、DetailTabs、DetailPanel 和 DetailSection 可按需要组合。",
+        "id 在页面内唯一；tabs 内 id 唯一且 active 必须有效。权限移除当前页签时由宿主回退，组件不自动选择。",
+        "字段状态、保存、返回路由和未保存保护属于宿主；演练中的表单保留与权限回退不是组件自动提供的业务行为。",
+        "接入演练通过不等于真实业务项目采用。记录源码检查 MATCH 只证明文件字节一致；STALE 时保留旧证据，评估影响后复验。",
+        "检查 detail-workspace.css 中 enterprise 类选择器与目标宿主的冲突，不复制整套 CRM CSS；实际接入仍需验证空态、权限及复杂表单。"
+      ],
+      "dependencies": [
+        "DetailHeader",
+        "DetailBackButton",
+        "DetailTabs",
+        "DetailPanel",
+        "DetailSection",
+        "React",
+        "@tabler/icons-react"
+      ],
+      "tags": [
+        "详情",
+        "页内Tab",
+        "返回"
+      ],
+      "thumbnail": "/template-previews/CMP-09-detail-workspace.png",
+      "previewSource": {
+        "name": "客户详情",
+        "path": "/showcase/customers",
+        "capturedAt": "2026-10-06",
+        "scope": "客户详情真实页面，包含返回、摘要和页内分区。"
+      },
+      "applications": [
+        {
+          "name": "客户详情",
+          "path": "/showcase/customers",
+          "pageType": "对象详情"
+        },
+        {
+          "name": "商机详情",
+          "path": "/showcase/opportunities",
+          "pageType": "对象详情"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-01-05",
+        "TPL-03-01"
+      ]
+    },
+    {
+      "code": "CMP-10",
+      "name": "DocumentWorkspace 单据详情容器",
+      "summary": "以统一详情头、主表信息与下方明细表组织单据，默认不强加内容 Tab。",
+      "sourcePaths": [
+        "packages/web/src/common/DocumentWorkspace.tsx",
+        "packages/web/src/common/document-workspace.css"
+      ],
+      "usageSnippet": "<DocumentWorkspace title={orderNo} fields={summary} onBack={back} backLabel=\"返回单据列表\">\n  <DetailSection title=\"明细\">{lineGrid}</DetailSection>\n</DocumentWorkspace>",
+      "suitableFor": [
+        "入库单、报价单、采购单等主表与明细表"
+      ],
+      "steps": [
+        "查看态隐藏新增行与行操作；状态及权限允许时进入编辑。",
+        "提交时保持原详情容器，失败保留输入。",
+        "跨项目接入阅读 _methodology/examples/document-workspace-adoption/README.md；在仓库根运行 node _methodology/scripts/rehearse-query-bar.mjs --component CMP-10 --clean-install，检查独立安装、类型和构建结果。",
+        "通过 _methodology/scripts/verify-document-workspace-adoption.mjs 验证构建产物中的查看、编辑、取消恢复、行操作和窄屏局部滚动。"
+      ],
+      "config": [
+        "业务字段、明细表、状态动作和保存离开守卫由单据页面传入。",
+        "接入演练通过不等于真实业务项目采用；内存保存和合成状态选择不是生产审批、权限或过账实现。",
+        "证据按版本保留；运行 component-evidence-inventory.mjs 检查历史记录。STALE 时判断变化和重验范围，不直接刷新旧哈希。"
+      ],
+      "dependencies": [
+        "DetailWorkspace",
+        "DetailHeader",
+        "DetailSection",
+        "React"
+      ],
+      "tags": [
+        "单据",
+        "主从明细",
+        "详情"
+      ],
+      "thumbnail": "/template-previews/CMP-10-document-workspace.png",
+      "previewSource": {
+        "name": "入库单详情",
+        "path": "/showcase/inbound-orders",
+        "capturedAt": "2026-10-06",
+        "scope": "入库单真实详情，展示主表信息及明细区域。"
+      },
+      "applications": [
+        {
+          "name": "入库单详情",
+          "path": "/showcase/inbound-orders",
+          "pageType": "单据详情"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-03-03"
+      ]
+    },
+    {
+      "code": "CMP-11",
+      "name": "DrawerWorkspace 侧边抽屉",
+      "summary": "在当前页面上展开右侧任务容器，统一遮罩、焦点管理、关闭和底部操作区。",
+      "sourcePaths": [
+        "packages/web/src/common/DrawerWorkspace.tsx",
+        "packages/web/src/common/drawer-workspace.css"
+      ],
+      "usageSnippet": "<DrawerWorkspace title=\"组件信息\" onClose={close} footer={<button onClick={save}>保存</button>}>\n  {detailFields}\n</DrawerWorkspace>",
+      "suitableFor": [
+        "组件详情、快速修改、审批处理和辅助任务"
+      ],
+      "steps": [
+        "打开后聚焦抽屉；未被子控件消费的 Escape 或关闭按钮请求 onClose，由宿主决定卸载。当前没有点击遮罩关闭行为。",
+        "涉及修改时由调用方拦截未保存离开并执行保存。",
+        "阅读 _methodology/examples/drawer-workspace-adoption/README.md；运行 node _methodology/scripts/rehearse-query-bar.mjs --component CMP-11 --clean-install。",
+        "使用 _methodology/scripts/verify-drawer-workspace-adoption.mjs 验证构建产物的真实键盘循环、子控件 Escape、宿主关闭守卫和入口焦点恢复。"
+      ],
+      "config": [
+        "title、subtitle、children、footer、onClose；业务权限和保存行为不在组件内。",
+        "接入演练通过不等于真实业务项目采用。当前不提供背景 inert、滚动锁或完整多层弹窗管理；aria-modal 声明不替代验证。",
+        "agent-* 样式由 AgentAssistantDrawer 显式导入，通用抽屉导出不包含该业务 CSS；Portal 位于 body，需核对宿主样式。",
+        "记录为历史证据，源码变化可能显示 STALE；按影响范围重验，不改旧哈希。"
+      ],
+      "dependencies": [
+        "React / ReactDOM（Portal）",
+        "@tabler/icons-react"
+      ],
+      "tags": [
+        "抽屉",
+        "焦点管理",
+        "任务容器"
+      ],
+      "thumbnail": "/template-previews/CMP-11-drawer-workspace.png",
+      "previewSource": {
+        "name": "BOM 管理",
+        "path": "/showcase/boms",
+        "capturedAt": "2026-10-06",
+        "scope": "BOM 页面打开节点编辑抽屉的真实截图。"
+      },
+      "applications": [
+        {
+          "name": "BOM组件详情",
+          "path": "/showcase/boms",
+          "pageType": "组件详情抽屉"
+        },
+        {
+          "name": "商机管理",
+          "path": "/showcase/opportunities",
+          "pageType": "Agent辅助抽屉"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-05-06"
+      ]
+    },
+    {
+      "code": "CMP-12",
+      "name": "ProductPickerDialog 产品选择弹窗",
+      "summary": "支持单选或多选、分页查询、跨页保留选择和确认回调的产品选择器。",
+      "sourcePaths": [
+        "packages/web/src/common/ProductPickerDialog.tsx",
+        "packages/web/src/common/product-picker-dialog.css"
+      ],
+      "usageSnippet": "<ProductPickerDialog mode=\"multiple\" loadProducts={queryProducts} onConfirm={addProducts} onClose={close} />",
+      "suitableFor": [
+        "报价明细、销售订单和其他关联产品的任务"
+      ],
+      "steps": [
+        "搜索和翻页后选择产品，选中项跨页保留；确认时回调选中产品。"
+      ],
+      "config": [
+        "调用方提供分页查询与保存回调；价格、数量和单据规则不固化在选择器内。"
+      ],
+      "dependencies": [
+        "DeclarativeDataGrid",
+        "React",
+        "@forge-crm/contracts：Product / ProductList 类型"
+      ],
+      "tags": [
+        "弹窗",
+        "产品选择",
+        "跨页多选"
+      ],
+      "thumbnail": "/template-previews/CMP-12-product-picker.png",
+      "previewSource": {
+        "name": "报价单",
+        "path": "/showcase/quotations",
+        "capturedAt": "2026-10-06",
+        "scope": "报价单新增明细时打开产品选择弹窗的真实截图。"
+      },
+      "applications": [
+        {
+          "name": "报价管理",
+          "path": "/showcase/quotations",
+          "pageType": "明细产品选择"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-04-01"
+      ]
+    },
+    {
+      "code": "CMP-13",
+      "name": "Dashboard 指标与消息模块",
+      "summary": "组合 MetricCard 指标卡和 DashboardModule 信息块，承载工作台指标、待办与预警。",
+      "sourcePaths": [
+        "packages/web/src/common/dashboard/Dashboard.tsx",
+        "packages/web/src/common/dashboard/dashboard.css"
+      ],
+      "usageSnippet": "<MetricCard title=\"跟进商机\" value={count} unit=\"个\" note=\"本月预计签约\">金额：{amount}</MetricCard>\n<DashboardModule title=\"待处理事项\" count={todos.length}>{todoList}</DashboardModule>",
+      "suitableFor": [
+        "工作台、经营概览和业务监控"
+      ],
+      "steps": [
+        "页面按服务端指标口径计算数值，再传入卡片和信息块。"
+      ],
+      "config": [
+        "指标口径、单位、颜色和明细跳转由调用页面决定。"
+      ],
+      "dependencies": [
+        "MetricCard",
+        "DashboardModule",
+        "React",
+        "全局 ipl-type-metric 指标样式与令牌"
+      ],
+      "tags": [
+        "工作台",
+        "指标卡",
+        "待办"
+      ],
+      "thumbnail": "/template-previews/my-workbench.png",
+      "previewSource": {
+        "name": "我的工作台",
+        "path": "/showcase/workbench",
+        "capturedAt": "2026-10-06",
+        "scope": "实际工作台内容区域，上方指标卡与下方待办/预警模块。"
+      },
+      "applications": [
+        {
+          "name": "我的工作台",
+          "path": "/showcase/workbench",
+          "pageType": "仪表盘"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-07-01"
+      ]
+    },
+    {
+      "code": "CMP-14",
+      "name": "SalesFunnel 销售漏斗",
+      "summary": "按业务阶段顺序显示阶段项目数、金额和赢率，点击阶段由页面下钻对应商机列表。",
+      "sourcePaths": [
+        "packages/web/src/common/analytics/SalesFunnel.tsx",
+        "packages/web/src/common/analytics/sales-funnel.css"
+      ],
+      "usageSnippet": "<SalesFunnel title=\"销售漏斗\" stages={stageTotals} selected={stageId} onSelect={setStageId} />",
+      "suitableFor": [
+        "商机分析、销售预测与阶段转化概览"
+      ],
+      "steps": [
+        "传入已按阶段模板排序的统计数据；点击某阶段通过 onSelect 筛选下方列表。"
+      ],
+      "config": [
+        "数据聚合、组织和日期范围由页面或 API 负责；组件不推断阶段顺序或金额口径。"
+      ],
+      "dependencies": [
+        "React JSX runtime"
+      ],
+      "tags": [
+        "销售分析",
+        "漏斗",
+        "下钻"
+      ],
+      "thumbnail": "/template-previews/opportunity-analysis-funnel.png",
+      "previewSource": {
+        "name": "商机分析",
+        "path": "/showcase/opportunity-analysis",
+        "capturedAt": "2026-10-06",
+        "scope": "销售漏斗页签实际内容，含阶段图形与下方商机列表。"
+      },
+      "applications": [
+        {
+          "name": "商机分析",
+          "path": "/showcase/opportunity-analysis",
+          "pageType": "销售漏斗"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-07-01"
+      ]
+    },
+    {
+      "code": "CMP-15",
+      "name": "AgentAssistantDrawer 商机助手抽屉",
+      "summary": "封装商机 Agent 任务创建、进度、来源依据、结果审阅及沟通计划保存流程。",
+      "sourcePaths": [
+        "packages/web/src/common/agent/AgentAssistantDrawer.tsx",
+        "packages/web/src/common/agent/agent-assistant-drawer.css"
+      ],
+      "usageSnippet": "<AgentAssistantDrawer systemCode={systemCode} contextId={opportunityId} contextName={name} api={agentGateway} canSave={canEdit} onClose={close} onSaved={reload} />",
+      "suitableFor": [
+        "商机详情中对当前商机及跟进记录进行 AI 分析"
+      ],
+      "steps": [
+        "提供 AgentGateway 的预览、列表、详情、开始、取消和保存方法。",
+        "任务完成后审阅依据与建议，再明确保存沟通计划。"
+      ],
+      "config": [
+        "当前实现依赖商机 Agent 契约与任务状态；其他业务域须先替换模型和 API，不能直接沿用商机字段。"
+      ],
+      "dependencies": [
+        "DrawerWorkspace",
+        "AgentGateway",
+        "React",
+        "@forge-crm/contracts：aiSectionTitles 运行时映射与 Agent 类型",
+        "agent-assistant-drawer.css：商机助手业务内容样式，不能由通用 DrawerWorkspace 隐式提供"
+      ],
+      "tags": [
+        "Agent",
+        "商机",
+        "任务抽屉"
+      ],
+      "thumbnail": "/template-previews/CMP-15-agent-assistant.png",
+      "previewSource": {
+        "name": "商机详情",
+        "path": "/showcase/opportunities",
+        "capturedAt": "2026-10-06",
+        "scope": "商机详情打开 Agent 小助手的真实截图。"
+      },
+      "applications": [
+        {
+          "name": "商机详情",
+          "path": "/showcase/opportunities",
+          "pageType": "Agent小助手"
+        }
+      ],
+      "relatedTemplates": [
+        "TPL-08-04"
+      ]
+    }
+  ]
+}

@@ -15,9 +15,9 @@ function money(value: bigint): string { if (value > MAX_MONEY) throw new Error('
 export function quotationLineAmount(quantity: string, unitPrice: string, discount: string): string {
   const q = decimalUnits(quantity, 4), p = decimalUnits(unitPrice, 2), d = decimalUnits(discount, 2);
   if (q <= 0n || q >= 10n ** 18n) throw new Error('数量必须大于零且不超过十四位整数');
-  if (d > 10000n) throw new Error('折扣必须在 0% 至 100% 之间');
+  if (d > 100n) throw new Error('折扣必须在 0 至 1 之间');
   if (p > MAX_MONEY) throw new Error('单价超出允许范围');
-  return money((q * p * (10000n - d) + 50000000n) / 100000000n);
+  return money((q * p * d + 500000n) / 1000000n);
 }
 export function quotationTotal(amounts: string[]): string { return money(amounts.reduce((sum, value) => sum + decimalUnits(value, 2), 0n)); }
 export type PriceTier = { from: string; to: string | null; price: string };
@@ -56,8 +56,8 @@ export const pricingWriteSchema = z.strictObject({
   if (v.pricingType === 'TIERED') { try { validateTiers(v.tiers); } catch (e) { ctx.addIssue({ code: 'custom', path: ['tiers'], message: (e as Error).message }); } }
 });
 export const quotationLineWriteSchema = z.strictObject({
-  id: z.string().uuid(), productId: z.string().uuid(), priceId: z.string().uuid(), quantity: quantitySchema,
-  unitPrice: priceSchema, discount: decimal(2, 3).refine((v) => decimalUnits(v, 2) <= 10000n, '折扣不能超过100%'),
+  id: z.string().uuid(), productId: z.string().uuid(), priceId: z.string().uuid().nullable(), quantity: quantitySchema,
+  unitPrice: priceSchema, discount: decimal(2, 1).refine((v) => decimalUnits(v, 2) <= 100n, '折扣必须在 0 至 1 之间'),
   delivery: z.string().trim().max(200).default(''), remark: z.string().trim().max(2000).default(''),
 });
 export const quotationDraftSchema = z.strictObject({

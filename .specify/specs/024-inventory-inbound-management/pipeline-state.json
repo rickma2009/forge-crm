@@ -6,7 +6,7 @@
   "tasks": "complete",
   "implementation": "verified",
   "releaseGate": "approved",
-  "updatedAt": "2026-09-24",
+  "updatedAt": "2026-10-05",
   "gates": {
     "business": "approved-by-user",
     "specification": "approved-by-user",
@@ -18,5 +18,19 @@
     "authorization": "用户明确要求添加字典并修改页面；沿用已批准技术栈，无另行人工评审声明。",
     "implementation": "implemented-local-validated",
     "verification": "9 web tests, 5 server tests, 1 PostgreSQL test; types/lint/build/browser passed"
+  },
+  "itemReferenceDictionaryChange": {
+    "source": "../../sources/REQSRC-102-item-source-lifecycle-and-reference-codes-20261005/source.md",
+    "authorization": "用户确认按推荐方案实现；字段可空、存量不推断回填、稳定编码及停用原值保留策略已写入需求与Plan。",
+    "implementation": "implemented-local; migration applied and demo-portal dictionaries initialized",
+    "verification": "Prisma validate, contracts build, server/web typecheck, database-governance checker, 8 web tests, 4 server tests and local PostgreSQL migration/initialization passed; Chrome confirmed the item list renders and both new columns are enabled in the default view configuration",
+    "release": "not-deployed"
+  },
+  "itemAutoCodeChange": {
+    "source": "../../sources/REQSRC-105-item-code-generation-disable-existing-20261005/source.md",
+    "authorization": "用户明确要求实现物料产品分类流水编码，并停用既有产品和物料。",
+    "implementation": "implemented-local; existing PRODUCT and MATERIAL records disabled in demo database",
+    "verification": "contracts build, server/web typecheck, database status and BOM reference checks passed; no automated tests run",
+    "release": "not-deployed"
   }
 }

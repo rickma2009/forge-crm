@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { listViewConfigSchema, businessListObjects, isBusinessListObject } from '@forge-crm/contracts';
+import { listViewConfigSchema, businessListDefaultConfig, businessListObjects, isBusinessListObject } from '@forge-crm/contracts';
 import { z } from 'zod';
 import { DatabaseService } from '../database/database.service';
 import { ApiException } from '../http/api-exceptions';
@@ -22,6 +22,18 @@ export class ListViewService {
 
   private validateConfig(pageCode: string, config: unknown) {
     const parsed = listViewConfigSchema.parse(config);
+    if ((parsed.viewMode === 'KANBAN' || parsed.kanban) && pageCode !== 'opportunity-directory') throw new ApiException('BAD_REQUEST', 400, '该对象不支持看板');
+    if (parsed.viewMode === 'KANBAN' && !parsed.kanban) throw new ApiException('BAD_REQUEST', 400, '看板必须指定模板');
+    if (parsed.kanban?.cardFields.some(key => !parsed.columns.some(column => column.key === key && column.visible))) throw new ApiException('BAD_REQUEST', 400, '看板字段必须在本视图的显示字段范围内');
+    // Old personal layouts predate these lifecycle fields. Add only missing fields;
+    // preserve an explicit visibility choice after the user has configured them.
+    if (pageCode === 'opportunity-directory') {
+      let position = Math.max(0, parsed.columns.findIndex(c => c.key === 'customerName') + 1);
+      for (const column of businessListDefaultConfig(pageCode).columns.filter(c => ['businessStatus', 'expectedSignDate', 'signedDate', 'lostDate'].includes(c.key))) {
+        if (parsed.columns.some(c => c.key === column.key)) continue;
+        if (column.visible) parsed.columns.splice(position++, 0, column); else parsed.columns.push(column);
+      }
+    }
     const fields = pageCode === 'customer-directory' ? CUSTOMER_FIELDS : new Set(isBusinessListObject(pageCode) ? Object.keys(businessListObjects[pageCode].fields) : []);
     const keys = new Set<string>();
     for (const column of parsed.columns) {
@@ -31,9 +43,11 @@ export class ListViewService {
     if (!parsed.columns.some((column) => column.visible)) throw new ApiException('BAD_REQUEST', HttpStatus.BAD_REQUEST, '至少保留一个显示字段');
     if (!fields.has(parsed.sort.field) && !(isBusinessListObject(pageCode) && parsed.sort.field === 'updatedAt')) throw new ApiException('BAD_REQUEST', HttpStatus.BAD_REQUEST, '排序字段无效');
     for (const key of Object.keys(parsed.filters)) if (!fields.has(key)) throw new ApiException('BAD_REQUEST', HttpStatus.BAD_REQUEST, '过滤字段无效');
+    for (const key of Object.keys(parsed.columnFilters ?? {})) if (!fields.has(key)) throw new ApiException('BAD_REQUEST', HttpStatus.BAD_REQUEST, '列筛选字段无效');
     if (isBusinessListObject(pageCode)) {
       if (!parsed.columns.some((column) => column.key === businessListObjects[pageCode].identity && column.visible)) throw new ApiException('BAD_REQUEST', HttpStatus.BAD_REQUEST, '必须保留记录详情入口字段');
-      if (parsed.sort.field !== 'updatedAt' || parsed.sort.direction !== 'desc' || Object.keys(parsed.filters).length || parsed.columns.some((column) => column.queryVisible || column.queryCollapsed || column.fixed !== null)) throw new ApiException('BAD_REQUEST', HttpStatus.BAD_REQUEST, '该对象仅支持列显示、列顺序、列宽和分页设置；查询条件由页面维护，按更新时间倒序');
+      if (pageCode === 'item-directory' && (Object.keys(parsed.filters).length || parsed.columns.some((column) => column.queryVisible || column.queryCollapsed))) throw new ApiException('BAD_REQUEST', HttpStatus.BAD_REQUEST, '物料产品查询条件由顶部查询栏和列筛选维护');
+      if (pageCode !== 'item-directory' && (parsed.sort.field !== 'updatedAt' || parsed.sort.direction !== 'desc' || Object.keys(parsed.filters).length || parsed.columns.some((column) => column.queryVisible || column.queryCollapsed || column.fixed !== null))) throw new ApiException('BAD_REQUEST', HttpStatus.BAD_REQUEST, '该对象仅支持列显示、列顺序、列宽和分页设置；查询条件由页面维护，按更新时间倒序');
     }
     return parsed;
   }
@@ -45,6 +59,13 @@ export class ListViewService {
   async resolve(userId: string, systemCode: string, pageCode: string, actionCode: string) {
     const roleIds = await this.roleIds(userId, systemCode);
     if (!roleIds.length) throw new ApiException('FORBIDDEN', HttpStatus.FORBIDDEN, '当前用户没有有效角色');
+    if ((pageCode === 'inbound-order-directory' || pageCode === 'bom-directory') && actionCode === 'view') {
+      await this.db.uiSystemListView.upsert({
+        where: { systemCode_pageCode_actionCode_viewCode: { systemCode, pageCode, actionCode, viewCode: 'object-default' } },
+        update: {},
+        create: { applicationId: await this.applicationId(systemCode), systemCode, pageCode, actionCode, viewCode: 'object-default', viewName: `${businessListObjects[pageCode].name}默认视图`, isDefault: true, allowPersonalOverride: true, priority: 100, status: 'ACTIVE', config: businessListDefaultConfig(pageCode), createdBy: 'system:list-view-bootstrap', updatedBy: 'system:list-view-bootstrap' },
+      });
+    }
     const systems = await this.db.uiSystemListView.findMany({
       where: { systemCode, pageCode, actionCode, status: 'ACTIVE', OR: [
         { roleAssignments: { some: { roleId: { in: roleIds }, status: 'ACTIVE' } } },

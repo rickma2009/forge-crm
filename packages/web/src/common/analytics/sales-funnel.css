@@ -1,0 +1,7 @@
+.sales-funnel { padding: 16px 20px; border: 1px solid var(--ipl-line); border-radius: 8px; background: #fff; }
+.sales-funnel h2 { margin: 0 0 16px; text-align: center; color: var(--ipl-ink); }
+.sales-funnel-stages { display: grid; justify-items: center; gap: 4px; }
+.sales-funnel-stages button { display: grid; justify-items: center; gap: 3px; min-height: 72px; padding: 10px 8px; border: 0; border-radius: 0; color: #fff; cursor: pointer; }
+.sales-funnel-stages button strong, .sales-funnel-stages button span, .sales-funnel-stages button small { color: inherit; }
+.sales-funnel-stages button[aria-pressed=true], .sales-funnel-stages button:focus-visible { filter: brightness(.84); outline: none; box-shadow: inset 0 0 0 3px #fff; }
+.sales-funnel-stages button:hover { filter: brightness(.94); }

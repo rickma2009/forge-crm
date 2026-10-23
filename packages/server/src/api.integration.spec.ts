@@ -270,16 +270,27 @@ describeDatabase('database-backed auth and authorization API', () => {
     const team = tree.body.items.find((item: { unitCode: string }) => item.unitCode === 'tv-rd-center');
     expect(root).toMatchObject({ parentId: null, depth: 0, unitType: 'COMPANY' });
     expect(team.depth).toBe(2);
+    expect(root.managerEmployeeId).toBeTruthy();
+    const analytics = await admin.agent.get('/api/systems/demo-portal/opportunity-analysis');
+    expect(analytics.status).toBe(200);
+    expect(analytics.body.organizations.every((item: { id: string }) => tree.body.items.find((unit: { id: string }) => unit.id === item.id)?.isSalesOrg === true)).toBe(true);
+    expect((await admin.agent.get(`/api/systems/demo-portal/opportunity-analysis?orgUnitId=${root.id}`)).status).toBe(400);
+    const managers = await admin.agent.get('/api/systems/demo-portal/organization/units/manager-options');
+    expect(managers.status).toBe(200);
+    expect(managers.body.items.some((item: { id: string }) => item.id === root.managerEmployeeId)).toBe(true);
     expect(root).not.toHaveProperty('tenantId');
     expect(root).not.toHaveProperty('createdBy');
 
     const unitCode = `integration-unit-${Date.now()}`;
     let createdId: string | undefined;
     try {
-      const created = await admin.agent.post('/api/systems/demo-portal/organization/units').set('Origin', origin).set('X-CSRF-Token', admin.csrf).send({ parentId: root.id, unitCode, unitName: '集成测试组织', unitType: 'DEPARTMENT', sortNo: 900, status: 'ACTIVE', effectiveAt: '2026-01-01T00:00:00.000Z', expiresAt: null, remark: '测试完成后清理' });
+      const missingManager = await admin.agent.post('/api/systems/demo-portal/organization/units').set('Origin', origin).set('X-CSRF-Token', admin.csrf).send({ parentId: root.id, unitCode: `${unitCode}-missing`, unitName: '未指定负责人', unitType: 'DEPARTMENT', effectiveAt: '2026-01-01T00:00:00.000Z' });
+      expect(missingManager.status).toBe(400);
+      const created = await admin.agent.post('/api/systems/demo-portal/organization/units').set('Origin', origin).set('X-CSRF-Token', admin.csrf).send({ parentId: root.id, unitCode, unitName: '集成测试组织', unitType: 'DEPARTMENT', managerEmployeeId: root.managerEmployeeId, isSalesOrg: true, isRdOrg: true, isPlatformOrg: false, sortNo: 900, status: 'ACTIVE', effectiveAt: '2026-01-01T00:00:00.000Z', expiresAt: null, remark: '测试完成后清理' });
       expect(created.status).toBe(201);
+      expect(created.body).toMatchObject({ depth: 1, isSalesOrg: true, isRdOrg: true, isPlatformOrg: false, managerEmployeeId: root.managerEmployeeId });
       createdId = created.body.id;
-      const selfParent = await admin.agent.patch(`/api/systems/demo-portal/organization/units/${createdId}`).set('Origin', origin).set('X-CSRF-Token', admin.csrf).send({ parentId: createdId, unitCode, unitName: '集成测试组织', unitType: 'DEPARTMENT', sortNo: 900, status: 'ACTIVE', effectiveAt: '2026-01-01T00:00:00.000Z', expiresAt: null, remark: null, version: 1 });
+      const selfParent = await admin.agent.patch(`/api/systems/demo-portal/organization/units/${createdId}`).set('Origin', origin).set('X-CSRF-Token', admin.csrf).send({ parentId: createdId, unitCode, unitName: '集成测试组织', unitType: 'DEPARTMENT', managerEmployeeId: root.managerEmployeeId, isSalesOrg: true, isRdOrg: true, isPlatformOrg: false, sortNo: 900, status: 'ACTIVE', effectiveAt: '2026-01-01T00:00:00.000Z', expiresAt: null, remark: null, version: 1 });
       expect(selfParent.status).toBe(409);
     } finally {
       if (createdId) {
@@ -299,16 +310,19 @@ describeDatabase('database-backed auth and authorization API', () => {
     expect(systemChildren(navigation.body).map((node) => node.menuCode)).toContain('system-employees');
     const options = await admin.agent.get('/api/systems/demo-portal/organization/employees/options');
     expect(options.status).toBe(200);
+    expect(options.body.posts.some((item: { value: string }) => item.value === 'sales-representative')).toBe(true);
+    expect(options.body.jobTitles.some((item: { value: string }) => item.value === 'SPECIALIST')).toBe(true);
     const organization = options.body.organizations.find((item: { unitName: string }) => item.unitName === '销售一部');
     const position = options.body.positions.find((item: { positionCode: string }) => item.positionCode === 'sales-representative');
-    const suffix = Date.now().toString(); const employeeNo = `IT${suffix}`; const account = `employee.${suffix}`; let employeeId: string | undefined;
+    const suffix = Date.now().toString(); const account = `employee.${suffix}`; let employeeId: string | undefined;
     try {
-      const rejected = await admin.agent.post('/api/systems/demo-portal/organization/employees').set('Origin', origin).set('X-CSRF-Token', admin.csrf).send({ employeeNo, employeeName: '缺少部门', account, initialPassword: testPassword('INITIAL_VIEWER_PASSWORD'), positionId: position.id, employmentType: 'FULL_TIME', status: 'ACTIVE', effectiveAt: '2026-01-01T00:00:00.000Z' });
+      const rejected = await admin.agent.post('/api/systems/demo-portal/organization/employees').set('Origin', origin).set('X-CSRF-Token', admin.csrf).send({ employeeName: '缺少部门', account, initialPassword: testPassword('INITIAL_VIEWER_PASSWORD'), positionId: position.id, employmentType: 'FULL_TIME', status: 'ACTIVE', effectiveAt: '2026-01-01T00:00:00.000Z' });
       expect(rejected.status).toBe(400);
-      const created = await admin.agent.post('/api/systems/demo-portal/organization/employees').set('Origin', origin).set('X-CSRF-Token', admin.csrf).send({ employeeNo, employeeName: '集成员工', account, initialPassword: testPassword('INITIAL_VIEWER_PASSWORD'), orgUnitId: organization.id, positionId: position.id, employmentType: 'FULL_TIME', email: 'integration@example.com', mobile: '13800000000', status: 'ACTIVE', effectiveAt: '2026-01-01T00:00:00.000Z', remark: '测试完成后清理' });
+      const created = await admin.agent.post('/api/systems/demo-portal/organization/employees').set('Origin', origin).set('X-CSRF-Token', admin.csrf).send({ employeeName: '集成员工', account, initialPassword: testPassword('INITIAL_VIEWER_PASSWORD'), orgUnitId: organization.id, postValue: 'sales-representative', jobTitleValue: 'SPECIALIST', employmentType: 'FULL_TIME', email: 'integration@example.com', mobile: '13800000000', status: 'ACTIVE', effectiveAt: '2026-01-01T00:00:00.000Z', remark: '测试完成后清理' });
       expect(created.status).toBe(201); employeeId = created.body.id;
-      expect(created.body).toMatchObject({ employeeNo, account, orgUnitName: '销售一部', positionName: '销售代表' });
-      const list = await admin.agent.get(`/api/systems/demo-portal/organization/employees?keyword=${employeeNo}`);
+      expect(created.body.employeeNo).toMatch(/^1[0-9]{6}$/);
+      expect(created.body).toMatchObject({ account, orgUnitName: '销售一部', positionName: '销售代表', postValue: 'sales-representative', jobTitleValue: 'SPECIALIST' });
+      const list = await admin.agent.get(`/api/systems/demo-portal/organization/employees?keyword=${created.body.employeeNo}`);
       expect(list.status).toBe(200); expect(list.body.items[0]).not.toHaveProperty('email'); expect(list.body.items[0].maskedMobile).toBe('138****0000');
       const employeeLogin = await login(account, testPassword('INITIAL_VIEWER_PASSWORD'));
       expect((await employeeLogin.agent.get('/api/systems/demo-portal/navigation')).status).toBe(200);

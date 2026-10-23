@@ -93,6 +93,8 @@ enum InboundStatus {
 enum InventoryMoveType {
   INBOUND
   REVERSAL
+  OUTBOUND
+  OUTBOUND_REVERSAL
 }
 
 model SysTenant {
@@ -118,6 +120,10 @@ model OrgUnit {
   unitCode            String                  @map("unit_code") @db.VarChar(64)
   unitName            String                  @map("unit_name") @db.VarChar(128)
   unitType            OrgUnitType             @map("unit_type")
+  isSalesOrg          Boolean                 @default(false) @map("is_sales_org")
+  isRdOrg             Boolean                 @default(false) @map("is_rd_org")
+  isPlatformOrg       Boolean                 @default(false) @map("is_platform_org")
+  managerEmployeeId   String?                 @map("manager_employee_id") @db.Uuid
   sortNo              Int                     @default(0) @map("sort_no")
   status              RecordStatus            @default(ACTIVE)
   effectiveAt         DateTime                @default(now()) @map("effective_at") @db.Timestamptz(3)
@@ -131,6 +137,7 @@ model OrgUnit {
   tenant              SysTenant               @relation(fields: [tenantId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   parent              OrgUnit?                @relation("OrgUnitTree", fields: [parentId, tenantId], references: [id, tenantId], onDelete: Restrict, onUpdate: Cascade)
   children            OrgUnit[]               @relation("OrgUnitTree")
+  manager             OrgEmployee?            @relation("OrgUnitManager", fields: [managerEmployeeId, tenantId], references: [id, tenantId], onDelete: Restrict, onUpdate: Cascade)
   userAssignments     OrgUserAssignment[]
   employeeAssignments OrgEmployeeAssignment[]
   roleBindings        SysRoleSubjectBinding[]
@@ -139,6 +146,7 @@ model OrgUnit {
   @@unique([id, tenantId], map: "org_unit_id_tenant_key")
   @@index([tenantId, parentId, sortNo], map: "org_unit_tree_idx")
   @@index([tenantId, status], map: "org_unit_status_idx")
+  @@index([tenantId, isSalesOrg, status], map: "org_unit_sales_lookup_idx")
   @@map("org_unit")
 }
 
@@ -158,11 +166,28 @@ model SysApplication {
   authorizationResources SysAuthorizationResource[]
   parameters             SysParameter[]
   userGroups             SysUserGroup[]
+  boms                   ScmBom[]
 
+  @@unique([id, tenantId, applicationCode], map: "sd_activity_app_scope_key")
   @@unique([tenantId, applicationCode], map: "sys_application_tenant_code_key")
   @@unique([id, tenantId], map: "sys_application_id_tenant_key")
   @@index([applicationCode, status], map: "sys_application_code_status_idx")
   @@map("sys_application")
+}
+
+model SysUserFavorite {
+  id            String   @id @default(uuid()) @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  userId        String   @map("user_id") @db.Uuid
+  targetType    String   @map("target_type") @db.VarChar(24)
+  targetId      String   @map("target_id") @db.Uuid
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@unique([applicationId, userId, targetType, targetId], map: "sys_user_favorite_target_key")
+  @@unique([id, tenantId, applicationId], map: "sys_user_favorite_scope_key")
+  @@index([applicationId, userId, createdAt(sort: Desc), id(sort: Desc)], map: "sys_user_favorite_owner_idx")
+  @@map("sys_user_favorite")
 }
 
 model SysRoleGroup {
@@ -386,22 +411,24 @@ model IamUser {
 }
 
 model OrgEmployee {
-  id           String                  @id @default(uuid()) @db.Uuid
-  tenantId     String                  @map("tenant_id") @db.Uuid
-  employeeName String                  @map("employee_name") @db.VarChar(128)
-  email        String?                 @db.VarChar(256)
-  mobile       String?                 @db.VarChar(32)
-  status       RecordStatus            @default(ACTIVE)
-  remark       String?                 @db.VarChar(500)
-  version      Int                     @default(1)
-  createdBy    String                  @map("created_by") @db.Uuid
-  updatedBy    String                  @map("updated_by") @db.Uuid
-  createdAt    DateTime                @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt    DateTime                @updatedAt @map("updated_at") @db.Timestamptz(3)
-  tenant       SysTenant               @relation(fields: [tenantId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  employments  OrgEmployment[]
-  assignments  OrgEmployeeAssignment[]
-  user         IamUser?
+  id            String                  @id @default(uuid()) @db.Uuid
+  tenantId      String                  @map("tenant_id") @db.Uuid
+  employeeName  String                  @map("employee_name") @db.VarChar(128)
+  email         String?                 @db.VarChar(256)
+  mobile        String?                 @db.VarChar(32)
+  jobTitleValue String?                 @map("job_title_value") @db.VarChar(64)
+  status        RecordStatus            @default(ACTIVE)
+  remark        String?                 @db.VarChar(500)
+  version       Int                     @default(1)
+  createdBy     String                  @map("created_by") @db.Uuid
+  updatedBy     String                  @map("updated_by") @db.Uuid
+  createdAt     DateTime                @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime                @updatedAt @map("updated_at") @db.Timestamptz(3)
+  tenant        SysTenant               @relation(fields: [tenantId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  employments   OrgEmployment[]
+  assignments   OrgEmployeeAssignment[]
+  managedUnits  OrgUnit[]               @relation("OrgUnitManager")
+  user          IamUser?
 
   @@unique([id, tenantId], map: "org_employee_id_tenant_key")
   @@index([tenantId, status, employeeName], map: "org_employee_lookup_idx")
@@ -784,23 +811,23 @@ model SysDictionary {
 }
 
 model SysDictionaryItem {
-  id           String        @id @default(uuid()) @db.Uuid
-  dictionaryId String        @map("dictionary_id") @db.Uuid
-  parentItemId String?       @map("parent_item_id") @db.Uuid
-  itemCode     String        @map("item_code") @db.VarChar(64)
-  itemValue    String        @map("item_value") @db.VarChar(128)
-  itemName     String        @map("item_name") @db.VarChar(128)
-  colorKey     String?       @map("color_key") @db.VarChar(32)
-  description  String?       @db.VarChar(512)
-  sortNo       Int           @default(0) @map("sort_no")
-  status       RecordStatus  @default(ACTIVE)
-  version      Int           @default(1)
-  createdBy    String        @map("created_by") @db.VarChar(128)
-  updatedBy    String        @map("updated_by") @db.VarChar(128)
-  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt    DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
-  dictionary   SysDictionary @relation(fields: [dictionaryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  parent       SysDictionaryItem? @relation("DictionaryItemTree", fields: [parentItemId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  id           String              @id @default(uuid()) @db.Uuid
+  dictionaryId String              @map("dictionary_id") @db.Uuid
+  parentItemId String?             @map("parent_item_id") @db.Uuid
+  itemCode     String              @map("item_code") @db.VarChar(64)
+  itemValue    String              @map("item_value") @db.VarChar(128)
+  itemName     String              @map("item_name") @db.VarChar(128)
+  colorKey     String?             @map("color_key") @db.VarChar(32)
+  description  String?             @db.VarChar(512)
+  sortNo       Int                 @default(0) @map("sort_no")
+  status       RecordStatus        @default(ACTIVE)
+  version      Int                 @default(1)
+  createdBy    String              @map("created_by") @db.VarChar(128)
+  updatedBy    String              @map("updated_by") @db.VarChar(128)
+  createdAt    DateTime            @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime            @updatedAt @map("updated_at") @db.Timestamptz(3)
+  dictionary   SysDictionary       @relation(fields: [dictionaryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  parent       SysDictionaryItem?  @relation("DictionaryItemTree", fields: [parentItemId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   children     SysDictionaryItem[] @relation("DictionaryItemTree")
 
   @@unique([dictionaryId, itemCode], map: "sys_dictionary_item_dict_code_key")
@@ -908,6 +935,7 @@ model CrmCustomer {
   contacts       CrmCustomerContact[]
   addresses      CrmCustomerAddress[]
 
+  @@unique([id, systemCode], map: "sd_activity_customer_scope_key")
   @@unique([systemCode, customerCode], map: "crm_customer_system_code_customer_code_key")
   @@unique([systemCode, customerName], map: "crm_customer_system_code_customer_name_key")
   @@index([systemCode, statusValue, categoryValue, updatedAt(sort: Desc)], map: "crm_customer_list_idx")
@@ -966,23 +994,24 @@ model CrmCustomerAddress {
 }
 
 model SdProductPrice {
-  id String @id @default(uuid()) @db.Uuid
-  tenantId String @map("tenant_id") @db.Uuid
-  productId String @map("product_id") @db.Uuid
-  itemCode String @map("item_code") @db.VarChar(32)
-  version Int
-  pricingType String @default("STANDARD") @map("pricing_type") @db.VarChar(16)
-  currencyCode String @default("CNY") @map("currency_code") @db.Char(3)
-  unitPrice Decimal? @map("unit_price") @db.Decimal(18, 2)
-  effectiveDate DateTime @map("effective_date") @db.Date
-  expiresDate DateTime? @map("expires_date") @db.Date
-  status String @default("ACTIVE") @db.VarChar(16)
-  remark String? @db.VarChar(1000)
-  createdBy String @map("created_by") @db.Uuid
-  updatedBy String @map("updated_by") @db.Uuid
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
-  tiers SdPriceTier[]
+  id            String        @id @default(uuid()) @db.Uuid
+  tenantId      String        @map("tenant_id") @db.Uuid
+  productId     String        @map("product_id") @db.Uuid
+  itemCode      String        @map("item_code") @db.VarChar(32)
+  version       Int
+  pricingType   String        @default("STANDARD") @map("pricing_type") @db.VarChar(16)
+  currencyCode  String        @default("CNY") @map("currency_code") @db.Char(3)
+  unitPrice     Decimal?      @map("unit_price") @db.Decimal(18, 2)
+  effectiveDate DateTime      @map("effective_date") @db.Date
+  expiresDate   DateTime?     @map("expires_date") @db.Date
+  status        String        @default("ACTIVE") @db.VarChar(16)
+  remark        String?       @db.VarChar(1000)
+  createdBy     String        @map("created_by") @db.Uuid
+  updatedBy     String        @map("updated_by") @db.Uuid
+  createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+  tiers         SdPriceTier[]
+
   @@unique([productId, version])
   @@unique([tenantId, itemCode, version], map: "sd_price_item_version_key")
   @@unique([id, tenantId, productId])
@@ -991,67 +1020,70 @@ model SdProductPrice {
 }
 
 model SysAttachment {
-  id String @id @default(uuid()) @db.Uuid
-  tenantId String @map("tenant_id") @db.Uuid
-  applicationId String @map("application_id") @db.Uuid
-  ownerType String @map("owner_type") @db.VarChar(32)
-  ownerId String @map("owner_id") @db.Uuid
-  originalName String @map("original_name") @db.VarChar(255)
-  attachmentType String @map("attachment_type") @db.VarChar(16)
-  mimeType String @map("mime_type") @db.VarChar(128)
-  fileSize BigInt @map("file_size")
-  storageKey String @map("storage_key") @db.VarChar(512)
-  description String? @db.VarChar(1000)
-  fileVersion String? @map("file_version") @db.VarChar(64)
-  status String @default("ACTIVE") @db.VarChar(16)
-  version Int @default(1)
-  createdBy String @map("created_by") @db.Uuid
-  updatedBy String @map("updated_by") @db.Uuid
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  id             String   @id @default(uuid()) @db.Uuid
+  tenantId       String   @map("tenant_id") @db.Uuid
+  applicationId  String   @map("application_id") @db.Uuid
+  ownerType      String   @map("owner_type") @db.VarChar(32)
+  ownerId        String   @map("owner_id") @db.Uuid
+  originalName   String   @map("original_name") @db.VarChar(255)
+  attachmentType String   @map("attachment_type") @db.VarChar(16)
+  mimeType       String   @map("mime_type") @db.VarChar(128)
+  fileSize       BigInt   @map("file_size")
+  storageKey     String   @map("storage_key") @db.VarChar(512)
+  description    String?  @db.VarChar(1000)
+  fileVersion    String?  @map("file_version") @db.VarChar(64)
+  status         String   @default("ACTIVE") @db.VarChar(16)
+  version        Int      @default(1)
+  createdBy      String   @map("created_by") @db.Uuid
+  updatedBy      String   @map("updated_by") @db.Uuid
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
   @@unique([applicationId, storageKey], map: "sys_attach_app_storage_key")
   @@index([applicationId, ownerType, ownerId, status, createdAt], map: "sys_attach_owner_idx")
   @@map("sys_attachment")
 }
 
 model SdPriceTier {
-  id String @id @default(uuid()) @db.Uuid
-  priceId String @map("price_id") @db.Uuid
-  lowerQty Decimal @map("lower_qty") @db.Decimal(18, 4)
-  upperQty Decimal? @map("upper_qty") @db.Decimal(18, 4)
-  unitPrice Decimal @map("unit_price") @db.Decimal(18, 2)
-  price SdProductPrice @relation(fields: [priceId], references: [id], onDelete: Restrict)
+  id        String         @id @default(uuid()) @db.Uuid
+  priceId   String         @map("price_id") @db.Uuid
+  lowerQty  Decimal        @map("lower_qty") @db.Decimal(18, 4)
+  upperQty  Decimal?       @map("upper_qty") @db.Decimal(18, 4)
+  unitPrice Decimal        @map("unit_price") @db.Decimal(18, 2)
+  price     SdProductPrice @relation(fields: [priceId], references: [id], onDelete: Restrict)
+
   @@unique([priceId, lowerQty])
   @@map("sd_price_tier")
 }
 
 model SdQuotation {
-  id String @id @default(uuid()) @db.Uuid
-  tenantId String @map("tenant_id") @db.Uuid
-  applicationId String @map("application_id") @db.Uuid
-  systemCode String @map("system_code") @db.VarChar(64)
-  quoteCode String @unique @map("quote_code") @db.VarChar(64)
-  title String @db.VarChar(200)
-  customerId String @map("customer_id") @db.Uuid
-  customerName String @map("customer_name") @db.VarChar(255)
-  contactId String? @map("contact_id") @db.Uuid
-  contactName String? @map("contact_name") @db.VarChar(100)
-  opportunityId String? @map("opportunity_id") @db.Uuid
-  ownerUserId String @map("owner_user_id") @db.Uuid
-  quoteDate DateTime @map("quote_date") @db.Date
-  validUntil DateTime @map("valid_until") @db.Date
-  status String @default("DRAFT") @db.VarChar(16)
-  total Decimal @default(0) @db.Decimal(18, 2)
-  terms String @default("") @db.VarChar(8000)
-  remark String @default("") @db.VarChar(2000)
-  sourceQuoteId String? @map("source_quote_id") @db.Uuid
-  version Int @default(1)
-  createdBy String @map("created_by") @db.Uuid
-  updatedBy String @map("updated_by") @db.Uuid
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
-  lines SdQuotationLine[]
-  events SdQuoteEvent[]
+  id            String            @id @default(uuid()) @db.Uuid
+  tenantId      String            @map("tenant_id") @db.Uuid
+  applicationId String            @map("application_id") @db.Uuid
+  systemCode    String            @map("system_code") @db.VarChar(64)
+  quoteCode     String            @unique @map("quote_code") @db.VarChar(64)
+  title         String            @db.VarChar(200)
+  customerId    String            @map("customer_id") @db.Uuid
+  customerName  String            @map("customer_name") @db.VarChar(255)
+  contactId     String?           @map("contact_id") @db.Uuid
+  contactName   String?           @map("contact_name") @db.VarChar(100)
+  opportunityId String?           @map("opportunity_id") @db.Uuid
+  ownerUserId   String            @map("owner_user_id") @db.Uuid
+  quoteDate     DateTime          @map("quote_date") @db.Date
+  validUntil    DateTime          @map("valid_until") @db.Date
+  status        String            @default("DRAFT") @db.VarChar(16)
+  total         Decimal           @default(0) @db.Decimal(18, 2)
+  terms         String            @default("") @db.VarChar(8000)
+  remark        String            @default("") @db.VarChar(2000)
+  sourceQuoteId String?           @map("source_quote_id") @db.Uuid
+  version       Int               @default(1)
+  createdBy     String            @map("created_by") @db.Uuid
+  updatedBy     String            @map("updated_by") @db.Uuid
+  createdAt     DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime          @updatedAt @map("updated_at") @db.Timestamptz(3)
+  lines         SdQuotationLine[]
+  events        SdQuoteEvent[]
+
   @@unique([id, tenantId, applicationId])
   @@index([applicationId, ownerUserId, updatedAt])
   @@index([opportunityId])
@@ -1061,62 +1093,65 @@ model SdQuotation {
 }
 
 model SdQuotationLine {
-  id String @id @default(uuid()) @db.Uuid
-  quotationId String @map("quotation_id") @db.Uuid
-  tenantId String @map("tenant_id") @db.Uuid
-  applicationId String @map("application_id") @db.Uuid
-  productId String @map("product_id") @db.Uuid
-  priceId String? @map("price_id") @db.Uuid
-  productCode String @map("item_code") @db.VarChar(32)
-  productName String @map("product_name") @db.VarChar(128)
-  model String? @db.VarChar(128)
-  unit String @db.VarChar(32)
-  productLine String @map("product_line") @db.VarChar(64)
-  quantity Decimal @db.Decimal(18, 4)
-  suggestedPrice Decimal @map("suggested_price") @db.Decimal(18, 2)
-  priceSource String @map("price_source") @db.VarChar(16)
-  lowerQty Decimal? @map("lower_qty") @db.Decimal(18, 4)
-  upperQty Decimal? @map("upper_qty") @db.Decimal(18, 4)
-  unitPrice Decimal @map("unit_price") @db.Decimal(18, 2)
-  discount Decimal @default(1) @db.Decimal(5, 2)
-  amount Decimal @db.Decimal(18, 2)
-  sortNo Int @map("sort_no")
-  delivery String @default("") @db.VarChar(200)
-  remark String @default("") @db.VarChar(2000)
-  quotation SdQuotation @relation(fields: [quotationId, tenantId, applicationId], references: [id, tenantId, applicationId], onDelete: Restrict)
+  id             String      @id @default(uuid()) @db.Uuid
+  quotationId    String      @map("quotation_id") @db.Uuid
+  tenantId       String      @map("tenant_id") @db.Uuid
+  applicationId  String      @map("application_id") @db.Uuid
+  productId      String      @map("product_id") @db.Uuid
+  priceId        String?     @map("price_id") @db.Uuid
+  productCode    String      @map("item_code") @db.VarChar(32)
+  productName    String      @map("product_name") @db.VarChar(128)
+  model          String?     @db.VarChar(128)
+  unit           String      @db.VarChar(32)
+  productLine    String      @map("product_line") @db.VarChar(64)
+  quantity       Decimal     @db.Decimal(18, 4)
+  suggestedPrice Decimal     @map("suggested_price") @db.Decimal(18, 2)
+  priceSource    String      @map("price_source") @db.VarChar(16)
+  lowerQty       Decimal?    @map("lower_qty") @db.Decimal(18, 4)
+  upperQty       Decimal?    @map("upper_qty") @db.Decimal(18, 4)
+  unitPrice      Decimal     @map("unit_price") @db.Decimal(18, 2)
+  discount       Decimal     @default(1) @db.Decimal(5, 2)
+  amount         Decimal     @db.Decimal(18, 2)
+  sortNo         Int         @map("sort_no")
+  delivery       String      @default("") @db.VarChar(200)
+  remark         String      @default("") @db.VarChar(2000)
+  quotation      SdQuotation @relation(fields: [quotationId, tenantId, applicationId], references: [id, tenantId, applicationId], onDelete: Restrict)
+
   @@index([quotationId, sortNo])
   @@map("sd_quotation_line")
 }
 
 model SdQuoteEvent {
-  id String @id @default(uuid()) @db.Uuid
-  quotationId String @map("quotation_id") @db.Uuid
-  tenantId String @map("tenant_id") @db.Uuid
-  applicationId String @map("application_id") @db.Uuid
-  action String @db.VarChar(32)
-  requestKey String @map("request_key") @db.Uuid
-  requestHash String @map("request_hash") @db.VarChar(64)
-  actorId String @map("actor_id") @db.Uuid
-  note String @default("") @db.VarChar(2000)
-  result Json
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
-  quotation SdQuotation @relation(fields: [quotationId, tenantId, applicationId], references: [id, tenantId, applicationId], onDelete: Restrict)
+  id            String      @id @default(uuid()) @db.Uuid
+  quotationId   String      @map("quotation_id") @db.Uuid
+  tenantId      String      @map("tenant_id") @db.Uuid
+  applicationId String      @map("application_id") @db.Uuid
+  action        String      @db.VarChar(32)
+  requestKey    String      @map("request_key") @db.Uuid
+  requestHash   String      @map("request_hash") @db.VarChar(64)
+  actorId       String      @map("actor_id") @db.Uuid
+  note          String      @default("") @db.VarChar(2000)
+  result        Json
+  createdAt     DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+  quotation     SdQuotation @relation(fields: [quotationId, tenantId, applicationId], references: [id, tenantId, applicationId], onDelete: Restrict)
+
   @@unique([applicationId, actorId, requestKey])
   @@index([quotationId, createdAt])
   @@map("sd_quote_event")
 }
 
 model SdOppAmountEvent {
-  id String @id @default(uuid()) @db.Uuid
-  tenantId String @map("tenant_id") @db.Uuid
-  applicationId String @map("application_id") @db.Uuid
-  opportunityId String @map("opportunity_id") @db.Uuid
-  quotationId String? @map("quotation_id") @db.Uuid
-  oldAmount Decimal? @map("old_amount") @db.Decimal(18, 2)
-  newAmount Decimal? @map("new_amount") @db.Decimal(18, 2)
-  opportunityVersion Int @map("opportunity_version")
-  actorId String @map("actor_id") @db.VarChar(128)
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  id                 String   @id @default(uuid()) @db.Uuid
+  tenantId           String   @map("tenant_id") @db.Uuid
+  applicationId      String   @map("application_id") @db.Uuid
+  opportunityId      String   @map("opportunity_id") @db.Uuid
+  quotationId        String?  @map("quotation_id") @db.Uuid
+  oldAmount          Decimal? @map("old_amount") @db.Decimal(18, 2)
+  newAmount          Decimal? @map("new_amount") @db.Decimal(18, 2)
+  opportunityVersion Int      @map("opportunity_version")
+  actorId            String   @map("actor_id") @db.VarChar(128)
+  createdAt          DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
   @@unique([opportunityId, opportunityVersion])
   @@map("sd_opp_amount_event")
 }
@@ -1143,31 +1178,104 @@ model MdProduct {
 }
 
 model MdItem {
-  id           String       @id @default(uuid()) @map("item_id") @db.Uuid
-  tenantId     String       @map("tenant_id") @db.Uuid
-  itemCode     String       @map("item_code") @db.VarChar(32)
-  itemName     String       @map("item_name") @db.VarChar(128)
-  itemType     ItemType     @map("item_type")
-  majorCategoryId  String?  @map("major_category_id") @db.Uuid
-  middleCategoryId String?  @map("middle_category_id") @db.Uuid
-  minorCategoryId  String?  @map("minor_category_id") @db.Uuid
-  model        String?      @db.VarChar(128)
-  productLine  String?      @map("product_line") @db.VarChar(64)
-  baseUnit     String       @map("base_unit") @db.VarChar(32)
-  batchManaged Boolean      @default(false) @map("batch_managed")
-  status       RecordStatus @default(ACTIVE)
-  remark       String?      @db.VarChar(500)
-  version      Int          @default(1)
-  createdBy    String       @map("created_by") @db.VarChar(128)
-  updatedBy    String       @map("updated_by") @db.VarChar(128)
-  createdAt    DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt    DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
-  inboundLines ScmInboundLine[]
+  id                 String                @id @default(uuid()) @map("item_id") @db.Uuid
+  tenantId           String                @map("tenant_id") @db.Uuid
+  itemCode           String                @map("item_code") @db.VarChar(32)
+  itemName           String                @map("item_name") @db.VarChar(128)
+  itemType           ItemType              @map("item_type")
+  itemSource         String?               @map("item_source") @db.VarChar(32)
+  itemLifecycle      String?               @map("item_lifecycle") @db.VarChar(32)
+  majorCategoryId    String?               @map("major_category_id") @db.Uuid
+  middleCategoryId   String?               @map("middle_category_id") @db.Uuid
+  minorCategoryId    String?               @map("minor_category_id") @db.Uuid
+  model              String?               @db.VarChar(128)
+  productLine        String?               @map("product_line") @db.VarChar(64)
+  baseUnit           String                @map("base_unit") @db.VarChar(32)
+  batchManaged       Boolean               @default(false) @map("batch_managed")
+  status             RecordStatus          @default(ACTIVE)
+  remark             String?               @db.VarChar(500)
+  version            Int                   @default(1)
+  createdBy          String                @map("created_by") @db.VarChar(128)
+  updatedBy          String                @map("updated_by") @db.VarChar(128)
+  createdAt          DateTime              @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt          DateTime              @updatedAt @map("updated_at") @db.Timestamptz(3)
+  inboundLines       ScmInboundLine[]
+  salesOrderLines    SdSalesOrderLine[]
+  salesOutboundLines SdSalesOutboundLine[]
+  boms               ScmBom[]
+  bomLines           ScmBomLine[]
+  bomAlternatives    ScmBomAlternative[]
 
   @@unique([tenantId, itemCode], map: "md_item_tenant_code_key")
+  @@unique([id, tenantId], map: "md_item_id_tenant_key")
   @@index([tenantId, itemType, status], map: "md_item_lookup_idx")
   @@index([tenantId, majorCategoryId, middleCategoryId, minorCategoryId], map: "md_item_category_idx")
   @@map("md_item")
+}
+
+model ScmBom {
+  id            String         @id @default(uuid()) @map("bom_id") @db.Uuid
+  tenantId      String         @map("tenant_id") @db.Uuid
+  applicationId String         @map("application_id") @db.Uuid
+  itemId        String         @map("item_id") @db.Uuid
+  bomCode       String         @map("bom_code") @db.VarChar(32)
+  revision      Int
+  status        String         @default("DRAFT") @db.VarChar(16)
+  isCurrent     Boolean        @default(false) @map("is_current")
+  baseQuantity  Decimal        @default(1) @map("base_quantity") @db.Decimal(18, 4)
+  rowVersion    Int            @default(1) @map("row_version")
+  createdBy     String         @map("created_by") @db.VarChar(128)
+  updatedBy     String         @map("updated_by") @db.VarChar(128)
+  createdAt     DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime       @updatedAt @map("updated_at") @db.Timestamptz(3)
+  lines         ScmBomLine[]   @relation("BomLines")
+  referencedBy  ScmBomLine[]   @relation("ChildBom")
+  application   SysApplication @relation(fields: [applicationId, tenantId], references: [id, tenantId], onDelete: Restrict, onUpdate: NoAction, map: "scm_bom_app_fk")
+  item          MdItem         @relation(fields: [itemId, tenantId], references: [id, tenantId], onDelete: Restrict, onUpdate: NoAction, map: "scm_bom_item_fk")
+
+  @@unique([applicationId, itemId, revision], map: "scm_bom_item_rev_key")
+  @@unique([applicationId, bomCode, revision], map: "scm_bom_code_rev_key")
+  @@unique([id, applicationId, tenantId], map: "scm_bom_scope_key")
+  @@index([tenantId, applicationId, status, updatedAt], map: "scm_bom_list_idx")
+  @@map("scm_bom")
+}
+
+model ScmBomLine {
+  id            String              @id @default(uuid()) @map("line_id") @db.Uuid
+  tenantId      String              @map("tenant_id") @db.Uuid
+  applicationId String              @map("application_id") @db.Uuid
+  bomId         String              @map("bom_id") @db.Uuid
+  lineCode      String              @map("line_code") @db.VarChar(32)
+  itemId        String              @map("item_id") @db.Uuid
+  quantity      Decimal             @db.Decimal(18, 4)
+  sortNo        Int                 @default(10) @map("sort_no")
+  childBomId    String?             @map("child_bom_id") @db.Uuid
+  bom           ScmBom              @relation("BomLines", fields: [bomId, applicationId, tenantId], references: [id, applicationId, tenantId], onDelete: Cascade, onUpdate: NoAction, map: "scm_bom_line_bom_fk")
+  childBom      ScmBom?             @relation("ChildBom", fields: [childBomId, applicationId, tenantId], references: [id, applicationId, tenantId], onDelete: Restrict, onUpdate: NoAction, map: "scm_bom_line_child_fk")
+  item          MdItem              @relation(fields: [itemId, tenantId], references: [id, tenantId], onDelete: Restrict, onUpdate: NoAction, map: "scm_bom_line_item_fk")
+  alternatives  ScmBomAlternative[]
+
+  @@unique([bomId, lineCode], map: "scm_bom_line_code_key")
+  @@unique([id, applicationId, tenantId], map: "scm_bom_line_scope_key")
+  @@index([applicationId, itemId], map: "scm_bom_line_item_idx")
+  @@map("scm_bom_line")
+}
+
+model ScmBomAlternative {
+  id            String     @id @default(uuid()) @map("alternative_id") @db.Uuid
+  tenantId      String     @map("tenant_id") @db.Uuid
+  applicationId String     @map("application_id") @db.Uuid
+  lineId        String     @map("line_id") @db.Uuid
+  itemId        String     @map("item_id") @db.Uuid
+  priority      Int        @default(1)
+  ratio         Decimal    @default(1) @db.Decimal(18, 4)
+  line          ScmBomLine @relation(fields: [lineId, applicationId, tenantId], references: [id, applicationId, tenantId], onDelete: Cascade, onUpdate: NoAction, map: "scm_bom_alt_line_fk")
+  item          MdItem     @relation(fields: [itemId, tenantId], references: [id, tenantId], onDelete: Restrict, onUpdate: NoAction, map: "scm_bom_alt_item_fk")
+
+  @@unique([lineId, itemId], map: "scm_bom_alt_item_key")
+  @@unique([lineId, priority], map: "scm_bom_alt_priority_key")
+  @@index([applicationId, itemId], map: "scm_bom_alt_lookup_idx")
+  @@map("scm_bom_alternative")
 }
 
 model OrgLegalEntity {
@@ -1188,6 +1296,7 @@ model OrgLegalEntity {
 
   @@unique([tenantId, entityCode], map: "org_legal_tenant_code_key")
   @@index([tenantId, status, sortNo], map: "org_legal_lookup_idx")
+  @@unique([id, tenantId], map: "org_legal_scope_key")
   @@map("org_legal_entity")
 }
 
@@ -1210,34 +1319,35 @@ model ScmWarehouse {
 
   @@unique([tenantId, warehouseCode], map: "scm_wh_tenant_code_key")
   @@index([tenantId, legalEntityId, status], map: "scm_wh_entity_lookup_idx")
+  @@unique([id, tenantId, legalEntityId], map: "scm_wh_scope_key")
   @@map("scm_warehouse")
 }
 
 model ScmInboundOrder {
-  id              String        @id @default(uuid()) @map("order_id") @db.Uuid
-  tenantId        String        @map("tenant_id") @db.Uuid
-  applicationId   String        @map("application_id") @db.Uuid
-  orderNo         String        @map("order_no") @db.VarChar(32)
-  documentDate    DateTime      @map("document_date") @db.Date
-  creatorId       String        @map("creator_id") @db.Uuid
-  inboundType     InboundType   @map("inbound_type")
-  status          InboundStatus @default(DRAFT)
-  postedAt        DateTime?     @map("posted_at") @db.Timestamptz(3)
-  postedBy        String?       @map("posted_by") @db.Uuid
-  reversedAt      DateTime?     @map("reversed_at") @db.Timestamptz(3)
-  reversedBy      String?       @map("reversed_by") @db.Uuid
-  legalEntityId   String        @map("legal_entity_id") @db.Uuid
-  warehouseId     String        @map("warehouse_id") @db.Uuid
-  factoryCode     String?       @map("factory_code") @db.VarChar(32)
-  reasonCode      String        @map("reason_code") @db.VarChar(32)
-  currencyCode    String        @default("CNY") @map("currency_code") @db.Char(3)
-  remark          String?       @db.VarChar(1000)
-  version         Int           @default(1)
-  createdBy       String        @map("created_by") @db.VarChar(128)
-  updatedBy       String        @map("updated_by") @db.VarChar(128)
-  createdAt       DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt       DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
-  lines           ScmInboundLine[]
+  id            String           @id @default(uuid()) @map("order_id") @db.Uuid
+  tenantId      String           @map("tenant_id") @db.Uuid
+  applicationId String           @map("application_id") @db.Uuid
+  orderNo       String           @map("order_no") @db.VarChar(32)
+  documentDate  DateTime         @map("document_date") @db.Date
+  creatorId     String           @map("creator_id") @db.Uuid
+  inboundType   InboundType      @map("inbound_type")
+  status        InboundStatus    @default(DRAFT)
+  postedAt      DateTime?        @map("posted_at") @db.Timestamptz(3)
+  postedBy      String?          @map("posted_by") @db.Uuid
+  reversedAt    DateTime?        @map("reversed_at") @db.Timestamptz(3)
+  reversedBy    String?          @map("reversed_by") @db.Uuid
+  legalEntityId String           @map("legal_entity_id") @db.Uuid
+  warehouseId   String           @map("warehouse_id") @db.Uuid
+  factoryCode   String?          @map("factory_code") @db.VarChar(32)
+  reasonCode    String           @map("reason_code") @db.VarChar(32)
+  currencyCode  String           @default("CNY") @map("currency_code") @db.Char(3)
+  remark        String?          @db.VarChar(1000)
+  version       Int              @default(1)
+  createdBy     String           @map("created_by") @db.VarChar(128)
+  updatedBy     String           @map("updated_by") @db.VarChar(128)
+  createdAt     DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime         @updatedAt @map("updated_at") @db.Timestamptz(3)
+  lines         ScmInboundLine[]
 
   @@unique([tenantId, orderNo], map: "scm_in_tenant_no_key")
   @@index([applicationId, status, updatedAt(sort: Desc)], map: "scm_in_order_list_idx")
@@ -1245,25 +1355,25 @@ model ScmInboundOrder {
 }
 
 model ScmInboundLine {
-  id           String          @id @default(uuid()) @map("line_id") @db.Uuid
-  orderId      String          @map("order_id") @db.Uuid
-  tenantId     String          @map("tenant_id") @db.Uuid
-  lineNo       Int             @map("line_no")
-  itemId       String          @map("item_id") @db.Uuid
-  itemCode     String          @map("item_code") @db.VarChar(32)
-  itemName     String          @map("item_name") @db.VarChar(128)
-  batchNo      String          @default("") @map("batch_no") @db.VarChar(64)
-  originalQty  Decimal?        @map("original_qty") @db.Decimal(18, 4)
-  actualQty    Decimal         @map("actual_qty") @db.Decimal(18, 4)
-  baseUnit     String          @map("base_unit") @db.VarChar(32)
-  amount       Decimal         @db.Decimal(18, 2)
-  remark       String?         @db.VarChar(1000)
-  createdBy    String          @map("created_by") @db.VarChar(128)
-  updatedBy    String          @map("updated_by") @db.VarChar(128)
-  createdAt    DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt    DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
-  order        ScmInboundOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
-  item         MdItem          @relation(fields: [itemId], references: [id], onDelete: Restrict)
+  id          String          @id @default(uuid()) @map("line_id") @db.Uuid
+  orderId     String          @map("order_id") @db.Uuid
+  tenantId    String          @map("tenant_id") @db.Uuid
+  lineNo      Int             @map("line_no")
+  itemId      String          @map("item_id") @db.Uuid
+  itemCode    String          @map("item_code") @db.VarChar(32)
+  itemName    String          @map("item_name") @db.VarChar(128)
+  batchNo     String          @default("") @map("batch_no") @db.VarChar(64)
+  originalQty Decimal?        @map("original_qty") @db.Decimal(18, 4)
+  actualQty   Decimal         @map("actual_qty") @db.Decimal(18, 4)
+  baseUnit    String          @map("base_unit") @db.VarChar(32)
+  amount      Decimal         @db.Decimal(18, 2)
+  remark      String?         @db.VarChar(1000)
+  createdBy   String          @map("created_by") @db.VarChar(128)
+  updatedBy   String          @map("updated_by") @db.VarChar(128)
+  createdAt   DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
+  order       ScmInboundOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  item        MdItem          @relation(fields: [itemId], references: [id], onDelete: Restrict)
 
   @@unique([orderId, lineNo], map: "scm_in_line_no_key")
   @@unique([orderId, itemId, batchNo], map: "scm_in_line_item_batch_key")
@@ -1348,6 +1458,163 @@ model ScmDocumentCounter {
   @@map("scm_document_counter")
 }
 
+model SdSalesOrder {
+  id                String             @id @default(uuid()) @map("order_id") @db.Uuid
+  tenantId          String             @map("tenant_id") @db.Uuid
+  applicationId     String             @map("application_id") @db.Uuid
+  orderNo           String             @map("order_no") @db.VarChar(32)
+  orderDate         DateTime           @map("order_date") @db.Date
+  sourceType        String             @map("source_type") @db.VarChar(16)
+  sourceId          String?            @map("source_id") @db.Uuid
+  sourceNo          String?            @map("source_no") @db.VarChar(64)
+  opportunityId     String?            @map("opportunity_id") @db.Uuid
+  customerId        String             @map("customer_id") @db.Uuid
+  customerCode      String             @map("customer_code") @db.VarChar(32)
+  customerName      String             @map("customer_name") @db.VarChar(255)
+  salespersonId     String             @map("salesperson_id") @db.Uuid
+  salespersonName   String             @map("salesperson_name") @db.VarChar(128)
+  organizationId    String?            @map("organization_id") @db.Uuid
+  organizationName  String             @map("organization_name") @db.VarChar(128)
+  region            String             @db.VarChar(64)
+  orderType         String             @map("order_type") @db.VarChar(32)
+  currencyCode      String             @default("CNY") @map("currency_code") @db.Char(3)
+  discount          Decimal            @default(1) @db.Decimal(5, 4)
+  amount            Decimal            @default(0) @db.Decimal(18, 2)
+  netAmount         Decimal            @default(0) @map("net_amount") @db.Decimal(18, 2)
+  taxAmount         Decimal            @default(0) @map("tax_amount") @db.Decimal(18, 2)
+  status            String             @default("DRAFT") @db.VarChar(16)
+  fulfillmentStatus String             @default("NOT_SHIPPED") @map("fulfillment_status") @db.VarChar(24)
+  remark            String             @default("") @db.VarChar(1000)
+  version           Int                @default(1)
+  creatorId         String             @map("creator_id") @db.Uuid
+  submittedBy       String?            @map("submitted_by") @db.Uuid
+  submittedAt       DateTime?          @map("submitted_at") @db.Timestamptz(3)
+  approvedBy        String?            @map("approved_by") @db.Uuid
+  approvedAt        DateTime?          @map("approved_at") @db.Timestamptz(3)
+  closedAt          DateTime?          @map("closed_at") @db.Timestamptz(3)
+  createdAt         DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
+  lines             SdSalesOrderLine[]
+  outbounds         SdSalesOutbound[]
+
+  @@unique([tenantId, orderNo], map: "sd_so_tenant_no_key")
+  @@unique([id, tenantId, applicationId], map: "sd_so_scope_key")
+  @@index([applicationId, status, updatedAt(sort: Desc)], map: "sd_so_list_idx")
+  @@index([applicationId, sourceType, sourceId], map: "sd_so_source_idx")
+  @@map("sd_sales_order")
+}
+
+model SdSalesOrderLine {
+  id               String                @id @default(uuid()) @map("line_id") @db.Uuid
+  orderId          String                @map("order_id") @db.Uuid
+  tenantId         String                @map("tenant_id") @db.Uuid
+  applicationId    String                @map("application_id") @db.Uuid
+  lineNo           Int                   @map("line_no")
+  sortNo           Int                   @map("sort_no")
+  sourceLineId     String?               @map("source_line_id") @db.Uuid
+  itemId           String                @map("item_id") @db.Uuid
+  itemCode         String                @map("item_code") @db.VarChar(32)
+  itemName         String                @map("item_name") @db.VarChar(128)
+  baseUnit         String                @map("base_unit") @db.VarChar(32)
+  quantity         Decimal               @db.Decimal(18, 4)
+  unitPrice        Decimal               @map("unit_price") @db.Decimal(18, 6)
+  amount           Decimal               @db.Decimal(18, 2)
+  discount         Decimal               @default(1) @db.Decimal(5, 4)
+  discountedAmount Decimal               @map("discounted_amount") @db.Decimal(18, 2)
+  finalAmount      Decimal               @map("final_amount") @db.Decimal(18, 2)
+  taxRate          Decimal               @map("tax_rate") @db.Decimal(5, 4)
+  taxAmount        Decimal               @map("tax_amount") @db.Decimal(18, 2)
+  shippedQty       Decimal               @default(0) @map("shipped_qty") @db.Decimal(18, 4)
+  lineStatus       String                @default("NOT_SHIPPED") @map("line_status") @db.VarChar(24)
+  remark           String                @default("") @db.VarChar(1000)
+  order            SdSalesOrder          @relation(fields: [orderId, tenantId, applicationId], references: [id, tenantId, applicationId], onDelete: Restrict)
+  item             MdItem                @relation(fields: [itemId, tenantId], references: [id, tenantId], onDelete: Restrict)
+  outboundLines    SdSalesOutboundLine[]
+
+  @@unique([orderId, lineNo], map: "sd_so_line_no_key")
+  @@unique([id, tenantId, applicationId], map: "sd_so_line_scope_key")
+  @@map("sd_sales_order_line")
+}
+
+model SdSalesOutbound {
+  id            String                @id @default(uuid()) @map("outbound_id") @db.Uuid
+  tenantId      String                @map("tenant_id") @db.Uuid
+  applicationId String                @map("application_id") @db.Uuid
+  outboundNo    String                @map("outbound_no") @db.VarChar(32)
+  orderId       String                @map("order_id") @db.Uuid
+  orderNo       String                @map("order_no") @db.VarChar(32)
+  customerName  String                @map("customer_name") @db.VarChar(255)
+  documentDate  DateTime              @map("document_date") @db.Date
+  legalEntityId String                @map("legal_entity_id") @db.Uuid
+  warehouseId   String                @map("warehouse_id") @db.Uuid
+  warehouseName String                @map("warehouse_name") @db.VarChar(128)
+  shipperId     String                @map("shipper_id") @db.Uuid
+  shipperName   String                @map("shipper_name") @db.VarChar(128)
+  currencyCode  String                @default("CNY") @map("currency_code") @db.Char(3)
+  salesAmount   Decimal               @default(0) @map("sales_amount") @db.Decimal(18, 2)
+  costAmount    Decimal               @default(0) @map("cost_amount") @db.Decimal(18, 2)
+  status        String                @default("DRAFT") @db.VarChar(16)
+  remark        String                @default("") @db.VarChar(1000)
+  version       Int                   @default(1)
+  creatorId     String                @map("creator_id") @db.Uuid
+  submittedBy   String?               @map("submitted_by") @db.Uuid
+  submittedAt   DateTime?             @map("submitted_at") @db.Timestamptz(3)
+  approvedBy    String?               @map("approved_by") @db.Uuid
+  approvedAt    DateTime?             @map("approved_at") @db.Timestamptz(3)
+  reversedBy    String?               @map("reversed_by") @db.Uuid
+  reversedAt    DateTime?             @map("reversed_at") @db.Timestamptz(3)
+  createdAt     DateTime              @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime              @updatedAt @map("updated_at") @db.Timestamptz(3)
+  order         SdSalesOrder          @relation(fields: [orderId, tenantId, applicationId], references: [id, tenantId, applicationId], onDelete: Restrict)
+  lines         SdSalesOutboundLine[]
+
+  @@unique([tenantId, outboundNo], map: "sd_out_tenant_no_key")
+  @@unique([id, tenantId, applicationId], map: "sd_out_scope_key")
+  @@index([applicationId, status, updatedAt(sort: Desc)], map: "sd_out_list_idx")
+  @@map("sd_sales_outbound")
+}
+
+model SdSalesOutboundLine {
+  id            String           @id @default(uuid()) @map("line_id") @db.Uuid
+  outboundId    String           @map("outbound_id") @db.Uuid
+  tenantId      String           @map("tenant_id") @db.Uuid
+  applicationId String           @map("application_id") @db.Uuid
+  lineNo        Int              @map("line_no")
+  orderLineId   String           @map("order_line_id") @db.Uuid
+  itemId        String           @map("item_id") @db.Uuid
+  itemCode      String           @map("item_code") @db.VarChar(32)
+  itemName      String           @map("item_name") @db.VarChar(128)
+  baseUnit      String           @map("base_unit") @db.VarChar(32)
+  batchNo       String           @default("") @map("batch_no") @db.VarChar(64)
+  quantity      Decimal          @db.Decimal(18, 4)
+  salesAmount   Decimal          @default(0) @map("sales_amount") @db.Decimal(18, 2)
+  costAmount    Decimal          @default(0) @map("cost_amount") @db.Decimal(18, 2)
+  remark        String           @default("") @db.VarChar(1000)
+  outbound      SdSalesOutbound  @relation(fields: [outboundId, tenantId, applicationId], references: [id, tenantId, applicationId], onDelete: Restrict)
+  orderLine     SdSalesOrderLine @relation(fields: [orderLineId, tenantId, applicationId], references: [id, tenantId, applicationId], onDelete: Restrict)
+  item          MdItem           @relation(fields: [itemId, tenantId], references: [id, tenantId], onDelete: Restrict)
+
+  @@unique([outboundId, lineNo], map: "sd_out_line_no_key")
+  @@map("sd_sales_outbound_line")
+}
+
+model SdSalesEvent {
+  id            String   @id @default(uuid()) @map("event_id") @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  documentType  String   @map("document_type") @db.VarChar(16)
+  documentId    String   @map("document_id") @db.Uuid
+  action        String   @db.VarChar(24)
+  requestKey    String   @map("request_key") @db.Uuid
+  actorId       String   @map("actor_id") @db.Uuid
+  note          String   @default("") @db.VarChar(1000)
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@unique([applicationId, actorId, requestKey], map: "sd_sales_event_req_key")
+  @@index([documentType, documentId, createdAt], map: "sd_sales_event_doc_idx")
+  @@map("sd_sales_event")
+}
+
 model SdCompetitor {
   id               String       @id @default(uuid()) @db.Uuid
   tenantId         String       @map("tenant_id") @db.Uuid
@@ -1371,19 +1638,19 @@ model SdCompetitor {
 }
 
 model SdOppTemplate {
-  id              String       @id @default(uuid()) @db.Uuid
-  tenantId        String       @map("tenant_id") @db.Uuid
-  applicationId   String       @map("application_id") @db.Uuid
-  templateCode    String       @map("template_code") @db.VarChar(32)
-  templateName    String       @map("template_name") @db.VarChar(128)
-  isDefault       Boolean      @default(false) @map("is_default")
-  status          RecordStatus @default(ACTIVE)
-  version         Int          @default(1)
-  createdBy       String       @map("created_by") @db.VarChar(128)
-  updatedBy       String       @map("updated_by") @db.VarChar(128)
-  createdAt       DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt       DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
-  stages          SdOppStage[]
+  id            String       @id @default(uuid()) @db.Uuid
+  tenantId      String       @map("tenant_id") @db.Uuid
+  applicationId String       @map("application_id") @db.Uuid
+  templateCode  String       @map("template_code") @db.VarChar(32)
+  templateName  String       @map("template_name") @db.VarChar(128)
+  isDefault     Boolean      @default(false) @map("is_default")
+  status        RecordStatus @default(ACTIVE)
+  version       Int          @default(1)
+  createdBy     String       @map("created_by") @db.VarChar(128)
+  updatedBy     String       @map("updated_by") @db.VarChar(128)
+  createdAt     DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  stages        SdOppStage[]
 
   @@unique([applicationId, templateCode], map: "sd_opp_template_app_code_key")
   @@index([applicationId, status], map: "sd_opp_template_lookup_idx")
@@ -1412,45 +1679,53 @@ model SdOppStage {
 }
 
 model SdOpp {
-  id                 String       @id @default(uuid()) @db.Uuid
-  tenantId           String       @map("tenant_id") @db.Uuid
-  applicationId      String       @map("application_id") @db.Uuid
-  systemCode         String       @map("system_code") @db.VarChar(64)
-  opportunityCode    String       @map("opportunity_code") @db.VarChar(32)
-  opportunityName    String       @map("opportunity_name") @db.VarChar(200)
-  customerId         String       @map("customer_id") @db.Uuid
-  customerName       String       @map("customer_name") @db.VarChar(255)
-  contactId          String?      @map("contact_id") @db.Uuid
-  contactName        String?      @map("contact_name") @db.VarChar(100)
-  ownerUserId        String       @map("owner_user_id") @db.Uuid
-  ownerName          String       @map("owner_name") @db.VarChar(128)
-  source             String?      @db.VarChar(128)
-  templateId         String       @map("template_id") @db.Uuid
-  templateName       String       @map("template_name") @db.VarChar(128)
-  stageId            String       @map("stage_id") @db.Uuid
-  stageName          String       @map("stage_name") @db.VarChar(128)
-  stageProbability   Int          @map("stage_probability")
-  confidence         Int          @default(0)
-  confirmedDate      DateTime?    @map("confirmed_date") @db.Date
-  expectedSignDate   DateTime?    @map("expected_sign_date") @db.Date
-  customerBudget     Decimal?     @map("customer_budget") @db.Decimal(18, 2)
-  expectedAmount     Decimal?     @map("expected_amount") @db.Decimal(18, 2)
-  partner            String?      @db.VarChar(200)
-  status             RecordStatus @default(ACTIVE)
-  remark             String?      @db.VarChar(1000)
-  version            Int          @default(1)
-  createdBy          String       @map("created_by") @db.VarChar(128)
-  updatedBy          String       @map("updated_by") @db.VarChar(128)
-  createdAt          DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt          DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
-  products           SdOppProduct[]
-  followUps          SdOppFollowUp[]
-  analyses           SdOppAnalysis[]
+  currencyCode     String?           @map("currency_code") @db.VarChar(3)
+  id               String            @id @default(uuid()) @db.Uuid
+  tenantId         String            @map("tenant_id") @db.Uuid
+  applicationId    String            @map("application_id") @db.Uuid
+  systemCode       String            @map("system_code") @db.VarChar(64)
+  opportunityCode  String            @map("opportunity_code") @db.VarChar(32)
+  opportunityName  String            @map("opportunity_name") @db.VarChar(200)
+  customerId       String            @map("customer_id") @db.Uuid
+  customerName     String            @map("customer_name") @db.VarChar(255)
+  contactId        String?           @map("contact_id") @db.Uuid
+  contactName      String?           @map("contact_name") @db.VarChar(100)
+  ownerUserId      String            @map("owner_user_id") @db.Uuid
+  ownerName        String            @map("owner_name") @db.VarChar(128)
+  source           String?           @db.VarChar(128)
+  templateId       String            @map("template_id") @db.Uuid
+  templateName     String            @map("template_name") @db.VarChar(128)
+  stageId          String            @map("stage_id") @db.Uuid
+  stageName        String            @map("stage_name") @db.VarChar(128)
+  stageProbability Int               @map("stage_probability")
+  confidence       Int               @default(0)
+  businessStatus   String            @default("INITIAL") @map("business_status") @db.VarChar(16)
+  signedDate       DateTime?         @map("signed_date") @db.Date
+  lostDate         DateTime?         @map("lost_date") @db.Date
+  confirmedDate    DateTime?         @map("confirmed_date") @db.Date
+  expectedSignDate DateTime?         @map("expected_sign_date") @db.Date
+  customerBudget   Decimal?          @map("customer_budget") @db.Decimal(18, 2)
+  expectedAmount   Decimal?          @map("expected_amount") @db.Decimal(18, 2)
+  partner          String?           @db.VarChar(200)
+  status           RecordStatus      @default(ACTIVE)
+  remark           String?           @db.VarChar(1000)
+  version          Int               @default(1)
+  createdBy        String            @map("created_by") @db.VarChar(128)
+  updatedBy        String            @map("updated_by") @db.VarChar(128)
+  createdAt        DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime          @updatedAt @map("updated_at") @db.Timestamptz(3)
+  products         SdOppProduct[]
+  followUps        SdOppFollowUp[]
+  analyses         SdOppAnalysis[]
+  stageEvents      SdOppStageEvent[]
 
+  @@unique([id, tenantId, applicationId], map: "sd_opp_scope_key")
   @@unique([applicationId, opportunityCode], map: "sd_opp_app_code_key")
+  @@index([applicationId, templateId, stageId, id], map: "sd_opp_board_idx")
   @@index([applicationId, status, updatedAt(sort: Desc)], map: "sd_opp_list_idx")
   @@index([customerId], map: "sd_opp_customer_idx")
   @@index([ownerUserId], map: "sd_opp_owner_idx")
+  @@index([applicationId, businessStatus, expectedSignDate], map: "sd_opp_business_forecast_idx")
   @@map("sd_opp")
 }
 
@@ -1480,20 +1755,24 @@ model SdOppProduct {
 }
 
 model SdOppFollowUp {
-  id             String       @id @default(uuid()) @db.Uuid
-  opportunityId  String       @map("opportunity_id") @db.Uuid
-  followedAt     DateTime     @map("followed_at") @db.Timestamptz(3)
-  followerUserId String       @map("follower_user_id") @db.Uuid
-  followerName   String       @map("follower_name") @db.VarChar(128)
-  workItem       String       @map("work_item") @db.VarChar(1000)
-  resultNext     String?      @map("result_next") @db.VarChar(2000)
-  status         RecordStatus @default(ACTIVE)
-  version        Int          @default(1)
-  createdBy      String       @map("created_by") @db.VarChar(128)
-  updatedBy      String       @map("updated_by") @db.VarChar(128)
-  createdAt      DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt      DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
-  opportunity    SdOpp        @relation(fields: [opportunityId], references: [id], onDelete: Restrict)
+  id               String       @id @default(uuid()) @db.Uuid
+  opportunityId    String       @map("opportunity_id") @db.Uuid
+  followedAt       DateTime     @map("followed_at") @db.Timestamptz(3)
+  followerUserId   String       @map("follower_user_id") @db.Uuid
+  followerName     String       @map("follower_name") @db.VarChar(128)
+  workItem         String       @map("work_item") @db.VarChar(1000)
+  resultNext       String?      @map("result_next") @db.VarChar(2000)
+  status           RecordStatus @default(ACTIVE)
+  requestId        String?      @unique(map: "sd_follow_up_request_key") @map("request_id") @db.Uuid
+  requestHash      String?      @map("request_hash") @db.VarChar(64)
+  activityTitle    String?      @map("activity_title") @db.VarChar(120)
+  activityNextStep String?      @map("activity_next_step") @db.VarChar(1000)
+  version          Int          @default(1)
+  createdBy        String       @map("created_by") @db.VarChar(128)
+  updatedBy        String       @map("updated_by") @db.VarChar(128)
+  createdAt        DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  opportunity      SdOpp        @relation(fields: [opportunityId], references: [id], onDelete: Restrict)
 
   @@index([opportunityId, followedAt(sort: Desc)], map: "sd_opp_follow_up_list_idx")
   @@map("sd_opp_follow_up")
@@ -1553,6 +1832,7 @@ model StyleScene {
   sceneName         String      @map("scene_name") @db.VarChar(128)
   description       String?     @db.VarChar(512)
   maturity          String?     @db.VarChar(32)
+  templateJson      Json?       @map("template_json") @db.JsonB
   definitionJson    Json?       @map("definition_json") @db.JsonB
   definitionRefJson Json?       @map("definition_ref_json") @db.JsonB
   artifactsJson     Json?       @map("artifacts_json") @db.JsonB
@@ -1576,21 +1856,21 @@ model StyleScene {
 }
 
 model SysParameter {
-  id             String         @id @default(uuid()) @db.Uuid
-  tenantId       String         @map("tenant_id") @db.Uuid
-  applicationId  String         @map("application_id") @db.Uuid
-  parameterCode  String         @map("parameter_code") @db.VarChar(64)
-  parameterName  String         @map("parameter_name") @db.VarChar(128)
-  value          String?        @map("parameter_value") @db.VarChar(1000)
-  usageNote      String         @map("usage_note") @db.VarChar(1000)
-  sortNo         Int            @default(0) @map("sort_no")
-  status         RecordStatus   @default(ACTIVE)
-  version        Int            @default(1)
-  createdBy      String         @map("created_by") @db.VarChar(128)
-  updatedBy      String         @map("updated_by") @db.VarChar(128)
-  createdAt      DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt      DateTime       @updatedAt @map("updated_at") @db.Timestamptz(3)
-  application    SysApplication @relation(fields: [applicationId, tenantId], references: [id, tenantId], onDelete: Restrict, map: "sys_parameter_app_scope_fk")
+  id            String         @id @default(uuid()) @db.Uuid
+  tenantId      String         @map("tenant_id") @db.Uuid
+  applicationId String         @map("application_id") @db.Uuid
+  parameterCode String         @map("parameter_code") @db.VarChar(64)
+  parameterName String         @map("parameter_name") @db.VarChar(128)
+  value         String?        @map("parameter_value") @db.VarChar(1000)
+  usageNote     String         @map("usage_note") @db.VarChar(1000)
+  sortNo        Int            @default(0) @map("sort_no")
+  status        RecordStatus   @default(ACTIVE)
+  version       Int            @default(1)
+  createdBy     String         @map("created_by") @db.VarChar(128)
+  updatedBy     String         @map("updated_by") @db.VarChar(128)
+  createdAt     DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime       @updatedAt @map("updated_at") @db.Timestamptz(3)
+  application   SysApplication @relation(fields: [applicationId, tenantId], references: [id, tenantId], onDelete: Restrict, map: "sys_parameter_app_scope_fk")
 
   @@unique([tenantId, applicationId, parameterCode], map: "sys_parameter_scope_code_key")
   @@index([tenantId, applicationId, sortNo, parameterCode], map: "sys_parameter_list_idx")
@@ -1598,34 +1878,1168 @@ model SysParameter {
 }
 
 model AiAnalysisTask {
-  id String @id @default(uuid()) @db.Uuid
-  applicationId String @map("application_id") @db.Uuid
-  tenantId String @map("tenant_id") @db.Uuid
-  systemCode String @map("system_code") @db.VarChar(64)
-  opportunityId String @map("opportunity_id") @db.Uuid
-  createdBy String @map("created_by") @db.Uuid
-  requestId String @map("request_id") @db.Uuid
-  parentTaskId String? @map("parent_task_id") @db.Uuid
-  status String @default("QUEUED") @db.VarChar(16)
-  snapshot Json
-  provider String @db.VarChar(32)
-  model String @db.VarChar(128)
-  templateVersion String @map("template_version") @db.VarChar(64)
-  schemaVersion String @map("schema_version") @db.VarChar(32)
-  result Json?
-  confirmedResult Json? @map("confirmed_result")
-  analysisId String? @unique @map("analysis_id") @db.Uuid
-  confirmedAt DateTime? @map("confirmed_at") @db.Timestamptz(3)
-  staleAtConfirmation Boolean @default(false) @map("stale_at_confirmation")
-  providerRequestId String? @map("provider_request_id") @db.VarChar(255)
-  usage Json?
-  error String? @db.VarChar(500)
-  startedAt DateTime? @map("started_at") @db.Timestamptz(3)
-  finishedAt DateTime? @map("finished_at") @db.Timestamptz(3)
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  id                  String    @id @default(uuid()) @db.Uuid
+  applicationId       String    @map("application_id") @db.Uuid
+  tenantId            String    @map("tenant_id") @db.Uuid
+  systemCode          String    @map("system_code") @db.VarChar(64)
+  opportunityId       String    @map("opportunity_id") @db.Uuid
+  createdBy           String    @map("created_by") @db.Uuid
+  requestId           String    @map("request_id") @db.Uuid
+  parentTaskId        String?   @map("parent_task_id") @db.Uuid
+  status              String    @default("QUEUED") @db.VarChar(16)
+  snapshot            Json
+  provider            String    @db.VarChar(32)
+  model               String    @db.VarChar(128)
+  templateVersion     String    @map("template_version") @db.VarChar(64)
+  schemaVersion       String    @map("schema_version") @db.VarChar(32)
+  result              Json?
+  confirmedResult     Json?     @map("confirmed_result")
+  analysisId          String?   @unique @map("analysis_id") @db.Uuid
+  confirmedAt         DateTime? @map("confirmed_at") @db.Timestamptz(3)
+  staleAtConfirmation Boolean   @default(false) @map("stale_at_confirmation")
+  providerRequestId   String?   @map("provider_request_id") @db.VarChar(255)
+  usage               Json?
+  error               String?   @db.VarChar(500)
+  startedAt           DateTime? @map("started_at") @db.Timestamptz(3)
+  finishedAt          DateTime? @map("finished_at") @db.Timestamptz(3)
+  createdAt           DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt           DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
   @@unique([applicationId, createdBy, requestId])
   @@index([applicationId, opportunityId, createdAt])
   @@index([status, createdAt])
   @@map("ai_analysis_task")
+}
+
+model AgentTask {
+  id              String    @id @default(uuid()) @db.Uuid
+  applicationId   String    @map("application_id") @db.Uuid
+  tenantId        String    @map("tenant_id") @db.Uuid
+  systemCode      String    @map("system_code") @db.VarChar(64)
+  contextType     String    @map("context_type") @db.VarChar(32)
+  contextId       String    @map("context_id") @db.Uuid
+  agentCode       String    @map("agent_code") @db.VarChar(64)
+  createdBy       String    @map("created_by") @db.Uuid
+  requestId       String    @map("request_id") @db.Uuid
+  mode            String    @db.VarChar(32)
+  instruction     String    @db.VarChar(2000)
+  status          String    @default("QUEUED") @db.VarChar(16)
+  snapshot        Json
+  steps           Json
+  provider        String    @db.VarChar(32)
+  model           String    @db.VarChar(128)
+  result          Json?
+  confirmedResult Json?     @map("confirmed_result")
+  plan            Json?
+  followUpId      String?   @unique @map("follow_up_id") @db.Uuid
+  usage           Json?
+  error           String?   @db.VarChar(500)
+  startedAt       DateTime? @map("started_at") @db.Timestamptz(3)
+  finishedAt      DateTime? @map("finished_at") @db.Timestamptz(3)
+  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([applicationId, createdBy, requestId])
+  @@index([applicationId, contextType, contextId, createdAt])
+  @@index([status, createdAt])
+  @@map("agent_task")
+}
+
+model SysAgentConversation {
+  id            String            @id @default(uuid()) @db.Uuid
+  tenantId      String            @map("tenant_id") @db.Uuid
+  applicationId String            @map("application_id") @db.Uuid
+  systemCode    String            @map("system_code") @db.VarChar(64)
+  ownerUserId   String            @map("owner_user_id") @db.Uuid
+  title         String            @db.VarChar(120)
+  contextType   String            @default("NONE") @map("context_type") @db.VarChar(16)
+  contextId     String?           @map("context_id") @db.Uuid
+  status        String            @default("ACTIVE") @db.VarChar(16)
+  createdAt     DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime          @updatedAt @map("updated_at") @db.Timestamptz(3)
+  messages      SysAgentMessage[]
+
+  @@unique([id, applicationId, ownerUserId], map: "sys_agent_conv_scope_key")
+  @@index([applicationId, ownerUserId, status, updatedAt], map: "sys_agent_conv_owner_idx")
+  @@map("sys_agent_conversation")
+}
+
+model SysAgentMessage {
+  id             String               @id @default(uuid()) @db.Uuid
+  conversationId String               @map("conversation_id") @db.Uuid
+  sequence       Int                  @default(0)
+  tenantId       String               @map("tenant_id") @db.Uuid
+  applicationId  String               @map("application_id") @db.Uuid
+  ownerUserId    String               @map("owner_user_id") @db.Uuid
+  requestId      String?              @map("request_id") @db.Uuid
+  role           String               @db.VarChar(16)
+  content        String               @db.Text
+  status         String               @default("COMPLETED") @db.VarChar(16)
+  sourceRefs     Json?                @map("source_refs")
+  todoDraft      Json?                @map("todo_draft")
+  error          String?              @db.VarChar(500)
+  createdAt      DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime             @updatedAt @map("updated_at") @db.Timestamptz(3)
+  conversation   SysAgentConversation @relation(fields: [conversationId, applicationId, ownerUserId], references: [id, applicationId, ownerUserId], onDelete: Cascade)
+
+  @@unique([conversationId, requestId], map: "sys_agent_msg_request_key")
+  @@unique([conversationId, sequence], map: "sys_agent_msg_sequence_key")
+  @@index([conversationId, createdAt, id], map: "sys_agent_msg_order_idx")
+  @@map("sys_agent_message")
+}
+
+model SysPersonalTodo {
+  sourceSuggestionId String?   @unique(map: "sys_todo_suggestion_key") @map("source_suggestion_id") @db.Uuid
+  result             String    @default("") @db.VarChar(2000)
+  version            Int       @default(1)
+  id                 String    @id @default(uuid()) @db.Uuid
+  tenantId           String    @map("tenant_id") @db.Uuid
+  applicationId      String    @map("application_id") @db.Uuid
+  ownerUserId        String    @map("owner_user_id") @db.Uuid
+  createdBy          String    @map("created_by") @db.Uuid
+  title              String    @db.VarChar(160)
+  description        String    @default("") @db.VarChar(2000)
+  dueDate            DateTime? @map("due_date") @db.Date
+  status             String    @default("OPEN") @db.VarChar(16)
+  contextType        String    @default("NONE") @map("context_type") @db.VarChar(16)
+  contextId          String?   @map("context_id") @db.Uuid
+  draftIndex         Int       @default(0) @map("draft_index")
+  sourceMessageId    String?   @map("source_message_id") @db.Uuid
+  createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt          DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([sourceMessageId, draftIndex], map: "sys_todo_source_draft_key")
+  @@index([applicationId, ownerUserId, status, dueDate], map: "sys_todo_owner_idx")
+  @@map("sys_personal_todo")
+}
+
+model SdOppStageEvent {
+  id                 String   @id @default(uuid()) @db.Uuid
+  tenantId           String   @map("tenant_id") @db.Uuid
+  applicationId      String   @map("application_id") @db.Uuid
+  opportunityId      String   @map("opportunity_id") @db.Uuid
+  fromStageId        String   @map("from_stage_id") @db.Uuid
+  toStageId          String   @map("to_stage_id") @db.Uuid
+  fromStageName      String   @map("from_stage_name") @db.VarChar(128)
+  toStageName        String   @map("to_stage_name") @db.VarChar(128)
+  reason             String   @db.VarChar(500)
+  source             String   @db.VarChar(32)
+  actor              String   @db.VarChar(128)
+  requestId          String   @map("request_id") @db.Uuid
+  payloadHash        String   @map("payload_hash") @db.VarChar(64)
+  opportunityVersion Int      @map("opportunity_version")
+  createdAt          DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  opportunity        SdOpp    @relation(fields: [opportunityId, tenantId, applicationId], references: [id, tenantId, applicationId], onDelete: Restrict)
+
+  @@unique([applicationId, requestId], map: "sd_opp_stage_event_request_key")
+  @@index([applicationId, opportunityId, createdAt], map: "sd_opp_stage_event_record_idx")
+  @@map("sd_opp_stage_event")
+}
+
+model SdSalesActivity {
+  id            String       @id @default(uuid()) @db.Uuid
+  tenantId      String       @map("tenant_id") @db.Uuid
+  applicationId String       @map("application_id") @db.Uuid
+  systemCode    String       @map("system_code") @db.VarChar(64)
+  customerId    String       @map("customer_id") @db.Uuid
+  opportunityId String?      @map("opportunity_id") @db.Uuid
+  type          String       @db.VarChar(16)
+  title         String       @db.VarChar(120)
+  content       String       @db.VarChar(1000)
+  result        String       @default("") @db.VarChar(2000)
+  nextStep      String       @default("") @map("next_step") @db.VarChar(1000)
+  occurredAt    DateTime     @map("occurred_at") @db.Timestamptz(3)
+  creatorId     String       @map("creator_id") @db.Uuid
+  creatorName   String       @map("creator_name") @db.VarChar(128)
+  status        RecordStatus @default(ACTIVE)
+  version       Int          @default(1)
+  requestId     String       @map("request_id") @db.Uuid
+  requestHash   String       @map("request_hash") @db.VarChar(64)
+  createdAt     DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([applicationId, creatorId, requestId], map: "sd_activity_request_key")
+  @@index([applicationId, customerId, occurredAt(sort: Desc), id], map: "sd_activity_customer_idx")
+  @@index([applicationId, opportunityId, occurredAt(sort: Desc), id], map: "sd_activity_opp_idx")
+  @@map("sd_sales_activity")
+}
+
+model SdSalesSuggestion {
+  id            String    @id @default(uuid()) @db.Uuid
+  tenantId      String    @map("tenant_id") @db.Uuid
+  applicationId String    @map("application_id") @db.Uuid
+  systemCode    String    @map("system_code") @db.VarChar(64)
+  customerId    String?   @map("customer_id") @db.Uuid
+  opportunityId String?   @map("opportunity_id") @db.Uuid
+  subjectKey    String    @map("subject_key") @db.VarChar(64)
+  recipientId   String    @map("recipient_id") @db.Uuid
+  ruleCode      String    @map("rule_code") @db.VarChar(16)
+  ruleVersion   Int       @default(1) @map("rule_version")
+  cycleKey      String    @map("cycle_key") @db.VarChar(64)
+  inputHash     String    @map("input_hash") @db.VarChar(64)
+  title         String    @db.VarChar(160)
+  evidence      Json
+  state         String    @default("ACTIVE") @db.VarChar(16)
+  resumeAt      DateTime? @map("resume_at") @db.Timestamptz(3)
+  version       Int       @default(1)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([id, tenantId, applicationId], map: "sd_sales_suggestion_scope_key")
+  @@unique([applicationId, recipientId, subjectKey, ruleCode, cycleKey], map: "sd_suggestion_cycle_key")
+  @@index([applicationId, recipientId, subjectKey, createdAt], map: "sd_suggestion_record_idx")
+  @@map("sd_sales_suggestion")
+}
+
+model SdScoreRuleSet {
+  id            String    @id @default(uuid()) @db.Uuid
+  tenantId      String    @map("tenant_id") @db.Uuid
+  applicationId String    @map("application_id") @db.Uuid
+  systemCode    String    @map("system_code") @db.VarChar(64)
+  ruleVersion   Int       @map("rule_version")
+  state         String    @default("DRAFT") @db.VarChar(16)
+  config        Json
+  creatorId     String    @map("creator_id") @db.Uuid
+  publishedAt   DateTime? @map("published_at") @db.Timestamptz(3)
+  version       Int       @default(1)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([id, tenantId, applicationId], map: "sd_score_rule_set_scope_key")
+  @@unique([applicationId, ruleVersion], map: "sd_score_rule_version_key")
+  @@map("sd_score_rule_set")
+}
+
+model SdOppScore {
+  id            String   @id @default(uuid()) @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  systemCode    String   @map("system_code") @db.VarChar(64)
+  opportunityId String   @map("opportunity_id") @db.Uuid
+  ruleSetId     String   @map("rule_set_id") @db.Uuid
+  inputHash     String   @map("input_hash") @db.VarChar(64)
+  systemScore   Int      @map("system_score")
+  breakdown     Json
+  inputSummary  Json     @map("input_summary")
+  calculatedAt  DateTime @default(now()) @map("calculated_at") @db.Timestamptz(3)
+
+  @@unique([id, tenantId, applicationId], map: "sd_opp_score_scope_key")
+  @@unique([opportunityId, ruleSetId, inputHash], map: "sd_score_input_key")
+  @@index([applicationId, opportunityId, calculatedAt], map: "sd_score_history_idx")
+  @@map("sd_opp_score")
+}
+
+model SdScoreOverride {
+  id            String   @id @default(uuid()) @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  systemCode    String   @map("system_code") @db.VarChar(64)
+  opportunityId String   @map("opportunity_id") @db.Uuid
+  score         Int?
+  reason        String   @db.VarChar(500)
+  operatorId    String   @map("operator_id") @db.Uuid
+  expiresAt     DateTime @map("expires_at") @db.Timestamptz(3)
+  state         String   @default("ACTIVE") @db.VarChar(16)
+  requestId     String   @map("request_id") @db.Uuid
+  requestHash   String   @map("request_hash") @db.VarChar(64)
+  version       Int      @default(1)
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([id, tenantId, applicationId], map: "sd_score_override_scope_key")
+  @@unique([applicationId, operatorId, requestId], map: "sd_score_override_request_key")
+  @@index([applicationId, opportunityId, createdAt], map: "sd_override_history_idx")
+  @@map("sd_score_override")
+}
+
+model SdRecordComment {
+  id            String    @id @default(uuid()) @db.Uuid
+  tenantId      String    @map("tenant_id") @db.Uuid
+  applicationId String    @map("application_id") @db.Uuid
+  systemCode    String    @map("system_code") @db.VarChar(64)
+  customerId    String?   @map("customer_id") @db.Uuid
+  opportunityId String?   @map("opportunity_id") @db.Uuid
+  subjectKey    String    @map("subject_key") @db.VarChar(64)
+  rootCommentId String?   @map("root_comment_id") @db.Uuid
+  authorId      String    @map("author_id") @db.Uuid
+  authorName    String    @map("author_name") @db.VarChar(128)
+  body          String    @default("") @db.VarChar(4000)
+  state         String    @default("DRAFT") @db.VarChar(16)
+  version       Int       @default(1)
+  requestId     String    @map("request_id") @db.Uuid
+  requestHash   String    @map("request_hash") @db.VarChar(64)
+  publishedAt   DateTime? @map("published_at") @db.Timestamptz(3)
+  expiresAt     DateTime  @map("expires_at") @db.Timestamptz(3)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([id, tenantId, applicationId], map: "sd_record_comment_scope_key")
+  @@unique([id, tenantId, applicationId, subjectKey], map: "sd_comment_subject_key")
+  @@unique([applicationId, authorId, requestId], map: "sd_comment_request_key")
+  @@index([applicationId, subjectKey, rootCommentId, createdAt], map: "sd_comment_record_idx")
+  @@map("sd_record_comment")
+}
+
+model SdCommentRevision {
+  id            String   @id @default(uuid()) @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  systemCode    String   @map("system_code") @db.VarChar(64)
+  commentId     String   @map("comment_id") @db.Uuid
+  version       Int
+  body          String   @db.VarChar(4000)
+  state         String   @db.VarChar(16)
+  reason        String   @db.VarChar(500)
+  operatorId    String   @map("operator_id") @db.Uuid
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@unique([id, tenantId, applicationId], map: "sd_comment_revision_scope_key")
+  @@unique([commentId, version], map: "sd_comment_revision_key")
+  @@map("sd_comment_revision")
+}
+
+model SdCommentMention {
+  id            String   @id @default(uuid()) @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  systemCode    String   @map("system_code") @db.VarChar(64)
+  commentId     String   @map("comment_id") @db.Uuid
+  userId        String   @map("user_id") @db.Uuid
+  isActive      Boolean  @default(true) @map("is_active")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@unique([id, tenantId, applicationId], map: "sd_comment_mention_scope_key")
+  @@unique([commentId, userId], map: "sd_comment_mention_key")
+  @@map("sd_comment_mention")
+}
+
+model SysEventOutbox {
+  id            String   @id @default(uuid()) @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  systemCode    String   @map("system_code") @db.VarChar(64)
+  commentId     String   @map("comment_id") @db.Uuid
+  recipientId   String   @map("recipient_id") @db.Uuid
+  eventKey      String   @map("event_key") @db.VarChar(128)
+  state         String   @default("PENDING") @db.VarChar(16)
+  attempts      Int      @default(0)
+  nextAt        DateTime @default(now()) @map("next_at") @db.Timestamptz(3)
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@unique([id, tenantId, applicationId], map: "sys_event_outbox_scope_key")
+  @@unique([applicationId, eventKey], map: "sys_outbox_event_key")
+  @@index([state, nextAt], map: "sys_outbox_pending_idx")
+  @@map("sys_event_outbox")
+}
+
+model SysNotification {
+  id            String    @id @default(uuid()) @db.Uuid
+  tenantId      String    @map("tenant_id") @db.Uuid
+  applicationId String    @map("application_id") @db.Uuid
+  systemCode    String    @map("system_code") @db.VarChar(64)
+  outboxId      String    @map("outbox_id") @db.Uuid
+  commentId     String    @map("comment_id") @db.Uuid
+  recipientId   String    @map("recipient_id") @db.Uuid
+  readAt        DateTime? @map("read_at") @db.Timestamptz(3)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@unique([id, tenantId, applicationId], map: "sys_notification_scope_key")
+  @@unique([outboxId], map: "sys_notification_event_key")
+  @@index([applicationId, recipientId, readAt, createdAt], map: "sys_notification_owner_idx")
+  @@map("sys_notification")
+}
+
+model SysCodeRule {
+  id            String    @id @default(uuid()) @db.Uuid
+  tenantId      String    @map("tenant_id") @db.Uuid
+  applicationId String    @map("application_id") @db.Uuid
+  objectCode    String    @map("object_code") @db.VarChar(40)
+  objectName    String    @map("object_name") @db.VarChar(80)
+  sortNo        Int       @default(0) @map("sort_no")
+  hasPrefix     Boolean   @default(true) @map("has_prefix")
+  prefix        String    @default("") @db.VarChar(12)
+  hasDate       Boolean   @default(false) @map("has_date")
+  dateType      String    @default("NONE") @map("date_type") @db.VarChar(8)
+  digits        Int
+  startNumber   BigInt    @default(1) @map("start_number")
+  status        String    @default("ACTIVE") @db.VarChar(16)
+  version       Int       @default(1)
+  deletedAt     DateTime? @map("deleted_at") @db.Timestamptz(3)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([applicationId, objectCode], map: "sys_code_rule_app_object_key")
+  @@unique([id, tenantId, applicationId], map: "sys_code_rule_scope_key")
+  @@map("sys_code_rule")
+}
+
+model SysCodeCounter {
+  id           String   @id @default(uuid()) @db.Uuid
+  tenantId     String   @map("tenant_id") @db.Uuid
+  objectCode   String   @map("object_code") @db.VarChar(40)
+  namespace    String   @db.VarChar(24)
+  currentValue BigInt   @map("current_value")
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([tenantId, objectCode, namespace], map: "sys_code_counter_namespace_key")
+  @@map("sys_code_counter")
+}
+
+model SysCodeIssue {
+  id            String   @id @default(uuid()) @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  ruleId        String   @map("rule_id") @db.Uuid
+  objectCode    String   @map("object_code") @db.VarChar(40)
+  requestId     String   @map("request_id") @db.Uuid
+  code          String   @db.VarChar(40)
+  ruleVersion   Int      @map("rule_version")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@unique([tenantId, objectCode, code], map: "sys_code_issue_number_key")
+  @@unique([applicationId, objectCode, requestId], map: "sys_code_issue_request_key")
+  @@index([ruleId], map: "sys_code_issue_rule_idx")
+  @@map("sys_code_issue")
+}
+
+model SysWfConfig {
+  id                 String   @id @default(uuid()) @db.Uuid
+  tenantId           String   @map("tenant_id") @db.Uuid
+  applicationId      String   @map("application_id") @db.Uuid
+  workflowCode       String   @map("workflow_code") @db.VarChar(48)
+  workflowName       String   @map("workflow_name") @db.VarChar(80)
+  objectCode         String   @map("object_code") @db.VarChar(40)
+  revision           Int
+  status             String   @db.VarChar(24)
+  enabled            Boolean  @default(false)
+  config             Json
+  engineDefinitionId String?  @map("engine_definition_id") @db.VarChar(128)
+  graph              Json?
+  createdBy          String   @map("created_by") @db.Uuid
+  createdAt          DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt          DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  version            Int      @default(1)
+
+  @@unique([applicationId, workflowCode, revision], map: "sys_wf_cfg_code_rev_key")
+  @@unique([id, tenantId, applicationId])
+  @@index([applicationId, objectCode, status, createdAt], map: "sys_wf_cfg_list_idx")
+  @@map("sys_wf_config")
+}
+
+model SysWfApproval {
+  id               String   @id @default(uuid()) @db.Uuid
+  tenantId         String   @map("tenant_id") @db.Uuid
+  applicationId    String   @map("application_id") @db.Uuid
+  configId         String   @map("config_id") @db.Uuid
+  orderId          String   @map("order_id") @db.Uuid
+  orderNo          String   @map("order_no") @db.VarChar(32)
+  applicantId      String   @map("applicant_id") @db.Uuid
+  participants     String[] @db.Uuid
+  round            Int
+  active           Boolean  @default(true)
+  status           String   @db.VarChar(24)
+  snapshot         Json
+  people           Json
+  engineInstanceId String?  @map("engine_instance_id") @db.VarChar(64)
+  engineState      Json?    @map("engine_state")
+  effectId         String?  @unique @map("effect_id") @db.VarChar(64)
+  version          Int      @default(1)
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([orderId, round])
+  @@unique([id, tenantId, applicationId])
+  @@index([applicationId, active])
+  @@map("sys_wf_approval")
+}
+
+model SysWfDelivery {
+  id            String    @id @default(uuid()) @db.Uuid
+  tenantId      String    @map("tenant_id") @db.Uuid
+  applicationId String    @map("application_id") @db.Uuid
+  approvalId    String?   @map("approval_id") @db.Uuid
+  configId      String?   @map("config_id") @db.Uuid
+  actorId       String    @map("actor_id") @db.Uuid
+  requestKey    String    @map("request_key") @db.VarChar(128)
+  command       Json
+  status        String    @default("PENDING") @db.VarChar(24)
+  attempts      Int       @default(0)
+  nextAt        DateTime  @default(now()) @map("next_at") @db.Timestamptz(3)
+  leaseUntil    DateTime? @map("lease_until") @db.Timestamptz(3)
+  leaseToken    String?   @map("lease_token") @db.Uuid
+  error         String?   @db.VarChar(500)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@unique([applicationId, actorId, requestKey])
+  @@index([status, nextAt])
+  @@map("sys_wf_delivery")
+}
+
+model SysWfNotice {
+  id            String    @id @default(uuid()) @db.Uuid
+  tenantId      String    @map("tenant_id") @db.Uuid
+  applicationId String    @map("application_id") @db.Uuid
+  approvalId    String    @map("approval_id") @db.Uuid
+  recipientId   String    @map("recipient_id") @db.Uuid
+  eventKey      String    @unique @map("event_key") @db.VarChar(160)
+  readAt        DateTime? @map("read_at") @db.Timestamptz(3)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([applicationId, recipientId, readAt])
+  @@map("sys_wf_notice")
+}
+
+model SysDeWorkspace {
+  id            String   @id @default(uuid()) @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  data          Json
+  version       Int      @default(1)
+  createdBy     String   @map("created_by") @db.Uuid
+  updatedBy     String   @map("updated_by") @db.Uuid
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([applicationId], map: "sys_de_workspace_app_key")
+  @@unique([id, tenantId, applicationId], map: "sys_de_workspace_scope_key")
+  @@map("sys_de_workspace")
+}
+
+model IntDeConnection {
+  id               String    @id @default(uuid()) @db.Uuid
+  tenantId         String    @map("tenant_id") @db.Uuid
+  applicationId    String    @map("application_id") @db.Uuid
+  connectionCode   String    @map("connection_code") @db.VarChar(64)
+  connectionName   String    @map("connection_name") @db.VarChar(120)
+  category         String    @db.VarChar(32)
+  provider         String    @db.VarChar(32)
+  status           String    @default("WAITING_CONFIG") @db.VarChar(24)
+  config           Json
+  credentialCipher String?   @map("credential_cipher") @db.Text
+  lastCheckedAt    DateTime? @map("last_checked_at") @db.Timestamptz(3)
+  lastError        String?   @map("last_error") @db.VarChar(500)
+  version          Int       @default(1)
+  createdBy        String    @map("created_by") @db.Uuid
+  updatedBy        String    @map("updated_by") @db.Uuid
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([applicationId, connectionCode], map: "int_de_connection_app_code_key")
+  @@unique([id, tenantId, applicationId], map: "int_de_connection_scope_key")
+  @@index([applicationId, category, status], map: "int_de_connection_list_idx")
+  @@map("int_de_connection")
+}
+
+model IntDeMailAutomation {
+  id            String    @id @default(uuid()) @db.Uuid
+  tenantId      String    @map("tenant_id") @db.Uuid
+  applicationId String    @map("application_id") @db.Uuid
+  connectionId  String    @unique(map: "int_de_mail_automation_connection_key") @map("connection_id") @db.Uuid
+  enabled       Boolean   @default(false)
+  config        Json
+  nextRunAt     DateTime? @map("next_run_at") @db.Timestamptz(3)
+  lastRunAt     DateTime? @map("last_run_at") @db.Timestamptz(3)
+  lastError     String?   @map("last_error") @db.VarChar(500)
+  version       Int       @default(1)
+  createdBy     String    @map("created_by") @db.Uuid
+  updatedBy     String    @map("updated_by") @db.Uuid
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([enabled, nextRunAt], map: "int_de_mail_automation_due_idx")
+  @@index([applicationId, connectionId], map: "int_de_mail_automation_scope_idx")
+  @@map("int_de_mail_automation")
+}
+
+model IntDeMailMessage {
+  id             String    @id @default(uuid()) @db.Uuid
+  tenantId       String    @map("tenant_id") @db.Uuid
+  applicationId  String    @map("application_id") @db.Uuid
+  connectionId   String    @map("connection_id") @db.Uuid
+  uid            Int
+  messageId      String    @map("message_id") @db.VarChar(500)
+  subject        String    @db.VarChar(500)
+  sender         String    @db.VarChar(320)
+  replyTo        String    @map("reply_to") @db.VarChar(320)
+  receivedAt     DateTime  @map("received_at") @db.Timestamptz(3)
+  summary        String    @db.Text
+  category       String    @db.VarChar(64)
+  domain         String    @db.VarChar(64)
+  risk           String    @db.VarChar(16)
+  status         String    @default("PENDING") @db.VarChar(32)
+  handlingResult String?   @map("handling_result") @db.VarChar(500)
+  taskId         String?   @map("task_id") @db.VarChar(160)
+  matchedRules   Json      @default("[]") @map("matched_rules")
+  processedAt    DateTime? @map("processed_at") @db.Timestamptz(3)
+  deletedAt      DateTime? @map("deleted_at") @db.Timestamptz(3)
+  version        Int       @default(1)
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([connectionId, uid], map: "int_de_mail_message_uid_key")
+  @@index([applicationId, status, receivedAt], map: "int_de_mail_message_list_idx")
+  @@map("int_de_mail_message")
+}
+
+model IntDeMailRule {
+  id            String   @id @default(uuid()) @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  connectionId  String   @map("connection_id") @db.Uuid
+  ruleCode      String   @map("rule_code") @db.VarChar(64)
+  ruleName      String   @map("rule_name") @db.VarChar(120)
+  priority      Int      @default(100)
+  enabled       Boolean  @default(true)
+  conditions    Json
+  actions       Json
+  stopOnMatch   Boolean  @default(true) @map("stop_on_match")
+  version       Int      @default(1)
+  createdBy     String   @map("created_by") @db.Uuid
+  updatedBy     String   @map("updated_by") @db.Uuid
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([connectionId, ruleCode], map: "int_de_mail_rule_code_key")
+  @@index([applicationId, connectionId, enabled, priority], map: "int_de_mail_rule_list_idx")
+  @@map("int_de_mail_rule")
+}
+
+model IntDeMailTemplate {
+  id              String   @id @default(uuid()) @db.Uuid
+  tenantId        String   @map("tenant_id") @db.Uuid
+  applicationId   String   @map("application_id") @db.Uuid
+  connectionId    String   @map("connection_id") @db.Uuid
+  templateCode    String   @map("template_code") @db.VarChar(64)
+  templateName    String   @map("template_name") @db.VarChar(120)
+  subjectTemplate String   @map("subject_template") @db.VarChar(500)
+  bodyTemplate    String   @map("body_template") @db.Text
+  mode            String   @default("DRAFT") @db.VarChar(24)
+  status          String   @default("ACTIVE") @db.VarChar(16)
+  version         Int      @default(1)
+  createdBy       String   @map("created_by") @db.Uuid
+  updatedBy       String   @map("updated_by") @db.Uuid
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([connectionId, templateCode], map: "int_de_mail_template_code_key")
+  @@index([applicationId, connectionId, status], map: "int_de_mail_template_list_idx")
+  @@map("int_de_mail_template")
+}
+
+model IntDeMailAction {
+  id             String    @id @default(uuid()) @db.Uuid
+  tenantId       String    @map("tenant_id") @db.Uuid
+  applicationId  String    @map("application_id") @db.Uuid
+  connectionId   String    @map("connection_id") @db.Uuid
+  messageId      String    @map("message_id") @db.Uuid
+  actionType     String    @map("action_type") @db.VarChar(32)
+  status         String    @default("PENDING") @db.VarChar(24)
+  payload        Json
+  idempotencyKey String    @unique(map: "int_de_mail_action_idempotency_key") @map("idempotency_key") @db.VarChar(200)
+  scheduledAt    DateTime  @default(now()) @map("scheduled_at") @db.Timestamptz(3)
+  executedAt     DateTime? @map("executed_at") @db.Timestamptz(3)
+  approvedBy     String?   @map("approved_by") @db.Uuid
+  attempts       Int       @default(0)
+  error          String?   @db.VarChar(500)
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([status, scheduledAt], map: "int_de_mail_action_due_idx")
+  @@index([applicationId, messageId], map: "int_de_mail_action_message_idx")
+  @@map("int_de_mail_action")
+}
+
+model IntDeMailRun {
+  id            String    @id @default(uuid()) @db.Uuid
+  tenantId      String    @map("tenant_id") @db.Uuid
+  applicationId String    @map("application_id") @db.Uuid
+  connectionId  String    @map("connection_id") @db.Uuid
+  triggerType   String    @map("trigger_type") @db.VarChar(24)
+  status        String    @db.VarChar(24)
+  readCount     Int       @default(0) @map("read_count")
+  newCount      Int       @default(0) @map("new_count")
+  actionCount   Int       @default(0) @map("action_count")
+  startedAt     DateTime  @default(now()) @map("started_at") @db.Timestamptz(3)
+  finishedAt    DateTime? @map("finished_at") @db.Timestamptz(3)
+  error         String?   @db.VarChar(500)
+
+  @@index([applicationId, connectionId, startedAt], map: "int_de_mail_run_list_idx")
+  @@map("int_de_mail_run")
+}
+
+model IntDeOpTopic {
+  id            String   @id @default(uuid()) @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  topicCode     String   @map("topic_code") @db.VarChar(64)
+  topicName     String   @map("topic_name") @db.VarChar(120)
+  brand         String   @db.VarChar(64)
+  requiredTerms Json     @map("required_terms")
+  riskTerms     Json     @map("risk_terms")
+  excludedTerms Json     @map("excluded_terms")
+  languages     Json
+  enabled       Boolean  @default(true)
+  version       Int      @default(1)
+  createdBy     String   @map("created_by") @db.Uuid
+  updatedBy     String   @map("updated_by") @db.Uuid
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([applicationId, topicCode], map: "int_de_op_topic_app_code_key")
+  @@index([applicationId, enabled], map: "int_de_op_topic_list_idx")
+  @@map("int_de_op_topic")
+}
+
+model IntDeOpSource {
+  id               String    @id @default(uuid()) @db.Uuid
+  tenantId         String    @map("tenant_id") @db.Uuid
+  applicationId    String    @map("application_id") @db.Uuid
+  sourceCode       String    @map("source_code") @db.VarChar(64)
+  sourceName       String    @map("source_name") @db.VarChar(120)
+  sourceType       String    @map("source_type") @db.VarChar(24)
+  status           String    @default("WAITING_CONFIG") @db.VarChar(24)
+  enabled          Boolean   @default(false)
+  config           Json
+  credentialCipher String?   @map("credential_cipher") @db.Text
+  lastCheckedAt    DateTime? @map("last_checked_at") @db.Timestamptz(3)
+  lastError        String?   @map("last_error") @db.VarChar(500)
+  version          Int       @default(1)
+  createdBy        String    @map("created_by") @db.Uuid
+  updatedBy        String    @map("updated_by") @db.Uuid
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([applicationId, sourceCode], map: "int_de_op_source_app_code_key")
+  @@index([applicationId, enabled, status], map: "int_de_op_source_list_idx")
+  @@map("int_de_op_source")
+}
+
+model IntDeOpRun {
+  id             String    @id @default(uuid()) @db.Uuid
+  tenantId       String    @map("tenant_id") @db.Uuid
+  applicationId  String    @map("application_id") @db.Uuid
+  topicId        String    @map("topic_id") @db.Uuid
+  status         String    @db.VarChar(24)
+  stage          String    @db.VarChar(64)
+  sourceCodes    Json      @map("source_codes")
+  rangeHours     Int       @map("range_hours")
+  useAi          Boolean   @map("use_ai")
+  previewOnly    Boolean   @map("preview_only")
+  readCount      Int       @default(0) @map("read_count")
+  newCount       Int       @default(0) @map("new_count")
+  duplicateCount Int       @default(0) @map("duplicate_count")
+  matchCount     Int       @default(0) @map("match_count")
+  eventCount     Int       @default(0) @map("event_count")
+  taskCount      Int       @default(0) @map("task_count")
+  startedAt      DateTime  @default(now()) @map("started_at") @db.Timestamptz(3)
+  finishedAt     DateTime? @map("finished_at") @db.Timestamptz(3)
+  error          String?   @db.VarChar(1000)
+  createdBy      String    @map("created_by") @db.Uuid
+
+  @@index([applicationId, startedAt], map: "int_de_op_run_list_idx")
+  @@index([topicId, status], map: "int_de_op_run_topic_idx")
+  @@map("int_de_op_run")
+}
+
+model IntDeOpItem {
+  id            String   @id @default(uuid()) @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  topicId       String   @map("topic_id") @db.Uuid
+  sourceId      String   @map("source_id") @db.Uuid
+  runId         String?  @map("run_id") @db.Uuid
+  eventId       String?  @map("event_id") @db.Uuid
+  externalId    String   @map("external_id") @db.VarChar(300)
+  contentHash   String   @map("content_hash") @db.VarChar(64)
+  title         String   @db.VarChar(500)
+  summary       String   @db.Text
+  content       String?  @db.Text
+  sourceName    String   @map("source_name") @db.VarChar(120)
+  sourceUrl     String   @map("source_url") @db.VarChar(2000)
+  author        String   @default("") @db.VarChar(120)
+  publishedAt   DateTime @map("published_at") @db.Timestamptz(3)
+  fetchedAt     DateTime @default(now()) @map("fetched_at") @db.Timestamptz(3)
+  language      String   @default("zh") @db.VarChar(12)
+  country       String   @default("") @db.VarChar(32)
+  matchedTerms  Json     @map("matched_terms")
+  sentiment     String   @default("UNKNOWN") @db.VarChar(16)
+  riskScore     Int      @default(0) @map("risk_score")
+  riskLevel     String   @default("GENERAL") @map("risk_level") @db.VarChar(16)
+  aiStatus      String   @default("NOT_REQUESTED") @map("ai_status") @db.VarChar(24)
+  aiSummary     String?  @map("ai_summary") @db.Text
+
+  @@unique([sourceId, externalId], map: "int_de_op_item_source_ext_key")
+  @@index([applicationId, publishedAt], map: "int_de_op_item_list_idx")
+  @@index([topicId, riskLevel], map: "int_de_op_item_risk_idx")
+  @@index([eventId], map: "int_de_op_item_event_idx")
+  @@map("int_de_op_item")
+}
+
+model IntDeOpEvent {
+  id                  String   @id @default(uuid()) @db.Uuid
+  tenantId            String   @map("tenant_id") @db.Uuid
+  applicationId       String   @map("application_id") @db.Uuid
+  topicId             String   @map("topic_id") @db.Uuid
+  eventCode           String   @map("event_code") @db.VarChar(64)
+  title               String   @db.VarChar(500)
+  status              String   @default("PENDING_REVIEW") @db.VarChar(24)
+  riskLevel           String   @default("GENERAL") @map("risk_level") @db.VarChar(16)
+  riskScore           Int      @default(0) @map("risk_score")
+  sentiment           String   @default("UNKNOWN") @db.VarChar(16)
+  summary             String   @db.Text
+  matchedTerms        Json     @map("matched_terms")
+  sourceCount         Int      @default(1) @map("source_count")
+  itemCount           Int      @default(1) @map("item_count")
+  firstSeenAt         DateTime @map("first_seen_at") @db.Timestamptz(3)
+  lastSeenAt          DateTime @map("last_seen_at") @db.Timestamptz(3)
+  owner               String   @default("未分配") @db.VarChar(120)
+  queue               String   @default("风险监控队列") @db.VarChar(64)
+  taskId              String?  @map("task_id") @db.VarChar(160)
+  resolution          String?  @db.Text
+  falsePositiveReason String?  @map("false_positive_reason") @db.Text
+  version             Int      @default(1)
+  createdBy           String   @map("created_by") @db.Uuid
+  updatedBy           String   @map("updated_by") @db.Uuid
+  createdAt           DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt           DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([applicationId, eventCode], map: "int_de_op_event_app_code_key")
+  @@index([applicationId, status, riskLevel], map: "int_de_op_event_list_idx")
+  @@index([topicId, lastSeenAt], map: "int_de_op_event_topic_idx")
+  @@map("int_de_op_event")
+}
+
+model IntDeMarketConfig {
+  id                  String    @id @default(uuid()) @db.Uuid
+  tenantId            String    @map("tenant_id") @db.Uuid
+  applicationId       String    @unique(map: "int_de_market_config_app_key") @map("application_id") @db.Uuid
+  enabled             Boolean   @default(false)
+  scheduleTime        String    @default("09:00") @map("schedule_time") @db.VarChar(5)
+  timezone            String    @default("Asia/Shanghai") @db.VarChar(64)
+  commodityApiBaseUrl String    @default("https://api.commoditypriceapi.com/v3") @map("commodity_api_base_url") @db.VarChar(500)
+  fxApiBaseUrl        String    @default("https://api.frankfurter.dev/v2/rates") @map("fx_api_base_url") @db.VarChar(500)
+  credentialCipher    String?   @map("credential_cipher") @db.Text
+  lastRunAt           DateTime? @map("last_run_at") @db.Timestamptz(3)
+  lastSuccessAt       DateTime? @map("last_success_at") @db.Timestamptz(3)
+  lastScheduledDate   DateTime? @map("last_scheduled_date") @db.Date
+  lastError           String?   @map("last_error") @db.VarChar(1000)
+  isRunning           Boolean   @default(false) @map("is_running")
+  version             Int       @default(1)
+  createdBy           String    @map("created_by") @db.Uuid
+  updatedBy           String    @map("updated_by") @db.Uuid
+  createdAt           DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt           DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([id, tenantId, applicationId], map: "int_de_market_config_scope_key")
+  @@map("int_de_market_config")
+}
+
+model IntDeMarketItem {
+  id             String    @id @default(uuid()) @db.Uuid
+  tenantId       String    @map("tenant_id") @db.Uuid
+  applicationId  String    @map("application_id") @db.Uuid
+  itemCode       String    @map("item_code") @db.VarChar(32)
+  itemName       String    @map("item_name") @db.VarChar(80)
+  sourceSymbol   String    @map("source_symbol") @db.VarChar(64)
+  benchmark      String    @db.VarChar(120)
+  unit           String    @db.VarChar(80)
+  enabled        Boolean   @default(true)
+  lastMarketDate DateTime? @map("last_market_date") @db.Date
+  lastFetchedAt  DateTime? @map("last_fetched_at") @db.Timestamptz(3)
+  version        Int       @default(1)
+  createdBy      String    @map("created_by") @db.Uuid
+  updatedBy      String    @map("updated_by") @db.Uuid
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([applicationId, itemCode], map: "int_de_market_item_app_code_key")
+  @@unique([id, tenantId, applicationId], map: "int_de_market_item_scope_key")
+  @@index([applicationId, enabled, itemCode], map: "int_de_market_item_list_idx")
+  @@map("int_de_market_item")
+}
+
+model IntDeMarketFx {
+  id            String   @id @default(uuid()) @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  sourceCode    String   @default("FRANKFURTER") @map("source_code") @db.VarChar(32)
+  baseCurrency  String   @default("USD") @map("base_currency") @db.VarChar(3)
+  quoteCurrency String   @default("CNY") @map("quote_currency") @db.VarChar(3)
+  effectiveDate DateTime @map("effective_date") @db.Date
+  rate          Decimal  @db.Decimal(18, 8)
+  fetchedAt     DateTime @default(now()) @map("fetched_at") @db.Timestamptz(3)
+
+  @@unique([applicationId, sourceCode, baseCurrency, quoteCurrency, effectiveDate], map: "int_de_market_fx_day_key")
+  @@unique([id, tenantId, applicationId], map: "int_de_market_fx_scope_key")
+  @@index([applicationId, effectiveDate], map: "int_de_market_fx_date_idx")
+  @@map("int_de_market_fx")
+}
+
+model IntDeMarketPrice {
+  id            String   @id @default(uuid()) @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  itemId        String   @map("item_id") @db.Uuid
+  fxId          String   @map("fx_id") @db.Uuid
+  sourceCode    String   @default("COMMODITY_PRICE_API") @map("source_code") @db.VarChar(32)
+  marketDate    DateTime @map("market_date") @db.Date
+  sourceSymbol  String   @map("source_symbol") @db.VarChar(64)
+  benchmark     String   @db.VarChar(120)
+  unit          String   @db.VarChar(80)
+  openUsd       Decimal? @map("open_usd") @db.Decimal(20, 8)
+  highUsd       Decimal? @map("high_usd") @db.Decimal(20, 8)
+  lowUsd        Decimal? @map("low_usd") @db.Decimal(20, 8)
+  closeUsd      Decimal  @map("close_usd") @db.Decimal(20, 8)
+  openCny       Decimal? @map("open_cny") @db.Decimal(20, 8)
+  highCny       Decimal? @map("high_cny") @db.Decimal(20, 8)
+  lowCny        Decimal? @map("low_cny") @db.Decimal(20, 8)
+  closeCny      Decimal  @map("close_cny") @db.Decimal(20, 8)
+  fxRate        Decimal  @map("fx_rate") @db.Decimal(18, 8)
+  fxDate        DateTime @map("fx_date") @db.Date
+  fetchedAt     DateTime @default(now()) @map("fetched_at") @db.Timestamptz(3)
+  sourcePayload Json     @map("source_payload")
+
+  @@unique([applicationId, itemId, sourceCode, marketDate], map: "int_de_market_price_day_key")
+  @@unique([id, tenantId, applicationId], map: "int_de_market_price_scope_key")
+  @@index([applicationId, itemId, marketDate], map: "int_de_market_price_trend_idx")
+  @@map("int_de_market_price")
+}
+
+model IntDeMarketCursor {
+  id            String    @id @default(uuid()) @db.Uuid
+  tenantId      String    @map("tenant_id") @db.Uuid
+  applicationId String    @map("application_id") @db.Uuid
+  cursorCode    String    @map("cursor_code") @db.VarChar(40)
+  cursorDate    DateTime? @map("cursor_date") @db.Date
+  lastSuccessAt DateTime? @map("last_success_at") @db.Timestamptz(3)
+  updatedAt     DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([applicationId, cursorCode], map: "int_de_market_cursor_app_code_key")
+  @@map("int_de_market_cursor")
+}
+
+model IntDeMarketRun {
+  id            String    @id @default(uuid()) @db.Uuid
+  tenantId      String    @map("tenant_id") @db.Uuid
+  applicationId String    @map("application_id") @db.Uuid
+  triggerType   String    @map("trigger_type") @db.VarChar(16)
+  status        String    @db.VarChar(16)
+  startDate     DateTime  @map("start_date") @db.Date
+  endDate       DateTime  @map("end_date") @db.Date
+  itemCount     Int       @default(0) @map("item_count")
+  successCount  Int       @default(0) @map("success_count")
+  failureCount  Int       @default(0) @map("failure_count")
+  startedAt     DateTime  @default(now()) @map("started_at") @db.Timestamptz(3)
+  finishedAt    DateTime? @map("finished_at") @db.Timestamptz(3)
+  error         String?   @db.VarChar(1000)
+  createdBy     String    @map("created_by") @db.Uuid
+
+  @@index([applicationId, startedAt], map: "int_de_market_run_list_idx")
+  @@map("int_de_market_run")
+}
+
+model SysAgentKnowledge {
+  id            String   @id @default(uuid()) @db.Uuid
+  documentId    String   @map("document_id") @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  ownerUserId   String   @map("owner_user_id") @db.Uuid
+  title         String   @db.VarChar(160)
+  kind          String   @db.VarChar(16)
+  content       String   @db.Text
+  revision      Int
+  status        String   @db.VarChar(16)
+  validUntil    DateTime? @map("valid_until") @db.Date
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  @@unique([documentId, revision], map: "sys_agent_know_revision_key")
+  @@index([applicationId, ownerUserId, documentId], map: "sys_agent_know_owner_idx")
+  @@map("sys_agent_knowledge")
+}
+
+/// Isolated demonstration records and future read-only API configuration; never authoritative business facts.
+model SysDeSceneWorkspace {
+  id String @id @default(uuid()) @db.Uuid
+  tenantId String @map("tenant_id") @db.Uuid
+  applicationId String @map("application_id") @db.Uuid
+  scenarioCode String @map("scenario_code") @db.VarChar(32)
+  data Json
+  version Int @default(1)
+  createdBy String @map("created_by") @db.Uuid
+  updatedBy String @map("updated_by") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  @@unique([applicationId, scenarioCode], map: "sys_de_scene_app_code_key")
+  @@map("sys_de_scene_workspace")
+}
+
+model MdSupplier {
+ id String @id @default(uuid()) @map("supplier_id") @db.Uuid
+ tenantId String @map("tenant_id") @db.Uuid
+ supplierCode String @map("supplier_code") @db.VarChar(32)
+ supplierName String @map("supplier_name") @db.VarChar(255)
+ shortName String @map("short_name") @db.VarChar(128)
+ categoryCode String @map("category_code") @db.VarChar(32)
+ creditCode String @default("") @map("credit_code") @db.VarChar(32)
+ contactName String @default("") @map("contact_name") @db.VarChar(128)
+ phone String @default("") @db.VarChar(64)
+ email String @default("") @db.VarChar(128)
+ address String @default("") @db.VarChar(500)
+ paymentTermDays Int @default(30) @map("payment_term_days")
+ leadTimeDays Int @default(7) @map("lead_time_days")
+ taxRate Decimal @default(0.13) @map("tax_rate") @db.Decimal(5,4)
+ status String @default("ACTIVE") @db.VarChar(16)
+ remark String @default("") @db.VarChar(1000)
+ deletedAt DateTime? @map("deleted_at") @db.Timestamptz(3)
+ creatorId String @map("creator_id") @db.Uuid
+ updatedBy String @map("updated_by") @db.Uuid
+ version Int @default(1)
+ createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+ updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+ @@unique([tenantId,supplierCode], map:"md_supplier_code_key")
+ @@unique([id,tenantId], map:"md_supplier_scope_key")
+ @@index([tenantId,status,supplierName], map:"md_supplier_list_idx")
+ @@map("md_supplier")
+}
+model ScmPurchaseOrder {
+ id String @id @default(uuid()) @map("order_id") @db.Uuid
+ tenantId String @map("tenant_id") @db.Uuid
+ applicationId String @map("application_id") @db.Uuid
+ orderNo String @map("order_no") @db.VarChar(32)
+ orderDate DateTime @map("order_date") @db.Date
+ expectedDate DateTime @map("expected_date") @db.Date
+ supplierId String @map("supplier_id") @db.Uuid
+ supplierCode String @map("supplier_code") @db.VarChar(32)
+ supplierName String @map("supplier_name") @db.VarChar(255)
+ buyerId String @map("buyer_id") @db.Uuid
+ legalEntityId String @map("legal_entity_id") @db.Uuid
+ warehouseId String @map("warehouse_id") @db.Uuid
+ orderType String @default("NORMAL") @map("order_type") @db.VarChar(16)
+ currencyCode String @default("CNY") @map("currency_code") @db.Char(3)
+ discount Decimal @default(1) @db.Decimal(5,4)
+ amount Decimal @default(0) @db.Decimal(18,2)
+ netAmount Decimal @default(0) @map("net_amount") @db.Decimal(18,2)
+ taxAmount Decimal @default(0) @map("tax_amount") @db.Decimal(18,2)
+ status String @default("DRAFT") @db.VarChar(16)
+ fulfillmentStatus String @default("NOT_RECEIVED") @map("fulfillment_status") @db.VarChar(24)
+ remark String @default("") @db.VarChar(1000)
+ version Int @default(1)
+ creatorId String @map("creator_id") @db.Uuid
+ submittedBy String? @map("submitted_by") @db.Uuid
+ submittedAt DateTime? @map("submitted_at") @db.Timestamptz(3)
+ approvedBy String? @map("approved_by") @db.Uuid
+ approvedAt DateTime? @map("approved_at") @db.Timestamptz(3)
+ createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+ updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+ lines ScmPurchaseOrderLine[]
+ @@unique([tenantId,orderNo],map:"scm_po_no_key")
+ @@unique([id,tenantId,applicationId],map:"scm_po_scope_key")
+ @@index([applicationId,status,updatedAt],map:"scm_po_list_idx")
+ @@map("scm_purchase_order")
+}
+model ScmPurchaseOrderLine {
+ id String @id @default(uuid()) @map("line_id") @db.Uuid
+ orderId String @map("order_id") @db.Uuid
+ tenantId String @map("tenant_id") @db.Uuid
+ applicationId String @map("application_id") @db.Uuid
+ lineNo Int @map("line_no")
+ sortNo Int @map("sort_no")
+ itemId String @map("item_id") @db.Uuid
+ itemCode String @map("item_code") @db.VarChar(32)
+ itemName String @map("item_name") @db.VarChar(128)
+ baseUnit String @map("base_unit") @db.VarChar(32)
+ quantity Decimal @db.Decimal(18,4)
+ unitPrice Decimal @map("unit_price") @db.Decimal(18,6)
+ discount Decimal @default(1) @db.Decimal(5,4)
+ taxRate Decimal @map("tax_rate") @db.Decimal(5,4)
+ amount Decimal @db.Decimal(18,2)
+ finalAmount Decimal @map("final_amount") @db.Decimal(18,2)
+ taxAmount Decimal @map("tax_amount") @db.Decimal(18,2)
+ receivedQty Decimal @default(0) @map("received_qty") @db.Decimal(18,4)
+ lineStatus String @default("NOT_RECEIVED") @map("line_status") @db.VarChar(24)
+ remark String @default("") @db.VarChar(1000)
+ order ScmPurchaseOrder @relation(fields:[orderId,tenantId,applicationId],references:[id,tenantId,applicationId],onDelete:Restrict)
+ @@unique([orderId,lineNo],map:"scm_po_line_no_key")
+ @@unique([id,orderId,tenantId,applicationId],map:"scm_po_line_scope_key")
+ @@index([tenantId,itemId],map:"scm_po_item_idx")
+ @@map("scm_purchase_order_line")
+}
+model ScmPurchaseReceipt {
+ id String @id @default(uuid()) @map("receipt_id") @db.Uuid
+ tenantId String @map("tenant_id") @db.Uuid
+ applicationId String @map("application_id") @db.Uuid
+ receiptNo String @map("receipt_no") @db.VarChar(32)
+ orderId String @map("order_id") @db.Uuid
+ orderNo String @map("order_no") @db.VarChar(32)
+ supplierId String @map("supplier_id") @db.Uuid
+ supplierName String @map("supplier_name") @db.VarChar(255)
+ legalEntityId String @map("legal_entity_id") @db.Uuid
+ warehouseId String @map("warehouse_id") @db.Uuid
+ receiverId String @map("receiver_id") @db.Uuid
+ documentDate DateTime @map("document_date") @db.Date
+ currencyCode String @default("CNY") @map("currency_code") @db.Char(3)
+ grossAmount Decimal @default(0) @map("gross_amount") @db.Decimal(18,2)
+ taxAmount Decimal @default(0) @map("tax_amount") @db.Decimal(18,2)
+ costAmount Decimal @default(0) @map("cost_amount") @db.Decimal(18,2)
+ status String @default("DRAFT") @db.VarChar(16)
+ remark String @default("") @db.VarChar(1000)
+ version Int @default(1)
+ creatorId String @map("creator_id") @db.Uuid
+ submittedBy String? @map("submitted_by") @db.Uuid
+ submittedAt DateTime? @map("submitted_at") @db.Timestamptz(3)
+ approvedBy String? @map("approved_by") @db.Uuid
+ approvedAt DateTime? @map("approved_at") @db.Timestamptz(3)
+ postedBy String? @map("posted_by") @db.Uuid
+ postedAt DateTime? @map("posted_at") @db.Timestamptz(3)
+ reversedBy String? @map("reversed_by") @db.Uuid
+ reversedAt DateTime? @map("reversed_at") @db.Timestamptz(3)
+ createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+ updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+ lines ScmPurchaseReceiptLine[]
+ @@unique([tenantId,receiptNo],map:"scm_pr_no_key")
+ @@unique([id,orderId,tenantId,applicationId],map:"scm_pr_scope_key")
+ @@index([applicationId,status,updatedAt],map:"scm_pr_list_idx")
+ @@index([orderId,status],map:"scm_pr_order_idx")
+ @@map("scm_purchase_receipt")
+}
+model ScmPurchaseReceiptLine {
+ id String @id @default(uuid()) @map("line_id") @db.Uuid
+ receiptId String @map("receipt_id") @db.Uuid
+ orderId String @map("order_id") @db.Uuid
+ orderLineId String @map("order_line_id") @db.Uuid
+ tenantId String @map("tenant_id") @db.Uuid
+ applicationId String @map("application_id") @db.Uuid
+ lineNo Int @map("line_no")
+ sourceLineNo Int @map("source_line_no")
+ itemId String @map("item_id") @db.Uuid
+ itemCode String @map("item_code") @db.VarChar(32)
+ itemName String @map("item_name") @db.VarChar(128)
+ baseUnit String @map("base_unit") @db.VarChar(32)
+ batchNo String @default("") @map("batch_no") @db.VarChar(64)
+ quantity Decimal @db.Decimal(18,4)
+ grossAmount Decimal @map("gross_amount") @db.Decimal(18,2)
+ taxAmount Decimal @map("tax_amount") @db.Decimal(18,2)
+ costAmount Decimal @map("cost_amount") @db.Decimal(18,2)
+ remark String @default("") @db.VarChar(1000)
+ receipt ScmPurchaseReceipt @relation(fields:[receiptId,orderId,tenantId,applicationId],references:[id,orderId,tenantId,applicationId],onDelete:Restrict)
+ @@unique([receiptId,lineNo],map:"scm_pr_line_no_key")
+ @@unique([receiptId,orderLineId,batchNo],map:"scm_pr_line_batch_key")
+ @@index([orderLineId],map:"scm_pr_source_idx")
+ @@map("scm_purchase_receipt_line")
+}
+model ScmPurchaseEvent {
+ id String @id @default(uuid()) @db.Uuid
+ tenantId String @map("tenant_id") @db.Uuid
+ applicationId String @map("application_id") @db.Uuid
+ documentId String @map("document_id") @db.Uuid
+ documentType String @map("document_type") @db.VarChar(16)
+ action String @db.VarChar(16)
+ requestKey String @map("request_key") @db.Uuid
+ requestHash String @map("request_hash") @db.VarChar(64)
+ actorId String @map("actor_id") @db.Uuid
+ note String @default("") @db.VarChar(1000)
+ result Json
+ createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+ @@unique([applicationId,actorId,requestKey],map:"scm_pc_event_req_key")
+ @@index([applicationId,documentId,createdAt],map:"scm_pc_event_doc_idx")
+ @@map("scm_purchase_event")
 }

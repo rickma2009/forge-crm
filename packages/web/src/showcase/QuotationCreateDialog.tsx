@@ -1,3 +1,4 @@
+import { DeclarativeDataGrid } from '../common/data-grid/DeclarativeDataGrid';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import type { Opportunity } from '@forge-crm/contracts';
 import type { EnterpriseGateway } from './gateway';
@@ -98,7 +99,7 @@ export function QuotationCreateDialog({ systemCode, gateway, opportunityId, cust
         <datalist id={listId}>{options.map((o) => <option key={o.id} value={o.label} />)}</datalist>
       </>}
       {mode === 'OPPORTUNITY' && (locked || selection) && <label>客户名称<input readOnly value={source?.customerName ?? selection?.customerName ?? ''} /></label>}
-      {source && <details className="quote-source-products" open={!!error}><summary>待带入产品（{source.products?.length ?? 0} 项）</summary><div className="enterprise-table-wrap"><table><thead><tr><th>产品</th><th>数量</th><th>单价</th><th>需求说明</th></tr></thead><tbody>{source.products?.map((p) => <tr key={p.id}><td>{p.productName}</td><td>{p.quantity}</td><td>{p.unitPrice}</td><td>{p.requirement || '—'}</td></tr>)}</tbody></table></div></details>}
+      {source && <details className="quote-source-products" open={!!error}><summary>待带入产品（{source.products?.length ?? 0} 项）</summary><div className="enterprise-table-wrap"><DeclarativeDataGrid><thead><tr><th>产品</th><th>数量</th><th>单价</th><th>需求说明</th></tr></thead><tbody>{source.products?.map((p) => <tr key={p.id}><td>{p.productName}</td><td>{p.quantity}</td><td>{p.unitPrice}</td><td>{p.requirement || '—'}</td></tr>)}</tbody></DeclarativeDataGrid></div></details>}
       {loading || refreshing ? <p role="status" className="quote-hint">正在查询…</p> : !locked && !options.length && !selection ? <p role="status" className="quote-hint">没有匹配记录</p> : null}
       {locked && error && !selection && <button type="button" disabled={saving || refreshing} onClick={() => void loadOpportunity(opportunityId!)}>重新加载商机</button>}
       {!locked && !selection && more && <button type="button" disabled={loading || saving || refreshing} onClick={() => setPage((p) => p + 1)}>加载更多</button>}

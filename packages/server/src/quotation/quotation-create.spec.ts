@@ -26,7 +26,7 @@ function setup() {
   const db = { ...tx, $transaction: jest.fn().mockImplementation((work) => work(tx)) };
   const pricing = { eligible: jest.fn().mockResolvedValue({ id: productId, productCode: 'P1', productName: '设备', model: null, unit: '件', productLine: '通用' }), reference: jest.fn().mockResolvedValue({ suggestion: { price: '15.00', source: 'STANDARD', from: null, to: null } }) };
   const auth = { assertAction: jest.fn() }, policies = { customerScope: jest.fn().mockResolvedValue(null) };
-  const service = new QuotationService(db as never, pricing as never, auth as never, policies as never);
+  const service = new QuotationService(db as never, pricing as never, auth as never, policies as never, { allocate: jest.fn().mockResolvedValue('QT2026100400001') } as never);
   jest.spyOn(service, 'scope').mockResolvedValue(scope);
   return { service, tx, scope, actor, customerId, oppId, pricing, line };
 }
@@ -50,15 +50,35 @@ describe('quotation creation invariants', () => {
     const { service, actor, customerId, tx } = setup();
     const result = await service.save('demo-portal', actor, null, { mode: 'INDEPENDENT', customerId, requestKey: uuid() }) as { opportunityId: null; total: string; quoteCode: string; createdBy: string };
     expect(result).toMatchObject({ opportunityId: null, total: '0.00', createdBy: actor });
-    expect(result.quoteCode).toMatch(/^Q\d+$/); expect(tx.sdQuotationLine.createMany).not.toHaveBeenCalled();
+    expect(result.quoteCode).toMatch(/^QT\d{13}$/); expect(tx.sdQuotationLine.createMany).not.toHaveBeenCalled();
   });
-  it.each(['closed', 'missing-price', 'customer-denied'])('does not persist a partial quote when %s', async (failure) => {
+  it.each(['closed', 'customer-denied'])('does not persist a partial quote when %s', async (failure) => {
     const { service, actor, oppId, tx } = setup();
     if (failure === 'closed') tx.sdOpp.findFirst.mockResolvedValue(null);
-    if (failure === 'missing-price') tx.sdProductPrice.findFirst.mockResolvedValue(null);
     if (failure === 'customer-denied') tx.crmCustomer.findFirst.mockResolvedValue(null);
     await expect(service.save('demo-portal', actor, null, { mode: 'OPPORTUNITY', opportunityId: oppId, opportunityVersion: 1, requestKey: uuid() })).rejects.toThrow();
     expect(tx.sdQuotation.create).not.toHaveBeenCalled(); expect(tx.sdQuotationLine.createMany).not.toHaveBeenCalled();
+  });
+  it('imports products without sales pricing and preserves the opportunity transaction price', async () => {
+    const { service, actor, oppId, tx, pricing } = setup();
+    tx.sdProductPrice.findFirst.mockResolvedValue(null);
+    const result = await service.save('demo-portal', actor, null, { mode: 'OPPORTUNITY', opportunityId: oppId, opportunityVersion: 1, requestKey: uuid() }) as { total: string; lines: Array<{ priceId: null; unitPrice: string; suggestedPrice: string; priceSource: string }> };
+    expect(result.total).toBe('61.70');
+    expect(result.lines).toHaveLength(2);
+    expect(result.lines.every((row) => row.priceId === null)).toBe(true);
+    expect(result.lines[0]).toMatchObject({ unitPrice: '12.34', suggestedPrice: '0.00', priceSource: 'UNPRICED' });
+    expect(pricing.reference).not.toHaveBeenCalled();
+  });
+  it('submits an unpriced quotation line without requiring a price master', async () => {
+    const { service, actor, oppId, tx, pricing } = setup();
+    tx.sdProductPrice.findFirst.mockResolvedValue(null);
+    tx.sdQuotation.updateMany.mockResolvedValue({ count: 1 });
+    const created = await service.save('demo-portal', actor, null, { mode: 'OPPORTUNITY', opportunityId: oppId, opportunityVersion: 1, requestKey: uuid() }) as { id: string; version: number };
+    pricing.reference.mockClear();
+    const submitted = await service.command('demo-portal', actor, created.id, 'submit', { version: created.version, requestKey: uuid(), note: '' }) as { status: string };
+    expect(submitted.status).toBe('SUBMITTED');
+    expect(pricing.reference).not.toHaveBeenCalled();
+    expect(pricing.eligible).toHaveBeenCalled();
   });
   it('rejects changing customer, removing, adding, or changing the opportunity through PATCH', async () => {
     const { service, actor, oppId, tx } = setup();
@@ -87,12 +107,17 @@ describe('opportunity entry creation guards', () => {
     await expect(service.save('demo-portal', actor, null, { mode: 'OPPORTUNITY', opportunityId: oppId, opportunityVersion: 2, requestKey: uuid() })).rejects.toThrow('商机信息已更新');
     expect(tx.sdQuotation.create).not.toHaveBeenCalled(); expect(tx.sdProductPrice.findFirst).not.toHaveBeenCalled();
   });
-  it('collects invalid product reasons and persists nothing', async () => {
+  it('collects invalid product reasons but does not treat missing pricing as invalid', async () => {
     const { service, actor, oppId, customerId, tx, pricing, line } = setup();
     tx.sdOpp.findFirst.mockResolvedValue({ id: oppId, customerId, version: 1, products: [{ ...line, productName: '停用产品' }, { ...line, productName: '未定价产品' }] });
     pricing.eligible.mockRejectedValueOnce(new ApiException('BAD_REQUEST', 400, '产品已停用'));
     tx.sdProductPrice.findFirst.mockResolvedValue(null);
-    await expect(service.save('demo-portal', actor, null, { mode: 'OPPORTUNITY', opportunityId: oppId, opportunityVersion: 1, requestKey: uuid() })).rejects.toThrow(/停用产品.*产品已停用.*未定价产品.*没有有效定价/);
+    let thrown: unknown;
+    try { await service.save('demo-portal', actor, null, { mode: 'OPPORTUNITY', opportunityId: oppId, opportunityVersion: 1, requestKey: uuid() }); }
+    catch (error) { thrown = error; }
+    expect(thrown).toBeInstanceOf(Error);
+    expect((thrown as Error).message).toMatch(/停用产品.*产品已停用/);
+    expect((thrown as Error).message).not.toMatch(/未定价产品.*没有有效定价/);
     expect(tx.sdQuotation.create).not.toHaveBeenCalled();
   });
   it('allows multiple separate confirmations and an empty opportunity draft', async () => {

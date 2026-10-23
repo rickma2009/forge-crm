@@ -1,0 +1,38 @@
+import { z } from 'zod';
+export const recordKindSchema=z.enum(['customer','opportunity']);
+export type RecordKind=z.infer<typeof recordKindSchema>;
+export const suggestionStateSchema=z.enum(['ACTIVE','ADOPTED','IGNORED','SNOOZED','EXPIRED']);
+export const suggestionSchema=z.object({id:z.string().uuid(),ruleCode:z.string(),ruleVersion:z.number(),title:z.string(),reason:z.string(),basisAt:z.string(),state:suggestionStateSchema,version:z.number(),inputHash:z.string(),resumeAt:z.string().nullable(),todoId:z.string().nullable(),canAct:z.boolean()});
+export type SalesSuggestion=z.infer<typeof suggestionSchema>;
+export const suggestionPageSchema=z.object({items:z.array(suggestionSchema),basis:z.string(),canAdopt:z.boolean()});
+export const suggestionActionSchema=z.strictObject({action:z.enum(['ADOPT','IGNORE','SNOOZE']),version:z.number().int().positive(),inputHash:z.string().length(64),requestId:z.string().uuid(),title:z.string().trim().min(1).max(160).optional(),description:z.string().trim().max(2000).default(''),dueDate:z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),resumeAt:z.string().datetime().optional()});
+export const guidanceTodoSchema=z.object({id:z.string().uuid(),title:z.string(),description:z.string(),status:z.enum(['OPEN','DONE','CANCELLED']),result:z.string(),dueDate:z.string().nullable(),version:z.number()});
+export type GuidanceTodo=z.infer<typeof guidanceTodoSchema>;
+export const todoCompleteSchema=z.strictObject({status:z.enum(['DONE','CANCELLED']),result:z.string().trim().min(1).max(2000),version:z.number().int().positive()});
+const money=z.string().regex(/^\d{1,16}(?:\.\d{1,2})?$/);
+export const scoreRuleConfigSchema=z.strictObject({sourceScores:z.record(z.string().min(1).max(128),z.number().int().min(0).max(20)),amountThresholds:z.record(z.string().regex(/^[A-Z]{3}$/),z.tuple([money,money,money]))}).superRefine((data,ctx)=>{
+ const cents=(v:string)=>BigInt(v.split('.')[0])*100n+BigInt((v.split('.')[1]??'').padEnd(2,'0'));
+ for(const [code,values] of Object.entries(data.amountThresholds))if(!(cents(values[0])>0n&&cents(values[0])<cents(values[1])&&cents(values[1])<cents(values[2])))ctx.addIssue({code:'custom',message:`${code}金额阈值必须为递增正数`});
+ if(Object.keys(data.sourceScores).length>100||Object.keys(data.amountThresholds).length>30)ctx.addIssue({code:'custom',message:'规则配置条数过多'});
+});
+export type ScoreRuleConfig=z.infer<typeof scoreRuleConfigSchema>;
+export const scoreRuleWriteSchema=z.strictObject({config:scoreRuleConfigSchema});
+export const scoreRuleStateSchema=z.strictObject({state:z.enum(['PUBLISHED','DISABLED']),version:z.number().int().positive()});
+export const scoreDimensionSchema=z.object({code:z.string(),label:z.string(),score:z.number(),max:z.number(),reasons:z.array(z.string())});
+export type ScoreDimension=z.infer<typeof scoreDimensionSchema>;
+export const priorityScoreSchema=z.object({systemScore:z.number().nullable(),effectiveScore:z.number().nullable(),dimensions:z.array(scoreDimensionSchema),ruleVersion:z.number().nullable(),calculatedAt:z.string().nullable(),stale:z.boolean(),closed:z.boolean(),message:z.string(),inputHash:z.string().nullable(),override:z.object({id:z.string(),score:z.number(),reason:z.string(),expiresAt:z.string(),version:z.number(),operatorName:z.string()}).nullable(),canOverride:z.boolean(),canManageRules:z.boolean()});
+export type PriorityScore=z.infer<typeof priorityScoreSchema>;
+export const scoreOverrideSchema=z.strictObject({score:z.number().int().min(0).max(100).nullable(),reason:z.string().trim().min(1).max(500),expiresAt:z.string().datetime().optional(),inputHash:z.string().length(64),currentOverrideId:z.string().uuid().nullable(),requestId:z.string().uuid()});
+export const scoreRuleSchema=z.object({id:z.string(),ruleVersion:z.number(),state:z.enum(['DRAFT','PUBLISHED','DISABLED']),config:scoreRuleConfigSchema,version:z.number(),createdAt:z.string()});
+export type ScoreRule=z.infer<typeof scoreRuleSchema>;
+export const commentDraftSchema=z.strictObject({requestId:z.string().uuid(),rootCommentId:z.string().uuid().nullable().default(null)});
+export const commentWriteSchema=z.strictObject({body:z.string().trim().min(1).max(4000),mentionUserIds:z.array(z.string().uuid()).max(20).default([]),version:z.number().int().positive(),reason:z.string().trim().max(500).optional()});
+export const commentStateSchema=z.strictObject({action:z.enum(['WITHDRAW','HIDE']),reason:z.string().trim().min(1).max(500),version:z.number().int().positive()});
+export const commentSchema=z.object({id:z.string().uuid(),rootCommentId:z.string().uuid().nullable(),authorName:z.string(),body:z.string(),state:z.string(),version:z.number(),createdAt:z.string(),canEdit:z.boolean(),canModerate:z.boolean(),mentions:z.array(z.object({id:z.string(),displayName:z.string()}))});
+export type RecordComment=z.infer<typeof commentSchema>;
+export const commentPageSchema=z.object({items:z.array(commentSchema),nextCursor:z.string().nullable(),canCreate:z.boolean()});
+export const notificationSchema=z.object({id:z.string(),readAt:z.string().nullable(),createdAt:z.string(),title:z.string(),body:z.string(),path:z.string().nullable(),available:z.boolean()});
+export type SalesNotification=z.infer<typeof notificationSchema>;
+export const notificationPageSchema=z.object({items:z.array(notificationSchema),unread:z.number(),nextCursor:z.string().nullable()});
+
+export const mentionMembersSchema=z.object({items:z.array(z.object({id:z.string(),displayName:z.string()})),nextCursor:z.string().nullable()});

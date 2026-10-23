@@ -1,0 +1,17 @@
+{
+  "feature": "038-approval-shell-preview",
+  "gates": {
+    "business": "approved-user-direct-request-preview",
+    "specification": "approved-user-prototype-confirmation",
+    "architecture": "approved-isolated-preview-scope",
+    "release": "not-production"
+  },
+  "implementation": "complete-preview-only",
+  "evidence": [
+    "REQSRC-103",
+    "7 targeted tests passed",
+    "shell-browser passed",
+    "prototype and web builds passed",
+    "UI-WORKFLOW-01"
+  ]
+}

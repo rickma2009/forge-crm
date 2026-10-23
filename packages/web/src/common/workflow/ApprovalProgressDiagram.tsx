@@ -1,0 +1,21 @@
+import { useId, useRef, useState } from 'react';
+import type { WorkflowGraph } from '@forge-crm/contracts';
+import './workflow.css';
+export type WorkflowNodeState='pending'|'current'|'complete'|'skipped'|'returned'|'rejected'|'failed'|'cancelled';
+const labels:Record<WorkflowNodeState,string>={pending:'未执行',current:'当前节点',complete:'已完成',skipped:'已跳过',returned:'已退回',rejected:'已拒绝',failed:'执行失败',cancelled:'已取消'};
+/** Same immutable graph for definition design and instance progress; state never removes or repositions nodes. */
+export function ApprovalProgressDiagram({graph,states={},activeEdges=[],selected,selectedEdge,onSelect,onEdgeSelect,showEdgeControls=false,title='工作流',design=false}:{graph:WorkflowGraph;states?:Record<string,WorkflowNodeState>;activeEdges?:string[];selected?:string;selectedEdge?:string;onSelect?:(id:string)=>void;onEdgeSelect?:(id:string)=>void;showEdgeControls?:boolean;title?:string;design?:boolean}){
+ const [zoom,setZoom]=useState(1),viewport=useRef<HTMLDivElement>(null),id=useId().replace(/:/g,'');
+ const select=(node:string)=>onSelect?.(node);
+ return <section className="workflow-diagram" aria-label={title}>
+  <div className="workflow-diagram-tools"><strong>{title}</strong><span>{design?'流程设计':'点击节点查看审批记录'}</span><div><button type="button" aria-label="缩小流程图" onClick={()=>setZoom(z=>Math.max(.25,z-.1))}>−</button><button type="button" onClick={()=>setZoom(Math.min(1,(viewport.current?.clientWidth??graph.width)/graph.width))}>适配</button><button type="button" aria-label="放大流程图" onClick={()=>setZoom(z=>Math.min(2,z+.1))}>＋</button><button type="button" disabled={!Object.values(states).includes('current')} onClick={()=>viewport.current?.querySelector('[data-state="current"]')?.scrollIntoView({block:'nearest',inline:'center'})}>定位当前</button></div></div>
+  <div className="workflow-diagram-viewport" ref={viewport}><svg role="group" aria-label={`${title}流程图`} width={graph.width*zoom} height={graph.height*zoom} viewBox={`0 0 ${graph.width} ${graph.height}`}>
+   <defs><marker id={`${id}-arrow`} markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="currentColor"/></marker></defs>
+   {graph.edges.map(e=>{const middle=e.points[Math.floor(e.points.length/2)];return <g key={e.id} role={onEdgeSelect?'button':undefined} tabIndex={onEdgeSelect?0:undefined} aria-label={onEdgeSelect?`连接线：${e.label||'默认流转'}`:undefined} aria-pressed={onEdgeSelect?selectedEdge===e.id:undefined} className={`workflow-edge ${activeEdges.includes(e.id)?'is-visited':''} ${selectedEdge===e.id?'is-selected':''}`} onClick={()=>onEdgeSelect?.(e.id)} onKeyDown={event=>{if(onEdgeSelect&&(event.key==='Enter'||event.key===' ')){event.preventDefault();onEdgeSelect(e.id);}}}><polyline className="workflow-edge-hit" points={e.points.map(p=>`${p.x},${p.y}`).join(' ')} fill="none"/><polyline points={e.points.map(p=>`${p.x},${p.y}`).join(' ')} fill="none" markerEnd={`url(#${id}-arrow)`}/>{e.label&&<text x={middle.x-20} y={middle.y-10}>{e.label}</text>}{showEdgeControls&&<g className="workflow-edge-add" transform={`translate(${middle.x} ${middle.y})`}><circle r="12"/><text textAnchor="middle" y="4">＋</text><title>选择连接线并插入节点</title></g>}</g>;})}
+   {graph.nodes.map(n=>{const state=states[n.id]??'pending',gateway=n.type==='ExclusiveGateway',round=['StartEvent','EndEvent'].includes(n.type);return <g key={n.id} role="button" tabIndex={0} aria-label={`${n.label}，${design?'设计节点':labels[state]}`} aria-pressed={selected===n.id} data-state={state} className={`workflow-node ${selected===n.id?'is-selected':''}`} onClick={()=>select(n.id)} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(n.id);}}} transform={`translate(${n.x} ${n.y})`}>
+    {gateway?<polygon points={`${n.width/2},0 ${n.width},${n.height/2} ${n.width/2},${n.height} 0,${n.height/2}`}/>:round?<ellipse cx={n.width/2} cy={n.height/2} rx={n.width/2} ry={n.height/2}/>:<rect width={n.width} height={n.height} rx={5}/>}
+    <text textAnchor="middle" x={n.width/2} y={gateway||round?n.height+20:32}>{n.label}</text>{!design&&<text className="workflow-node-state" textAnchor="middle" x={n.width/2} y={gateway||round?n.height+38:60}>{labels[state]}</text>}<title>{n.label} · {design?'设计节点':labels[state]}</title>
+   </g>;})}
+  </svg></div>
+ </section>;
+}

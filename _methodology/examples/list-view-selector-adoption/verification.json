@@ -1,0 +1,90 @@
+{
+  "createdAt": "2026-10-03T03:04:20.400Z",
+  "component": "CMP-05",
+  "cleanInstall": false,
+  "nodeVersion": "v24.16.0",
+  "architecture": "x64",
+  "platform": "darwin",
+  "installedVersions": {
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "@tabler/icons-react": "3.46.0",
+    "typescript": "5.7.3",
+    "vite": "5.4.20",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9"
+  },
+  "lockSha256": null,
+  "sources": [
+    {
+      "source": "packages/web/src/common/ListViewSelector.tsx",
+      "sha256": "c0a66270f580fcf1b1d22971d4de6d04f53470c503e802adda37e7f0eba44a9d"
+    },
+    {
+      "source": "packages/web/src/common/list-view-selector.css",
+      "sha256": "39868322d00887dd27e61f01d69481c0996b9786a21cc586d97f12a689538e8c"
+    },
+    {
+      "source": "_methodology/examples/list-view-selector-adoption/main.tsx",
+      "sha256": "d964d01a19347c7874e1dbbb384da7e5bd7a39da535d2e4381afcc37c2b52d3a"
+    },
+    {
+      "source": "_methodology/examples/list-view-selector-adoption/host.css",
+      "sha256": "8a5d5738e08387596eca047481bf5c3c95c7b406a47b58542648a28611ad69f0"
+    }
+  ],
+  "exportManifest": "component-source/manifest.json",
+  "adapterSha256": "de458b7b3eeee29521e63698f98252d790c73745569fdefe1bdf6e401299c699",
+  "results": [
+    {
+      "command": "tsc --noEmit",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 1507,
+      "timeoutMs": 60000,
+      "errorCode": null
+    },
+    {
+      "command": "vite build",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 3359,
+      "timeoutMs": 180000,
+      "errorCode": null
+    }
+  ],
+  "limitations": [
+    "Existing workspace node_modules is linked; clean installation and dependency closure are not verified.",
+    "The component source comes from the source exporter; unresolved external contracts and CSS assets remain subject to its manifest limits. Host styles are supplied by this fixture.",
+    "No browser layout, backend integration, or independent business adoption is claimed."
+  ],
+  "browserVerification": {
+    "browser": "154.0.8037.95",
+    "url": "http://127.0.0.1:4189/",
+    "results": [
+      {
+        "viewport": "1440x900",
+        "touch": false,
+        "height": 32,
+        "aligned": true,
+        "callbacks": true,
+        "disabledStates": true,
+        "emptyState": true,
+        "keyboard": true,
+        "noPageOverflow": true
+      },
+      {
+        "viewport": "390x844",
+        "touch": true,
+        "height": 44,
+        "aligned": true,
+        "callbacks": true,
+        "disabledStates": true,
+        "emptyState": true,
+        "keyboard": true,
+        "noPageOverflow": true
+      }
+    ],
+    "errors": []
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "gates": {
+    "business": "approved-user-next-stage",
+    "specification": "approved-P2-sales-slice",
+    "architecture": "approved-independent-engine-and-CRM-adapter",
+    "release": "not-production"
+  },
+  "implementation": "implemented-locally-validated"
+}

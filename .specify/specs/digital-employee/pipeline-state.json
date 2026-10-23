@@ -1,0 +1,17 @@
+{
+  "feature": "digital-employee-navigation-scenario-workspaces-and-commodity-monitoring",
+  "source": "../../sources/20261008-commodity-monitoring-monthly-free/source.md",
+  "businessGate": "prior-navigation-slice-approved; commodity-monitoring-scope-recorded",
+  "specificationGate": "monthly-free-no-key-source-change-archived-and-integrated; World Bank source is monthly benchmark data",
+  "architectureGate": "six-table-architecture-and-migration-implemented-and-applied-to-local-postgresql",
+  "tasks": "four-tab-ui-and-monthly-free-source-integrated; provider parser verified against current World Bank workbook; authenticated browser acceptance pending",
+  "implementation": "monthly-world-bank-pink-sheet-no-key-import-frankfurter-fx-recent-12-month-backfill-monthly-cursors-and-chart-implemented",
+  "verification": "real-world-bank-XLSX-download-parsed-801-months-for-four-commodities; server-and-web-typechecks-passed; authenticated UI/database end-to-end not verified",
+  "release": "not-approved",
+  "gates": {
+    "business": "prior-navigation-slice-approved; commodity-monitoring-scope-recorded",
+    "specification": "monthly-free-no-key-source-change-integrated",
+    "architecture": "implemented-and-migrated-locally",
+    "release": "not-approved"
+  }
+}

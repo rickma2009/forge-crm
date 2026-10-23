@@ -2,6 +2,7 @@
   --ipl-font-family: 'Avenir Next', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --ipl-font-size: 12px;
   --ipl-font-size-large: 18px;
+  --ipl-font-size-metric: 40px;
   --ipl-line-height: 1.5;
   --ipl-ink: #172033;
   --ipl-text: #263147;
@@ -180,4 +181,10 @@ p, li { text-wrap: pretty; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+
+/* Dashboard values opt in; ordinary enterprise text keeps the global size. */
+:where(.showcase-shell) .ipl-type-metric {
+  font-size: var(--ipl-font-size-metric) !important;
+  line-height: 1.3;
 }

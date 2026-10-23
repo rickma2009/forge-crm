@@ -10,7 +10,7 @@ const sourceSchema = z.strictObject({
   generatedBy: z.string(),
   assets: z.array(z.strictObject({
     assetId: z.string().min(1).max(32),
-    kind: z.enum(['PAGE', 'ACT', 'VIEW', 'STATE', 'SPECIAL', 'SCENE']),
+    kind: z.enum(['PAGE', 'ACT', 'VIEW', 'STATE', 'SPECIAL', 'COMPONENT', 'SCENE']),
     group: z.string().min(1).max(64),
     name: z.string().min(1).max(128),
     maturity: interactionMaturitySchema,
@@ -20,6 +20,7 @@ const sourceSchema = z.strictObject({
     evidence: z.array(z.string()),
     evidenceCards: z.array(interactionEvidenceCardSchema),
     nextEvidence: z.string().max(500),
+    demoPath: z.string().startsWith('/showcase/').max(256).nullable(),
   })),
 });
 
@@ -36,6 +37,7 @@ export type InteractionCatalogSeed = {
   evidenceJson: Prisma.InputJsonValue;
   evidenceCardsJson: Prisma.InputJsonValue;
   nextEvidence: string;
+  pagePath: string | null;
   status: 'DONE';
   sortNo: number;
 };
@@ -59,6 +61,7 @@ export function loadInteractionCatalog(rootDir: string): InteractionCatalogSeed[
       evidenceJson: asset.evidence,
       evidenceCardsJson: asset.evidenceCards,
       nextEvidence: asset.nextEvidence,
+      pagePath: asset.demoPath,
       status: 'DONE' as const,
       sortNo: (index + 1) * 10,
     };

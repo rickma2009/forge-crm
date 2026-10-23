@@ -1,0 +1,102 @@
+{
+  "createdAt": "2026-10-03T06:29:30.363Z",
+  "component": "CMP-08",
+  "cleanInstall": false,
+  "nodeVersion": "v24.16.0",
+  "architecture": "x64",
+  "platform": "darwin",
+  "installedVersions": {
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "typescript": "5.7.3",
+    "vite": "5.4.20",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9"
+  },
+  "lockSha256": null,
+  "sources": [
+    {
+      "source": "packages/web/src/common/route-tabs/README.md",
+      "sha256": "da785886a080eafd4eb95d19cc2f27073d13d5b4dae76fe362f2304fd0a5250a"
+    },
+    {
+      "source": "packages/web/src/common/route-tabs/RouteTabs.tsx",
+      "sha256": "d6697ad2d7f5565ca42ba9bd80bfd048cbcb33e58f5c9eeebd793c83a4ac94b3"
+    },
+    {
+      "source": "packages/web/src/common/route-tabs/index.ts",
+      "sha256": "3cd8950f11a44ce648efd10f72ff6dba8fca933a6fe8b675db85fa32fdf7a190"
+    },
+    {
+      "source": "packages/web/src/common/route-tabs/model.ts",
+      "sha256": "0427f5887c99664e3f319d8107547b4b3747abc925f6c1651c16233e13e7c006"
+    },
+    {
+      "source": "packages/web/src/common/route-tabs/route-tabs.css",
+      "sha256": "c473dce35d62e247b87cc1ec1f464db66b24420f1b3c038f0c1d750ac86a0e8d"
+    },
+    {
+      "source": "packages/web/src/common/route-tabs/useRouteTabs.ts",
+      "sha256": "53170200bc5460b0e22ded465c635d74a44896bb7389ff53bdcaef1f6667c8ff"
+    },
+    {
+      "source": "_methodology/examples/route-tabs-adoption/main.tsx",
+      "sha256": "913bffaae0fe34db6bd4d898f5e789267c1eb806ecce330fe8159b77ed5151d5"
+    },
+    {
+      "source": "_methodology/examples/route-tabs-adoption/host.css",
+      "sha256": "f09e834a61d991501c3ae189a4e1e3a17e006a68c84f62c60f5bb8847034d59a"
+    },
+    {
+      "source": "_methodology/components/rehearsals/CMP-08.json",
+      "sha256": "6f420c37b0c62faee2e820017804dfcb8a4311028b8b7b4ecbf3bdc7e0df4b2d"
+    },
+    {
+      "source": "_methodology/scripts/rehearse-query-bar.mjs",
+      "sha256": "1687867862dc8781fc26af1925d4cde460aa89a669b0961dc21211fc1a2bf059"
+    },
+    {
+      "source": "_methodology/scripts/rehearsal-recipe.mjs",
+      "sha256": "ab81574bf99cf2c400ffa0cc15d2a57a430c18aaa9e3c80aa5b4bb7294d85cf2"
+    },
+    {
+      "source": "_methodology/scripts/export-component-source.mjs",
+      "sha256": "8546eb3c9f3c68c503106ade89742971b35864d9c59ca272b673c5914f620edf"
+    },
+    {
+      "source": "_methodology/scripts/inspect-component-dependencies.mjs",
+      "sha256": "7a88d39f08f8df4a1c5b7d1be8ea546a1409e64761cbb17861fa43b6622ea759"
+    },
+    {
+      "source": "packages/web/package.json",
+      "sha256": "94898dca1d196818d72032d38693d8fab4d07ac44531d87e64dfc17e2baae2f9"
+    }
+  ],
+  "exportManifest": "component-source/manifest.json",
+  "adapterSha256": "534ad8aa9228021d82b4f0952f740be7a9c7633b1654aa45dfc262673574f35e",
+  "results": [
+    {
+      "command": "tsc --noEmit",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 1285,
+      "timeoutMs": 60000,
+      "errorCode": null
+    },
+    {
+      "command": "vite build",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 1299,
+      "timeoutMs": 180000,
+      "errorCode": null
+    }
+  ],
+  "limitations": [
+    "Existing workspace node_modules is linked; clean installation and dependency closure are not verified.",
+    "The component source comes from the source exporter; unresolved external contracts and CSS assets remain subject to its manifest limits. Host styles are supplied by this fixture.",
+    "No browser layout, backend integration, or independent business adoption is claimed."
+  ],
+  "artifactDirectory": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/forge-route-tabs-adoption-KK2Y9s",
+  "verificationScope": "Configuration migration smoke: generated host, TypeScript and Vite build using linked workspace dependencies. No fresh install or browser run."
+}

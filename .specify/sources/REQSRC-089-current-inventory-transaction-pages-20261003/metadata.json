@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-089",
+  "title": "当前库存与库存事务明细页面",
+  "sourceType": "user-implementation-request",
+  "sourceDate": "2026-10-03",
+  "importedAt": "2026-10-03T09:27:13+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "7f4121e3be2c4632fc40351796af3332cacfaf9809bde1eff0f8dda0778228fe",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "implemented-local-verification"
+}

@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-075",
+  "title": "报价明细允许加入未配置售价的产品",
+  "sourceType": "user-business-rule-change-and-defect-fix",
+  "sourceDate": "2026-09-25",
+  "importedAt": "2026-09-25T10:30:00+08:00",
+  "originalPath": "current-codex-task:user-message-and-attached-screenshot",
+  "managedCopy": "source.md",
+  "sha256": "da59e417a9cf8fddb1ff0ada9af5e4ebb4944663b428c62010149e56e2470561",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "implemented-and-verified"
+}

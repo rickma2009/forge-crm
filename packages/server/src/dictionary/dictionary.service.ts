@@ -75,6 +75,7 @@ export class DictionaryService {
     if (!existing) throw new ApiException('NOT_FOUND', HttpStatus.NOT_FOUND, '字典项不存在');
     if (existing.dictionary.status !== 'ACTIVE') throw new ApiException('BAD_REQUEST', HttpStatus.CONFLICT, '停用字典不能修改字典值');
     if (!existing.dictionary.itemsEditable) throw new ApiException('FORBIDDEN', HttpStatus.FORBIDDEN, '该字典为初始化固定值，不允许维护');
+    if (['employee_post', 'employee_job_title'].includes(existing.dictionary.dictCode) && input.itemValue && input.itemValue !== existing.itemValue) throw new ApiException('BAD_REQUEST', HttpStatus.CONFLICT, '岗位和职位编码已用于员工资料，不能修改；可调整名称或状态');
     const { version, ...data } = input;
     const result = await this.db.sysDictionaryItem.updateMany({ where: { id, version }, data: { ...data, ...(data.itemValue ? { itemCode: itemCodeFor(existing.dictionary.dictCode, data.itemValue) } : {}), updatedBy: actor, version: { increment: 1 } } });
     if (!result.count) throw new ApiException('BAD_REQUEST', HttpStatus.CONFLICT, '字典项已被其他用户修改');

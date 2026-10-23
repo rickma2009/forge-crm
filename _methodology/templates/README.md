@@ -1,38 +1,54 @@
-# SDD 通用模板
+# 交互模板库维护
 
-这些模板是新项目的唯一模板来源，技术栈中立，不继承 `_ref/` 中任何项目的历史约束。
+团队培训文档另有 [案例编写模板](training-case-template.md) 和 [学员交付模板](training-submission-template.md)，使用方式见[练习路径](../../docs/training/learning-path.md)。它们是文档模板，不作为可交互 UI 模板登记到数据库。
 
-## 项目级模板
+正式入口：[交互模板库](http://localhost:5173/#/showcase/style-scenes)。一级为分类，二级直接为模板；“插件组件”也作为一级目录，二级直接显示已开发的公共组件。业务应用与组成组件在详情中列出，不创建第三层。插件组件的登记与接入规则见[`../components/README.md`](../components/README.md)。
 
-- `AGENTS-template.md`
-- `project-charter-template.md`
-- `business-context-template.md`
-- `constitution-template.md`
-- `source-metadata-template.json`
-- `requirements-package-README-template.md`
-- `transformation-template.md`
+模板源：`index.json`。编码稳定，分类按数组中首次出现排序，增加分类或模板后按同样结构登记。全局样式入口：`../style-index.md`；正式页面必须调用公共 `RecordQueryBar` 与 `TreeWorkspace`。
 
-## 功能级模板
+每条模板登记名称、用途、可用程度、区域结构、操作步骤、配置参数、组件、标签、效果资源、独立演示、实际应用案例和参考指令。暂未提炼的内容留空，不伪造已完成的资产。参考指令示例：“请参考树状分类明细（TPL-02-01）模板设计本页面”。
 
-- `requirements-original-template.md`
-- `clarification-template.md`
-- `spec-template.md`
-- `testcases-template.md`
-- `plan-template.md`
-- `tasks-template.md`
-- `traceability-template.md`
-- `review-template.md`
-- `pipeline-state-template.json`
+可用程度：待提炼→可预览→可交互→可复用；有效效果图、独立演示、组件骨架/接入说明以及验证证据逐项齐备后才调整状态。布局示意图明确注明非实际截图，独立内存样例不连接业务写接口。
 
-## UI 与交互模板
+数据库保存于 `style_scene.template_json`，运行时读取数据库。登记命令（工程根目录）：`pnpm --filter @forge-crm/server exec tsx scripts/seed-template-library.ts`。按配置系统及TPL编码幂等更新，不恢复已删除的历史讨论案例。不要为更新模板运行全量业务seed。
 
-- [企业 UI 资产采用入口](ui/ADOPTION.md)：按任务选择代码、模板和验收，附隔离接入演练。
-- [采用记录模板](ui/adoption-record-template.md)：记录版本、采用差异、验证与回退。
-- `ui/enterprise-workbench/`：工作台、提醒与待办候选。
-- `ui/master-detail-document/`：主从表单、行表、状态与验收候选。
+登记更新名称、分类、说明、模板配置和源码资产入口；已有成熟度、进度状态、证据、下一步验证项和页面关联不重置，备注与完成时间保留。新记录才初始化为 candidate/TODO。来源更新后应复审证据适用版本，不能通过清空已有证据来制造“重新开始”的状态。
 
-- `ui/interaction-pattern-candidate-template.md`：页面、操作、展示、状态或特殊交互的候选登记卡，用于补齐适用边界、行为契约、风险、验收和来源证据。
-- `ui/enterprise-navigation-shell/`：企业系统双层导航壳层，包含设计令牌、菜单配置骨架和接入/验收说明。
-- `ui/record-management-workspace/`：列表—新增—详情记录管理工作区，包含路由/字段配置骨架、设计令牌和验收清单。
+直接定位：`http://localhost:5173/?interactionTemplate=TPL-02-01#/showcase/style-scenes`。需要登录后访问；应用案例继续执行原页面授权。点击分类/模板时地址同步更新，刷新可恢复该分类或详情。
 
-新项目优先使用 `node _methodology/scripts/forge.mjs init ...` 建立治理骨架；这些文件继续作为人工定制和功能切片模板。使用时替换 `{{placeholder}}`，未替换占位符时不得通过交付质量门禁。
+
+## 页面组织与任务操作
+当前8类42个模板，12种常见模式的映射见 `docs/design/interaction-template-library.md`。保存、权限、反馈是横向规则，不增加第三层目录。仪表盘表示指标/趋势/下钻；阶段看板表示阶段列/对象卡片，两者保持独立。
+
+`defaults` 集中维护查看编辑、保存离开、六种反馈。`behaviorOverrides[模板编码]` 仅写需要覆盖的viewEdit、saving或完整feedback对象；登记适配器合并并验证后保存为metadata.behaviorRules。新增模板自动继承公共规则，但必须声明直接录入、只读浏览、任务生成等实际例外。覆盖编码与关联模板必须真实存在，错误会阻止登记。
+
+模板名称调整时编码不变，旧名称登记到metadata.aliases，目录及顶部关键词查询都可检索。关联模板通过relatedTemplates引用现有稳定编码，可从详情直接切换。
+
+## 实际页面效果与应用案例登记
+
+后续新开发或改造的页面需关联现有模板（编码稳定）；在该模板applications登记名称、页面路径和pageType（例如“列表页面”），一个模板可以对应多个业务页面，不额外增加目录层级。
+
+代表案例使用实际运行页面的区域截图，存于`packages/web/public/template-previews/`，thumbnail填写静态资源路径，previewKind填写screenshot；previewSource记录页面名称、路由、截图日期和截取范围。查询列表应截取查询条件、列表工具栏、网格、分页，排除系统菜单、顶部toolbar与页面Tab；先等待真实数据加载完成，截图不能用模拟页面冒充真实业务页。使用测试记录，避免把生产敏感数据存为静态资源。
+
+效果预览展示截图及来源，实际页面入口在新页面打开并沿用业务权限；独立demo仍通过demoPath登记，两者分别维护。结合代表案例补充区域结构、交互步骤、公共组件、查看编辑、保存反馈及可配置项，不能只放图片。界面变化后重新截图并更新日期；可运行案例不等于完整可复用模板骨架，只具备截图与业务入口时标为“可预览”。
+
+代表案例：查询表格列表（TPL-01-01）→员工管理（列表页面）；带表格视图的列表（TPL-01-02）→客户管理（列表页面）。分类依据实际交互能力：存在视图选择与个人视图设置时归入TPL-01-02，基础查询网格归入TPL-01-01。
+
+## 抽象整理交互模板的固定步骤
+
+每次从业务页面提炼模板均按以下步骤执行：
+
+1. 浏览真实已运行页面，确认查询、区域结构、视图、树、查看/编辑容器、保存及反馈等实际交互；按核心能力选择最匹配模板，不能仅凭“都有表格”归类。基础查询网格以员工管理为例；有对象默认/个人视图选择和设置的列表以客户管理为例。
+2. 等待真实测试记录及有效配置加载完成，恢复代表状态（列表通常为第一页、每页20条、无额外查询条件），截取本页面内容区域的图片。列表截图必须包含查询区、工具栏、网格与分页，排除系统左菜单、顶部toolbar和系统页面Tab；其他模板按实际内容边界截取，不把父级系统框架计入模板。
+3. 将截图存入`packages/web/public/template-previews/模板编码-案例.png`，在模板详情“效果预览”登记thumbnail、previewKind=screenshot和previewSource（页面名称、实际路由、日期、截取范围）；效果图必须与所选模板的说明、组件及应用案例一致。
+4. 结合实际案例补充用途、区域结构、操作步骤、配置参数、公共组件、查看编辑、保存及过程反馈。描述公共结构与业务可替换项，不将该业务的固定字段或接口当成所有页面的通用要求。
+5. 在applications登记实际页面名、路由和页面类型；实际页面通过新页面打开，保留登录与权限。独立demo通过demoPath单独维护，示意图、真实截图、业务案例和独立demo不得混淆。
+6. 校验源文件和数据库登记一致，浏览模板详情确认图片可加载、案例链接可进入真实页面，再按资产齐备程度标记可用状态。页面变化后更新截图和说明；一个模板可对应多个案例，代表截图选择核心交互最匹配的一项。
+
+## 已有页面回填记录（2026-10-04）
+
+按 `REQSRC-098` 对照了实际路由、页面组件和测试，将已有业务页面回填到交互模板。42条中32条有应用案例，21条有实页截图。代表案例包括：资源菜单→树节点与多Tab详情、入库单→主从单据工作区、报价单→产品多选、来源选择与操作确认、BOM→抽屉编辑与导入校验、角色管理→成员批量授权、客户/商机→活动时间轴、商机列表→阶段看板、Agent工作台→大模型对话和待办草稿、商机详情→AI分析弹窗。完整映射以 `index.json` 的 `applications` 为准。
+
+剩余10条没有可确认的完整业务页面调用：卡片检索列表、分组与层级列表、单表录入、弹窗表格单选、弹窗树分类与表格多选、双区选择、分步办理、审批处理、日历与时间计划、多Agent协作。公共组件存在单选能力或页面使用原生 `window.confirm` 不等于已落地这些完整模板。已有业务案例但缺实页截图的条目继续标为“待提炼”，不得因为登记了应用地址就称其有独立演示或可复用骨架。动态详情路由使用稳定列表地址，并在 `pageType` 说明从编码/单号进入。
+
+本次复查金标准页面例子：员工查询列表与客户个人视图列表仍是不同模板的正确基准，不调整其行为；自动检查见 `template-library.seed.spec.ts`。来源截图经过视觉核对，商机看板和客户时间轴的预览只含页面内容区。项目业务权限仍在实际页面执行，模板库案例链接不绕过权限。

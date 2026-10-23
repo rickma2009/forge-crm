@@ -1,0 +1,32 @@
+{
+  "createdAt": "2026-10-03T07:06:22.343Z",
+  "utility": "csv-export",
+  "nodeVersion": "v24.16.0",
+  "typescriptVersion": "5.7.3",
+  "sources": [
+    {
+      "source": "packages/web/src/common/data-grid/csv-export.ts",
+      "sha256": "bd1877256a832f9e4601608fc89e64d96d86acf3147721318f1f2a0c298fb4da"
+    },
+    {
+      "source": "_methodology/scripts/rehearse-csv-export.mjs",
+      "sha256": "2a3e33967698851204e376d0b2edc0fa24a493403ba0b752cafdd2575c44d7e3"
+    }
+  ],
+  "isolatedDirectory": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/csv-export-adoption-xewj40",
+  "targetHasNodeModules": false,
+  "buildExitCode": 0,
+  "outputSha256": "5d55e88d811fc1d239e5fc996b452b2e5369fc380b4e050d4e4e2abf752cfc59",
+  "checks": [
+    "copied-source-compilation",
+    "UTF-8-BOM",
+    "exact-CSV-bytes",
+    "input-unchanged",
+    "native-Blob"
+  ],
+  "limitations": [
+    "Compiler reused from source workspace; target installs no packages.",
+    "Node native Blob check only; no browser download or spreadsheet application verification.",
+    "Current text-prefix policy is not a universal formula safety guarantee."
+  ]
+}

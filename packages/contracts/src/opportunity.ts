@@ -1,3 +1,4 @@
+import { aiResultSchema } from './ai-analysis';
 import { z } from 'zod';
 
 const statusSchema = z.enum(['ACTIVE', 'DISABLED']);
@@ -18,7 +19,11 @@ export const productWriteSchema = z.strictObject({
 });
 export const productUpdateSchema = productWriteSchema.partial().extend({ version: z.number().int().positive() });
 export const productDeleteSchema = z.strictObject({ version: z.number().int().positive() });
-export const productSchema = productWriteSchema.extend(auditFields);
+export const productSchema = productWriteSchema.extend({
+  middleCategoryName: nullableText(128),
+  minorCategoryName: nullableText(128),
+  ...auditFields,
+});
 export const productListSchema = z.strictObject({ items: z.array(productSchema), pagination: pageSchema });
 
 export const competitorWriteSchema = z.strictObject({
@@ -58,41 +63,50 @@ export const opportunityProductSchema = z.strictObject({
   quantity: z.number(), unitPrice: z.number(), expectedAmount: z.number(), requirement: z.string().nullable(), sortNo: z.number().int(),
 });
 
+export const opportunityBusinessStatusSchema = z.enum(['INITIAL', 'FOLLOWING', 'VOID', 'SIGNED', 'LOST']);
+export const opportunityBusinessStatusLabels = { INITIAL: '初始', FOLLOWING: '跟进中', VOID: '已作废', SIGNED: '已签约', LOST: '已丢单' } as const;
 export const opportunityWriteSchema = z.strictObject({
+  currencyCode: z.string().regex(/^[A-Z]{3}$/).nullable().optional(),
   opportunityName: z.string().trim().min(1).max(200), customerId: z.string().uuid(), contactId: z.string().uuid().optional().nullable(),
   ownerUserId: z.string().uuid(), source: nullableText(128), templateId: z.string().uuid(), stageId: z.string().uuid(),
+  businessStatus: opportunityBusinessStatusSchema.optional(), signedDate: z.string().date().nullable().optional(), lostDate: z.string().date().nullable().optional(),
   confidence: z.number().int().min(0).max(100).default(0), confirmedDate: z.string().date().optional().nullable(), expectedSignDate: z.string().date().optional().nullable(),
   customerBudget: z.number().nonnegative().optional().nullable(), expectedAmount: z.union([z.number().nonnegative(), z.string().regex(/^\d{1,16}(?:\.\d{1,2})?$/, '预计金额最多两位小数')]).optional().nullable(), partner: nullableText(200),
   status: statusSchema.default('ACTIVE'), remark: nullableText(1000), products: z.array(opportunityProductWriteSchema).max(200).default([]),
 });
-export const opportunityUpdateSchema = opportunityWriteSchema.partial().extend({ version: z.number().int().positive() });
+export const opportunityUpdateSchema = opportunityWriteSchema.partial().extend({ version: z.number().int().positive(), stageReason: z.string().trim().max(500).optional() });
 export const opportunitySchema = z.strictObject({
   ...auditFields, opportunityCode: z.string(), opportunityName: z.string(), customerId: z.string().uuid(), customerName: z.string(),
   contactId: z.string().uuid().nullable(), contactName: z.string().nullable(), ownerUserId: z.string().uuid(), ownerName: z.string(), source: z.string().nullable(),
   templateId: z.string().uuid(), templateName: z.string(), stageId: z.string().uuid(), stageName: z.string(), stageProbability: z.number().int(), confidence: z.number().int(),
+  businessStatus: opportunityBusinessStatusSchema.optional(), signedDate: z.string().nullable().optional(), lostDate: z.string().nullable().optional(),
   confirmedDate: z.string().nullable(), expectedSignDate: z.string().nullable(), customerBudget: z.number().nullable(), expectedAmount: z.number().nullable(),
-  expectedAmountExact: z.string().nullable().optional(),
+  expectedAmountExact: z.string().nullable().optional(), currencyCode: z.string().nullable().optional(),
   partner: z.string().nullable(), status: statusSchema, remark: z.string().nullable(), products: z.array(opportunityProductSchema).optional(),
 });
 export const opportunityListSchema = z.strictObject({ items: z.array(opportunitySchema), pagination: pageSchema });
 
 export const opportunityFollowUpWriteSchema = z.strictObject({
+  requestId: z.string().uuid().optional(),
+  activityTitle: z.string().trim().min(1).max(120).optional(), activityNextStep: z.string().trim().max(1000).optional(),
   followedAt: z.string().datetime(), workItem: z.string().trim().min(1).max(1000), resultNext: nullableText(2000), status: statusSchema.default('ACTIVE'),
 });
-export const opportunityFollowUpUpdateSchema = opportunityFollowUpWriteSchema.partial().extend({ version: z.number().int().positive() });
+export const opportunityFollowUpUpdateSchema = opportunityFollowUpWriteSchema.omit({ requestId: true }).partial().extend({ version: z.number().int().positive(), changeReason: z.string().trim().min(1).max(500).optional() });
 export const opportunityFollowUpSchema = z.strictObject({
   ...auditFields, opportunityId: z.string().uuid(), followedAt: z.string().datetime(), followerUserId: z.string().uuid(), followerName: z.string(),
-  workItem: z.string(), resultNext: z.string().nullable(), status: statusSchema,
+  workItem: z.string(), resultNext: z.string().nullable(), activityTitle: z.string().nullable().optional(), activityNextStep: z.string().nullable().optional(), status: statusSchema,
 });
 
 export const opportunityAnalysisWriteSchema = z.strictObject({
   stageId: z.string().uuid(), confidence: z.number().int().min(0).max(100), competitorIds: z.array(z.string().uuid()).max(2).default([]),
   opportunityPoint: z.string().trim().min(1).max(2000), risk: z.string().trim().min(1).max(2000), nextPlan: z.string().trim().min(1).max(2000), remark: nullableText(1000),
   opportunityVersion: z.number().int().positive().optional(),
+  stageReason: z.string().trim().max(500).optional(),
 }).superRefine((value, context) => {
   if (new Set(value.competitorIds).size !== value.competitorIds.length) context.addIssue({ code: z.ZodIssueCode.custom, path: ['competitorIds'], message: '主要竞争对手不能重复' });
 });
 export const opportunityAnalysisSchema = z.strictObject({
+  aiTaskId: z.string().uuid().nullable().optional(), aiResult: aiResultSchema.nullable().optional(),
   id: z.string().uuid(), opportunityId: z.string().uuid(), opportunityName: z.string(), stageId: z.string().uuid(), stageName: z.string(), stageProbability: z.number().int(),
   confidence: z.number().int(), opportunityPoint: z.string(), risk: z.string(), nextPlan: z.string(), remark: z.string().nullable(), analystUserId: z.string().uuid(),
   analystName: z.string(), analyzedAt: z.string().datetime(), competitors: z.array(z.strictObject({ id: z.string().uuid(), competitorId: z.string().uuid(), competitorName: z.string(), rank: z.number().int() })),
@@ -125,3 +139,18 @@ export type OpportunityFollowUpUpdate = z.infer<typeof opportunityFollowUpUpdate
 export type OpportunityAnalysis = z.infer<typeof opportunityAnalysisSchema>;
 export type OpportunityAnalysisWrite = z.infer<typeof opportunityAnalysisWriteSchema>;
 export type OpportunityDetail = z.infer<typeof opportunityDetailSchema>;
+
+export const opportunityStageCommandSchema = z.strictObject({
+  stageId: z.string().uuid(), version: z.number().int().positive(),
+  reason: z.string().trim().min(1).max(500), requestId: z.string().uuid(),
+});
+export const opportunityBoardSchema = z.strictObject({
+  templateId: z.string().uuid(),
+  columns: z.array(z.strictObject({
+    stage: opportunityStageSchema, total: z.number().int().nonnegative(),
+    amount: z.string(), missingAmount: z.number().int().nonnegative(),
+    items: z.array(opportunitySchema), nextCursor: z.string().uuid().nullable(),
+  })),
+});
+export type OpportunityBoard = z.infer<typeof opportunityBoardSchema>;
+export type OpportunityStageCommand = z.infer<typeof opportunityStageCommandSchema>;

@@ -44,3 +44,21 @@ BUS-WDICT-01：仓库分类统一由公共数据字典维护，避免自由文�
 REQ-DOCUMENT-DETAIL-01 → AC-DOCUMENT-DETAIL-01 → TC-DOCUMENT-DETAIL-01：客户详情同款返回箭头；单页主表在上、明细在下，无多Tab。默认查看只读，隐藏明细新增和操作列；符合既有权限/状态时编辑按钮启用编辑，编辑变保存，允许维护的字段和明细可操作，固定身份字段仍只读。成功保存回查看，失败不丢输入；返回防止未保存丢失。来源 `.specify/sources/2026-09-24-document-detail/original.md`，完整当前态规则见 global-page-style/requirement.md。替代过去详情默认编辑或查看态显示明细操作的约定。用户直接授权此交互实现；不改变后端业务状态、权限、数据结构，无新增Architecture数据影响。
 
 本变更明确替代入库详情旧的“基本信息/入库明细”双Tab和“修改入库单”弹窗；新增单据入口仍沿用创建流程。真实执行证据见 `.specify/requirements/global-page-style/verification-document.md`。
+
+| REQ-024-17 / UI-DETAIL-MODE-01 | AC-024-17、TC-16、TC-17 | `ItemDetailPage`、`DetailBackButton`、`InventoryPages.test.tsx`；来源 `.specify/sources/REQSRC-074-item-detail-view-edit-parity-20260925/source.md` |
+| REQ-024-STOCK-01 | AC-024-STOCK-01、TC-18 | `InventoryService.inventorySummary/listBalances`、`CurrentInventoryPage`、`InventoryStockPages.test.tsx`；来源 `REQSRC-089` |
+| REQ-024-STOCK-02 | AC-024-STOCK-02、TC-19 | `InventoryService.listTransactions`、`InventoryTransactionPage`、`scm_inventory_txn.line_no`；来源 `REQSRC-089` |
+| REQ-024-18/19/20 | AC-024-18/19/20、TC-024-18/19/20 | `MdItem.itemSource/itemLifecycle`、专项字典初始化、`InventoryService.itemDtos/assertItemReferences`、物料表单与目录；来源 `REQSRC-102` |
+| REQ-024-21 / REQSRC-104 | AC-024-21、TC-024-25 | `packages/contracts/src/inventory.ts` 物料专用编码契约、`20261005190000_item_code_dot` 数据库约束、演示数据点号恢复事务及数据库核对 |
+| REQ-024-22 / REQSRC-105 | AC-024-22、TC-024-26 | `itemCreateSchema`、`InventoryService.nextItemCode/createItem`、`ItemEditor` 自动编码提示和必填分类；数据库事务锁与最大流水查询 |
+| REQ-024-23 / REQSRC-105 | AC-024-23、TC-024-27 | 本机一次性停用事务、`sys_audit_log`、迁移前数据库备份及状态/BOM引用核对 |
+
+验证记录（2026-09-25）：先新增 TC-16/TC-17 并确认测试因旧 Unicode 链接箭头及纯文本浏览布局失败；实现后 `InventoryPages.test.tsx` 6/6 通过。随后 `pnpm verify` 全部通过：web 51 个测试文件、253 项测试通过；contracts 37 项通过；server 107 项通过、46 项按既有环境条件跳过；lint、typecheck、build 均通过。既有 `ResourceMenuPage` React `act(...)` 警告及 Vite 大包警告未由本次引入，不影响通过状态。
+## 同条件查询缺陷回归（2026-10-03）
+
+REQ-024-STOCK-01/02 → TC-20 → `InventoryStockPages.test.tsx` 的两项重复查询/重置用例、`scripts/check-inventory-refresh-browser.mjs`。沿用原查询范围，修正显式查询被相同 effect 依赖值忽略的问题；实际结果见 `docs/testing/current-inventory-acceptance.md`，不涉及新需求来源或业务 Gate 边界变化。
+
+REQ-024-STOCK-01/02 → TC-21 → `InventoryStockPages.test.tsx` 的四项受控乱序响应测试。验证现有查询结果隔离，未新增网络取消或业务行为；结果与限制见同一验收记录。
+REQ-024-STOCK-01 → TC-22 → `InventoryStockPages.test.tsx` 的实际 CSV 内容回归、`grid-export.test.ts` 的共享入口字节一致性测试。沿用既有导出需求与公共编码策略，移除页面副本；14 项相关测试通过，范围见库存查询验收记录。没有改变导出业务范围或数据权限。
+REQ-024-STOCK-01 → TC-23 → `InventoryStockPages.test.tsx` 缺页/总数变化两项回归及既有分页筛选用例；公共 `loadAllGridRows` 替代库存页面重复循环。16 项相关测试通过，不涉及库存写入或新增业务状态。
+REQ-024-STOCK-01 → TC-24 → `grid-export.test.ts` 无效总数七类反例与合法空结果；`loadAllGridRows` 在累计前检查非负安全整数。与库存页面回归合计 24 项通过，未扩大为服务端快照或所有调用页浏览器验收。

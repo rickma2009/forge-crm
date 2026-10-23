@@ -1,0 +1,16 @@
+{
+  "gates": {
+    "business": "approved-user-development-request",
+    "specification": "approved-plan-P2-foundation",
+    "architecture": "approved-plan-independent-engine",
+    "release": "not-approved-production"
+  },
+  "implementation": "complete-P2.1-only",
+  "evidence": [
+    "9 PostgreSQL engine tests",
+    "5 transport tests",
+    "2 diagram tests",
+    "HTTP and restart checks",
+    "TypeScript checks"
+  ]
+}

@@ -1,0 +1,39 @@
+.business-data-grid{min-width:0;width:100%;color:#344054}.bdg-toolbar{display:flex;align-items:center;gap:8px;padding:9px 12px;border-block:1px solid #e1e6ef;flex-wrap:wrap}.bdg-toolbar-spacer{flex:1}.bdg-toolbar label{display:flex;align-items:center;gap:6px;font-size:12px}.bdg-toolbar select{width:auto;min-height:30px;padding:3px 7px}.bdg-toolbar button{min-height:30px}.bdg-grid{height:470px;min-height:250px;width:100%}.bdg-header{display:flex;flex-direction:column;justify-content:center;gap:6px;width:100%;overflow:hidden}.bdg-header .bdg-sort{border:0;background:transparent;color:#59657a;font-size:13px;font-weight:650;text-align:left;min-height:22px;padding:0;white-space:nowrap}.bdg-header input,.bdg-header select{width:100%;min-width:0;min-height:28px;height:28px;padding:3px 6px;border:1px solid #d9e0eb;border-radius:4px;font-size:12px;background:#fff}.bdg-grid .ag-cell{border-right:1px solid #e1e6ef}.bdg-grid .ag-cell button,.bdg-grid .ag-cell a{font-size:13px}.bdg-grid .ag-cell button{border:0;background:transparent;min-height:26px;padding:0 5px}.bdg-pagination{gap:8px;flex-wrap:wrap}.bdg-pagination label{display:flex;align-items:center;gap:6px}.bdg-pagination input{width:64px;min-height:30px}.bdg-feedback{padding:8px 12px;margin:0;font-size:13px}.bdg-settings{width:min(900px,94vw)}.bdg-settings fieldset{border:0;padding:0;min-width:0}.bdg-setting-row{display:grid;grid-template-columns:minmax(120px,1fr) 90px 100px 100px 30px 30px;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #e1e6ef}.bdg-setting-row label:first-child{display:flex;align-items:center;gap:8px}.bdg-setting-row input[type=checkbox]{width:15px;min-height:15px}.bdg-setting-row input,.bdg-setting-row select{min-height:30px}.bdg-setting-row button{padding:0;min-height:30px}.tree-workspace .business-data-grid{min-height:0}.bdg-grid .ag-root-wrapper{border-radius:0}@media(max-width:700px){.bdg-grid{height:390px}.bdg-setting-row{grid-template-columns:minmax(100px,1fr) 70px 80px 80px 25px 25px;font-size:12px}.bdg-settings .modal-body{overflow:auto}.bdg-toolbar-spacer{display:none}}
+
+.bdg-grid .customer-code-link,.bdg-grid .record-detail-link{color:#3465ff!important;font-weight:600;text-decoration:none}.bdg-grid .customer-code-link:hover,.bdg-grid .record-detail-link:hover{text-decoration:underline}
+
+.item-grid-toolbar .view-controls{display:flex;align-items:center;min-width:0;max-width:100%;margin-left:auto}.item-grid-toolbar{flex-wrap:wrap;gap:10px}
+
+.bdg-header .bdg-title{color:#59657a;font-size:13px;font-weight:650;white-space:nowrap}
+
+.bdg-grid-auto-height{height:auto;min-height:0}.bdg-grid-auto-height .ag-center-cols-viewport,.bdg-grid-auto-height .ag-center-cols-container{min-height:0}.bdg-declarative{min-width:0;width:100%}.bdg-cell-content{line-height:20px;white-space:nowrap}.bdg-cell-content>input:not([type=checkbox]):not([type=radio]),.bdg-cell-content>select{min-height:28px;height:28px;max-width:100%;font-size:13px;padding:2px 6px}.bdg-cell-content>input[type=checkbox],.bdg-cell-content>input[type=radio],.bdg-header input[type=checkbox]{width:16px;height:16px;min-height:16px;padding:0}.bdg-cell-content>textarea{min-height:60px;width:100%}.bdg-cell-content p{margin:2px 0;line-height:20px}.bdg-summary{display:flex;gap:16px;flex-wrap:wrap;padding:8px 12px;border-top:1px solid #e1e6ef;font-size:13px}.bdg-declarative .ag-row.is-selected{background:#edf2ff}.enterprise-table-wrap:has(>.bdg-declarative){overflow:visible}
+.bdg-grid .ag-cell:not(.ag-cell-wrap-text){white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.bdg-grid{position:relative}.bdg-empty{position:absolute;inset:40px 0 0;display:grid;place-items:center;margin:0;padding:16px;color:#667085;background:#fff;pointer-events:none}.bdg-grid-auto-height:has(>.bdg-empty){min-height:100px}
+.bdg-cell-content{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+/* Center the content's own height; a fixed-height inner wrapper would shift single-line text upward. */
+.bdg-grid .ag-cell{display:flex;align-items:center;min-width:0}
+.bdg-grid .ag-cell-value{min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.bdg-grid .ag-cell.ag-cell-wrap-text{white-space:normal;align-items:center}
+.bdg-grid .ag-cell.ag-cell-wrap-text .ag-cell-value{overflow:visible;text-overflow:clip}
+.bdg-cell-content.is-wrap{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+.bdg-cell-content:has(> .row-action-button){display:flex;align-items:center;gap:4px}
+.bdg-cell-content:has(> .row-action-button) .row-action-button + .row-action-button{margin-left:0}
+.bdg-grid .record-detail-link,.bdg-grid .customer-code-link,.bdg-grid .inventory-item-link,.bdg-grid .bom-tree-cell{color:#3465ff!important;font-weight:600;text-decoration:none;cursor:pointer}
+.bdg-grid .record-detail-link:hover,.bdg-grid .customer-code-link:hover,.bdg-grid .inventory-item-link:hover,.bdg-grid .bom-tree-cell:hover{text-decoration:underline}
+.bdg-grid .record-detail-link:focus-visible,.bdg-grid .customer-code-link:focus-visible,.bdg-grid .inventory-item-link:focus-visible,.bdg-grid .bom-tree-cell:focus-visible{outline:2px solid #3465ff;outline-offset:2px;border-radius:2px}
+.bdg-grid .bdg-identity-cell a,.bdg-grid .bdg-identity-cell button:not(.row-action-button){color:#3465ff!important;font-weight:600;text-decoration:none;cursor:pointer}
+.bdg-grid .bdg-identity-cell a:hover,.bdg-grid .bdg-identity-cell button:not(.row-action-button):hover{text-decoration:underline}
+.bdg-grid .bdg-identity-cell a:focus-visible,.bdg-grid .bdg-identity-cell button:not(.row-action-button):focus-visible{outline:2px solid #3465ff;outline-offset:2px;border-radius:2px}
+
+/* Reserve room for query controls and pagination in tree + grid lists. */
+@media(min-width:701px){
+.enterprise-page:has(>.record-query-bar)>.tree-workspace:has(.bdg-grid:not(.bdg-grid-auto-height)){height:calc(100dvh - 222px);min-height:360px}
+.tree-workspace:has(.bdg-grid:not(.bdg-grid-auto-height)) .tw-detail>.table-card{display:flex;flex-direction:column;height:100%;min-height:0}
+.tree-workspace:has(.bdg-grid:not(.bdg-grid-auto-height)) .table-toolbar{flex-shrink:0}
+.tree-workspace .business-data-grid:has(>.bdg-grid:not(.bdg-grid-auto-height)){display:flex;flex-direction:column;flex:1;min-height:0}
+.tree-workspace .bdg-grid:not(.bdg-grid-auto-height){flex:1;height:auto;min-height:0;max-height:470px}
+.tree-workspace .bdg-pagination{flex-shrink:0}
+}
+
+/* All-mode keeps the grid scrollable; load failures use shared feedback styling. */
+.bdg-feedback[role=alert]{color:#b42318}.bdg-feedback[role=alert] button{margin-inline-start:8px}

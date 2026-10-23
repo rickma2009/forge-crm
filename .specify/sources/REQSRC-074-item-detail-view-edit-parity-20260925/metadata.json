@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-074",
+  "title": "物料详情浏览编辑同构与返回按钮规范化",
+  "sourceType": "user-ui-refinement-and-global-rule-request",
+  "sourceDate": "2026-09-25",
+  "importedAt": "2026-09-25T01:50:00+08:00",
+  "originalPath": "current-codex-task:user-message-and-attached-screenshot",
+  "managedCopy": "source.md",
+  "sha256": "b064b1c4ac6e2e590307b63c49af20c0056f296d61d94bce17bd1db8412eea8c",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "implemented-and-verified"
+}

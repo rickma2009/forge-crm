@@ -1,0 +1,5 @@
+.digital-employee-scenario{display:flex;flex-direction:column;gap:12px}
+.digital-source-state{padding:18px}
+.digital-source-state h2{margin:0 0 10px;font-size:16px}
+.digital-source-state p{color:var(--ipl-muted);line-height:1.65}
+.digital-source-state strong{color:var(--ipl-primary)}

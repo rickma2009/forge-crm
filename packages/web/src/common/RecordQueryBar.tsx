@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { IconChevronDown, IconChevronUp, IconRefresh, IconSearch } from '@tabler/icons-react';
 import './record-query-bar.css';
 
-export function RecordQueryBar({ children, onQuery, onReset, expanded, onToggleMore, moreCount, queryDisabled = false }: {
+export function RecordQueryBar({ children, onQuery, onReset, expanded, onToggleMore, moreCount, queryDisabled = false, layout = 'default' }: {
   children: ReactNode;
   onQuery: () => void;
   onReset: () => void;
@@ -10,8 +10,9 @@ export function RecordQueryBar({ children, onQuery, onReset, expanded, onToggleM
   onToggleMore?: () => void;
   moreCount?: number;
   queryDisabled?: boolean;
+  layout?: 'default' | 'singleRow';
 }) {
-  return <form className="enterprise-card record-query-bar" aria-label="查询条件" onSubmit={(event) => { event.preventDefault(); if (!queryDisabled) onQuery(); }}>
+  return <form className={`enterprise-card record-query-bar${layout === 'singleRow' ? ' record-query-bar--single-row' : ''}`} aria-label="查询条件" onSubmit={(event) => { event.preventDefault(); if (!queryDisabled) onQuery(); }}>
     <div className="record-query-fields">{children}</div>
     <div className="record-query-actions">
       <button type="button" onClick={onReset}><IconRefresh size={16} />重置</button>

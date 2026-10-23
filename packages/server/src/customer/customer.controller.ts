@@ -5,12 +5,13 @@ import { WriteRequestGuard } from '../auth/write-request.guard';
 import type { AuthenticatedRequest } from '../auth/auth.types';
 import { AuthorizationService } from '../rbac/authorization.service';
 import { CustomerService } from './customer.service';
+import { CustomerRelatedService } from './customer-related.service';
 import { RolePolicyService } from '../role-management/role-policy.service';
 
 @Controller('api/systems/:systemCode/customers')
 @UseGuards(SessionGuard)
 export class CustomerController {
-  constructor(private readonly customers: CustomerService, private readonly authorization: AuthorizationService, private readonly policies: RolePolicyService) {}
+  constructor(private readonly customers: CustomerService, private readonly authorization: AuthorizationService, private readonly policies: RolePolicyService, private readonly related: CustomerRelatedService) {}
 
   private async writeScope(systemCode: string, userId: string) {
     const [read, write] = await Promise.all([this.policies.customerScope(systemCode, userId, 'read'), this.policies.customerScope(systemCode, userId, 'update')]);
@@ -30,6 +31,16 @@ export class CustomerController {
     const systemCode = systemCodeSchema.parse(raw);
     await this.authorization.assertAction(request.currentUser.id, systemCode, 'customer-directory', 'view');
     return this.customers.list(systemCode, query, await this.policies.customerScope(systemCode, request.currentUser.id, 'read'));
+  }
+
+  @Get(':id/overview')
+  async overview(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('id') id: string) {
+    return this.related.overview(systemCodeSchema.parse(raw), request.currentUser.id, id);
+  }
+
+  @Get(':id/related/:kind')
+  async relatedRecords(@Req() request: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('id') id: string, @Param('kind') kind: string, @Query() query: Record<string, unknown>) {
+    return this.related.related(systemCodeSchema.parse(raw), request.currentUser.id, id, kind, query);
   }
 
   @Get(':id')

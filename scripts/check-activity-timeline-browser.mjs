@@ -1,0 +1,47 @@
+import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
+const require = createRequire(new URL('../packages/server/package.json', import.meta.url));
+require('dotenv').config({ path: new URL('../.env', import.meta.url).pathname, quiet: true });
+const base = new URL(process.env.TIMELINE_BROWSER_URL || 'http://localhost:5173');
+if (!['localhost', '127.0.0.1', '[::1]'].includes(base.hostname)) throw new Error('LOCAL_BROWSER_REQUIRED');
+const { chromium } = await import(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright');
+const browser = await chromium.launch({ channel: 'chrome', headless: true });
+let diagnosticPage;
+try {
+ const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+ diagnosticPage = page;
+ page.on('response', r => { if (r.status() >= 400 && r.url().includes('/api/')) console.log('HTTP', r.status(), new URL(r.url()).pathname); });
+ let consoleErrors = 0; page.on('console', m => { if (m.type() === 'error' && consoleErrors++ < 5) console.log('CONSOLE', m.text().slice(0,700)); });
+ const errors = []; page.on('pageerror', e => errors.push(e.message)); page.setDefaultTimeout(45000);
+ const session = await page.request.get(`${base.origin}/api/auth/session`);
+ const cookies = await page.context().cookies();
+ const csrf = cookies.find(x => x.name === 'ipl_csrf')?.value; assert(csrf);
+ const login = await page.request.post(`${base.origin}/api/auth/login`, { headers: { Origin: process.env.TIMELINE_LOGIN_ORIGIN || base.origin, 'X-CSRF-Token': decodeURIComponent(csrf) }, data: { account: 'admin', password: process.env.INITIAL_ADMIN_PASSWORD } });
+ assert.equal(login.status(), 201); console.log('Authenticated');
+ const opportunities=await (await page.request.get(`${base.origin}/api/systems/demo-portal/opportunities?pageSize=100`)).json();
+ const selected=opportunities.items.find(row=>row.opportunityCode==='O2026090001')||opportunities.items[0];assert(selected);
+ await page.goto(`${base.origin}/#/showcase/opportunities/${selected.id}`);
+ const detail=page.locator('.detail-workspace:visible');
+ await detail.getByRole('tab',{name:'活动时间轴',exact:true}).click();
+ const panel=detail.getByRole('region',{name:'销售活动'});await panel.getByRole('button',{name:'新增活动',exact:true}).waitFor();
+ await panel.getByText('正在加载活动…').waitFor({state:'hidden'});assert.equal(await panel.locator('[role=alert]').count(),0);
+ await page.screenshot({path:'/tmp/activity-timeline-opportunity.png',fullPage:true});
+ const title=panel.locator('.activity-title').first();
+ if(await title.count()){await title.click();await panel.getByText('来源：',{exact:false}).waitFor();}
+ await panel.getByRole('button',{name:'新增活动',exact:true}).click();
+ const dialog=page.getByRole('dialog',{name:'新增活动',exact:true});await dialog.getByLabel('标题',{exact:true}).fill('浏览器验收，不写入业务记录');await dialog.getByLabel('内容',{exact:true}).fill('验证未来时间被拒绝且表单保留');
+ await dialog.getByLabel('发生时间',{exact:true}).fill('2099-01-01T10:00');
+ await dialog.getByRole('button',{name:'保存活动',exact:true}).click();await dialog.getByRole('alert').filter({hasText:'未来'}).waitFor();
+ assert.equal(await dialog.getByLabel('标题',{exact:true}).inputValue(),'浏览器验收，不写入业务记录');
+ await page.screenshot({path:'/tmp/activity-timeline-editor.png'});
+ page.once('dialog',d=>d.accept());await dialog.getByRole('button',{name:'取消',exact:true}).click();
+ const filtered=page.waitForResponse(r=>r.url().includes('/activity-timeline/opportunity/')&&r.url().includes('type=SYSTEM'));
+ await panel.getByRole('combobox',{name:'活动类型',exact:true}).selectOption('SYSTEM');assert.equal((await filtered).status(),200);
+ await page.goto(`${base.origin}/#/showcase/customers/${selected.customerId}`);
+ const customer=page.locator('.customer-detail-page:visible');await customer.getByRole('tab',{name:'活动时间轴',exact:true}).click();
+ const customerPanel=customer.getByRole('region',{name:'销售活动'});await customerPanel.getByRole('button',{name:'新增活动',exact:true}).waitFor();await customerPanel.getByText('正在加载活动…').waitFor({state:'hidden'});
+ assert.equal(await customerPanel.locator('[role=alert]').count(),0);await page.screenshot({path:'/tmp/activity-timeline-customer.png',fullPage:true});
+ await page.setViewportSize({width:390,height:844});await page.screenshot({path:'/tmp/activity-timeline-mobile.png',fullPage:true});
+ assert.deepEqual(errors,[]);assert.equal(await page.locator('vite-error-overlay').count(),0);
+ console.log(JSON.stringify({result:'PASS',opportunityTimeline:true,customerTimeline:true,filter:true,detailExpansion:true,futureRejectedAndFormRetained:true,mobileRendered:true,pageErrors:errors}));
+} catch (error) { console.log(String(error)); if (diagnosticPage) { console.log(await diagnosticPage.locator('body').innerText({timeout:3000}).then(x=>x.slice(-1600)).catch(()=> 'BODY_UNAVAILABLE')); await diagnosticPage.screenshot({path:'/tmp/activity-timeline-failure.png', timeout:3000}).catch(()=>{}); } throw error; } finally { await browser.close(); }

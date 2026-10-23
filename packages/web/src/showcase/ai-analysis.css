@@ -1,0 +1,29 @@
+.enterprise-modal.ai-analysis-dialog { width: min(1080px, 100%); max-width: 100%; min-width: 0; height: min(88vh, 1000px); max-height: 88vh; display: flex; flex-direction: column; }
+.ai-analysis-dialog > header, .ai-analysis-dialog > footer { flex-shrink: 0; }
+.ai-analysis-dialog > header p { margin: 6px 0 0; color: var(--text-secondary, #64748b); }
+.ai-analysis-body { flex: 1; overflow-y: auto; scrollbar-gutter: stable; min-height: 0; }
+.enterprise-modal.ai-analysis-dialog .ai-analysis-body .detail-section { margin: 0; padding: 18px 0; border: 0; border-bottom: 1px solid var(--border-color, #e2e8f0); border-radius: 0; box-shadow: none; background: transparent; }
+.ai-analysis-body label { display: grid; gap: 6px; }
+.ai-analysis-body textarea { width: 100%; min-height: 76px; resize: vertical; box-sizing: border-box; font: inherit; }
+.ai-analysis-body details { margin: 14px 0; }
+.ai-analysis-body summary { cursor: pointer; color: var(--text-secondary, #64748b); }
+.ai-analysis-body h3 { margin: 0 0 14px; font-size: 15px; }
+.ai-meta { color: var(--text-secondary, #64748b); font-size: 13px; }
+.ai-sources, .ai-history { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 0; }
+.ai-issue { display: grid; grid-template-columns: 80px 2fr 1fr 1fr auto; align-items: end; gap: 10px; margin: 12px 0; }
+.ai-issue input { min-width: 0; width: 100%; }
+.ai-result-item { margin: 12px 0 20px; }
+.ai-result-item p, .ai-result-readonly p { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.7; }
+.ai-item-meta { display: flex; align-items: center; gap: 12px; margin: 8px 0; }
+.ai-kind { color: var(--text-secondary, #64748b); display: inline-block; margin-right: 10px; font-size: 12px; }
+.ai-evidence { display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; color: var(--text-secondary, #64748b); margin-top: 6px; }
+.ai-analysis-body .ai-check { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
+.ai-check input[type=checkbox] { width: 16px; height: 16px; flex-shrink: 0; }
+.ai-source { border-left: 3px solid #3765ff; padding: 12px; margin-top: 12px; background: #f8fafc; }
+.ai-source pre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
+.ai-source > button { float: right; }
+@media (max-width: 760px) { .enterprise-modal.ai-analysis-dialog { width: 100%; } .ai-issue { grid-template-columns: 1fr 1fr; } }
+
+.ai-source dl { display: grid; gap: 10px; margin: 12px 0; }
+.ai-source dt { color: var(--text-secondary, #64748b); }
+.ai-source dd { margin: 3px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }

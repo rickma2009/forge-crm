@@ -5,6 +5,8 @@ const root = path.resolve(process.argv[2] ?? '.');
 const scanRoots = [
   path.join(root, 'README.md'),
   path.join(root, '_methodology'),
+  path.join(root, 'docs', 'training'),
+  path.join(root, 'docs', 'testing'),
   path.join(root, '_ref', 'README.md'),
 ];
 const markdownFiles = [];
@@ -39,4 +41,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log(`PASS  Markdown 本地链接有效（${markdownFiles.length} 个文件）`);
+console.log(`PASS  Markdown 本地文件链接有效（${markdownFiles.length} 个文件；含培训与验收记录，不检查锚点和远程地址）`);

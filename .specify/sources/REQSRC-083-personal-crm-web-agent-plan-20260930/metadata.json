@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-083",
+  "title": "个人 CRM Web Agent 需求与首版共识",
+  "sourceType": "user-requirement-and-confirmed-recommendations",
+  "sourceDate": "2026-09-30",
+  "importedAt": "2026-09-30T15:48:40+08:00",
+  "originalPath": "current-codex-task:user-messages-and-three-recommendation-rounds",
+  "managedCopy": "source.md",
+  "sha256": "3c425c11fb39359e135d4052ccac966607ad852855569ce8818fe9ee0127c4c2",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "design-agreed-development-awaiting-authorization"
+}

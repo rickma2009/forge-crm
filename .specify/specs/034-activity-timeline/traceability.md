@@ -1,0 +1,13 @@
+# 追溯矩阵
+
+BUS-SX-01：销售过程可追溯；上位REQ-SX-03，实施来源REQSRC-095。
+
+| 需求 | 验收 | 测试 | 任务 |
+|---|---|---|---|
+| REQ-TL-01 | AC-TL-01 | TC-TL-01、TC-TL-02、TC-TL-08 | TASK-TL-01、TASK-TL-02 |
+| REQ-TL-02 | AC-TL-02 | TC-TL-03 | TASK-TL-01、TASK-TL-02 |
+| REQ-TL-03 | AC-TL-03 | TC-TL-04 | TASK-TL-01、TASK-TL-02 |
+| REQ-TL-04 | AC-TL-04 | TC-TL-05 | TASK-TL-01 |
+| REQ-TL-05 | AC-TL-05 | TC-TL-06 | TASK-TL-01 |
+| REQ-TL-06 | AC-TL-06 | TC-TL-07 | TASK-TL-01、TASK-TL-02 |
+| REQ-SX-03 | AC-TL-01—06 | TC-TL-01—08 | TASK-TL-03 |

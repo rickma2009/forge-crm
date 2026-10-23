@@ -16,7 +16,7 @@ describe('dialog submission boundary', () => {
     render(<Harness operation={operation} />);
     fireEvent.submit(screen.getByRole('dialog'));
     expect(await screen.findByRole('alert')).toHaveTextContent('编码重复');
-    expect(screen.getByRole('alert')).toHaveFocus();
+    await waitFor(() => expect(screen.getByRole('alert')).toHaveFocus());
     expect(screen.getByLabelText('名称')).toHaveValue('保留输入');
     fireEvent.submit(screen.getByRole('dialog'));
     await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());

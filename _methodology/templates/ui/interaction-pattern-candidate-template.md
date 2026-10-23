@@ -3,6 +3,7 @@
 > 模式名称：`{{pattern_name}}`  
 > 模式编号：`{{EPM-PAGE|ACT|VIEW|STATE|SPECIAL|SCENE-NNN}}`  
 > 状态：`idea | candidate | implementation-verified | interaction-verified | project-adopted | business-validated | released | deprecated`
+> 复用范围：`仅本项目 | 候选跨项目采用 | 已有独立项目采用 | 已发布能力包`（按证据选择）
 > 负责人：`{{owner}}`  
 > 最近更新：`{{YYYY-MM-DD}}`
 
@@ -87,3 +88,4 @@
 - 已通过的成熟度证据：`{{maturity_evidence}}`
 - 下一成熟度所缺证据：`{{next_maturity_evidence}}`
 - 下次复审条件：`{{review_trigger}}`
+- 跨项目采用记录或仍缺的采用证据：`{{adoption_record_or_gap}}`

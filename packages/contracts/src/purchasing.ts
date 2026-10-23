@@ -1,0 +1,13 @@
+import { z } from 'zod';
+const decimal = (scale: number, max: number) => z.string().regex(new RegExp(`^\\d{1,10}(?:\\.\\d{1,${scale}})?$`)).refine(v => Number(v) <= max);
+const factor = decimal(4, 1);
+const quantity = decimal(4, 9999999999).refine(v => Number(v) > 0, '数量必须大于0');
+const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(v => !Number.isNaN(Date.parse(v)) && new Date(v).toISOString().slice(0, 10) === v);
+const note = z.string().trim().max(1000).default('');
+export const supplierWriteSchema = z.strictObject({ version: z.number().int().positive().optional(), supplierName: z.string().trim().min(1).max(255), shortName: z.string().trim().max(128).default(''), categoryCode: z.string().max(32).default('GENERAL'), creditCode: z.string().trim().max(32).default(''), contactName: z.string().trim().max(128).default(''), phone: z.string().trim().max(64).default(''), email: z.union([z.literal(''), z.string().email().max(128)]).default(''), address: z.string().trim().max(500).default(''), paymentTermDays: z.number().int().min(0).max(3650).default(30), leadTimeDays: z.number().int().min(0).max(3650).default(7), taxRate: factor.default('0.13'), status: z.enum(['ACTIVE', 'DISABLED']).default('ACTIVE'), remark: note });
+export const purchaseOrderWriteSchema = z.strictObject({ version: z.number().int().positive().optional(), supplierId: z.string().uuid(), buyerId: z.string().uuid(), legalEntityId: z.string().uuid(), warehouseId: z.string().uuid(), orderDate: date, expectedDate: date, orderType: z.enum(['NORMAL', 'SAMPLE']).default('NORMAL'), discount: factor.default('1'), remark: note, lines: z.array(z.strictObject({ itemId: z.string().uuid(), quantity, unitPrice: decimal(6, 9999999999), discount: factor.default('1'), taxRate: factor.default('0.13'), sortNo: z.number().int().min(1).max(99999), remark: note })).min(1).max(200) });
+export const purchaseReceiptWriteSchema = z.strictObject({ version: z.number().int().positive().optional(), orderId: z.string().uuid(), warehouseId: z.string().uuid(), receiverId: z.string().uuid(), documentDate: date, remark: note, lines: z.array(z.strictObject({ orderLineId: z.string().uuid(), batchNo: z.string().trim().max(64).default(''), quantity, remark: note })).min(1).max(300) });
+export const purchaseCommandSchema = z.strictObject({ version: z.number().int().positive(), requestKey: z.string().uuid(), note });
+export type SupplierWrite = z.infer<typeof supplierWriteSchema>;
+export type PurchaseOrderWrite = z.infer<typeof purchaseOrderWriteSchema>;
+export type PurchaseReceiptWrite = z.infer<typeof purchaseReceiptWriteSchema>;

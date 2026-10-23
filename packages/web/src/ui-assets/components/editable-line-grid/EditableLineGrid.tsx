@@ -1,3 +1,4 @@
+import { DeclarativeDataGrid } from '../../../common/data-grid/DeclarativeDataGrid';
 import { useLayoutEffect, useState } from 'react';
 import type { DeletedLineUndoToken, LineMutation, LineMutationPermission, LineRecord, LineValues } from './types';
 
@@ -174,7 +175,7 @@ export function EditableLineGrid<TLine extends LineRecord>({
       })}</ul>
     </section>}
 
-    <table aria-label={ariaLabel}>
+    <DeclarativeDataGrid aria-label={ariaLabel}>
       <thead><tr>
         <th scope="col">选择</th>
         {columns.map((column) => <th scope="col" key={column.id}>{column.label}</th>)}
@@ -235,7 +236,7 @@ export function EditableLineGrid<TLine extends LineRecord>({
         </tr>;
       })}</tbody>
       {summary.length > 0 && <tfoot><tr><th colSpan={columns.length + 2} scope="row">汇总</th><td>{summary.map((item) => <span key={item.id}>{item.label}：{item.value}</span>)}</td></tr></tfoot>}
-    </table>
+    </DeclarativeDataGrid>
   </section>;
 }
 

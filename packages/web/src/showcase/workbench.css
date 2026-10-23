@@ -1,0 +1,25 @@
+.my-workbench { width: 100%; display: grid; gap: 20px; }
+.workbench-heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.workbench-heading h1 { margin: 0; font-size: 21px; color: #27364b; }
+.workbench-heading p { margin: 8px 0 0; color: #8592a6; font-size: 12px; }
+.workbench-modules { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.workbench-side { display: grid; gap: 20px; }
+.workbench-items { margin: 0; padding: 0; list-style: none; }
+.workbench-items li + li { border-top: 1px solid #edf0f6; }
+.workbench-items button { display: flex; align-items: center; gap: 12px; width: 100%; border: 0; background: none; padding: 16px 0; text-align: left; cursor: pointer; color: #8995aa; }
+.workbench-items button:hover { background: #f8faff; }
+.workbench-items button:focus-visible { outline: 2px solid #356dff; outline-offset: -2px; }
+.workbench-item-mark { color: #347dcd; flex-shrink: 0; }
+.workbench-item-mark i { display: block; height: 36px; width: 3px; border-radius: 3px; background: #609ec7; }
+.workbench-items [data-warning=true] .workbench-item-mark { color: #ef535f; }
+.workbench-item-content { display: grid; gap: 7px; flex: 1; min-width: 0; }
+.workbench-item-content strong { color: #344056; font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
+.workbench-item-content small { font-size: 12px; color: #929eb2; }
+.workbench-items time { font-size: 12px; white-space: nowrap; }
+.workbench-list-note { margin: 0; padding: 8px 0; color: #919eb1; font-size: 12px; }
+@media(max-width: 1100px) { .workbench-modules { grid-template-columns: 1fr; } }
+@media(max-width: 650px) { .workbench-heading { align-items: start; } .workbench-items time { display: none; } }
+
+.workbench-heading > button { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 11px; border: 1px solid var(--ipl-line-strong); border-radius: 5px; background: #fff; color: var(--ipl-text); cursor: pointer; }
+.workbench-heading > button:hover { border-color: var(--ipl-primary); }
+.workbench-todo-complete{flex:0 0 auto!important;width:auto!important;min-width:60px;margin:6px;border:1px solid #b9c9e4!important;border-radius:6px;color:#2563eb;background:#fff!important;padding:5px 9px!important}

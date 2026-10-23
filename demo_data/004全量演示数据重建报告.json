@@ -1,0 +1,277 @@
+{
+  "rebuiltAt": "2026-10-05T16:37:20.392Z",
+  "systemCode": "demo-portal",
+  "marker": "demo-rebuild-20261006",
+  "employeeCount": 34,
+  "customers": [
+    {
+      "_count": 5,
+      "categoryValue": "formal",
+      "statusValue": "active"
+    },
+    {
+      "_count": 5,
+      "categoryValue": "formal",
+      "statusValue": "archived"
+    },
+    {
+      "_count": 5,
+      "categoryValue": "formal",
+      "statusValue": "paused"
+    },
+    {
+      "_count": 5,
+      "categoryValue": "partner",
+      "statusValue": "active"
+    },
+    {
+      "_count": 5,
+      "categoryValue": "partner",
+      "statusValue": "archived"
+    },
+    {
+      "_count": 5,
+      "categoryValue": "partner",
+      "statusValue": "paused"
+    },
+    {
+      "_count": 5,
+      "categoryValue": "potential",
+      "statusValue": "active"
+    },
+    {
+      "_count": 5,
+      "categoryValue": "potential",
+      "statusValue": "archived"
+    },
+    {
+      "_count": 5,
+      "categoryValue": "potential",
+      "statusValue": "paused"
+    }
+  ],
+  "items": [
+    {
+      "_count": 70,
+      "itemType": "PRODUCT",
+      "status": "ACTIVE"
+    },
+    {
+      "_count": 444,
+      "itemType": "MATERIAL",
+      "status": "ACTIVE"
+    }
+  ],
+  "boms": 24,
+  "bomLines": 803,
+  "alternatives": 130,
+  "opportunities": [
+    {
+      "_count": 5,
+      "businessStatus": "FOLLOWING",
+      "status": "ACTIVE"
+    },
+    {
+      "_count": 1,
+      "businessStatus": "FOLLOWING",
+      "status": "DISABLED"
+    },
+    {
+      "_count": 5,
+      "businessStatus": "INITIAL",
+      "status": "ACTIVE"
+    },
+    {
+      "_count": 1,
+      "businessStatus": "INITIAL",
+      "status": "DISABLED"
+    },
+    {
+      "_count": 5,
+      "businessStatus": "LOST",
+      "status": "ACTIVE"
+    },
+    {
+      "_count": 1,
+      "businessStatus": "LOST",
+      "status": "DISABLED"
+    },
+    {
+      "_count": 5,
+      "businessStatus": "SIGNED",
+      "status": "ACTIVE"
+    },
+    {
+      "_count": 1,
+      "businessStatus": "SIGNED",
+      "status": "DISABLED"
+    },
+    {
+      "_count": 5,
+      "businessStatus": "VOID",
+      "status": "ACTIVE"
+    },
+    {
+      "_count": 1,
+      "businessStatus": "VOID",
+      "status": "DISABLED"
+    }
+  ],
+  "quotations": [
+    {
+      "_count": 40,
+      "status": "ACCEPTED"
+    },
+    {
+      "_count": 5,
+      "status": "DRAFT"
+    },
+    {
+      "_count": 5,
+      "status": "EXPIRED"
+    },
+    {
+      "_count": 5,
+      "status": "REJECTED"
+    },
+    {
+      "_count": 5,
+      "status": "SUBMITTED"
+    }
+  ],
+  "salesOrders": [
+    {
+      "_count": 25,
+      "status": "APPROVED"
+    },
+    {
+      "_count": 5,
+      "status": "CANCELLED"
+    },
+    {
+      "_count": 5,
+      "status": "DRAFT"
+    },
+    {
+      "_count": 5,
+      "status": "SUBMITTED"
+    }
+  ],
+  "salesOutbounds": [
+    {
+      "_count": 5,
+      "status": "APPROVED"
+    },
+    {
+      "_count": 5,
+      "status": "DRAFT"
+    },
+    {
+      "_count": 5,
+      "status": "REVERSED"
+    },
+    {
+      "_count": 5,
+      "status": "SUBMITTED"
+    }
+  ],
+  "inbounds": [
+    {
+      "_count": 2,
+      "status": "DRAFT",
+      "inboundType": "PRODUCTION"
+    },
+    {
+      "_count": 1,
+      "status": "DRAFT",
+      "inboundType": "FINISHED_GOODS"
+    },
+    {
+      "_count": 1,
+      "status": "DRAFT",
+      "inboundType": "TRANSFER"
+    },
+    {
+      "_count": 1,
+      "status": "DRAFT",
+      "inboundType": "STOCK_GAIN"
+    },
+    {
+      "_count": 1,
+      "status": "POSTED",
+      "inboundType": "PRODUCTION"
+    },
+    {
+      "_count": 2,
+      "status": "POSTED",
+      "inboundType": "FINISHED_GOODS"
+    },
+    {
+      "_count": 1,
+      "status": "POSTED",
+      "inboundType": "TRANSFER"
+    },
+    {
+      "_count": 1,
+      "status": "POSTED",
+      "inboundType": "STOCK_GAIN"
+    },
+    {
+      "_count": 1,
+      "status": "REVERSED",
+      "inboundType": "PRODUCTION"
+    },
+    {
+      "_count": 1,
+      "status": "REVERSED",
+      "inboundType": "FINISHED_GOODS"
+    },
+    {
+      "_count": 2,
+      "status": "REVERSED",
+      "inboundType": "TRANSFER"
+    },
+    {
+      "_count": 1,
+      "status": "REVERSED",
+      "inboundType": "STOCK_GAIN"
+    },
+    {
+      "_count": 1,
+      "status": "VOIDED",
+      "inboundType": "PRODUCTION"
+    },
+    {
+      "_count": 1,
+      "status": "VOIDED",
+      "inboundType": "FINISHED_GOODS"
+    },
+    {
+      "_count": 1,
+      "status": "VOIDED",
+      "inboundType": "TRANSFER"
+    },
+    {
+      "_count": 2,
+      "status": "VOIDED",
+      "inboundType": "STOCK_GAIN"
+    }
+  ],
+  "inventoryBalances": 5,
+  "inventoryTransactions": 30,
+  "verification": {
+    "invalidCustomerCodes": 0,
+    "invalidEmployeeCodes": 0,
+    "invalidDocumentCodes": 0,
+    "employeeRelationGaps": 0,
+    "staleBusinessAuxiliaryRows": 0,
+    "itemIssues": 0,
+    "duplicateItemNames": 0,
+    "itemNamesOver30Characters": 0,
+    "invalidBomReferences": 0,
+    "quotationTotalMismatches": 0,
+    "salesOrderTotalMismatches": 0,
+    "inventoryBalanceMismatches": 0,
+    "minimumScenarioCount": 5
+  }
+}

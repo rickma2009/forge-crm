@@ -75,15 +75,15 @@ export function RoleDialog({ title, onClose, children }: { title: string; onClos
 
 function RoleEditor({ role, parentId, systemCode, gateway, onClose, onSaved }: { role: RoleTreeNode | null; parentId: string | null; systemCode: string; gateway: EnterpriseGateway; onClose: () => void; onSaved: () => Promise<void> }) {
   const [draft, setDraft] = useState({ roleCode: role?.roleCode ?? '', roleName: role?.roleName ?? '', roleAbbrName: role?.roleAbbrName ?? '', description: role?.description ?? '', isEnabled: role?.isEnabled ?? true, begin: dateInput(role?.effectiveDateBegin), end: dateInput(role?.effectiveDateEnd) });
-  const [error, setError] = useState(''); const [busy, setBusy] = useState(false); const [dirty, setDirty] = useState(false);
-  const set = (key: string, value: string | boolean) => { setDirty(true); setDraft((current) => ({ ...current, [key]: value })); };
-  const close = () => { if (!busy && (!dirty || window.confirm('放弃未保存的角色修改？'))) onClose(); };
+  const [error, setError] = useState(''); const [busy, setBusy] = useState(false);
+  const set = (key: string, value: string | boolean) => { setDraft((current) => ({ ...current, [key]: value })); };
+  const close = () => { if (!busy) onClose(); };
   const submit = async (e: FormEvent) => { e.preventDefault(); if (busy) return; setBusy(true); setError(''); try {
     if (!draft.roleName.trim()) throw new Error('请输入角色名称');
     if (draft.begin && draft.end && draft.end <= draft.begin) throw new Error('有效期结束必须晚于开始');
     const common = { roleName: draft.roleName.trim(), roleAbbrName: draft.roleAbbrName.trim() || null, description: draft.description.trim() || null, isEnabled: draft.isEnabled, parentId, sortNo: role?.sortNo ?? 0, effectiveDateBegin: draft.begin ? new Date(draft.begin + 'T00:00:00+08:00').toISOString() : null, effectiveDateEnd: draft.end ? new Date(draft.end + 'T00:00:00+08:00').toISOString() : null };
     if (role) await gateway.updateRole(systemCode, role.id, { ...common, version: role.version }); else await gateway.createRole(systemCode, { ...common, roleCode: draft.roleCode.trim() } satisfies RoleWrite);
-    setDirty(false); await onSaved();
+    await onSaved();
   } catch (e) { setError(errorText(e)); } finally { setBusy(false); } };
   return <RoleDialog title={role ? '编辑角色' : parentId ? '新建子角色' : '新建角色'} onClose={close}><form onSubmit={submit}><div className="modal-body form-grid">{error && <div className="enterprise-alert span-2" role="alert">{error}</div>}
     <label>角色编码<span className="br-required">*</span><input required disabled={!!role || busy} pattern="[a-z][a-z0-9.-]*" maxLength={64} value={draft.roleCode} onChange={(e) => set('roleCode', e.target.value)} /></label><label>角色名称<span className="br-required">*</span><input required maxLength={128} value={draft.roleName} onChange={(e) => set('roleName', e.target.value)} /></label><label>角色简称<input maxLength={64} value={draft.roleAbbrName} onChange={(e) => set('roleAbbrName', e.target.value)} /></label><label>是否启用<select value={String(draft.isEnabled)} onChange={(e) => set('isEnabled', e.target.value === 'true')}><option value="true">启用</option><option value="false">停用</option></select></label><label>有效期开始<input type="date" value={draft.begin} onChange={(e) => set('begin', e.target.value)} /></label><label>有效期结束（不含当日）<input type="date" value={draft.end} onChange={(e) => set('end', e.target.value)} /></label><label className="span-2">备注<textarea maxLength={512} rows={3} value={draft.description} onChange={(e) => set('description', e.target.value)} /></label><p className="span-2 br-note">日期按北京时间计算。角色树不继承权限；普通角色不能设置绕过授权。</p></div><footer><button type="button" disabled={busy} onClick={close}>取消</button><button type="submit" className="is-primary" disabled={busy}>{busy ? '保存中…' : '保存'}</button></footer></form></RoleDialog>;

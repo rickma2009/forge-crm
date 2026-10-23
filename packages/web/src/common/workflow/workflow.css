@@ -1,0 +1,37 @@
+.workflow-diagram { font:inherit; color:var(--ipl-text,#334155); }
+.workflow-diagram-tools { display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--ipl-border,#e2e8f0); }
+.workflow-diagram-tools>span { color:var(--ipl-text-muted,#64748b); }
+.workflow-diagram-tools>div { margin-left:auto;display:flex;gap:8px; }
+.workflow-diagram-viewport { overflow:auto;padding:20px 0; }
+.workflow-edge { color:#94a3b8;stroke:#94a3b8;stroke-width:1.5; }
+.workflow-edge[role=button] { cursor:pointer;outline:none; }
+.workflow-edge .workflow-edge-hit { stroke:transparent;stroke-width:18; }
+.workflow-edge text { stroke:none;fill:#64748b;font-size:12px; }
+.workflow-edge.is-visited { color:#15803d;stroke:#15803d; }
+.workflow-edge.is-selected { color:#2563eb;stroke:#2563eb;stroke-width:2.5; }
+.workflow-edge:focus-visible { color:#2563eb;stroke:#2563eb;stroke-width:2.5; }
+.workflow-edge-add circle { fill:#fff;stroke:currentColor;stroke-width:1.5; }
+.workflow-edge-add text { fill:currentColor;font-size:16px;font-weight:600;stroke:none; }
+.workflow-node { cursor:pointer;outline:none; }
+.workflow-node rect,.workflow-node ellipse,.workflow-node polygon { stroke:#cbd5e1;fill:#fff;stroke-width:1.5; }
+.workflow-node text { fill:currentColor;font:inherit;font-size:12px; }
+.workflow-node .workflow-node-state { fill:#64748b; }
+.workflow-node[data-state=current] rect,.workflow-node[data-state=current] polygon { stroke:#2563eb;fill:#eff6ff;stroke-width:2; }
+.workflow-node[data-state=complete] rect,.workflow-node[data-state=complete] ellipse,.workflow-node[data-state=complete] polygon { stroke:#15803d;fill:#f0fdf4; }
+.workflow-node[data-state=failed] rect,.workflow-node[data-state=rejected] rect { stroke:#dc2626;fill:#fef2f2; }
+.workflow-node[data-state=returned] rect { stroke:#d97706;fill:#fffbeb; }
+.workflow-node[data-state=skipped],.workflow-node[data-state=cancelled] { opacity:.65; }
+.workflow-node:focus-visible rect,.workflow-node:focus-visible ellipse,.workflow-node:focus-visible polygon,.workflow-node.is-selected rect,.workflow-node.is-selected polygon { stroke:#2563eb;stroke-width:3; }
+
+.controlled-workflow-designer { display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start; }
+.controlled-workflow-canvas { min-width:0;border:1px solid var(--ipl-border,#e2e8f0);border-radius:8px;padding:0 16px 12px;background:#fff; }
+.controlled-workflow-inspector { border-left:1px solid var(--ipl-border,#e2e8f0);padding-left:20px;min-width:0; }
+.controlled-workflow-inspector h3 { margin:0 0 16px;font-size:16px; }
+.controlled-workflow-inspector label { display:grid;gap:6px;margin-bottom:14px;color:var(--ipl-text-muted,#64748b); }
+.controlled-workflow-inspector input,.controlled-workflow-inspector select { width:100%; }
+.controlled-workflow-actions { display:flex;flex-wrap:wrap;gap:8px;margin:14px 0; }
+.controlled-workflow-hint { color:var(--ipl-text-muted,#64748b);margin:10px 0 0; }
+.controlled-workflow-condition { border-top:1px solid var(--ipl-border,#e2e8f0);padding-top:12px;margin-top:12px; }
+.controlled-workflow-condition-row { display:grid;grid-template-columns:1fr 110px;gap:8px;margin-bottom:8px; }
+.controlled-workflow-condition-row .condition-value { grid-column:1 / -1; }
+@media (max-width:1000px) { .controlled-workflow-designer { grid-template-columns:1fr; }.controlled-workflow-inspector { border-left:0;border-top:1px solid var(--ipl-border,#e2e8f0);padding:20px 0 0; } }

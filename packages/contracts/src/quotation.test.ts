@@ -3,15 +3,19 @@ import { quotationLineAmount, quotationTotal, suggestedPrice, validateTiers, quo
 
 describe('quotation money and tier invariants', () => {
   it('rounds each line HALF_UP before summing', () => {
-    expect(quotationLineAmount('3', '0.05', '10')).toBe('0.14');
+    expect(quotationLineAmount('3', '0.05', '0.9')).toBe('0.14');
     expect(quotationTotal(['0.14', '0.14'])).toBe('0.28');
-    expect(quotationLineAmount('1', '9999999999999999.99', '0')).toBe('9999999999999999.99');
+    expect(quotationLineAmount('1', '9999999999999999.99', '1')).toBe('9999999999999999.99');
+  });
+  it('uses the Chinese discount factor where one is full price and 0.9 is 九折', () => {
+    expect(quotationLineAmount('10', '100', '1')).toBe('1000.00');
+    expect(quotationLineAmount('10', '100', '0.9')).toBe('900.00');
+    expect(quotationLineAmount('10', '100', '0')).toBe('0.00');
   });
   it('rejects unsupported decimals rather than silently rounding inputs', () => {
     for (const value of ['-1', '1e3', 'NaN', '1.001', '']) expect(() => decimalUnits(value, 2)).toThrow();
-    expect(() => quotationLineAmount('0', '1', '0')).toThrow();
-    expect(() => quotationLineAmount('1', '1', '100.01')).toThrow();
-    expect(quotationLineAmount('2', '1', '100')).toBe('0.00');
+    expect(() => quotationLineAmount('0', '1', '1')).toThrow();
+    expect(() => quotationLineAmount('1', '1', '1.01')).toThrow();
     expect(() => quotationTotal(['9999999999999999.99', '0.01'])).toThrow();
   });
   const tiers = [{ from: '0', to: '10', price: '100' }, { from: '10', to: null, price: '90' }];
@@ -45,4 +49,22 @@ it('requires the opportunity version reviewed before creation', async () => {
   const { quotationCreateSchema } = await import('./quotation');
   const id = '00000000-0000-4000-8000-000000000001';
   expect(quotationCreateSchema.safeParse({ mode: 'OPPORTUNITY', opportunityId: id, requestKey: id }).success).toBe(false);
+});
+
+it('accepts a quotation line without a price master reference', async () => {
+  const { quotationLineWriteSchema } = await import('./quotation');
+  const id = '00000000-0000-4000-8000-000000000001';
+  expect(quotationLineWriteSchema.safeParse({
+    id,
+    productId: id,
+    priceId: null,
+    quantity: '1',
+    unitPrice: '12.50',
+    discount: '1',
+    delivery: '',
+    remark: '',
+  }).success).toBe(true);
+  expect(quotationLineWriteSchema.safeParse({
+    id, productId: id, priceId: null, quantity: '1', unitPrice: '12.50', discount: '1.01', delivery: '', remark: '',
+  }).success).toBe(false);
 });

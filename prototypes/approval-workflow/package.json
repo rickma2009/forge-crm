@@ -1,0 +1,1 @@
+{"name":"forge-approval-prototype","private":true,"type":"module","scripts":{"dev":"../../packages/web/node_modules/.bin/vite --config vite.config.mjs","build":"../../packages/web/node_modules/.bin/vite build --config vite.config.mjs","test":"node --test tests/model.test.mjs"}}

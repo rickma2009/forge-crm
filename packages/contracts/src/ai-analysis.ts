@@ -1,0 +1,13 @@
+import { z } from 'zod';
+export const aiSectionKeys = ['summary', 'customer', 'competition', 'risks', 'actions', 'missing'] as const;
+export const aiSectionTitles: Record<typeof aiSectionKeys[number], string> = { summary: '商机现状摘要', customer: '客户需求与决策进展', competition: '竞争态势', risks: '问题与风险', actions: '下一步行动', missing: '缺失信息' };
+export const aiItemSchema = z.strictObject({ text: z.string().trim().min(1).max(3000), kind: z.enum(['FACT', 'INFERENCE', 'UNKNOWN']), sourceIds: z.array(z.string().max(100)).max(30), category: z.enum(['技术', '产品', '交期', '成本', '竞争', '商务', '其他']).optional() });
+export const aiResultSchema = z.strictObject({ sections: z.array(z.strictObject({ key: z.enum(aiSectionKeys), items: z.array(aiItemSchema).min(1).max(15) })).length(6) }).superRefine((v, ctx) => { if (new Set(v.sections.map(s => s.key)).size !== 6) ctx.addIssue({ code: 'custom', message: '分析必须包含六个不同部分' }); });
+export const aiStartSchema = z.strictObject({ requestId: z.string().uuid(), parentTaskId: z.string().uuid().optional(), focus: z.string().trim().max(2000).default(''), issues: z.array(z.strictObject({ category: z.enum(['技术', '产品', '交期', '成本', '其他']), description: z.string().trim().min(1).max(1500), impact: z.string().max(1000).default(''), status: z.string().max(200).default('') })).max(20).default([]) });
+export const aiConfirmSchema = z.strictObject({ result: aiResultSchema, acceptStale: z.boolean().default(false) });
+export type AiResult = z.infer<typeof aiResultSchema>;
+export type AiStart = z.infer<typeof aiStartSchema>;
+export type AiSource = { id: string; kind: string; title: string; content: Record<string, unknown> };
+export type AiSnapshot = { capturedAt: string; hash: string; sources: AiSource[]; opportunity: { id: string; name: string; stageId: string; stageName: string; stageProbability: number; confidence: number }; focus: string; issues: AiStart['issues'] };
+export type AiTask = { id: string; opportunityId: string; status: 'QUEUED' | 'RUNNING' | 'SUCCEEDED' | 'FAILED'; createdAt: string; createdBy: string; model: string; provider: string; templateVersion: string; schemaVersion: string; snapshot: AiSnapshot; result: AiResult | null; confirmedResult: AiResult | null; analysisId: string | null; confirmedAt: string | null; staleAtConfirmation: boolean; error: string | null; parentTaskId: string | null; isOwner: boolean; stale?: boolean };
+export type AiStatus = { configured: boolean; provider: string; model: string; timeoutMs: number; maxInputChars: number; dailyLimit: number };

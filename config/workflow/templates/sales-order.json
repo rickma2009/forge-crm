@@ -1,0 +1,6 @@
+{
+  "code": "sales_order",
+  "name": "销售订单审批",
+  "revision": 1,
+  "threshold": "100000"
+}

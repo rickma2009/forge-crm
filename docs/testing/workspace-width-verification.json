@@ -1,0 +1,298 @@
+{
+  "createdAt": "2026-10-03T03:52:33.803Z",
+  "browser": "154.0.8037.95",
+  "results": [
+    {
+      "route": "system/menus",
+      "width": 1440,
+      "boxes": [
+        {
+          "selector": ".showcase-main",
+          "left": 220,
+          "right": 1440,
+          "width": 1220,
+          "clientWidth": 1220,
+          "scrollWidth": 1220
+        },
+        {
+          "selector": ".showcase-topbar",
+          "left": 220,
+          "right": 1440,
+          "width": 1220,
+          "clientWidth": 1220,
+          "scrollWidth": 1220
+        },
+        {
+          "selector": ".showcase-content",
+          "left": 220,
+          "right": 1440,
+          "width": 1220,
+          "clientWidth": 1220,
+          "scrollWidth": 1220
+        }
+      ],
+      "screenshot": "system-menus-1440.png"
+    },
+    {
+      "route": "system/menus",
+      "width": 390,
+      "boxes": [
+        {
+          "selector": ".showcase-main",
+          "left": 64,
+          "right": 390,
+          "width": 326,
+          "clientWidth": 326,
+          "scrollWidth": 326
+        },
+        {
+          "selector": ".showcase-topbar",
+          "left": 64,
+          "right": 390,
+          "width": 326,
+          "clientWidth": 326,
+          "scrollWidth": 326
+        },
+        {
+          "selector": ".showcase-content",
+          "left": 64,
+          "right": 390,
+          "width": 326,
+          "clientWidth": 326,
+          "scrollWidth": 326
+        }
+      ],
+      "counterexample": [
+        {
+          "selector": ".showcase-main",
+          "left": 64,
+          "right": 390,
+          "width": 326,
+          "clientWidth": 326,
+          "scrollWidth": 418
+        },
+        {
+          "selector": ".showcase-topbar",
+          "left": 64,
+          "right": 481.78125,
+          "width": 417.78125,
+          "clientWidth": 418,
+          "scrollWidth": 418
+        },
+        {
+          "selector": ".showcase-content",
+          "left": 64,
+          "right": 481.78125,
+          "width": 417.78125,
+          "clientWidth": 418,
+          "scrollWidth": 418
+        }
+      ],
+      "screenshot": "system-menus-390.png"
+    },
+    {
+      "route": "system/organization",
+      "width": 1440,
+      "boxes": [
+        {
+          "selector": ".showcase-main",
+          "left": 220,
+          "right": 1440,
+          "width": 1220,
+          "clientWidth": 1220,
+          "scrollWidth": 1220
+        },
+        {
+          "selector": ".showcase-topbar",
+          "left": 220,
+          "right": 1440,
+          "width": 1220,
+          "clientWidth": 1220,
+          "scrollWidth": 1220
+        },
+        {
+          "selector": ".showcase-content",
+          "left": 220,
+          "right": 1440,
+          "width": 1220,
+          "clientWidth": 1220,
+          "scrollWidth": 1220
+        }
+      ],
+      "screenshot": "system-organization-1440.png"
+    },
+    {
+      "route": "system/organization",
+      "width": 390,
+      "boxes": [
+        {
+          "selector": ".showcase-main",
+          "left": 64,
+          "right": 390,
+          "width": 326,
+          "clientWidth": 326,
+          "scrollWidth": 326
+        },
+        {
+          "selector": ".showcase-topbar",
+          "left": 64,
+          "right": 390,
+          "width": 326,
+          "clientWidth": 326,
+          "scrollWidth": 326
+        },
+        {
+          "selector": ".showcase-content",
+          "left": 64,
+          "right": 390,
+          "width": 326,
+          "clientWidth": 326,
+          "scrollWidth": 326
+        }
+      ],
+      "screenshot": "system-organization-390.png"
+    },
+    {
+      "route": "inventory-balances",
+      "width": 1440,
+      "boxes": [
+        {
+          "selector": ".showcase-main",
+          "left": 220,
+          "right": 1440,
+          "width": 1220,
+          "clientWidth": 1220,
+          "scrollWidth": 1220
+        },
+        {
+          "selector": ".showcase-topbar",
+          "left": 220,
+          "right": 1440,
+          "width": 1220,
+          "clientWidth": 1220,
+          "scrollWidth": 1220
+        },
+        {
+          "selector": ".showcase-content",
+          "left": 220,
+          "right": 1440,
+          "width": 1220,
+          "clientWidth": 1220,
+          "scrollWidth": 1220
+        }
+      ],
+      "screenshot": "inventory-balances-1440.png"
+    },
+    {
+      "route": "inventory-balances",
+      "width": 390,
+      "boxes": [
+        {
+          "selector": ".showcase-main",
+          "left": 64,
+          "right": 390,
+          "width": 326,
+          "clientWidth": 326,
+          "scrollWidth": 326
+        },
+        {
+          "selector": ".showcase-topbar",
+          "left": 64,
+          "right": 390,
+          "width": 326,
+          "clientWidth": 326,
+          "scrollWidth": 326
+        },
+        {
+          "selector": ".showcase-content",
+          "left": 64,
+          "right": 390,
+          "width": 326,
+          "clientWidth": 326,
+          "scrollWidth": 326
+        }
+      ],
+      "screenshot": "inventory-balances-390.png"
+    },
+    {
+      "route": "inventory-transactions",
+      "width": 1440,
+      "boxes": [
+        {
+          "selector": ".showcase-main",
+          "left": 220,
+          "right": 1440,
+          "width": 1220,
+          "clientWidth": 1220,
+          "scrollWidth": 1220
+        },
+        {
+          "selector": ".showcase-topbar",
+          "left": 220,
+          "right": 1440,
+          "width": 1220,
+          "clientWidth": 1220,
+          "scrollWidth": 1220
+        },
+        {
+          "selector": ".showcase-content",
+          "left": 220,
+          "right": 1440,
+          "width": 1220,
+          "clientWidth": 1220,
+          "scrollWidth": 1220
+        }
+      ],
+      "screenshot": "inventory-transactions-1440.png"
+    },
+    {
+      "route": "inventory-transactions",
+      "width": 390,
+      "boxes": [
+        {
+          "selector": ".showcase-main",
+          "left": 64,
+          "right": 390,
+          "width": 326,
+          "clientWidth": 326,
+          "scrollWidth": 326
+        },
+        {
+          "selector": ".showcase-topbar",
+          "left": 64,
+          "right": 390,
+          "width": 326,
+          "clientWidth": 326,
+          "scrollWidth": 326
+        },
+        {
+          "selector": ".showcase-content",
+          "left": 64,
+          "right": 390,
+          "width": 326,
+          "clientWidth": 326,
+          "scrollWidth": 326
+        }
+      ],
+      "screenshot": "inventory-transactions-390.png"
+    }
+  ],
+  "errors": [],
+  "artifactDirectory": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/workspace-width-WjRrpj",
+  "sources": [
+    {
+      "source": "packages/web/src/showcase/showcase.css",
+      "sha256": "fb8bced78dae7104afd210c08132858306946c30288e6939e4bfdf5ceb230892"
+    },
+    {
+      "source": "scripts/check-workspace-width-browser.mjs",
+      "sha256": "02b15f529ae9b3e6c179ed873c0c185bd0273cd0da7ad4860ae801da800bebea"
+    }
+  ],
+  "limitations": [
+    "Four pages, two widths; not a site-wide mobile audit.",
+    "Grid and query field local scrolling is allowed; no backend business mutations tested.",
+    "Browser plugin unavailable; existing Playwright and Chrome used.",
+    "Initial unauthenticated session probes are excluded; errors after login must be empty."
+  ]
+}

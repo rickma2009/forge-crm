@@ -10,3 +10,7 @@
   .customer-basic-form .form-grid { grid-template-columns: minmax(0, 1fr); }
   .customer-basic-form .span-2 { grid-column: auto; }
 }
+
+.customer-overview-counts { display: flex; flex-wrap: wrap; gap: 24px; margin: 20px 0; }
+.customer-overview-counts dt { color: var(--ipl-muted); }
+.customer-overview-counts dd { margin: 8px 0 0; }

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const parameterCodeSchema = z.enum(['DEFAULT_LEGAL_ENTITY', 'DEFAULT_WAREHOUSE']);
+export const parameterCodeSchema = z.enum(['DEFAULT_LEGAL_ENTITY', 'DEFAULT_WAREHOUSE', 'OPPORTUNITY_STAGE_TEMPLATE']);
 export type ParameterCode = z.infer<typeof parameterCodeSchema>;
 export const parameterUpdateSchema = z.object({
   value: z.string().max(1000).nullable(), status: z.enum(['ACTIVE', 'DISABLED']), version: z.number().int().positive(),

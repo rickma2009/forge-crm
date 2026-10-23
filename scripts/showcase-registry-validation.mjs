@@ -93,7 +93,7 @@ function validateTraceability(page, requiredPageIds, evidence, errors) {
   const references = [
     ['directSourceRefs', /^REQSRC-\d{3}$/, 'INVALID_DIRECT_SOURCE_REF'],
     ['extractionRefs', /^UID-\d{3}$/, 'INVALID_EXTRACTION_REF'],
-    ['assetRefs', /^EPM-(?:PAGE|ACT|VIEW|STATE|SPECIAL)-\d{3}$/, 'INVALID_ASSET_REF'],
+    ['assetRefs', /^EPM-(?:PAGE|ACT|VIEW|STATE|SPECIAL|COMPONENT|SCENE)-\d{3}$/, 'INVALID_ASSET_REF'],
     ['implementationRefs', /.+/, 'INVALID_IMPLEMENTATION_REF'],
     ['qaRefs', /.+/, 'INVALID_QA_REF'],
   ];

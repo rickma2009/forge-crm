@@ -1,0 +1,14 @@
+.bom-page .product-object-header { margin-bottom: 16px; }
+.bom-toolbar, .bom-alt-row { display: flex; align-items: center; gap: 8px; }
+.bom-base-qty { display: flex; align-items: center; gap: 8px; padding: 8px 16px; }
+.bom-base-qty input { width: 110px; }
+.bom-tree-cell { border: 0; background: none; color: var(--color-primary, #3269e8); cursor: pointer; text-align: left; white-space: nowrap; }
+.bom-drawer-fields { display: grid; grid-template-columns: 110px 1fr; gap: 12px; }
+.bom-drawer-fields dt { color: #718096; }
+.bom-drawer-fields dd { margin: 0; }
+.bom-editor { display: grid; gap: 16px; }
+.bom-editor label { display: grid; gap: 6px; }
+.bom-editor input, .bom-editor select { min-height: 36px; }
+.bom-alt-row select { min-width: 0; flex: 1; }
+.bom-alt-row input { width: 72px; }
+.bom-hint { color: #718096; line-height: 1.5; }

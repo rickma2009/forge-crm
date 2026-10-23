@@ -19,10 +19,10 @@ assert.ok(validateJsonSchema(schema, invalidProbe).length > 0, 'Schema 负向探
 const invalidEvidenceCardProbe = structuredClone(registry);
 delete invalidEvidenceCardProbe.assets.find((asset) => asset.assetId === 'EPM-PAGE-013').evidenceCards[0].validation.versionPoint;
 assert.ok(validateJsonSchema(schema, invalidEvidenceCardProbe).length > 0, 'Schema 负向探针必须拒绝不完整证据卡');
-assert.equal(registry.assets.length, 103, '登记册必须包含 103 项');
-assert.equal(new Set(registry.assets.map((asset) => asset.assetId)).size, 103, '资产编号必须唯一');
+assert.equal(registry.assets.length, 113, '登记册必须包含 113 项');
+assert.equal(new Set(registry.assets.map((asset) => asset.assetId)).size, 113, '资产编号必须唯一');
 
-const expectedCounts = { PAGE: 25, ACT: 33, VIEW: 16, STATE: 12, SPECIAL: 10, SCENE: 7 };
+const expectedCounts = { PAGE: 25, ACT: 33, VIEW: 16, STATE: 12, SPECIAL: 10, COMPONENT: 10, SCENE: 7 };
 for (const [kind, count] of Object.entries(expectedCounts)) {
   assert.equal(registry.assets.filter((asset) => asset.kind === kind).length, count, `${kind} 数量错误`);
 }
@@ -65,4 +65,4 @@ assert.equal(workbench.maturity, 'idea', 'P002 不属于 TASK-1011 成熟度提�
 assert.deepEqual(workbench.artifacts, [], 'P002 不得引用未随 TASK-1011 提交的资产');
 assert.deepEqual(workbench.evidence, [], 'P002 不得在 TASK-1011 中登记越界证据');
 
-console.log('PASS  企业交互资产登记册 103 项、六类计数、成熟度与引用均有效');
+console.log('PASS  企业交互资产登记册 113 项、七类计数、成熟度、演示地址与引用均有效');

@@ -1,0 +1,57 @@
+/** Read-only API smoke test against the local demo server. */
+import { config as loadEnv } from 'dotenv';
+import { resolve } from 'node:path';
+import { bomDetailSchema, bomListSchema } from '@forge-crm/contracts';
+
+loadEnv({ path: resolve(process.cwd(), '../../.env'), quiet: true });
+const origin = 'http://localhost:5173';
+const base = process.env.BOM_SMOKE_URL ?? 'http://127.0.0.1:3000';
+async function main() {
+  if (!process.env.INITIAL_ADMIN_PASSWORD) throw new Error('INITIAL_ADMIN_PASSWORD is required');
+  const anonymous = await fetch(`${base}/api/auth/session`);
+  const csrf = anonymous.headers.getSetCookie().map((value) => value.match(/^ipl_csrf=([^;]+)/)?.[1]).find(Boolean);
+  if (!csrf) throw new Error('CSRF bootstrap failed');
+  const login = await fetch(`${base}/api/auth/login`, { method: 'POST', headers: { origin, 'x-csrf-token': csrf, cookie: `ipl_csrf=${csrf}`, 'content-type': 'application/json' }, body: JSON.stringify({ account: 'admin', password: process.env.INITIAL_ADMIN_PASSWORD }) });
+  if (login.status !== 201) throw new Error(`Demo login failed: ${login.status}`);
+  const session = login.headers.getSetCookie().map((value) => value.match(/^ipl_session=([^;]+)/)?.[1]).find(Boolean);
+  if (!session) throw new Error('Session cookie missing');
+  const headers = { cookie: `ipl_csrf=${csrf}; ipl_session=${session}` };
+  const navigation = await fetch(`${base}/api/systems/demo-portal/navigation`, { headers });
+  if (!navigation.ok || !JSON.stringify(await navigation.json()).includes('bom-directory')) throw new Error('BOM menu missing from authorized navigation');
+  const result = await fetch(`${base}/api/systems/demo-portal/boms?page=1&pageSize=20&keyword=BOM-DEMO`, { headers });
+  if (!result.ok) throw new Error(`BOM list failed: ${result.status}`);
+  const list = bomListSchema.parse(await result.json());
+  if (list.pagination.total < 2) throw new Error('BOM demo records missing');
+  const screen = list.items.find((row) => row.itemCode === 'BOM-DEMO-SCREEN');
+  if (!screen) throw new Error('Screen BOM missing');
+  const detailResponse = await fetch(`${base}/api/systems/demo-portal/boms/${screen.id}`, { headers });
+  if (!detailResponse.ok) throw new Error(`BOM detail failed: ${detailResponse.status}`);
+  const detail = bomDetailSchema.parse(await detailResponse.json());
+  const board = detail.lines.find((line) => line.itemCode === 'BOM-DEMO-BOARD');
+  if (!board || board.children[0]?.alternatives.length !== 1 || board.children[0]?.cumulativeQuantity !== '4.0000') throw new Error('Multi-level structure or alternative/cumulative quantity mismatch');
+  const screenResult = await fetch(`${base}/api/systems/demo-portal/boms?page=1&pageSize=20&keyword=TEST-P-SCREEN-`, { headers });
+  if (!screenResult.ok) throw new Error(`Screen BOM list failed: ${screenResult.status}`);
+  const screenList = bomListSchema.parse(await screenResult.json());
+  if (screenList.pagination.total < 8) throw new Error('Existing screen product BOMs are missing');
+  const ledScreen = screenList.items.find((row) => row.itemCode === 'TEST-P-SCREEN-034' && row.status === 'PUBLISHED');
+  if (!ledScreen) throw new Error('LED screen published BOM is missing');
+  const ledResponse = await fetch(`${base}/api/systems/demo-portal/boms/${ledScreen.id}`, { headers });
+  if (!ledResponse.ok) throw new Error(`LED screen BOM detail failed: ${ledResponse.status}`);
+  const ledDetail = bomDetailSchema.parse(await ledResponse.json());
+  const ledModules = ledDetail.lines.find((line) => line.itemCode === 'DEMO-A-LED-CAB')?.children.find((line) => line.itemCode === 'DEMO-E-LED-MOD');
+  if (ledModules?.cumulativeQuantity !== '16.0000') throw new Error('LED screen nested modules mismatch');
+  const access = await fetch(`${base}/api/systems/demo-portal/page-access?routePath=${encodeURIComponent(`/showcase/boms/${screen.id}`)}`, { headers });
+  if (!access.ok) throw new Error(`BOM detail page access failed: ${access.status}`);
+  if (!process.env.INITIAL_VIEWER_PASSWORD) throw new Error('INITIAL_VIEWER_PASSWORD is required');
+  const viewerLogin = await fetch(`${base}/api/auth/login`, { method: 'POST', headers: { origin, 'x-csrf-token': csrf, cookie: `ipl_csrf=${csrf}`, 'content-type': 'application/json' }, body: JSON.stringify({ account: 'viewer', password: process.env.INITIAL_VIEWER_PASSWORD }) });
+  if (viewerLogin.status !== 201) throw new Error(`Viewer login failed: ${viewerLogin.status}`);
+  const viewerSession = viewerLogin.headers.getSetCookie().map((value) => value.match(/^ipl_session=([^;]+)/)?.[1]).find(Boolean);
+  if (!viewerSession) throw new Error('Viewer session cookie missing');
+  const viewerHeaders = { ...headers, cookie: `ipl_csrf=${csrf}; ipl_session=${viewerSession}` };
+  const viewerList = await fetch(`${base}/api/systems/demo-portal/boms`, { headers: viewerHeaders });
+  if (viewerList.status !== 200) throw new Error(`Viewer BOM list failed: ${viewerList.status}`);
+  const forbidden = await fetch(`${base}/api/systems/demo-portal/boms`, { method: 'POST', headers: { ...viewerHeaders, origin, 'x-csrf-token': csrf, 'content-type': 'application/json' }, body: JSON.stringify({ itemId: screen.itemId, baseQuantity: '1' }) });
+  if (forbidden.status !== 403) throw new Error(`Viewer BOM create should be forbidden: ${forbidden.status}`);
+  console.log(`BOM API smoke passed: ${list.pagination.total} base demo versions, ${screenList.pagination.total} existing screen BOMs, screen → board → chip`);
+}
+main().catch((error) => { console.error(error instanceof Error ? error.message : error); process.exitCode = 1; });

@@ -1,0 +1,1 @@
+.approval-preview-host{height:calc(100vh - 122px);min-height:460px;position:relative}.approval-preview-host iframe{border:0;width:100%;height:100%;display:block;border-radius:6px}.approval-preview-host>p,.approval-preview-error{position:absolute;inset:16px;z-index:1;background:#fff;padding:20px;height:fit-content}.approval-preview-error p{line-height:1.8}

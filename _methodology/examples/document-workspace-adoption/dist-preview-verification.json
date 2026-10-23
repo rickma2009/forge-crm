@@ -1,0 +1,149 @@
+{
+  "createdAt": "2026-10-03T06:23:17.175Z",
+  "component": "CMP-10",
+  "cleanInstall": true,
+  "nodeVersion": "v24.16.0",
+  "architecture": "x64",
+  "platform": "darwin",
+  "installedVersions": {
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "@tabler/icons-react": "3.48.0",
+    "typescript": "5.7.3",
+    "vite": "5.4.20",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9"
+  },
+  "lockSha256": "1cc90342fb8f0917eb2391dcb7cc9c718167dbb6f2560edc95a0038218334708",
+  "sources": [
+    {
+      "source": "packages/web/src/common/DetailWorkspace.tsx",
+      "sha256": "ab47fa785fb577b32ff07ffbe131c012426758aa5dd136eb1c0891655cfab2f7"
+    },
+    {
+      "source": "packages/web/src/common/DocumentWorkspace.tsx",
+      "sha256": "2fc15341327f19a36c68fee0154adb1d7573efe653d7ee9e1557f40dfe930c7c"
+    },
+    {
+      "source": "packages/web/src/common/detail-workspace.css",
+      "sha256": "b9da43b1d169e1adfcef8e42b6ae06884739aaa38abb3e470f8ea36cb6f04e54"
+    },
+    {
+      "source": "packages/web/src/common/document-workspace.css",
+      "sha256": "2152fe00f63312958e6e1b9732095925505f5981e88312af4ba1698649fdbab9"
+    },
+    {
+      "source": "_methodology/examples/document-workspace-adoption/main.tsx",
+      "sha256": "4b9018bee7b3a1a348980b036b92a4dc854518b8eb5d717c4fe84490b774b9ff"
+    },
+    {
+      "source": "_methodology/examples/document-workspace-adoption/host.css",
+      "sha256": "949ad1ab8776d91e61aead7d11b6ae6cd73641439a0bdb64d3d70cd2b24610f9"
+    },
+    {
+      "source": "_methodology/scripts/rehearse-query-bar.mjs",
+      "sha256": "ca2536d2c083cdc3b5ba9e7f87b5fe53c252af4992aeed2c5f850f2f0c4355f4"
+    },
+    {
+      "source": "_methodology/scripts/verify-document-workspace-adoption.mjs",
+      "sha256": "8ac1431e1ee8f8e4077db07ee815d798319458d3707e218bbd58b471dee27501"
+    },
+    {
+      "source": "_methodology/scripts/export-component-source.mjs",
+      "sha256": "8546eb3c9f3c68c503106ade89742971b35864d9c59ca272b673c5914f620edf"
+    },
+    {
+      "source": "_methodology/scripts/inspect-component-dependencies.mjs",
+      "sha256": "7a88d39f08f8df4a1c5b7d1be8ea546a1409e64761cbb17861fa43b6622ea759"
+    }
+  ],
+  "exportManifest": "component-source/manifest.json",
+  "adapterSha256": "17bb73da42717e5106c6d9360364d6cb5cd80d9898fc23a3106b7e61b0f00c22",
+  "results": [
+    {
+      "command": "npm install --ignore-scripts --no-audit --no-fund --cache /var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/forge-document-workspace-adoption-guml0j/.npm-cache",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 22068,
+      "timeoutMs": 60000,
+      "errorCode": null
+    },
+    {
+      "command": "tsc --noEmit",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 1998,
+      "timeoutMs": 60000,
+      "errorCode": null
+    },
+    {
+      "command": "vite build",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 131791,
+      "timeoutMs": 180000,
+      "errorCode": null
+    }
+  ],
+  "limitations": [
+    "Fresh installation requested with lifecycle scripts disabled; inspect npm exit status and recorded versions. This is not a dependency security audit.",
+    "The component source comes from the source exporter; unresolved external contracts and CSS assets remain subject to its manifest limits. Host styles are supplied by this fixture.",
+    "Browser checks cover the synthetic host production build only. No business API, authorization, inventory, persistence or independent business adoption validated."
+  ],
+  "browser": {
+    "browserVersion": "154.0.8037.95",
+    "results": [
+      {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "touch": false,
+        "scroll": {
+          "client": 1046,
+          "scroll": 1046
+        },
+        "screenshot": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/document-workspace-browser-YNHa09/desktop.png"
+      },
+      {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "touch": true,
+        "scroll": {
+          "client": 332,
+          "scroll": 1000
+        },
+        "screenshot": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/document-workspace-browser-YNHa09/touch.png"
+      }
+    ],
+    "errors": [],
+    "limitation": "Host state only; no business API, inventory or persistence validation."
+  },
+  "nodeModulesIndependent": true,
+  "artifactDirectories": {
+    "build": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/forge-document-workspace-adoption-guml0j",
+    "browser": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/document-workspace-browser-YNHa09"
+  },
+  "browserTarget": {
+    "type": "production-build-preview",
+    "command": "./node_modules/.bin/vite preview --host 127.0.0.1 --port 5197 --strictPort",
+    "serviceStopped": true
+  },
+  "buildArtifacts": [
+    {
+      "file": "dist/assets/index-BA45V24m.js",
+      "sha256": "2b9c15fbf3650e4c7075fecba630d0eea556d973b36716ced2c730c938923aa5"
+    },
+    {
+      "file": "dist/assets/index-DT3gntb2.css",
+      "sha256": "8d071b0434845299915997768f811ec57503b17fbfeab348e9b3abb1591c30ea"
+    },
+    {
+      "file": "dist/index.html",
+      "sha256": "1e17d1bd06f365f4a3d3890c85f0c0f4f28de589f20d1bda23c00b8294a30e1e"
+    }
+  ],
+  "verificationCorrection": "First browser run timed out on exact label lookup for the nested status select. Changed locator to combobox role and name prefix; reran same build successfully."
+}

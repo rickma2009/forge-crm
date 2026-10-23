@@ -1,4 +1,7 @@
 import { warehouseDictionarySeeds } from '../src/dictionary/warehouse-dictionaries.seed';
+import { itemReferenceDictionarySeeds } from '../src/dictionary/item-reference-dictionaries.seed';
+import { organizationDictionarySeeds } from '../src/dictionary/organization-dictionaries.seed';
+import { initializeNumberingRules } from '../src/numbering/numbering-defaults';
 import { initializeParameters } from '../src/system-parameter/parameter-defaults';
 import { initializeBusinessListViews } from '../src/list-view/business-list-defaults';
 import { hash } from 'argon2';
@@ -11,7 +14,7 @@ import { databaseRowsToSeedDefinition } from '../src/rbac/database-definition';
 import { validateSeedDefinition } from '../src/rbac/seed-definition';
 import { seedDefinition } from './seed-data';
 import { contactProjectRoleSeed } from '../src/dictionary/contact-project-role.seed';
-import { seedInteractionCatalog } from '../src/style-scene/style-scene.seed';
+import { seedComponentLibrary, seedTemplateLibrary } from '../src/style-scene/template-library.seed';
 
 loadEnv({ path: fileURLToPath(new URL('../../../.env', import.meta.url)), quiet: true });
 const projectRoot = fileURLToPath(new URL('../../..', import.meta.url));
@@ -272,7 +275,7 @@ async function main(): Promise<void> {
         const unit = await database.orgUnit.upsert({
           where: { tenantId_unitCode: { tenantId: tenant.id, unitCode: seed.unitCode } },
           update: { parentId, unitName: seed.unitName, unitType: seed.unitType, sortNo: seed.sortNo, status: 'ACTIVE', updatedBy: adminUserId, version: { increment: 1 } },
-          create: { tenantId: tenant.id, parentId, unitCode: seed.unitCode, unitName: seed.unitName, unitType: seed.unitType, sortNo: seed.sortNo, createdBy: adminUserId, updatedBy: adminUserId },
+          create: { tenantId: tenant.id, parentId, unitCode: seed.unitCode, unitName: seed.unitName, unitType: seed.unitType, isSalesOrg: ['tv-division', 'tv-sales-one', 'tv-sales-two', 'tv-sales-admin'].includes(seed.unitCode), isRdOrg: seed.unitCode === 'tv-rd-center', isPlatformOrg: ['component-bg', 'finance-dept', 'supply-chain-dept'].includes(seed.unitCode), sortNo: seed.sortNo, createdBy: adminUserId, updatedBy: adminUserId },
         });
         organizationIds.set(seed.unitCode, unit.id);
       }
@@ -287,7 +290,7 @@ async function main(): Promise<void> {
       for (const [positionCode, positionName] of positionSeeds) {
         const position = await database.orgPosition.upsert({
           where: { tenantId_positionCode: { tenantId: tenant.id, positionCode } },
-          update: { positionName, status: 'ACTIVE', updatedBy: adminUserId, version: { increment: 1 } },
+          update: {},
           create: { tenantId: tenant.id, positionCode, positionName, createdBy: adminUserId, updatedBy: adminUserId },
         });
         positionIds.set(positionCode, position.id);
@@ -309,13 +312,15 @@ async function main(): Promise<void> {
         ['E4001', 'supply.manager', '黄俊杰', 'supply-chain-dept', 'supply-manager'],
         ['E4002', 'supply.buyer', '梁欣', 'supply-chain-dept', 'procurement-specialist'],
       ] as const;
+      const seededEmployeeIds = new Map<string, string>();
       for (const [employeeNo, account, employeeName, unitCode, positionCode] of employeeSeeds) {
         const orgUnitId = organizationIds.get(unitCode); const positionId = positionIds.get(positionCode);
         if (!orgUnitId || !positionId) throw new Error(`SEED_EMPLOYEE_SCOPE_MISSING:${employeeNo}`);
         const existingEmployment = await database.orgEmployment.findUnique({ where: { tenantId_employeeNo: { tenantId: tenant.id, employeeNo } } });
         const employee = existingEmployment
           ? await database.orgEmployee.update({ where: { id: existingEmployment.employeeId }, data: { employeeName, status: 'ACTIVE', updatedBy: adminUserId, version: { increment: 1 } } })
-          : await database.orgEmployee.create({ data: { tenantId: tenant.id, employeeName, status: 'ACTIVE', createdBy: adminUserId, updatedBy: adminUserId } });
+          : await database.orgEmployee.create({ data: { tenantId: tenant.id, employeeName, jobTitleValue: ['bg-manager', 'division-manager'].includes(positionCode) ? 'DIRECTOR' : positionCode === 'rd-engineer' ? 'ENGINEER' : positionCode.endsWith('-manager') ? 'MANAGER' : 'SPECIALIST', status: 'ACTIVE', createdBy: adminUserId, updatedBy: adminUserId } });
+        seededEmployeeIds.set(account, employee.id);
         if (existingEmployment) await database.orgEmployment.update({ where: { id: existingEmployment.id }, data: { status: 'ACTIVE', expiresAt: null, updatedBy: adminUserId, version: { increment: 1 } } });
         else await database.orgEmployment.create({ data: { tenantId: tenant.id, employeeId: employee.id, employeeNo, createdBy: adminUserId, updatedBy: adminUserId } });
         const user = await database.iamUser.upsert({
@@ -337,6 +342,15 @@ async function main(): Promise<void> {
         }
       }
 
+      for (const [unitCode, account] of [
+        ['component-bg', 'admin'], ['tv-division', 'tv.manager'], ['tv-sales-one', 'sales1.manager'],
+        ['tv-sales-two', 'sales2.manager'], ['tv-sales-admin', 'sales.ops'], ['tv-rd-center', 'rd.manager'],
+        ['power-division', 'power.manager'], ['finance-dept', 'finance.manager'], ['supply-chain-dept', 'supply.manager'],
+      ] as const) {
+        const orgUnitId = organizationIds.get(unitCode); const managerEmployeeId = seededEmployeeIds.get(account);
+        if (orgUnitId && managerEmployeeId) await database.orgUnit.updateMany({ where: { id: orgUnitId, tenantId: tenant.id, managerEmployeeId: null }, data: { managerEmployeeId } });
+      }
+
       type DictionarySeed = { code: string; name: string; parentCode?: string; groupCode: string; description: string; sortNo: number; itemsEditable: boolean; items: ReadonlyArray<readonly [string, string, string, string?]> };
       const dictionarySeeds: DictionarySeed[] = [
         { code: 'product_line', name: '产品线', groupCode: 'product', description: '可报价产品线；存量值须人工映射', sortNo: 90, itemsEditable: true, items: [] },
@@ -351,19 +365,23 @@ async function main(): Promise<void> {
         { code: 'material_minor_category', name: '物料小类', parentCode: 'material_middle_category', groupCode: 'material', description: '物料三级分类', sortNo: 130, itemsEditable: true, items: [['resistor', '电阻', 'red', 'electronic'], ['connector', '连接器', 'gray', 'structural']] },
         { code: 'yes_no', name: '是否', groupCode: 'common', description: '系统初始化固定的是/否标准值', sortNo: 200, itemsEditable: false, items: [['1', '是', 'green'], ['0', '否', 'gray']] },
         ...warehouseDictionarySeeds,
+        ...itemReferenceDictionarySeeds,
+        ...organizationDictionarySeeds,
         { code: 'inbound_reason', name: '入库原因', groupCode: 'inventory', description: '入库单业务原因', sortNo: 230, itemsEditable: true, items: [['PRODUCTION_COMPLETE', '生产完工', 'green'], ['FINISHED_GOODS', '成品收货', 'blue'], ['STOCK_GAIN', '盘盈', 'orange']] },
       ];
       const dictionaries = new Map<string, string>();
       const dictionaryItems = new Map<string, string>();
       for (const dictionarySeed of dictionarySeeds) {
+        const preserveMaintainedValues = ['item_source', 'item_lifecycle'].includes(dictionarySeed.code);
         const dictionary = await database.sysDictionary.upsert({
           where: { systemCode_dictCode: { systemCode: 'demo-portal', dictCode: dictionarySeed.code } },
-          update: { dictName: dictionarySeed.name, groupCode: dictionarySeed.groupCode, description: dictionarySeed.description, sortNo: dictionarySeed.sortNo, status: 'ACTIVE', itemsEditable: dictionarySeed.itemsEditable, updatedBy: 'seed', version: { increment: 1 } },
+          update: dictionarySeed.groupCode === 'organization' || preserveMaintainedValues ? {} : { dictName: dictionarySeed.name, groupCode: dictionarySeed.groupCode, description: dictionarySeed.description, sortNo: dictionarySeed.sortNo, status: 'ACTIVE', itemsEditable: dictionarySeed.itemsEditable, updatedBy: 'seed', version: { increment: 1 } },
           create: { systemCode: 'demo-portal', dictCode: dictionarySeed.code, dictName: dictionarySeed.name, groupCode: dictionarySeed.groupCode, description: dictionarySeed.description, sortNo: dictionarySeed.sortNo, itemsEditable: dictionarySeed.itemsEditable, createdBy: 'seed', updatedBy: 'seed' },
         });
         dictionaries.set(dictionarySeed.code, dictionary.id);
       }
       for (const dictionarySeed of dictionarySeeds) {
+        const preserveMaintainedValues = ['item_source', 'item_lifecycle'].includes(dictionarySeed.code);
         const dictionaryId = dictionaries.get(dictionarySeed.code);
         if (!dictionaryId) throw new Error(`SEED_DICTIONARY_REFERENCE_MISSING:${dictionarySeed.code}`);
         const parentId = dictionarySeed.parentCode ? dictionaries.get(dictionarySeed.parentCode) : null;
@@ -373,7 +391,7 @@ async function main(): Promise<void> {
           const parentItemId = parentValue && dictionarySeed.parentCode ? dictionaryItems.get(`${dictionarySeed.parentCode}:${parentValue}`) : null;
           const item = await database.sysDictionaryItem.upsert({
             where: { dictionaryId_itemValue: { dictionaryId, itemValue: value } },
-            update: { parentItemId, itemName: name, itemCode: value, colorKey, sortNo: dictionarySeed.items.findIndex((item) => item[0] === value) * 10 + 10, status: 'ACTIVE', updatedBy: 'seed', version: { increment: 1 } },
+            update: dictionarySeed.groupCode === 'organization' || preserveMaintainedValues ? {} : { parentItemId, itemName: name, itemCode: value, colorKey, sortNo: dictionarySeed.items.findIndex((item) => item[0] === value) * 10 + 10, status: 'ACTIVE', updatedBy: 'seed', version: { increment: 1 } },
             create: { dictionaryId, parentItemId, itemCode: value, itemValue: value, itemName: name, colorKey, sortNo: dictionarySeed.items.findIndex((item) => item[0] === value) * 10 + 10, createdBy: 'seed', updatedBy: 'seed' },
           });
           dictionaryItems.set(`${dictionarySeed.code}:${value}`, item.id);
@@ -402,6 +420,7 @@ async function main(): Promise<void> {
       }
 
       await initializeParameters(database, seedDefinition.systems);
+      await initializeNumberingRules(database, seedDefinition.systems);
       await initializeBusinessListViews(database, seedDefinition.systems);
 
       const customers = [
@@ -538,7 +557,10 @@ async function main(): Promise<void> {
         await database.sdOppProduct.create({ data: { tenantId: tenant.id, opportunityId: sampleOpportunity.id, productId: sampleProductId, productCode: 'P2026090001', productName: '智能控制板', model: 'CB-100', quantity: 1000, unitPrice: 280, expectedAmount: 280000, requirement: '首批样机验证后分批交付', sortNo: 10, createdBy: 'seed', updatedBy: 'seed' } });
       }
 
-      await seedInteractionCatalog(database, 'demo-portal', projectRoot);
+      for (const systemCode of seedDefinition.systems) {
+        await seedTemplateLibrary(database, systemCode, projectRoot);
+        await seedComponentLibrary(database, systemCode, projectRoot);
+      }
 
       const systemCodes = seedDefinition.systems;
       const [persistedMenus, persistedActions, persistedRoles, persistedGrants] = await Promise.all([

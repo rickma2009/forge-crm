@@ -1,3 +1,4 @@
+import { NumberingService } from '../numbering/numbering.service';
 import { Injectable, OnModuleDestroy, OnModuleInit, Logger } from '@nestjs/common';
 import { createHash, randomUUID } from 'node:crypto';
 import { z } from 'zod';
@@ -23,7 +24,7 @@ const querySchema = z.object({ sortBy: z.enum(['updatedAt', 'createdAt']).defaul
 export class QuotationService implements OnModuleInit, OnModuleDestroy {
   private timer?: ReturnType<typeof setInterval>;
   private expiring = false;
-  constructor(private readonly db: DatabaseService, private readonly pricing: PricingService, private readonly auth: AuthorizationService, private readonly policies: RolePolicyService) {}
+  constructor(private readonly db: DatabaseService, private readonly pricing: PricingService, private readonly auth: AuthorizationService, private readonly policies: RolePolicyService, private readonly numbers: NumberingService = new NumberingService(db)) {}
   onModuleInit() { this.timer = setInterval(() => { void this.expire().catch(() => Logger.warn('报价失效扫描失败，将在下一周期重试', 'QuotationService')); }, 60000); this.timer.unref(); }
   onModuleDestroy() { if (this.timer) clearInterval(this.timer); }
   async scope(code: string, actorId: string, action: string): Promise<Scope> {
@@ -111,8 +112,7 @@ export class QuotationService implements OnModuleInit, OnModuleDestroy {
       try { await this.pricing.eligible(tx, scope.systemCode, scope.tenantId, line.productId); }
       catch (error) { if (!(error instanceof ApiException)) throw error; problems.push(`产品「${line.productName}」：${error.message}`); continue; }
       const price = await tx.sdProductPrice.findFirst({ where: { tenantId: scope.tenantId, productId: line.productId, status: 'ACTIVE', currencyCode: 'CNY', effectiveDate: { lte: new Date(date) }, OR: [{ expiresDate: null }, { expiresDate: { gte: new Date(date) } }] }, orderBy: { version: 'desc' } });
-      if (!price) { problems.push(`产品「${line.productName}」在报价日期没有有效定价，请先维护销售定价`); continue; }
-      input.lines.push({ id: randomUUID(), productId: line.productId, priceId: price.id, quantity: line.quantity.toString(), unitPrice: line.unitPrice.toFixed(2), discount: '0', delivery: '', remark: line.requirement ?? '' });
+      input.lines.push({ id: randomUUID(), productId: line.productId, priceId: price?.id ?? null, quantity: line.quantity.toString(), unitPrice: line.unitPrice.toFixed(2), discount: '1', delivery: '', remark: line.requirement ?? '' });
     }
     if (problems.length) throw new ApiException('BAD_REQUEST', 400, problems.join('；'));
     return quotationDraftSchema.parse(input);
@@ -120,6 +120,7 @@ export class QuotationService implements OnModuleInit, OnModuleDestroy {
   async save(code: string, actor: string, id: string | null, raw: unknown) {
     const scope = await this.scope(code, actor, id ? 'edit' : 'create');
     const payload = id ? quotationDraftSchema.parse(raw) : quotationCreateSchema.parse(raw), requestHash = hash({ id, input: payload });
+    const generatedCode = id ? '' : await this.numbers.allocate(code, 'QUOTATION', payload.requestKey);
     return this.db.$transaction(async (tx) => {
       const replay = await this.replay(tx, scope, payload.requestKey, requestHash); if (replay) return replay;
       const input = 'mode' in payload ? await this.initialize(tx, scope, payload) : payload;
@@ -131,7 +132,9 @@ export class QuotationService implements OnModuleInit, OnModuleDestroy {
       const lines = [];
       for (const [sortNo, line] of input.lines.entries()) {
         const product = await this.pricing.eligible(tx, code, scope.tenantId, line.productId);
-        const { suggestion } = await this.pricing.reference(tx, scope.tenantId, product.id, line.priceId, line.quantity, input.quoteDate);
+        const suggestion = line.priceId
+          ? (await this.pricing.reference(tx, scope.tenantId, product.id, line.priceId, line.quantity, input.quoteDate)).suggestion
+          : { price: '0.00', source: 'UNPRICED' as const, from: null, to: null };
         const old = current?.lines.find((l) => l.id === line.id && l.productId === line.productId);
         try { quotationLineAmount(line.quantity, line.unitPrice, line.discount); }
         catch { throw new ApiException('BAD_REQUEST', 400, `第 ${sortNo + 1} 行金额超出范围，请调整数量或成交单价`); }
@@ -152,8 +155,7 @@ export class QuotationService implements OnModuleInit, OnModuleDestroy {
           else await tx.sdQuotationLine.create({ data: { ...line, quotationId: quoteId } });
         }
       } else {
-        const [{ sequence }] = await tx.$queryRaw<Array<{ sequence: bigint }>>`SELECT nextval('sd_quote_number_seq') AS sequence`;
-        await tx.sdQuotation.create({ data: { ...data, id: quoteId, tenantId: scope.tenantId, applicationId: scope.id, systemCode: code, quoteCode: `Q${businessDate().replaceAll('-', '')}${String(sequence).padStart(8, '0')}`, ownerUserId: actor, createdBy: actor } });
+        await tx.sdQuotation.create({ data: { ...data, id: quoteId, tenantId: scope.tenantId, applicationId: scope.id, systemCode: code, quoteCode: generatedCode, ownerUserId: actor, createdBy: actor } });
         if (lines.length) await tx.sdQuotationLine.createMany({ data: lines.map((line) => ({ ...line, quotationId: quoteId })) });
       }
       const result = this.dto(await this.record(tx, scope, quoteId));
@@ -173,7 +175,7 @@ export class QuotationService implements OnModuleInit, OnModuleDestroy {
         if (!row.lines.length) throw new ApiException('BAD_REQUEST', 400, '至少添加一条报价明细');
         for (const line of row.lines) {
           await this.pricing.eligible(tx, code, scope.tenantId, line.productId);
-          await this.pricing.reference(tx, scope.tenantId, line.productId, line.priceId, line.quantity.toString(), row.quoteDate.toISOString().slice(0, 10));
+          if (line.priceId) await this.pricing.reference(tx, scope.tenantId, line.productId, line.priceId, line.quantity.toString(), row.quoteDate.toISOString().slice(0, 10));
         }
       }
       const changed = await tx.sdQuotation.updateMany({ where: { id, applicationId: scope.id, version: input.version, status: row.status }, data: { status: next, version: { increment: 1 }, updatedBy: actor } });
@@ -185,12 +187,12 @@ export class QuotationService implements OnModuleInit, OnModuleDestroy {
   }
   async copy(code: string, actor: string, id: string, raw: unknown) {
     const scope = await this.scope(code, actor, 'copy'), input = quotationCommandSchema.parse(raw), requestHash = hash({ id, action: 'copy', input });
+    const generatedCode = await this.numbers.allocate(code, 'QUOTATION', input.requestKey);
     return this.db.$transaction(async (tx) => {
       const replay = await this.replay(tx, scope, input.requestKey, requestHash); if (replay) return replay;
       const row = await this.record(tx, scope, id); if (row.version !== input.version || row.status === 'DRAFT') throw conflict();
-      const [{ sequence }] = await tx.$queryRaw<Array<{ sequence: bigint }>>`SELECT nextval('sd_quote_number_seq') AS sequence`;
       const { lines, id: oldId, createdAt, updatedAt, ...base } = row; void createdAt; void updatedAt;
-      const header = await tx.sdQuotation.create({ data: { ...base, quoteCode: `Q${businessDate().replaceAll('-', '')}${String(sequence).padStart(8, '0')}`, sourceQuoteId: oldId, status: 'DRAFT', version: 1, ownerUserId: actor, createdBy: actor, updatedBy: actor, quoteDate: new Date(businessDate()), validUntil: new Date(businessDate(new Date(Date.now() + 30 * 86400000))) } });
+      const header = await tx.sdQuotation.create({ data: { ...base, quoteCode: generatedCode, sourceQuoteId: oldId, status: 'DRAFT', version: 1, ownerUserId: actor, createdBy: actor, updatedBy: actor, quoteDate: new Date(businessDate()), validUntil: new Date(businessDate(new Date(Date.now() + 30 * 86400000))) } });
       if (lines.length) await tx.sdQuotationLine.createMany({ data: lines.map(({ id: lineId, quotationId, ...l }) => { void lineId; void quotationId; return { ...l, id: randomUUID(), quotationId: header.id }; }) });
       const created = await this.record(tx, scope, header.id);
       const result = this.dto(created); await this.event(tx, scope, created.id, 'copy', input.requestKey, requestHash, result, `来源 ${row.quoteCode}`); return result;

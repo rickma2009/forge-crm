@@ -1,0 +1,12 @@
+2026-10-11 purchasing final verification
+Backend: 3 suites, 17 tests passed (isolated database, exact purchasing incremental migration).
+Frontend: 1 suite, 3 tests passed.
+Scoped ESLint: passed.
+Server production build: passed.
+Web production build: passed with pre-existing large chunk warning.
+Database governance: passed.
+Showcase registry: passed, 37 pages / 86 capabilities.
+Local frontend: HTTP 200.
+Local backend session endpoint without credentials: HTTP 401 (expected).
+Demo rerun state digest unchanged; inventory reconciliation errors: 0.
+Browser: IB2026101100027 posted; POSTED status / reverse button visible, origin order received quantity updated.

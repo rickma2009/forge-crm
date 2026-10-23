@@ -18,3 +18,15 @@ Release Gate 尚未批准；`verified` 只表示实现与验证完成，不表�
 ## 全局整改追溯
 
 UIAUDIT-20260923 → REQ-STYLE-01 → 本切片当前有效约定 → 全局页面样式 testcases.md / audit.md；具体公共实现及本切片接入位置由 audit.md 登记。
+
+## REQSRC-100 增量追溯
+
+| 来源 | 需求 | 验收 | 测试 | 实现 | 状态 |
+|---|---|---|---|---|---|
+| REQSRC-100 | REQ-1610 | AC-1610 | TC-1610 | `OrganizationService`、`OrganizationUnitsPage` | 定向验证通过 |
+| REQSRC-100 | REQ-1611 | AC-1611 | TC-1611 | `OrgUnit` 三标识、商机分析与销售订单服务 | 定向验证通过 |
+| REQSRC-100 | REQ-1612 | AC-1612 | TC-1612 | 负责人复合外键、组织及员工服务 | 定向验证通过 |
+| REQSRC-100 | REQ-1613 | AC-1613 | TC-1613 | 岗位/职位字典、员工服务及页面 | 定向验证通过 |
+| REQSRC-100 | REQ-1614 | AC-1614 | TC-1614 | `20261005090000_organization_business_fields`、定向初始化 | 定向验证通过 |
+
+本轮是已获用户直接开发授权的增量切片；历史 Release Gate 不覆盖新增字段，未执行发布。

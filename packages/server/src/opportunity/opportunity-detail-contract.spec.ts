@@ -30,4 +30,11 @@ describe('opportunity detail wire contract', () => {
     if (analyses.length) expect(result.analyses[0].competitors[0]).toEqual({ id, competitorId: id, competitorName: '竞争对手', rank: 1 });
     expect(db.sdOpp.findFirst).toHaveBeenCalledWith(expect.objectContaining({ where: { id, applicationId: 'app' } }));
   });
+  it('keeps result and next step separate to avoid duplication on a legacy result round trip', async () => {
+    const follow = { id, opportunityId: id, followedAt: date, followerUserId: id, followerName: '销售', workItem: '需求', resultNext: '确认', activityTitle: '拜访', activityNextStep: '报价', status: 'ACTIVE', version: 1, createdAt: date, updatedAt: date };
+    const db = { sysApplication: { findFirst: jest.fn().mockResolvedValue({ id:'app',tenantId:'tenant' }) }, sdOpp: { findFirst: jest.fn().mockResolvedValue({ ...opportunity, analyses: [], followUps: [follow] }) } };
+    const result = await new OpportunityService(db as unknown as DatabaseService).detail('demo',id);
+    expect(opportunityDetailSchema.parse(result).followUps[0]).toMatchObject({resultNext:'确认',activityNextStep:'报价'});
+  });
+
 });

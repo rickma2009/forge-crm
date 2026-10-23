@@ -45,7 +45,7 @@ try {
   await product.locator('option').filter({ hasText: 'P2026090001' }).waitFor({ state: 'attached' });
   await product.selectOption(await product.locator('option').filter({ hasText: 'P2026090001' }).getAttribute('value'));
   await lineDialog.getByLabel('数量', { exact: true }).fill('3');
-  await lineDialog.getByLabel('折扣 %', { exact: true }).fill('10');
+  await lineDialog.getByLabel('折扣', { exact: true }).fill('0.9');
   await page.screenshot({ path: `${output}/quotation-line-dialog.png`, fullPage: false });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({ path: `${output}/quotation-line-mobile.png`, fullPage: false });
@@ -55,12 +55,12 @@ try {
   await lineDialog.getByRole('button', { name: '确认', exact: true }).click();
   await page.getByRole('button', { name: '编辑第1行' }).click();
   const editDialog = page.getByRole('dialog', { name: '编辑报价明细' });
-  await editDialog.getByLabel('折扣 %').fill('101');
+  await editDialog.getByLabel('折扣').fill('1.01');
   await editDialog.getByRole('button', { name: '确认', exact: true }).click();
   await editDialog.getByRole('alert').waitFor();
   await editDialog.getByRole('button', { name: '取消', exact: true }).click();
   await page.getByRole('button', { name: '编辑第1行' }).click();
-  assert.equal(await editDialog.getByLabel('折扣 %').inputValue(), '10');
+  assert.equal(await editDialog.getByLabel('折扣').inputValue(), '0.9');
   await editDialog.getByLabel('交付说明').fill('弹窗编辑已确认');
   await editDialog.getByRole('button', { name: '确认', exact: true }).click();
   assert.equal(await page.getByText('弹窗编辑已确认', { exact: true }).count(), 1);
@@ -96,7 +96,7 @@ try {
   const copied = await (await page.request.get(api)).json();
   const csrf = (await page.context().cookies(url)).find((c) => c.name === 'ipl_csrf')?.value;
   const first = copied.lines[0];
-  const many = { title: '多页中文报价验收', customerId: copied.customerId, contactId: copied.contactId, opportunityId: copied.opportunityId, quoteDate: copied.quoteDate, validUntil: copied.validUntil, terms: '交付与验收条款：分批交付，双方依约核验产品型号及数量。\n'.repeat(30), remark: 'INTERNAL_PDF_SECRET', version: copied.version, requestKey: crypto.randomUUID(), lines: Array.from({ length: 60 }, (_, index) => ({ id: crypto.randomUUID(), productId: first.productId, priceId: first.priceId, quantity: '3', unitPrice: first.unitPrice, discount: '10', delivery: `第 ${index + 1} 批分批交付，按确认计划执行`, remark: 'INTERNAL_LINE_SECRET' })) };
+  const many = { title: '多页中文报价验收', customerId: copied.customerId, contactId: copied.contactId, opportunityId: copied.opportunityId, quoteDate: copied.quoteDate, validUntil: copied.validUntil, terms: '交付与验收条款：分批交付，双方依约核验产品型号及数量。\n'.repeat(30), remark: 'INTERNAL_PDF_SECRET', version: copied.version, requestKey: crypto.randomUUID(), lines: Array.from({ length: 60 }, (_, index) => ({ id: crypto.randomUUID(), productId: first.productId, priceId: first.priceId, quantity: '3', unitPrice: first.unitPrice, discount: '0.9', delivery: `第 ${index + 1} 批分批交付，按确认计划执行`, remark: 'INTERNAL_LINE_SECRET' })) };
   const changed = await page.request.patch(api, { headers: { Origin: url, 'X-CSRF-Token': csrf }, data: many });
   assert.equal(changed.status(), 200);
   const pdf = await page.request.get(`${api}/pdf`, { timeout: 65000 }); assert.equal(pdf.status(), 200);

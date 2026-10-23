@@ -1,0 +1,169 @@
+{
+  "createdAt": "2026-10-03T06:14:47.483Z",
+  "component": "CMP-09",
+  "cleanInstall": true,
+  "nodeVersion": "v24.16.0",
+  "architecture": "x64",
+  "platform": "darwin",
+  "installedVersions": {
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "@tabler/icons-react": "3.48.0",
+    "typescript": "5.7.3",
+    "vite": "5.4.20",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9"
+  },
+  "lockSha256": "9642e613b303ee0f683462dfcec6b0e414f9cd4664830a7326c4227e93381f59",
+  "sources": [
+    {
+      "source": "packages/web/src/common/DetailWorkspace.tsx",
+      "sha256": "ab47fa785fb577b32ff07ffbe131c012426758aa5dd136eb1c0891655cfab2f7"
+    },
+    {
+      "source": "packages/web/src/common/detail-workspace.css",
+      "sha256": "b9da43b1d169e1adfcef8e42b6ae06884739aaa38abb3e470f8ea36cb6f04e54"
+    },
+    {
+      "source": "_methodology/examples/detail-workspace-adoption/main.tsx",
+      "sha256": "8de5c6f9cc859fde62b8df98a6ba81c5648d394fdb0ef6f1f070eebce4e9f0e4"
+    },
+    {
+      "source": "_methodology/examples/detail-workspace-adoption/host.css",
+      "sha256": "532a6f2c73f936d13194c89fcab8311e7bc6326df9b3aa162a8d370197a4e8fe"
+    },
+    {
+      "source": "_methodology/scripts/rehearse-query-bar.mjs",
+      "sha256": "e5cf00da202e4e3cd538963439b25c59b15e93f81b3a3bacd4c59bafa12e1d70"
+    },
+    {
+      "source": "_methodology/scripts/verify-detail-workspace-adoption.mjs",
+      "sha256": "8b508fa0eaa5f494826093c64e6cfc9e29e6b7b181ae2af359e529c5115b5d46"
+    },
+    {
+      "source": "_methodology/scripts/export-component-source.mjs",
+      "sha256": "8546eb3c9f3c68c503106ade89742971b35864d9c59ca272b673c5914f620edf"
+    },
+    {
+      "source": "_methodology/scripts/inspect-component-dependencies.mjs",
+      "sha256": "7a88d39f08f8df4a1c5b7d1be8ea546a1409e64761cbb17861fa43b6622ea759"
+    }
+  ],
+  "exportManifest": "component-source/manifest.json",
+  "adapterSha256": "8c4434c50ce3e6a2adc1062ee9158286a0865c60315bd67ca3a2da5127d66532",
+  "results": [
+    {
+      "command": "npm install --ignore-scripts --no-audit --no-fund --cache /var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/forge-detail-workspace-adoption-02i9IY/.npm-cache",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 21642,
+      "timeoutMs": 60000,
+      "errorCode": null
+    },
+    {
+      "command": "tsc --noEmit",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 1739,
+      "timeoutMs": 60000,
+      "errorCode": null
+    },
+    {
+      "command": "vite build",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 115860,
+      "timeoutMs": 180000,
+      "errorCode": null
+    }
+  ],
+  "limitations": [
+    "Fresh installation requested with lifecycle scripts disabled; inspect npm exit status and recorded versions. This is not a dependency security audit.",
+    "The component source comes from the source exporter; unresolved external contracts and CSS assets remain subject to its manifest limits. Host styles are supplied by this fixture.",
+    "Browser evidence below covers the production build in an isolated synthetic host, not backend integration, authentication, persistence or independent business adoption."
+  ],
+  "browser": {
+    "browserVersion": "154.0.8037.95",
+    "results": [
+      {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "touch": false,
+        "back": {
+          "width": 32,
+          "height": 32
+        },
+        "styles": [
+          {
+            "color": "rgb(47, 107, 255)",
+            "weight": "600",
+            "border": "2px",
+            "radius": "0px"
+          },
+          {
+            "color": "rgb(100, 116, 139)",
+            "weight": "400",
+            "border": "2px",
+            "radius": "0px"
+          }
+        ],
+        "screenshot": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/detail-workspace-browser-C9YZOg/desktop.png"
+      },
+      {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "touch": true,
+        "back": {
+          "width": 44,
+          "height": 44
+        },
+        "styles": [
+          {
+            "color": "rgb(47, 107, 255)",
+            "weight": "600",
+            "border": "2px",
+            "radius": "0px"
+          },
+          {
+            "color": "rgb(100, 116, 139)",
+            "weight": "400",
+            "border": "2px",
+            "radius": "0px"
+          }
+        ],
+        "screenshot": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/detail-workspace-browser-C9YZOg/touch.png"
+      }
+    ],
+    "errors": [],
+    "limitation": "Isolated synthetic host only; callbacks do not persist data or navigate."
+  },
+  "nodeModulesIndependent": true,
+  "artifactDirectories": {
+    "build": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/forge-detail-workspace-adoption-02i9IY",
+    "browser": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/detail-workspace-browser-C9YZOg"
+  },
+  "browserTarget": {
+    "type": "production-build-preview",
+    "url": "http://127.0.0.1:5196/",
+    "command": "./node_modules/.bin/vite preview --host 127.0.0.1 --port 5196 --strictPort",
+    "serviceStopped": true
+  },
+  "buildArtifacts": [
+    {
+      "file": "dist/assets/index-DGlL9FDz.css",
+      "sha256": "dfec9257fb17edf4acf83d881e3b363e8b8aefbdc74a63e2f0d0a8317c05f6ff"
+    },
+    {
+      "file": "dist/assets/index-DGoxQKqu.js",
+      "sha256": "5adaec5abce0b92333ad62986b65f2bb58948307433e6412a64b1d55965322b2"
+    },
+    {
+      "file": "dist/index.html",
+      "sha256": "c2c6ad4018f2329f8c1c809a05728a2cd65ec0a20b3a8b3bbbde37b53c80b358"
+    }
+  ]
+}

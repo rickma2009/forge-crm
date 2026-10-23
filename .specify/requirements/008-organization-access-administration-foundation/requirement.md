@@ -81,3 +81,7 @@
 ## 9. Gate 边界
 
 Business Gate 已由用户通过 `REQSRC-045` 批准业务目标、角色、范围、不变量、切片顺序与 `Q-1201`—`Q-1210` 推荐答案。它不批准字段 Schema、迁移 SQL、API、组件设计、测试实现、Architecture、Tasks、代码、部署或 Release。
+
+## 2026-10-04 编码规则当前有效变更
+
+来源REQSRC-097。新建编码统一由[编码规则当前规格](../013-numbering-rules/requirement.md)及036切片负责，替代本文中原有硬编码前缀/日期/流水或手填员工工号的描述；历史记录不改号。客户CUSTOMER默认C+7位、员工EMPLOYEE默认1+6位、商机OPPORTUNITY默认OP+年月日+5位、报价QUOTATION默认QT+年月日+5位、订单SALES_ORDER默认SO+年月日+5位、入库INBOUND默认IB+年月日+5位、销售出库OUTBOUND默认OB+年月日+5位。实际生成以当前启用规则为准，更新不重新取号；缺失/停用规则阻止新建，不回退旧算法。验收映射为036的REQ-NUM-06/AC-NUM-06/TC-NUM-06；未涉及本模块的对象仅作统一规则说明，不扩大功能范围。

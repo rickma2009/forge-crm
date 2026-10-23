@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-076",
+  "title": "报价单价文案与批量产品选择组件",
+  "sourceType": "user-ui-and-reusable-component-requirement",
+  "sourceDate": "2026-09-25",
+  "importedAt": "2026-09-25T11:30:00+08:00",
+  "originalPath": "current-codex-task:user-message-clarification-and-attached-screenshot",
+  "managedCopy": "source.md",
+  "sha256": "5f364d92d662ae9cdd3bbef32af8371c0f70090e2db9492129d3eb55376ed3ef",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "implemented-and-verified"
+}

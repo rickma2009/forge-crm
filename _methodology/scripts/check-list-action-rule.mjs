@@ -53,3 +53,13 @@ const inboundDetail = readFileSync(new URL('packages/web/src/showcase/InboundOrd
 if (!inboundDetail.includes('<DocumentWorkspace') || inboundDetail.includes('<DetailTabs') || inboundDetail.includes('product-inner-tabs')) throw new Error('UI-DOCUMENT-01 入库详情必须使用单页主从工作区');
 const detailHeader = readFileSync(new URL('packages/web/src/common/DetailWorkspace.tsx', root), 'utf8');
 if (!detailHeader.includes('<DetailBackButton label={backLabel}')) throw new Error('UI-BACK-01 公共头部必须使用统一返回组件');
+
+// UI-ACTION-LAYOUT-01 checks only wiring/tokens; browser acceptance is separate.
+const actionCss = readFileSync(new URL('packages/web/src/common/row-actions.css', root), 'utf8');
+if (!/\.row-actions-two-lines\s*\{[^}]*grid-template-columns:repeat\(3,28px\)[^}]*gap:3\.2px/.test(actionCss)) throw new Error('UI-ACTION-LAYOUT-01 双行操作布局或间距不正确');
+const mailPage = readFileSync(new URL('packages/web/src/showcase/digital-employee/MailAutomationCenter.tsx', root), 'utf8');
+if ((mailPage.match(/data-wrap="true">\{canExecute&&<span className="row-actions-two-lines">/g) ?? []).length !== 2) throw new Error('UI-ACTION-LAYOUT-01 邮件记录及任务必须接入双行布局和自动行高');
+for (const file of ['_methodology/style-index.md', '_methodology/templates/ui/record-management-workspace/README.md', '_methodology/examples/003-golden-interaction-record-management-workspace/list-action-guideline.md']) {
+ if (!readFileSync(new URL(file, root), 'utf8').includes('UI-ACTION-LAYOUT-01')) throw new Error(file + ' 缺少双行图标规则');
+}
+console.log('PASS UI-ACTION-LAYOUT-01 接入和样式令牌；浏览器视觉需另行验收');

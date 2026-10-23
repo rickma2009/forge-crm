@@ -7,7 +7,7 @@ describe('isolated resource adoption', () => {
   it('keeps the same resource across list, detail, edit and return', async () => {
     const user = userEvent.setup();
     render(<ResourceWorkspace />);
-    await user.click(screen.getByRole('button', { name: '查看 演练资源 A' }));
+    await user.click(await screen.findByRole('button', { name: '查看 演练资源 A' }));
     await user.click(screen.getByRole('button', { name: '编辑资源' }));
     const name = screen.getByRole('textbox', { name: /资源名称/ });
     await user.clear(name);
@@ -23,7 +23,7 @@ describe('isolated resource adoption', () => {
   it('blocks invalid save and preserves edits when leaving is cancelled', async () => {
     const user = userEvent.setup();
     render(<ResourceWorkspace />);
-    await user.click(screen.getByRole('button', { name: '查看 演练资源 A' }));
+    await user.click(await screen.findByRole('button', { name: '查看 演练资源 A' }));
     await user.click(screen.getByRole('button', { name: '编辑资源' }));
     await user.clear(screen.getByRole('textbox', { name: /资源名称/ }));
     await user.click(screen.getByRole('button', { name: '保存资源' }));

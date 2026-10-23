@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { effectiveCapabilities, normalizeDemoIdentity, resolvePageAccess } from './access';
 import { filterNavigation, projectVisibleNavigation } from './navigation';
-import { parseRootRoute } from './routes';
+import { parseRootRoute, showcaseHref } from './routes';
 import { showcaseRegistry } from '../registry/registry';
 
 describe('showcase identity and access', () => {
@@ -52,13 +52,23 @@ describe('showcase navigation projection and search', () => {
   });
 });
 
+describe('business links and interaction selection', () => {
+  it('keeps catalog selection only on catalog links and strips it from every business link', () => {
+    const source = 'http://localhost:5173/?keep=1&interactionCategory=%E6%A0%91%E5%BD%A2%E8%81%94%E5%8A%A8#/showcase/style-scenes';
+    expect(showcaseHref('/showcase/style-scenes', source)).toContain('interactionCategory=');
+    const target = showcaseHref('/showcase/inbound-orders', source);
+    expect(target).toBe('/?keep=1#/showcase/inbound-orders');
+    expect(showcaseHref('/showcase/system/roles', source)).toBe('/?keep=1#/showcase/system/roles');
+  });
+});
+
 describe('single CRM root route', () => {
   it('normalizes retired locations into CRM without changing valid business routes', () => {
-    expect(parseRootRoute('')).toEqual({ kind: 'showcase', path: '/showcase/customers' });
-    expect(parseRootRoute('#section')).toEqual({ kind: 'showcase', path: '/showcase/customers' });
-    expect(parseRootRoute('#/showcase-preview')).toEqual({ kind: 'showcase', path: '/showcase/customers' });
-    expect(parseRootRoute('#/showcase')).toEqual({ kind: 'showcase', path: '/showcase/customers' });
-    expect(parseRootRoute('#/showcase/')).toEqual({ kind: 'showcase', path: '/showcase/customers' });
+    expect(parseRootRoute('')).toEqual({ kind: 'showcase', path: '/showcase/workbench' });
+    expect(parseRootRoute('#section')).toEqual({ kind: 'showcase', path: '/showcase/workbench' });
+    expect(parseRootRoute('#/showcase-preview')).toEqual({ kind: 'showcase', path: '/showcase/workbench' });
+    expect(parseRootRoute('#/showcase')).toEqual({ kind: 'showcase', path: '/showcase/workbench' });
+    expect(parseRootRoute('#/showcase/')).toEqual({ kind: 'showcase', path: '/showcase/workbench' });
     expect(parseRootRoute('#/showcase/interaction-index')).toEqual({ kind: 'showcase', path: '/showcase/style-scenes' });
     expect(parseRootRoute('#/showcase/system/users')).toEqual({ kind: 'showcase', path: '/showcase/system/users' });
   });

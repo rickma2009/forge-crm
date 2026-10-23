@@ -1,3 +1,4 @@
+import { DeclarativeDataGrid } from '../common/data-grid/DeclarativeDataGrid';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { IconRefresh } from '@tabler/icons-react';
 import type { ParameterList, SystemParameter } from '@forge-crm/contracts';
@@ -33,12 +34,12 @@ export function SystemParametersPage({ systemCode, allowedActions, gateway, regi
     {error && <div className="enterprise-alert" role="alert">{error}</div>}
     <section className="enterprise-card table-card" aria-label="参数设置" aria-busy={loading}>
       <div className="table-toolbar"><strong>参数设置</strong><div className="parameter-toolbar-actions"><span>{result ? `共 ${result.pagination.total} 条` : ''}</span><button type="button" aria-label="刷新参数" title="刷新参数" disabled={loading} onClick={() => setReload((value) => value + 1)}><IconRefresh size={16} /></button></div></div>
-      <div className="enterprise-table-wrap"><table><thead><tr>{canManage && <th>操作</th>}<th>参数编码</th><th>参数名称</th><th>参数值</th><th>使用说明</th><th>显示序号</th><th>当前状态</th></tr></thead><tbody>
+      <div className="enterprise-table-wrap"><DeclarativeDataGrid><thead><tr>{canManage && <th>操作</th>}<th>参数编码</th><th>参数名称</th><th>参数值</th><th>使用说明</th><th>显示序号</th><th>当前状态</th></tr></thead><tbody>
         {loading ? <tr><td colSpan={canManage ? 7 : 6}>正在加载…</td></tr> : result?.items.length ? result.items.map((row) => <tr key={row.id}>
           {canManage && <td><RowActionButton label={`编辑${row.parameterName}`} onClick={() => setEditing(row)} /></td>}
-          <td>{row.parameterCode}</td><td>{row.parameterName}</td><td className="parameter-value">{row.value || '未设置'}</td><td className="parameter-note">{row.usageNote}</td><td>{row.sortNo}</td><td>{row.status === 'ACTIVE' ? '可用' : '停用'}</td>
+          <td>{canManage ? <button type="button" className="record-detail-link" onClick={() => setEditing(row)}>{row.parameterCode}</button> : row.parameterCode}</td><td>{row.parameterName}</td><td className="parameter-value">{row.value || '未设置'}</td><td className="parameter-note">{row.usageNote}</td><td>{row.sortNo}</td><td>{row.status === 'ACTIVE' ? '可用' : '停用'}</td>
         </tr>) : <tr><td colSpan={canManage ? 7 : 6}>{error ? '加载失败，请刷新重试' : '暂无符合条件的参数'}</td></tr>}
-      </tbody></table></div>
+      </tbody></DeclarativeDataGrid></div>
       {result && <div className="parameter-pagination"><button type="button" disabled={loading || query.page <= 1} onClick={() => setQuery({ ...query, page: query.page - 1 })}>上一页</button><span>第 {query.page} / {Math.max(1, result.pagination.totalPages)} 页</span><button type="button" disabled={loading || query.page >= result.pagination.totalPages} onClick={() => setQuery({ ...query, page: query.page + 1 })}>下一页</button></div>}
     </section>
     {editing && canManage && <ParameterEditor registerGuard={registerGuard} key={`${systemCode}:${editing.id}`} row={editing} systemCode={systemCode} gateway={gateway} onClose={() => setEditing(null)} onSaved={(savedNotice) => { setEditing(null); setNotice(savedNotice || '参数已保存'); setReload((value) => value + 1); }} />}
@@ -50,7 +51,7 @@ function ParameterEditor({ row, systemCode, gateway, onClose, onSaved, registerG
   const [busy, setBusy] = useState(false), [error, setError] = useState('');
   const form = useRef<HTMLFormElement>(null), dirty = value !== (row.value ?? '') || status !== row.status;
   const closeRef = useRef(() => {});
-  closeRef.current = () => { if (!busy && (!dirty || window.confirm('放弃未保存的参数修改？'))) onClose(); };
+  closeRef.current = () => { if (!busy) onClose(); };
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
     form.current?.querySelector<HTMLButtonElement>('button')?.focus();

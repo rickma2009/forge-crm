@@ -12,6 +12,13 @@ node _methodology/scripts/check-page-style.mjs
 node _methodology/scripts/check-matt-setup.mjs . --require-git
 node _methodology/scripts/test-forge-init.mjs
 node _methodology/scripts/check-database-governance.mjs .
+node --test _methodology/scripts/check-database-governance.test.mjs
+node --test _methodology/scripts/inspect-component-dependencies.test.mjs
+node --test _methodology/scripts/export-component-source.test.mjs
+node --test _methodology/scripts/check-rehearsal-source.test.mjs
+node --test _methodology/scripts/rehearsal-recipe.test.mjs
+node --test _methodology/scripts/component-evidence-inventory.test.mjs
+node --test _methodology/scripts/check-markdown-links.test.mjs
 
 for requirement_rule_file in AGENTS.md _methodology/templates/AGENTS-template.md _methodology/project-init/templates/AGENTS.md; do
   if ! rg -q "需求变更回写" "$requirement_rule_file"; then

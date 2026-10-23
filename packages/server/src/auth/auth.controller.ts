@@ -18,12 +18,12 @@ export class AuthController {
     const input = loginRequestSchema.parse(body);
     const user = await this.auth.authenticate(input.account, input.password);
     response.cookie(SESSION_COOKIE, this.signer.issue(user.id), { httpOnly: true, sameSite: 'lax', secure: this.config.secureCookies, path: '/', maxAge: 900_000 });
-    return { account: user.account, displayName: user.displayName };
+    return { id: user.id, account: user.account, displayName: user.displayName };
   }
 
   @Get('session')
   @UseGuards(SessionGuard)
-  session(@Req() request: AuthenticatedRequest) { return { account: request.currentUser.account, displayName: request.currentUser.displayName }; }
+  session(@Req() request: AuthenticatedRequest) { return { id: request.currentUser.id, account: request.currentUser.account, displayName: request.currentUser.displayName }; }
 
   @Post('logout')
   @UseGuards(WriteRequestGuard)

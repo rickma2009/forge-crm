@@ -33,6 +33,7 @@ export class AuthorizationService {
     const effectivePath = routePath.match(/^\/showcase\/customers\/[\w-]+$/) ? '/showcase/customers'
       : routePath.match(/^\/showcase\/opportunities\/[\w-]+$/) ? '/showcase/opportunities'
       : routePath.match(/^\/showcase\/products\/[\w-]+$/) ? '/showcase/products'
+      : routePath.match(/^\/showcase\/boms\/[\w-]+$/) ? '/showcase/boms'
       : routePath.match(/^\/showcase\/inbound-orders\/[\w-]+$/) ? '/showcase/inbound-orders'
       : routePath.match(/^\/showcase\/quotations\/[\w-]+$/) ? '/showcase/quotations' : routePath;
     const registered = await this.db.uiMenu.findFirst({ where: { systemCode, routePath: effectivePath, nodeType: 'PAGE', status: 'ACTIVE' }, select: { menuCode: true } }).catch(() => { throw new ApiException('SERVICE_UNAVAILABLE', HttpStatus.SERVICE_UNAVAILABLE, '权限服务暂时不可用'); });

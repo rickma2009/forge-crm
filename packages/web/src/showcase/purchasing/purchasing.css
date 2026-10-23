@@ -1,0 +1,17 @@
+.purchasing-page { color: var(--text-primary, #334155); }
+.purchasing-fields { display:grid; grid-template-columns:repeat(4,minmax(160px,1fr)); gap:20px 24px; margin:0 0 24px; }
+.purchasing-field { display:flex;flex-direction:column;gap:8px;min-width:0; }
+.purchasing-field>span,.purchasing-hint {color:var(--text-secondary,#64748b);font-size:12px;}
+.purchasing-field input,.purchasing-field select,.purchasing-field textarea,.purchasing-lines input,.purchasing-lines select { width:100%;box-sizing:border-box;border:1px solid var(--border-color,#cbd5e1);border-radius:6px;background:var(--surface,#fff);color:inherit;padding:7px 10px;min-height:32px;font:inherit; }
+.purchasing-field input[readonly],.purchasing-lines input[readonly],.purchasing-field select:disabled {background:var(--surface-muted,#f8fafc);}
+.purchasing-link {color:var(--primary,#2563eb)!important;border:0!important;background:transparent!important;padding:0!important;min-height:0!important;text-decoration:underline;cursor:pointer;}
+.purchasing-status {border-radius:4px;background:#eff6ff;color:#2563eb;padding:4px 8px;font-size:12px;}
+.purchasing-table-scroll {overflow:auto;max-width:100%;}
+.purchasing-lines {width:100%;border-collapse:collapse;table-layout:auto;font-size:12px;}
+.purchasing-lines th {background:var(--surface-muted,#f8fafc);color:var(--text-secondary,#64748b);text-align:left;white-space:nowrap;}
+.purchasing-lines th,.purchasing-lines td {padding:10px 12px;border-bottom:1px solid var(--border-color,#e2e8f0);}
+.purchasing-lines input {min-width:100px;}.purchasing-lines select {min-width:260px;}.purchasing-lines td:last-child input {min-width:240px;}
+.purchasing-source-query {display:flex;align-items:end;gap:12px;margin-bottom:16px;}.purchasing-source-query .purchasing-field {width:360px;}
+.purchasing-source-pager {display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:12px 0;}
+@media(max-width:1100px){.purchasing-fields{grid-template-columns:repeat(2,minmax(160px,1fr));}}
+.purchasing-history {list-style:none;padding:0;font-size:12px;}.purchasing-history li {display:flex;gap:20px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--border-color,#e2e8f0);}.purchasing-history time {color:var(--text-secondary,#64748b);}

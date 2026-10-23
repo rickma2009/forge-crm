@@ -1,0 +1,40 @@
+import { Test } from '@nestjs/testing';
+import type { INestApplication } from '@nestjs/common';
+import cookieParser from 'cookie-parser';
+import request from 'supertest';
+import { AppModule } from '../app.module';
+import { DatabaseService } from '../database/database.service';
+import { ApiExceptionFilter } from '../http/api-exception.filter';
+import { AgentService } from '../agent/agent.service';
+import { AiAnalysisService } from '../ai/ai-analysis.service';
+const run = process.env.RUN_AGENT_DB_TESTS === '1' ? describe : describe.skip;
+run('opportunity lifecycle authenticated persistence', () => {
+  let app: INestApplication, db: DatabaseService, api: ReturnType<typeof request.agent>, csrf: string;
+  const base = '/api/systems/demo-portal/opportunities';
+  const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai' }).format(new Date());
+  const day = (offset: number) => new Date(new Date(today + 'T00:00:00Z').getTime() + offset * 86400000).toISOString().slice(0, 10);
+  beforeAll(async () => {
+    if (!new URL(process.env.DATABASE_URL!).pathname.startsWith('/sdd_agent_')) throw new Error('ISOLATED_TEST_DB_REQUIRED');
+    app = (await Test.createTestingModule({ imports: [AppModule] }).compile()).createNestApplication();
+    app.use(cookieParser()); app.useGlobalFilters(new ApiExceptionFilter()); await app.init();
+    app.get(AgentService).onModuleDestroy(); app.get(AiAnalysisService).onModuleDestroy(); db = app.get(DatabaseService); api = request.agent(app.getHttpServer());
+    const session = await api.get('/api/auth/session'); csrf = (session.headers['set-cookie'] as unknown as string[]).map(c => c.match(/^ipl_csrf=([^;]+)/)?.[1]).find(Boolean)!;
+    const login = await api.post('/api/auth/login').set('Origin', 'http://localhost:5173').set('X-CSRF-Token', csrf).send({ account: 'admin', password: process.env.INITIAL_ADMIN_PASSWORD }); expect(login.status).toBe(201);
+  }, 30000);
+  afterAll(async () => { await app?.close(); });
+  it('round-trips dates, filters business status, protects invalid changes and clears closure dates when reopening', async () => {
+    const reference = await db.sdOpp.findFirstOrThrow({ where: { systemCode: 'demo-portal' } });
+    const input = { opportunityName: '生命周期接口测试', customerId: reference.customerId, ownerUserId: reference.ownerUserId, templateId: reference.templateId, stageId: reference.stageId, businessStatus: 'FOLLOWING', expectedSignDate: day(30) };
+    const create = await api.post(base).set('Origin', 'http://localhost:5173').set('X-CSRF-Token', csrf).send(input);
+    expect(create.status).toBe(201); expect(create.body.businessStatus).toBe('FOLLOWING'); expect(create.body.expectedSignDate).toBe(day(30));
+    let version = create.body.version; const patch = (body: object) => api.patch(`${base}/${create.body.id}`).set('Origin', 'http://localhost:5173').set('X-CSRF-Token', csrf).send({ version, ...body });
+    expect((await patch({ businessStatus: 'SIGNED', signedDate: today })).status).toBe(400);
+    expect((await patch({ businessStatus: 'LOST' })).status).toBe(400);
+    expect((await patch({ expectedSignDate: day(-1) })).status).toBe(400);
+    const lost = await patch({ businessStatus: 'LOST', lostDate: day(-5) }); expect(lost.status).toBe(200); expect(lost.body.opportunity.lostDate).toBe(day(-5)); version = lost.body.opportunity.version;
+    const signed = await patch({ businessStatus: 'SIGNED', signedDate: day(-2), expectedSignDate: day(-2) }); expect(signed.status).toBe(200); expect(signed.body.opportunity.signedDate).toBe(day(-2)); expect(signed.body.opportunity.lostDate).toBeNull(); version = signed.body.opportunity.version;
+    const list = await api.get(base + '?businessStatus=SIGNED'); expect(list.status).toBe(200); expect(list.body.items.some((r: { id: string }) => r.id === create.body.id)).toBe(true); expect(list.body.items.every((r: { businessStatus: string }) => r.businessStatus === 'SIGNED')).toBe(true);
+    const reopened = await patch({ businessStatus: 'INITIAL', expectedSignDate: day(90) }); expect(reopened.status).toBe(200); expect(reopened.body.opportunity.signedDate).toBeNull(); expect(reopened.body.opportunity.lostDate).toBeNull();
+    const stored = await db.sdOpp.findUniqueOrThrow({ where: { id: create.body.id } }); expect(stored.businessStatus).toBe('INITIAL'); expect(stored.stageId).toBe(reference.stageId);
+  });
+});

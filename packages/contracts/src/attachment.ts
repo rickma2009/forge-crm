@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const attachmentOwnerTypeSchema = z.enum(['PRODUCT']);
+export const attachmentOwnerTypeSchema = z.enum(['PRODUCT', 'SALES_ACTIVITY', 'OPPORTUNITY_FOLLOW_UP', 'RECORD_COMMENT']);
 export const attachmentTypeSchema = z.enum(['PDF', 'EXCEL', 'IMAGE', 'OTHER']);
 export const attachmentStatusSchema = z.enum(['ACTIVE', 'DELETE_PENDING', 'DELETE_FAILED']);
 export const attachmentUpdateSchema = z.strictObject({

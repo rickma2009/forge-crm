@@ -1,0 +1,26 @@
+.sales-directory .sales-actions { white-space: nowrap; }
+.sales-text-link { border: 0; background: transparent; color: #2563eb; padding: 0; font: inherit; cursor: pointer; }
+.sales-text-link:hover { text-decoration: underline; }
+.sales-create-page, .sales-directory { min-width: 0; }
+.sales-create-options { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; padding: 18px 28px; border-bottom: 1px solid #e1e7f0; }
+.sales-create-options-title { color: #64748b; }
+.sales-create-options label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.sales-create-options input { accent-color: #2563eb; width: 17px; height: 17px; }
+.sales-create-content { padding: 20px 28px 28px; }
+.sales-create-help, .sales-section-note { color: #64748b; margin: 0 0 18px; }
+.sales-create-list-heading { display: flex; align-items: baseline; justify-content: space-between; margin: 20px 0 10px; }
+.sales-create-list-heading h2 { margin: 0; font-size: 16px; }
+.sales-create-list-heading span, .sales-create-footer span, .sales-live-inline-field span { color: #64748b; }
+.sales-create-content tbody tr { cursor: pointer; }
+.sales-create-content tbody tr:hover { background: #f4f7ff; }
+.sales-create-footer { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 22px; }
+.sales-create-footer > div { display: flex; gap: 8px; }
+.sales-live-inline-field { display: flex; gap: 24px; align-items: end; margin-top: 20px; }
+.sales-live-inline-field label { display: grid; gap: 6px; min-width: 260px; }
+.sales-live-message { padding: 28px; color: #64748b; }
+.sales-directory .enterprise-table-wrap, .sales-create-content .enterprise-table-wrap { overflow-x: auto; }
+.sales-directory table, .sales-create-content table { min-width: 940px; }
+.sales-directory .view-controls { display: flex; align-items: center; gap: 12px; }
+.sales-directory .record-count { white-space: nowrap; color: #64748b; }
+.sales-section-note { margin: 0 0 12px; }
+@media (max-width: 760px) { .sales-create-content { padding: 16px; } .sales-create-options { padding: 14px 16px; } .sales-create-footer, .sales-live-inline-field { align-items: stretch; flex-direction: column; } }

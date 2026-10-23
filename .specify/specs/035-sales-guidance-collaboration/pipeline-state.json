@@ -1,0 +1,18 @@
+{
+  "feature": "035-sales-guidance-collaboration",
+  "scope": "P4-P6",
+  "gates": {
+    "business": "approved-user-existing-solution",
+    "specification": "approved-user-existing-solution",
+    "architecture": "approved-user-delegated-implementation",
+    "release": "not-production-deployed"
+  },
+  "evidence": [
+    "REQSRC-092",
+    "REQSRC-096"
+  ],
+  "implementation": "complete",
+  "verification": "passed-scoped-L3",
+  "completedAt": "2026-10-04",
+  "delivery": "docs/testing/sales-enhancement-p4-p6.md"
+}

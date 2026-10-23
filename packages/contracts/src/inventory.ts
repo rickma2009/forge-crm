@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 const code = z.string().trim().min(1).max(32).regex(/^[A-Z0-9_-]+$/, '编码只允许大写字母、数字、-、_');
+const itemCode = z.string().trim().min(1).max(32).regex(/^[A-Z0-9_.-]+$/, '物料编码只允许大写字母、数字、.、-、_');
 const nullableText = (max: number) => z.string().trim().max(max).nullable().optional();
 const status = z.enum(['ACTIVE', 'DISABLED']);
 const quantity = z.string().regex(/^\d{1,14}(?:\.\d{1,4})?$/, '数量最多四位小数').refine((value) => Number(value) > 0, '数量必须大于零');
@@ -10,13 +11,17 @@ const audit = { id: z.string().uuid(), version: z.number().int().positive(), cre
 const pagination = z.strictObject({ page: z.number().int().positive(), pageSize: z.number().int().positive(), total: z.number().int().nonnegative(), totalPages: z.number().int().nonnegative() });
 
 export const itemWriteSchema = z.strictObject({
-  itemCode: code, itemName: z.string().trim().min(1).max(128), itemType: z.enum(['PRODUCT', 'MATERIAL', 'SEMI_FINISHED']),
+  itemCode, itemName: z.string().trim().min(1).max(128), itemType: z.enum(['PRODUCT', 'MATERIAL', 'SEMI_FINISHED']),
+  itemSource: z.string().trim().max(32).nullable().optional(), itemLifecycle: z.string().trim().max(32).nullable().optional(),
   majorCategoryId: z.string().uuid().nullable().optional(), middleCategoryId: z.string().uuid().nullable().optional(), minorCategoryId: z.string().uuid().nullable().optional(),
   model: nullableText(128), productLine: nullableText(64), baseUnit: z.string().trim().min(1).max(32), batchManaged: z.boolean().default(false),
   status: status.default('ACTIVE'), remark: nullableText(500),
 });
+export const itemCreateSchema = itemWriteSchema.omit({ itemCode: true, majorCategoryId: true, middleCategoryId: true }).extend({
+  majorCategoryId: z.string().uuid(), middleCategoryId: z.string().uuid(),
+});
 export const itemUpdateSchema = itemWriteSchema.omit({ itemCode: true }).partial().extend({ version: z.number().int().positive() });
-export const itemSchema = itemWriteSchema.extend(audit).extend({ majorCategoryName: z.string().nullable(), middleCategoryName: z.string().nullable(), minorCategoryName: z.string().nullable() });
+export const itemSchema = itemWriteSchema.extend(audit).extend({ majorCategoryName: z.string().nullable(), middleCategoryName: z.string().nullable(), minorCategoryName: z.string().nullable(), itemSourceName: z.string().nullable().optional(), itemLifecycleName: z.string().nullable().optional() });
 export const itemListSchema = z.strictObject({ items: z.array(itemSchema), pagination });
 
 export const legalEntityWriteSchema = z.strictObject({
@@ -36,7 +41,7 @@ export const warehouseSchema = warehouseWriteSchema.extend(audit).extend({ legal
 export const warehouseListSchema = z.strictObject({ items: z.array(warehouseSchema), pagination });
 
 export const inboundLineWriteSchema = z.strictObject({
-  lineNo: z.number().int().positive(), itemCode: code, batchNo: z.string().trim().max(64).nullable().optional(), originalQty: optionalQuantity,
+  lineNo: z.number().int().positive(), itemCode, batchNo: z.string().trim().max(64).nullable().optional(), originalQty: optionalQuantity,
   actualQty: quantity, amount, remark: nullableText(1000),
 });
 export const inboundOrderWriteSchema = z.strictObject({
@@ -51,7 +56,7 @@ export const inboundOrderWriteSchema = z.strictObject({
 export const inventoryCommandSchema = z.strictObject({ version: z.number().int().positive(), requestKey: z.string().uuid(), note: z.string().trim().max(1000).default('') });
 
 export const inboundLineSchema = z.strictObject({
-  id: z.string().uuid(), lineNo: z.number().int().positive(), itemCode: code, itemName: z.string(), batchNo: z.string().nullable(),
+  id: z.string().uuid(), lineNo: z.number().int().positive(), itemCode, itemName: z.string(), batchNo: z.string().nullable(),
   originalQty: z.string().nullable(), actualQty: z.string(), baseUnit: z.string(), amount: z.string(), remark: z.string().nullable(),
 });
 export const inboundOrderSchema = z.strictObject({
@@ -65,7 +70,8 @@ export const inboundOrderSchema = z.strictObject({
 });
 export const inboundOrderListSchema = z.strictObject({ items: z.array(inboundOrderSchema), pagination });
 export const inventoryBalanceSchema = z.strictObject({
-  id: z.string().uuid(), legalEntityId: z.string().uuid(), warehouseId: z.string().uuid(), itemCode: code, itemName: z.string(),
+  id: z.string().uuid(), legalEntityId: z.string().uuid(), warehouseId: z.string().uuid(), itemCode, itemName: z.string(),
+  legalEntityName: z.string().optional(), warehouseName: z.string().optional(), majorCategoryName: z.string().optional(), middleCategoryName: z.string().optional(), minorCategoryName: z.string().optional(),
   itemType: z.enum(['PRODUCT', 'MATERIAL', 'SEMI_FINISHED']), batchNo: z.string().nullable(), baseUnit: z.string(),
   quantity: z.string(), amount: z.string(), currencyCode: z.literal('CNY'), version: z.number().int().positive(), updatedAt: z.string().datetime(),
 });
@@ -81,6 +87,7 @@ export function nextInboundStatus(statusValue: InboundStatus, action: 'post' | '
 export function normalizeBatch(value: string | null | undefined): string { return value?.trim() ?? ''; }
 
 export type ItemWrite = z.infer<typeof itemWriteSchema>;
+export type ItemCreate = z.infer<typeof itemCreateSchema>;
 export type ItemUpdate = z.infer<typeof itemUpdateSchema>;
 export type Item = z.infer<typeof itemSchema>;
 export type ItemList = z.infer<typeof itemListSchema>;

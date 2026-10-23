@@ -1,3 +1,5 @@
+import { NumberingService } from '../numbering/numbering.service';
+import { columnFiltersSchema, gridWhere } from '../common/grid-query';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { customerContactUpdateSchema, customerContactWriteSchema, customerUpdateSchema, customerAddressUpdateSchema, customerAddressWriteSchema, customerWriteSchema } from '@forge-crm/contracts';
 import { z } from 'zod';
@@ -13,14 +15,15 @@ export type CustomerPolicyScope = Awaited<ReturnType<RolePolicyService['customer
 
 const querySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
-  pageSize: z.coerce.number().int().min(1).max(100).default(20),
+  pageSize: z.coerce.number().int().min(1).max(200).default(20),
   keyword: z.string().trim().max(255).optional(),
   categoryValue: z.string().max(128).optional(),
   statusValue: z.string().max(128).optional(),
   industryValue: z.string().max(128).optional(),
   levelValue: z.string().max(128).optional(),
   salesOwnerKey: z.string().max(128).optional(),
-  orderBy: z.enum(['customerCode', 'customerName', 'shortName', 'updatedAt']).default('updatedAt'),
+  columnFilters: columnFiltersSchema,
+  orderBy: z.enum(['customerCode', 'customerName', 'shortName', 'categoryValue', 'statusValue', 'industryValue', 'levelValue', 'address', 'salesOwnerName', 'remark', 'updatedAt']).default('updatedAt'),
   order: z.enum(['asc', 'desc']).default('desc'),
 });
 
@@ -34,7 +37,7 @@ const SALES_OPTIONS = [
 
 @Injectable()
 export class CustomerService {
-  constructor(private readonly db: DatabaseService, private readonly dictionaries: DictionaryService) {}
+  constructor(private readonly db: DatabaseService, private readonly dictionaries: DictionaryService, private readonly numbers: NumberingService = new NumberingService(db)) {}
 
   async list(systemCode: string, raw: Record<string, unknown>, scope?: CustomerPolicyScope) {
     const query = querySchema.parse(raw);
@@ -43,11 +46,14 @@ export class CustomerService {
       if (query[key] && !queryable(key)) throw new ApiException('FORBIDDEN', 403, '不可使用隐藏或脱敏字段筛选数据');
     }
     if (raw.orderBy && !queryable(query.orderBy)) throw new ApiException('FORBIDDEN', 403, '不可使用隐藏或脱敏字段排序');
+    for (const key of Object.keys(query.columnFilters ?? {})) if (!queryable(key)) throw new ApiException('FORBIDDEN', 403, '不可使用隐藏或脱敏字段筛选数据');
+    let columnWhere: Prisma.CrmCustomerWhereInput[];
+    try { columnWhere = gridWhere(query.columnFilters, Object.fromEntries(['customerCode', 'customerName', 'shortName', 'categoryValue', 'statusValue', 'industryValue', 'levelValue', 'address', 'salesOwnerName', 'remark'].map((key) => [key, 'text']).concat([['updatedAt', 'date']])) as Record<string, 'text' | 'date'>) as Prisma.CrmCustomerWhereInput[]; } catch { throw new ApiException('BAD_REQUEST', 400, '列筛选字段或值无效'); }
     const searchFields = ['customerCode', 'customerName', 'shortName'].filter(queryable);
     if (query.keyword && !searchFields.length) throw new ApiException('FORBIDDEN', 403, '当前没有可供搜索的明文字段');
     const where: Prisma.CrmCustomerWhereInput = {
       systemCode,
-      ...(scope ? { AND: [scope.where as Prisma.CrmCustomerWhereInput] } : {}),
+      AND: [...columnWhere, ...(scope ? [scope.where as Prisma.CrmCustomerWhereInput] : [])],
       ...(query.keyword ? { OR: searchFields.map((field) => ({ [field]: { contains: query.keyword, mode: 'insensitive' as const } })) } : {}),
       ...(query.categoryValue ? { categoryValue: query.categoryValue } : {}),
       ...(query.statusValue ? { statusValue: query.statusValue } : {}),
@@ -56,7 +62,7 @@ export class CustomerService {
       ...(query.salesOwnerKey ? { salesOwnerKey: query.salesOwnerKey } : {}),
     };
     const [items, total] = await Promise.all([
-      this.db.crmCustomer.findMany({ where, orderBy: { [queryable(query.orderBy) ? query.orderBy : 'id']: query.order }, skip: (query.page - 1) * query.pageSize, take: query.pageSize }),
+      this.db.crmCustomer.findMany({ where, orderBy: [{ [queryable(query.orderBy) ? query.orderBy : 'id']: query.order }, { id: 'asc' }], skip: (query.page - 1) * query.pageSize, take: query.pageSize }),
       this.db.crmCustomer.count({ where }),
     ]);
     return { items: items.map((row) => this.secured(row, scope)), pagination: { page: query.page, pageSize: query.pageSize, total, totalPages: Math.ceil(total / query.pageSize) } };
@@ -137,19 +143,17 @@ export class CustomerService {
     const input = customerWriteSchema.parse(raw);
     this.assertWritable(input, scope);
     await this.validateReferences(systemCode, input);
+    const customerCode = await this.numbers.allocate(systemCode, 'CUSTOMER');
     try {
       const customer = await this.db.$transaction(async (tx) => {
-        const prefix = `C${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}`;
-        const last = await tx.crmCustomer.findFirst({ where: { systemCode, customerCode: { startsWith: prefix } }, orderBy: { customerCode: 'desc' }, select: { customerCode: true } });
-        const sequence = last ? Number(last.customerCode.slice(prefix.length)) + 1 : 1;
-        const customerCode = `${prefix}${String(sequence).padStart(4, '0')}`;
+
         const sales = input.salesOwnerKey ? SALES_OPTIONS.find((option) => option.key === input.salesOwnerKey) : undefined;
         const data = { systemCode, customerCode, ...this.toData(input), salesOwnerKey: sales?.key ?? null, salesOwnerName: sales?.name ?? null, createdBy: actor, updatedBy: actor };
         if (scope && !matchesPolicyWhere({ ...data, version: 1, createdAt: new Date(), updatedAt: new Date() }, scope.where)) throw new ApiException('FORBIDDEN', 403, '新客户不在可创建的数据范围内');
         return tx.crmCustomer.create({ data });
       }, { isolationLevel: 'Serializable' });
       return this.secured(customer, scope);
-    } catch (error) { if (error instanceof ApiException) throw error; throw new ApiException('BAD_REQUEST', HttpStatus.CONFLICT, '客户名称或本月客户编码已存在，请刷新后重试'); }
+    } catch (error) { if (error instanceof ApiException) throw error; throw new ApiException('BAD_REQUEST', HttpStatus.CONFLICT, '客户名称或客户编码已存在，请刷新后重试'); }
   }
 
   async update(systemCode: string, id: string, actor: string, raw: unknown, scope?: CustomerPolicyScope) {

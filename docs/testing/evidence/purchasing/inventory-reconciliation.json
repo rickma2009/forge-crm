@@ -1,0 +1,25 @@
+{
+  "verifiedAt": "2026-10-10T16:46:51.941Z",
+  "supplierCount": 24,
+  "orderCount": 32,
+  "receiptCount": 36,
+  "postedCount": 25,
+  "orderStates": {
+    "APPROVED": 28,
+    "DRAFT": 2,
+    "SUBMITTED": 2
+  },
+  "receiptStates": {
+    "APPROVED": 3,
+    "DRAFT": 3,
+    "POSTED": 25,
+    "REVERSED": 2,
+    "SUBMITTED": 3
+  },
+  "movementCount": 67,
+  "movementNetQuantity": "500.0000",
+  "movementNetCost": "41829.77",
+  "verifiedInventoryDimensions": 38,
+  "stateDigest": "ac1b62ee7ebeb94ada88c8701c5cd3cf84f74de14f2acea71598349c7c1b1ba8",
+  "errors": []
+}

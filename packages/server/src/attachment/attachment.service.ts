@@ -1,6 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Optional } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import { attachmentOwnerTypeSchema, attachmentUpdateSchema } from '@forge-crm/contracts';
+import { ActivityAccessService } from '../activity/activity-access.service';
 import { DatabaseService } from '../database/database.service';
 import { ApiException } from '../http/api-exceptions';
 import { RUNTIME_CONFIG, type RuntimeConfig } from '../config/runtime-config';
@@ -15,6 +16,7 @@ export class AttachmentService {
     private readonly db: DatabaseService,
     private readonly files: FileStorage,
     @Inject(RUNTIME_CONFIG) private readonly config: RuntimeConfig,
+    @Optional() private readonly activityAccess?: ActivityAccessService,
   ) {}
 
   private async scope(code: string) {
@@ -23,8 +25,25 @@ export class AttachmentService {
     return app;
   }
 
-  private async owner(app: { tenantId: string }, type: string, id: string) {
+  async authorizationOwner(code: string, id: string) {
+    const app = await this.scope(code);
+    const row = await this.db.sysAttachment.findFirst({ where: { id, applicationId: app.id, tenantId: app.tenantId } });
+    if (!row) throw new ApiException('NOT_FOUND', 404, '附件不存在');
+    return { type: row.ownerType, id: row.ownerId };
+  }
+  async authorizeActivity(code: string, user: string, type: string, id: string, write: boolean) {
+    if (!this.activityAccess) throw new ApiException('SERVICE_UNAVAILABLE', 503, '活动权限服务不可用');
+    await this.activityAccess.record(code, user, type, id, write);
+  }
+  private async owner(app: { id: string; tenantId: string }, type: string, id: string) {
     attachmentOwnerTypeSchema.parse(type);
+    if (type !== 'PRODUCT') {
+      const row = type === 'RECORD_COMMENT' ? await this.db.sdRecordComment.findFirst({ where: { id, applicationId: app.id, tenantId: app.tenantId, state: { in: ['DRAFT','PUBLISHED'] } } }) : type === 'SALES_ACTIVITY'
+        ? await this.db.sdSalesActivity.findFirst({ where: { id, applicationId: app.id, tenantId: app.tenantId } })
+        : await this.db.sdOppFollowUp.findFirst({ where: { id, opportunity: { applicationId: app.id, tenantId: app.tenantId } } });
+      if (!row) throw new ApiException('NOT_FOUND', 404, '活动附件归属不存在');
+      return;
+    }
     if (!await this.db.mdItem.findFirst({ where: { id, tenantId: app.tenantId, itemType: 'PRODUCT' } })) {
       throw new ApiException('NOT_FOUND', 404, '附件归属对象不存在');
     }
@@ -56,6 +75,14 @@ export class AttachmentService {
     await this.files.put(key, file.buffer);
     try {
       const row = await this.db.$transaction(async (tx) => {
+        if (type !== 'PRODUCT') {
+          if (type === 'RECORD_COMMENT') await tx.$queryRaw`SELECT id FROM sd_record_comment WHERE id=${ownerId}::uuid FOR UPDATE`;
+          else if (type === 'SALES_ACTIVITY') await tx.$queryRaw`SELECT id FROM sd_sales_activity WHERE id=${ownerId}::uuid FOR UPDATE`;
+          else await tx.$queryRaw`SELECT id FROM sd_opp_follow_up WHERE id=${ownerId}::uuid FOR UPDATE`;
+          const source = type === 'RECORD_COMMENT' ? await tx.sdRecordComment.findFirst({ where: { id: ownerId, applicationId: app.id, authorId: actor, state: 'DRAFT', expiresAt: { gt: new Date() } } }) : type === 'SALES_ACTIVITY' ? await tx.sdSalesActivity.findFirst({ where: { id: ownerId, applicationId: app.id, creatorId: actor, status: 'ACTIVE' } }) : await tx.sdOppFollowUp.findFirst({ where: { id: ownerId, followerUserId: actor, status: 'ACTIVE', opportunity: { applicationId: app.id } } });
+          if (!source) throw new ApiException('FORBIDDEN', 403, '活动已作废或无上传权限');
+          if (await tx.sysAttachment.count({ where: { applicationId: app.id, ownerType: type, ownerId } }) >= 10) throw new ApiException('BAD_REQUEST', 400, '每条活动最多10个附件');
+        }
         const created = await tx.sysAttachment.create({ data: {
           id, tenantId: app.tenantId, applicationId: app.id, ownerType: type, ownerId,
           originalName: file.originalname.slice(0, 255), attachmentType: this.type(file.mimetype, file.originalname),

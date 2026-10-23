@@ -1,0 +1,13 @@
+/* Rehearsal host contract, intentionally independent of the CRM global stylesheet. */
+:root { --showcase-muted: #526176; --app-font-size: 14px; font-family: system-ui, sans-serif; color: #243247; background: #f6f8fb; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 1280px; padding: 20px; margin: auto; }
+h1 { font-size: 22px; } h2 { font-size: 16px; }
+.enterprise-card { background: white; border: 1px solid #cbd3df; border-radius: 8px; }
+button, input, select { font: inherit; min-height: 36px; padding: 5px 9px; border: 1px solid #aab8ca; border-radius: 5px; background: white; color: inherit; }
+button { cursor: pointer; }
+button.is-primary { background: #265ee8; color: white; border-color: #265ee8; }
+:is(button, input, select):focus-visible { outline: 2px solid #265ee8; outline-offset: -2px; }
+.mode { display: flex; gap: 12px; align-items: center; margin: 16px 0; }
+output { display: block; overflow-wrap: anywhere; }

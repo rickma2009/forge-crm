@@ -1,3 +1,32 @@
+import { PurchasingService } from './purchasing/purchasing.service';
+import { PurchasingController } from './purchasing/purchasing.controller';
+import { PurchasePostingService } from './inventory/purchase-posting.service';
+import { BusinessSceneController } from './digital-employee/business-scene.controller';
+import { BusinessSceneService } from './digital-employee/business-scene.service';
+import { SalesWorkflowService } from './workflow/sales-workflow.service';
+import { SalesWorkflowController } from './workflow/sales-workflow.controller';
+import { WorkflowEngineClient } from './workflow/workflow-engine.client';
+import { NumberingController } from './numbering/numbering.controller';
+import { NumberingService } from './numbering/numbering.service';
+import { SalesEnhancementController } from './sales-guidance/sales-enhancement.controller';
+import { SuggestionService } from './sales-guidance/suggestion.service';
+import { ScoreService } from './sales-guidance/score.service';
+import { CommentService } from './record-collaboration/comment.service';
+import { NotificationService } from './notification/notification.service';
+import { PersonalTodoService } from './personal-todo/personal-todo.service';
+import { OpportunityAnalyticsController } from './opportunity-analysis/opportunity-analytics.controller';
+import { OpportunityAnalyticsService } from './opportunity-analysis/opportunity-analytics.service';
+import { WorkbenchController } from './workbench/workbench.controller';
+import { WorkbenchService } from './workbench/workbench.service';
+import { AgentController } from './agent/agent.controller';
+import { AgentService } from './agent/agent.service';
+import { PersonalAgentService } from './agent/personal-agent.service';
+import { PersonalAgentController } from './agent/personal-agent.controller';
+import { AgentRuntime } from './agent/agent-runtime';
+import { AgentProvider } from './agent/agent-provider';
+import { AiAnalysisController } from './ai/ai-analysis.controller';
+import { AiAnalysisService } from './ai/ai-analysis.service';
+import { AiProvider } from './ai/ai-provider';
 import { InventoryDefaultsService } from './inventory/inventory-defaults.service';
 import { SystemParameterController } from './system-parameter/system-parameter.controller';
 import { SystemParameterService } from './system-parameter/system-parameter.service';
@@ -22,6 +51,10 @@ import { ListViewController } from './list-view/list-view.controller';
 import { ListViewService } from './list-view/list-view.service';
 import { CustomerController } from './customer/customer.controller';
 import { CustomerService } from './customer/customer.service';
+import { ActivityService } from './activity/activity.service';
+import { ActivityAccessService } from './activity/activity-access.service';
+import { ActivityController } from './activity/activity.controller';
+import { CustomerRelatedService } from './customer/customer-related.service';
 import { StyleSceneController } from './style-scene/style-scene.controller';
 import { StyleSceneService } from './style-scene/style-scene.service';
 import { AccessController } from './access/access.controller';
@@ -49,17 +82,29 @@ import { AttachmentService } from './attachment/attachment.service';
 import { FileStorage } from './attachment/file-storage';
 import { InventoryController } from './inventory/inventory.controller';
 import { InventoryService } from './inventory/inventory.service';
+import { SalesPostingService } from './inventory/sales-posting.service';
+import { SalesController } from './sales/sales.controller';
+import { SalesService } from './sales/sales.service';
+import { BomController } from './bom/bom.controller';
+import { BomService } from './bom/bom.service';
+import { FavoriteController } from './favorites/favorite.controller';
+import { FavoriteService } from './favorites/favorite.service';
+import { DigitalEmployeeController } from './digital-employee/digital-employee.controller';
+import { DigitalEmployeeService } from './digital-employee/digital-employee.service';
+import { MailAutomationService } from './digital-employee/mail-automation.service';
+import { PublicOpinionService } from './digital-employee/public-opinion.service';
+import { CommodityMarketService } from './digital-employee/commodity-market.service';
 
 const config = loadRuntimeConfig();
 
 @Module({
-  controllers: [SystemParameterController, InventoryController, AttachmentController, PricingController, QuotationController, AuthController, NavigationController, ResourceMenuController, AccessController, OrganizationController, EmployeeController, DemoResourceController, DictionaryController, ListViewController, CustomerController, ProductController, CompetitorController, OpportunityTemplateController, OpportunityController, StyleSceneController, RoleManagementController, RolePolicyController, RoleSubjectController, HealthController],
-  providers: [
-    InventoryDefaultsService, SystemParameterService, AttachmentService, FileStorage, PricingService, QuotationService, OpportunityAmountService,
+  controllers: [PurchasingController, BusinessSceneController, DigitalEmployeeController, SalesWorkflowController, NumberingController, SalesEnhancementController, ActivityController, SalesController, BomController, FavoriteController, PersonalAgentController, OpportunityAnalyticsController, WorkbenchController, AgentController, AiAnalysisController, SystemParameterController, InventoryController, AttachmentController, PricingController, QuotationController, AuthController, NavigationController, ResourceMenuController, AccessController, OrganizationController, EmployeeController, DemoResourceController, DictionaryController, ListViewController, CustomerController, ProductController, CompetitorController, OpportunityTemplateController, OpportunityController, StyleSceneController, RoleManagementController, RolePolicyController, RoleSubjectController, HealthController],
+  providers: [PurchasingService, PurchasePostingService, SalesWorkflowService, WorkflowEngineClient, FavoriteService, NumberingService, SuggestionService, ScoreService, CommentService, NotificationService, PersonalTodoService, ActivityService, ActivityAccessService, PersonalAgentService, OpportunityAnalyticsService, WorkbenchService, AgentService, AgentRuntime, AgentProvider, AiAnalysisService, AiProvider,
+    BusinessSceneService, PublicOpinionService, MailAutomationService, DigitalEmployeeService, CommodityMarketService, InventoryDefaultsService, SystemParameterService, AttachmentService, FileStorage, PricingService, QuotationService, OpportunityAmountService,
     { provide: RUNTIME_CONFIG, useValue: config },
     { provide: DatabaseService, useFactory: (runtime: RuntimeConfig) => new DatabaseService(runtime.databaseUrl), inject: [RUNTIME_CONFIG] },
     { provide: SessionSigner, useFactory: (runtime: RuntimeConfig) => new SessionSigner({ current: signingKey(runtime.sessionSecret), ...(runtime.previousSessionSecret ? { previous: signingKey(runtime.previousSessionSecret) } : {}) }), inject: [RUNTIME_CONFIG] },
-    AuthService, SessionGuard, WriteRequestGuard, AuthorizationService, ResourceMenuService, AccessService, OrganizationService, EmployeeService, DemoResourceService, DictionaryService, ListViewService, CustomerService, OpportunityService, InventoryService, StyleSceneService, RoleManagementService, RolePolicyService, RoleSubjectService,
+    AuthService, SessionGuard, WriteRequestGuard, AuthorizationService, ResourceMenuService, AccessService, OrganizationService, EmployeeService, DemoResourceService, DictionaryService, ListViewService, CustomerService, CustomerRelatedService, OpportunityService, InventoryService, SalesPostingService, SalesService, BomService, StyleSceneService, RoleManagementService, RolePolicyService, RoleSubjectService,
   ],
 })
 export class AppModule implements NestModule {

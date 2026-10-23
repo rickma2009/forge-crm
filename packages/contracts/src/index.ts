@@ -3,6 +3,7 @@ export { businessListObjects, businessListDefaultConfig, isBusinessListObject, t
 export * from './role-policy';
 export * from './opportunity';
 export * from './attachment';
+export * from './digital-employee';
 
 export const systemCodeSchema = z.string().min(1).max(64).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
 export const accountSchema = z.string().trim().min(1).max(128).transform((value) => value.toLowerCase());
@@ -14,6 +15,7 @@ export const loginRequestSchema = z.strictObject({
 });
 
 export const sessionUserSchema = z.strictObject({
+  id: z.string().uuid().optional(),
   account: z.string(),
   displayName: z.string(),
 });
@@ -260,10 +262,15 @@ export const listViewColumnSchema = z.strictObject({
   queryCollapsed: z.boolean(),
   width: z.number().int().min(80).max(600),
   fixed: z.enum(['left', 'right']).nullable(),
+  align: z.enum(['left', 'center', 'right']).optional(),
 });
 export const listViewConfigSchema = z.strictObject({
+  schemaVersion: z.literal(2).optional(),
+  viewMode: z.enum(['TABLE', 'KANBAN']).optional(),
+  kanban: z.strictObject({ templateId: z.string().uuid(), cardFields: z.array(z.enum(['opportunityName', 'customerName', 'expectedAmount', 'ownerName', 'confidence', 'expectedSignDate'])).max(6) }).optional(),
   columns: z.array(listViewColumnSchema).min(1),
-  pageSize: z.union([z.literal(10), z.literal(20), z.literal(50), z.literal(100)]),
+  pageSize: z.number().int().min(1).max(200),
+  columnFilters: z.record(z.string().max(255)).optional(),
   filters: z.record(z.union([z.string(), z.array(z.string())])),
   sort: z.strictObject({ field: z.string(), direction: z.enum(['asc', 'desc']) }),
 });
@@ -414,9 +421,32 @@ export const styleSceneSchema = z.strictObject({
   sortNo: z.number().int(),
   version: z.number().int().positive(),
 });
+export const interactionTemplateBehaviorSchema = z.strictObject({
+  viewEdit: z.array(z.string()),
+  saving: z.array(z.string()),
+  feedback: z.strictObject({ loading: z.string(), processing: z.string(), success: z.string(), failure: z.string(), empty: z.string(), forbidden: z.string() }),
+});
+export type InteractionTemplateBehavior = z.infer<typeof interactionTemplateBehaviorSchema>;
+export const interactionTemplateSchema = z.strictObject({
+  availability: z.enum(['pending', 'preview', 'interactive', 'reusable']),
+  aliases: z.array(z.string()).optional(),
+  behaviorRules: interactionTemplateBehaviorSchema.optional(),
+  suitableFor: z.array(z.string()), regions: z.array(z.string()), steps: z.array(z.string()),
+  config: z.array(z.string()), components: z.array(z.string()), tags: z.array(z.string()),
+  thumbnail: z.string().startsWith('/template-previews/').nullable(),
+  previewKind: z.enum(['diagram', 'screenshot']).nullable(),
+  previewSource: z.strictObject({ name: z.string().min(1), path: z.string().startsWith('/showcase/'), capturedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), scope: z.string().min(1) }).optional(),
+  demoPath: z.string().startsWith('/template-demos/').nullable(),
+  applications: z.array(z.strictObject({ name: z.string(), path: z.string().startsWith('/showcase/'), pageType: z.string().optional() })),
+  sourcePaths: z.array(z.string().min(1)).optional(),
+  usageSnippet: z.string().optional(),
+  referencePrompt: z.string(), version: z.string(), relatedTemplates: z.array(z.string()),
+});
+export type InteractionTemplate = z.infer<typeof interactionTemplateSchema>;
 export const styleSceneSummarySchema = styleSceneSchema.extend({
   assetCode: z.string().nullable(),
   maturity: interactionMaturitySchema.nullable(),
+  template: interactionTemplateSchema.nullable().optional(),
 });
 export const interactionEvidenceCardSchema = z.strictObject({
   evidenceId: z.string(),
@@ -469,19 +499,25 @@ export const organizationUnitTypeSchema = z.enum(['COMPANY', 'DIVISION', 'DEPART
 export const organizationUnitSchema = z.strictObject({
   id: z.string().uuid(), parentId: z.string().uuid().nullable(), unitCode: z.string(), unitName: z.string(),
   unitType: organizationUnitTypeSchema, sortNo: z.number().int(), status: z.enum(['ACTIVE', 'DISABLED']),
+  isSalesOrg: z.boolean(), isRdOrg: z.boolean(), isPlatformOrg: z.boolean(),
+  managerEmployeeId: z.string().uuid().nullable(), managerEmployeeName: z.string().nullable(),
   effectiveAt: z.string().datetime(), expiresAt: z.string().datetime().nullable(), remark: z.string().nullable(),
   depth: z.number().int().min(0), version: z.number().int().positive(), updatedAt: z.string().datetime(),
 });
 export const organizationUnitListSchema = z.strictObject({ items: z.array(organizationUnitSchema) });
+export const organizationManagerOptionsSchema = z.strictObject({ items: z.array(z.strictObject({ id: z.string().uuid(), employeeName: z.string(), employeeNo: z.string() })) });
 const organizationUnitWriteObjectSchema = z.strictObject({
   parentId: z.string().uuid().optional().nullable(),
   unitCode: z.string().trim().regex(/^[a-z][a-z0-9.-]*$/, '组织编码仅支持小写字母、数字、点和连字符').max(64),
   unitName: z.string().trim().min(1, '请输入组织名称').max(128), unitType: organizationUnitTypeSchema,
+  isSalesOrg: z.boolean().default(false), isRdOrg: z.boolean().default(false), isPlatformOrg: z.boolean().default(false),
+  managerEmployeeId: z.string().uuid().optional().nullable(),
   sortNo: z.number().int().min(0).max(9999).default(0), status: z.enum(['ACTIVE', 'DISABLED']).default('ACTIVE'),
   effectiveAt: z.string().datetime(), expiresAt: z.string().datetime().optional().nullable(), remark: z.string().trim().max(500).optional().nullable(),
 });
-const validateOrganizationUnitPeriod = (value: { effectiveAt: string; expiresAt?: string | null }, context: z.RefinementCtx) => {
+const validateOrganizationUnitPeriod = (value: { effectiveAt: string; expiresAt?: string | null; unitType: z.infer<typeof organizationUnitTypeSchema>; managerEmployeeId?: string | null }, context: z.RefinementCtx) => {
   if (value.expiresAt && new Date(value.expiresAt) <= new Date(value.effectiveAt)) context.addIssue({ code: 'custom', path: ['expiresAt'], message: '失效时间必须晚于生效时间' });
+  if (value.unitType === 'DEPARTMENT' && !value.managerEmployeeId) context.addIssue({ code: 'custom', path: ['managerEmployeeId'], message: '部门必须指定负责人' });
 };
 export const organizationUnitWriteSchema = organizationUnitWriteObjectSchema.superRefine(validateOrganizationUnitPeriod);
 export const organizationUnitUpdateSchema = organizationUnitWriteObjectSchema.extend({ version: z.number().int().positive() }).superRefine(validateOrganizationUnitPeriod);
@@ -489,6 +525,7 @@ export const organizationUnitUpdateSchema = organizationUnitWriteObjectSchema.ex
 export const employeeSchema = z.strictObject({
   id: z.string().uuid(), employeeNo: z.string(), employeeName: z.string(), account: z.string(),
   orgUnitId: z.string().uuid(), orgUnitName: z.string(), positionId: z.string().uuid(), positionName: z.string(),
+  postValue: z.string(), jobTitleValue: z.string().nullable(),
   employmentType: z.enum(['FULL_TIME', 'PART_TIME', 'CONTRACTOR']), status: z.enum(['ACTIVE', 'DISABLED']),
   maskedEmail: z.string().nullable(), maskedMobile: z.string().nullable(), effectiveAt: z.string().datetime(),
   remark: z.string().nullable(), version: z.number().int().positive(), updatedAt: z.string().datetime(),
@@ -498,18 +535,20 @@ export const employeeDetailSchema = employeeSchema.extend({ email: z.string().em
 export const employeeOptionsSchema = z.strictObject({
   organizations: z.array(z.strictObject({ id: z.string().uuid(), parentId: z.string().uuid().nullable(), unitName: z.string(), depth: z.number().int().min(0) })),
   positions: z.array(z.strictObject({ id: z.string().uuid(), positionCode: z.string(), positionName: z.string() })),
+  posts: z.array(z.strictObject({ value: z.string(), name: z.string() })),
+  jobTitles: z.array(z.strictObject({ value: z.string(), name: z.string() })),
 });
 export const employeeWriteSchema = z.strictObject({
-  employeeNo: z.string().trim().regex(/^[A-Za-z0-9.-]+$/, '工号仅支持字母、数字、点和连字符').max(64),
   employeeName: z.string().trim().min(1, '请输入员工姓名').max(128),
   account: z.string().trim().toLowerCase().regex(/^[a-z][a-z0-9._-]+$/, '登录账号格式不正确').max(128),
   initialPassword: z.string().min(12, '初始密码至少 12 位').max(128),
-  orgUnitId: z.string().uuid(), positionId: z.string().uuid(),
+  orgUnitId: z.string().uuid(), positionId: z.string().uuid().optional(),
+  postValue: z.string().trim().min(1).max(64).optional(), jobTitleValue: z.string().trim().min(1).max(64).optional().nullable(),
   employmentType: z.enum(['FULL_TIME', 'PART_TIME', 'CONTRACTOR']).default('FULL_TIME'),
   email: z.string().trim().email('邮箱格式不正确').optional().nullable(), mobile: z.string().trim().max(32).optional().nullable(),
   status: z.enum(['ACTIVE', 'DISABLED']).default('ACTIVE'), effectiveAt: z.string().datetime(), remark: z.string().trim().max(500).optional().nullable(),
 });
-export const employeeUpdateSchema = employeeWriteSchema.omit({ employeeNo: true, account: true, initialPassword: true }).extend({ version: z.number().int().positive() });
+export const employeeUpdateSchema = employeeWriteSchema.omit({ account: true, initialPassword: true }).extend({ version: z.number().int().positive() });
 
 export type LoginRequest = z.infer<typeof loginRequestSchema>;
 export type SessionUser = z.infer<typeof sessionUserSchema>;
@@ -546,6 +585,7 @@ export type StyleSceneWrite = z.infer<typeof styleSceneWriteSchema>;
 export type StyleSceneUpdate = z.infer<typeof styleSceneUpdateSchema>;
 export type OrganizationUnit = z.infer<typeof organizationUnitSchema>;
 export type OrganizationUnitList = z.infer<typeof organizationUnitListSchema>;
+export type OrganizationManagerOptions = z.infer<typeof organizationManagerOptionsSchema>;
 export type OrganizationUnitWrite = z.infer<typeof organizationUnitWriteSchema>;
 export type OrganizationUnitUpdate = z.infer<typeof organizationUnitUpdateSchema>;
 export type Employee = z.infer<typeof employeeSchema>;
@@ -595,7 +635,28 @@ export type RoleUpdate = z.infer<typeof roleUpdateSchema>;
 export type RoleList = z.infer<typeof roleListSchema>;
 export * from './quotation';
 export * from './inventory';
+export * from './sales';
 
 export * from './system-parameter';
 
 export * from './ai-analysis';
+
+export * from './agent';
+export * from './workbench';
+export * from './opportunity-analysis';
+
+export * from "./bom";
+
+export * from './customer-related';
+
+export * from './activity';
+
+export * from './sales-enhancement';
+
+export * from './numbering';
+
+export * from './workflow';
+export * from './favorites';
+export * from './business-scenes';
+
+export * from './purchasing';

@@ -18,19 +18,19 @@ function fixture() {
 }
 
 describe('customer detail page', () => {
-  it('keeps the customer tabs without a related quotation entry', async () => {
+  it('keeps the basic customer tabs and adds the overview without unauthorized relation tabs', async () => {
     const legacyProps = { quotationActions: ['view'] };
     render(<CustomerDetailPage {...legacyProps} systemCode="demo-portal" customerId={customer.id} allowedActions={['view', 'update']} gateway={fixture()} onBack={() => {}} />);
     await screen.findByLabelText('客户名称');
     expect(screen.queryByRole('button', { name: /关联报价/ })).not.toBeInTheDocument();
-    expect(screen.getAllByRole('tab').map((tab) => tab.textContent)).toEqual(['客户基本信息', '联系人 (0)', '地址 (0)']);
+    expect(screen.getAllByRole('tab').map((tab) => tab.textContent)).toEqual(['客户基本信息', '概览', '活动时间轴', '联系人 (0)', '地址 (0)']);
   });
   it('displays the dictionary label in the contact grid and keeps the stored code in the editor', async () => {
     const api = fixture(); const user = userEvent.setup();
     api.customerDetail = async () => ({ customer, addresses: [], contacts: [{ id: '00000000-0000-4000-8000-000000000003', customerId: customer.id, name: '张三', department: null, position: null, decisionRole: 'technical_selector', mobile: null, phone: null, email: null, status: 'ACTIVE', remark: null, sortNo: 0, version: 1, updatedAt: '2026-09-22T00:00:00.000Z' }] });
     render(<CustomerDetailPage systemCode="demo-portal" customerId={customer.id} allowedActions={['view', 'update']} gateway={api} onBack={() => {}} />);
     await user.click(await screen.findByRole('tab', { name: /联系人/ }));
-    expect(within(screen.getByRole('table', { name: '客户联系人' })).getByRole('cell', { name: '技术选型人' })).toBeInTheDocument();
+    expect(within(await screen.findByRole('grid', { name: '客户联系人' })).getByRole('gridcell', { name: '技术选型人' })).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: '修改联系人 张三' }));
     const dialog = screen.getByRole('dialog', { name: '修改联系人' });
     expect(within(dialog).getByRole('combobox', { name: '项目角色' })).toHaveValue('technical_selector');
@@ -94,7 +94,7 @@ describe('customer detail page', () => {
     const api = fixture(); const user = userEvent.setup();
     render(<CustomerDetailPage systemCode="demo-portal" customerId={customer.id} allowedActions={['view', 'update']} gateway={api} onBack={() => {}} />);
     await user.click(await screen.findByRole('tab', { name: /联系人/ }));
-    const table = screen.getByRole('table', { name: '客户联系人' });
+    const table = await screen.findByRole('grid', { name: '客户联系人' });
     expect(within(table).getByRole('columnheader', { name: '项目角色' })).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: '新增联系人' }));
     const dialog = screen.getByRole('dialog', { name: '新增联系人' });

@@ -1,0 +1,168 @@
+{
+  "createdAt": "2026-10-03T06:40:17.944Z",
+  "component": "CMP-11",
+  "cleanInstall": true,
+  "nodeVersion": "v24.16.0",
+  "architecture": "x64",
+  "platform": "darwin",
+  "installedVersions": {
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "@tabler/icons-react": "3.48.0",
+    "typescript": "5.7.3",
+    "vite": "5.4.20",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9"
+  },
+  "lockSha256": "c99633cc7d40659630ecb248a62aacf1236f454f16414980ecb523bc1dcf9ab2",
+  "sources": [
+    {
+      "source": "packages/web/src/common/DrawerWorkspace.tsx",
+      "sha256": "82f41f9dea06d373b5feb2a0083a0299fc3be954f66ba23ff145fbdba64b7cbf"
+    },
+    {
+      "source": "packages/web/src/common/drawer-workspace.css",
+      "sha256": "7dc0b82d2cd67a8a2e8c50b5b1702fe7091740d4fdd4055bfb26288cf67e657f"
+    },
+    {
+      "source": "_methodology/examples/drawer-workspace-adoption/main.tsx",
+      "sha256": "2d2ce367132e560920b96e270c82e12a5465024ae0e527afe1bc1b2f628108f1"
+    },
+    {
+      "source": "_methodology/examples/drawer-workspace-adoption/host.css",
+      "sha256": "0d102912f0be388c3305b85d94c8a994a3137575dc11d92ccbc85ebbd8c3cfcb"
+    },
+    {
+      "source": "_methodology/components/rehearsals/CMP-11.json",
+      "sha256": "a66f891b0f96331e59899642ceca9eb14faec628d52f1739d2d4b891db905925"
+    },
+    {
+      "source": "_methodology/scripts/rehearse-query-bar.mjs",
+      "sha256": "1687867862dc8781fc26af1925d4cde460aa89a669b0961dc21211fc1a2bf059"
+    },
+    {
+      "source": "_methodology/scripts/rehearsal-recipe.mjs",
+      "sha256": "ab81574bf99cf2c400ffa0cc15d2a57a430c18aaa9e3c80aa5b4bb7294d85cf2"
+    },
+    {
+      "source": "_methodology/scripts/export-component-source.mjs",
+      "sha256": "8546eb3c9f3c68c503106ade89742971b35864d9c59ca272b673c5914f620edf"
+    },
+    {
+      "source": "_methodology/scripts/inspect-component-dependencies.mjs",
+      "sha256": "7a88d39f08f8df4a1c5b7d1be8ea546a1409e64761cbb17861fa43b6622ea759"
+    },
+    {
+      "source": "packages/web/package.json",
+      "sha256": "94898dca1d196818d72032d38693d8fab4d07ac44531d87e64dfc17e2baae2f9"
+    },
+    {
+      "source": "_methodology/scripts/verify-drawer-workspace-adoption.mjs",
+      "sha256": "d11d93315b0d0004505cf5198669bf39893b3a1a9d841764da326e30393ebf59"
+    }
+  ],
+  "exportManifest": "component-source/manifest.json",
+  "adapterSha256": "b6eaef488037c279104d4648e192365c4e58c0f2048b111141112edc5da00279",
+  "results": [
+    {
+      "command": "npm install --ignore-scripts --no-audit --no-fund --cache /var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/forge-drawer-workspace-adoption-U60S76/.npm-cache",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 18169,
+      "timeoutMs": 60000,
+      "errorCode": null
+    },
+    {
+      "command": "tsc --noEmit",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 1458,
+      "timeoutMs": 60000,
+      "errorCode": null
+    },
+    {
+      "command": "vite build",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 115257,
+      "timeoutMs": 180000,
+      "errorCode": null
+    }
+  ],
+  "limitations": [
+    "Fresh installation requested with lifecycle scripts disabled; inspect npm exit status and recorded versions. This is not a dependency security audit.",
+    "The component source comes from the source exporter; unresolved external contracts and CSS assets remain subject to its manifest limits. Host styles are supplied by this fixture.",
+    "Browser evidence covers synthetic single-drawer keyboard/host guard and viewport geometry. Background programmatic scroll remains possible. No inert, nested-modal, screen-reader, backend or independent business adoption validation."
+  ],
+  "browser": {
+    "browserVersion": "154.0.8037.95",
+    "results": [
+      {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "touch": false,
+        "scroll": {
+          "before": 0,
+          "after": 180,
+          "programmaticScrollBlocked": false,
+          "bodyOverflow": "visible"
+        },
+        "closeButton": {
+          "x": 1388,
+          "y": 16,
+          "width": 32,
+          "height": 32
+        },
+        "screenshot": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/drawer-workspace-browser-VxG42u/desktop.png"
+      },
+      {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "touch": true,
+        "scroll": {
+          "before": 0,
+          "after": 180,
+          "programmaticScrollBlocked": false,
+          "bodyOverflow": "visible"
+        },
+        "closeButton": {
+          "x": 326,
+          "y": 16,
+          "width": 44,
+          "height": 44
+        },
+        "screenshot": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/drawer-workspace-browser-VxG42u/touch.png"
+      }
+    ],
+    "errors": [],
+    "limitation": "Synthetic single drawer; programmatic background scroll observation is not wheel/touch locking verification. No inert, screen-reader, nested-modal or persistence claim."
+  },
+  "nodeModulesIndependent": true,
+  "artifactDirectories": {
+    "build": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/forge-drawer-workspace-adoption-U60S76",
+    "browser": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/drawer-workspace-browser-VxG42u"
+  },
+  "browserTarget": {
+    "type": "production-build-preview",
+    "command": "./node_modules/.bin/vite preview --host 127.0.0.1 --port 5198 --strictPort",
+    "serviceStopped": true
+  },
+  "buildArtifacts": [
+    {
+      "file": "dist/assets/index-CQB4Ixbl.css",
+      "sha256": "d0790063b90ea69d63d7aed594883f2f14e5b1ad4d63e9290b34e26b75634838"
+    },
+    {
+      "file": "dist/assets/index-cWdouMS2.js",
+      "sha256": "6b10d33d6b451b517983a90023da0ad2afc98c52ebe2871c4103b4a8b2f64229"
+    },
+    {
+      "file": "dist/index.html",
+      "sha256": "524bcf6b303045de6fd7082cbbf6901df2b5a1a7da64215b422ea05cae5fe5ff"
+    }
+  ]
+}

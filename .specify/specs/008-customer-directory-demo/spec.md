@@ -50,3 +50,7 @@ Gate 由 `REQSRC-023` 对 `Q-505`—`Q-508` 推荐值的明确授权覆盖。
 ### UIRULE-20260924-detail-workspace 当前有效详情样式
 
 REQ-DETAIL-001 / AC-DETAIL-001 / TC-DETAIL-001：遵循总样式 UI-DETAIL-01，替代旧独立摘要卡片/record-tabs/内部卡片组合。使用公共头部（返回+标题、带标签摘要）、客户式下划线Tab及平铺正文；无Tab不强加。适用客户、商机、报价，保留权限、离开保护和数据操作。验收返回目标、Tab箭头/Home/End、手机布局、表格滚动和无内部卡片边框。实现对应 DetailWorkspace.tsx、三个详情页及组件/浏览器回归。Specification按用户明确呈现变更更新并授权本地实施；不涉及数据库和Architecture变更，Release状态不变。
+
+## 2026-10-04 编码规则当前有效变更
+
+来源REQSRC-097。新建编码统一由[编码规则当前规格](../../requirements/013-numbering-rules/requirement.md)及036切片负责，替代本文中原有硬编码前缀/日期/流水或手填员工工号的描述；历史记录不改号。客户CUSTOMER默认C+7位、员工EMPLOYEE默认1+6位、商机OPPORTUNITY默认OP+年月日+5位、报价QUOTATION默认QT+年月日+5位、订单SALES_ORDER默认SO+年月日+5位、入库INBOUND默认IB+年月日+5位、销售出库OUTBOUND默认OB+年月日+5位。实际生成以当前启用规则为准，更新不重新取号；缺失/停用规则阻止新建，不回退旧算法。验收映射为036的REQ-NUM-06/AC-NUM-06/TC-NUM-06；未涉及本模块的对象仅作统一规则说明，不扩大功能范围。

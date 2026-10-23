@@ -200,3 +200,11 @@ erDiagram
 ## 7. Gate 边界
 
 当前为 Business Gate 草案。批准后允许按 `slice-map.md` 逐片形成 Specification 和测试设计；在各切片 Specification/Architecture Gate 获得批准前，不创建实现任务、不修改数据库、不编码，也不声明 Release。
+
+## 2026-10-04 编码规则当前有效变更
+
+来源REQSRC-097。新建编码统一由[编码规则当前规格](../013-numbering-rules/requirement.md)及036切片负责，替代本文中原有硬编码前缀/日期/流水或手填员工工号的描述；历史记录不改号。客户CUSTOMER默认C+7位、员工EMPLOYEE默认1+6位、商机OPPORTUNITY默认OP+年月日+5位、报价QUOTATION默认QT+年月日+5位、订单SALES_ORDER默认SO+年月日+5位、入库INBOUND默认IB+年月日+5位、销售出库OUTBOUND默认OB+年月日+5位。实际生成以当前启用规则为准，更新不重新取号；缺失/停用规则阻止新建，不回退旧算法。验收映射为036的REQ-NUM-06/AC-NUM-06/TC-NUM-06；未涉及本模块的对象仅作统一规则说明，不扩大功能范围。
+
+## 2026-10-06 演示数据基线
+
+来源 `REQSRC-106`。商机、商机产品、跟进和报价演示数据统一由 `016-demo-data-rebuild` 重建；每个商机业务状态和启用阶段至少 5 条，引用当前启用的规范产品，编码和金额按当前规则生成。该基线不改变商机状态机。

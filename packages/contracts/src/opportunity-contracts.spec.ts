@@ -5,6 +5,7 @@ import {
   opportunityProductWriteSchema,
   opportunityWriteSchema,
   productWriteSchema,
+  productSchema,
   opportunityStageWriteSchema,
   opportunityStageDeleteSchema,
 } from './opportunity';
@@ -21,6 +22,14 @@ describe('opportunity contracts', () => {
   it('requires product identity and normalizes optional values', () => {
     expect(productWriteSchema.parse({ productCode: 'P2026090001', productName: '控制板', status: 'ACTIVE' })).toMatchObject({ productCode: 'P2026090001', productName: '控制板' });
     expect(() => productWriteSchema.parse({ productCode: '', productName: '', status: 'ACTIVE' })).toThrow();
+  });
+
+  it('accepts product category names projected for reusable pickers', () => {
+    expect(productSchema.parse({
+      id: '00000000-0000-4000-8000-000000000001', productCode: 'P1', productName: '控制板', model: null,
+      productLine: null, unit: '件', status: 'ACTIVE', remark: null, middleCategoryName: '电子类', minorCategoryName: '控制板类',
+      version: 1, createdAt: '2026-09-25T00:00:00.000Z', updatedAt: '2026-09-25T00:00:00.000Z',
+    })).toMatchObject({ middleCategoryName: '电子类', minorCategoryName: '控制板类' });
   });
 
   it('requires competitor name', () => {

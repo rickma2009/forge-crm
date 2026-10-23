@@ -3,6 +3,20 @@ import { describe, expect, it, vi } from 'vitest';
 import { ListViewSelector } from './ListViewSelector';
 
 describe('shared list view selector', () => {
+  it('keeps the owning page authoritative when a selection is rejected or reset', () => {
+    const props = { value: 'system', options: [{ value: 'system', label: '系统默认' }, { value: 'mine', label: '个人视图' }], onChange: vi.fn(), onSettings: vi.fn() };
+    const { rerender } = render(<ListViewSelector {...props} />);
+    const select = screen.getByRole('combobox');
+    fireEvent.change(select, { target: { value: 'mine' } });
+    expect(props.onChange).toHaveBeenCalledWith('mine');
+    // Parent has not accepted the request: displaying the new value would be a second source of truth.
+    expect(select).toHaveValue('system');
+    rerender(<ListViewSelector {...props} value="mine" />);
+    expect(select).toHaveValue('mine');
+    rerender(<ListViewSelector {...props} />);
+    expect(select).toHaveValue('system');
+    expect(props.onChange).toHaveBeenCalledOnce();
+  });
   it('passes selected values and settings actions to the owning page', () => {
     const change = vi.fn(), settings = vi.fn();
     render(<ListViewSelector value="system" options={[{ value: 'system', label: '系统默认' }, { value: 'mine', label: '个人视图' }]} onChange={change} onSettings={settings} />);

@@ -35,5 +35,7 @@ export class InventoryController {
   @Post('inbound-orders/:id/void') @UseGuards(WriteRequestGuard) async voidInbound(@Req() r: AuthenticatedRequest, @Param('systemCode') raw: string, @Param('id') id: string, @Body() b: unknown) { return this.run(r, raw, id, 'void', 'void', b); }
   private async run(r: AuthenticatedRequest, raw: string, id: string, permission: string, action: 'post' | 'reverse' | 'void', b: unknown) { const c = this.code(raw); await this.allowed(r, c, 'inbound-order-directory', permission); return this.service.command(c, r.currentUser.id, r.currentUser.account, id, action, b); }
 
-  @Get('inventory-balances') async balances(@Req() r: AuthenticatedRequest, @Param('systemCode') raw: string, @Query() q: Record<string, unknown>) { const c = this.code(raw); await this.allowed(r, c, 'inventory-balance-directory', 'view'); return this.service.listBalances(c, q); }
+  @Get('inventory-summary') async summary(@Req() r: AuthenticatedRequest, @Param('systemCode') raw: string, @Query() q: Record<string, unknown>) { const c = this.code(raw); await this.allowed(r, c, 'current-inventory-directory', 'view'); return this.service.inventorySummary(c, q); }
+  @Get('inventory-balances') async balances(@Req() r: AuthenticatedRequest, @Param('systemCode') raw: string, @Query() q: Record<string, unknown>) { const c = this.code(raw); await this.allowed(r, c, 'current-inventory-directory', 'view'); return this.service.listBalances(c, q); }
+  @Get('inventory-transactions') async transactions(@Req() r: AuthenticatedRequest, @Param('systemCode') raw: string, @Query() q: Record<string, unknown>) { const c = this.code(raw); await this.allowed(r, c, 'inventory-balance-directory', 'view'); return this.service.listTransactions(c, q); }
 }

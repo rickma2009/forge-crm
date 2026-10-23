@@ -17,7 +17,7 @@ export type TreeWorkspaceProps = {
 /** Shared UI-TREE-WORKSPACE-01 frame. Authorization and mutations belong to callers. */
 export function TreeWorkspace({ nodes, selectedId, onSelect, title, searchLabel = `搜索${title}`, selectLabel = (node) => `选择${title} ${node.label}`, onRefresh, onCreate, createLabel = '新增', actions, rowProps, loading = false, children, tools, className = '', collapseLabel = `收起${title}树`, expandLabel = `展开${title}树`, total = nodes.length }: TreeWorkspaceProps) {
   const [query, setQuery] = useState(''), [closed, setClosed] = useState<Set<string>>(new Set());
-  const [collapsed, setCollapsed] = useState(false), [width, setWidth] = useState(320), [showTools, setShowTools] = useState(false);
+  const [collapsed, setCollapsed] = useState(false), [width, setWidth] = useState(282), [showTools, setShowTools] = useState(false);
   const menu = useTreeNodeMenu(); const tree = useRef<HTMLDivElement>(null);
   const search = query.trim().toLocaleLowerCase();
   const { rows, parents } = useMemo(() => {

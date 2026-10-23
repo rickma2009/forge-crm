@@ -1,0 +1,17 @@
+{
+  "feature": "042-personal-favorites",
+  "source": "../../sources/REQSRC-108-personal-favorites-20261006/source.md",
+  "businessGate": "approved-by-user-development-request",
+  "specificationGate": "approved-under-user-development-request",
+  "architectureGate": "approved-under-proposed-plan",
+  "tasks": "complete",
+  "implementation": "complete",
+  "verification": "partial-with-environment-and-baseline-blockers",
+  "release": "not-approved",
+  "gates": {
+    "business": "approved-by-explicit-user-feature-request",
+    "specification": "approved-under-user-request-to-implement-recommended-scope",
+    "architecture": "approved-under-user-request-to-proceed-with-recommended-plan",
+    "release": "not-approved"
+  }
+}

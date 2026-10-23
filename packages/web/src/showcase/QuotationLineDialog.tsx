@@ -42,11 +42,14 @@ export function QuotationLineDialog({ initial, products, systemCode, businessDat
       const product = options.find((p) => p.id === id);
       if (!product || product.status !== 'ACTIVE') throw new Error('产品不存在或已停用');
       const { current } = await quotationApi.prices(systemCode, id, undefined, businessDate);
-      if (!current) throw new Error('产品尚未配置销售定价');
       if (requestVersion !== request.current) return;
+      if (!current) {
+        setLine({ id: crypto.randomUUID(), productId: id, priceId: null, quantity: '1', unitPrice: '0.00', discount: '1', delivery: '', remark: '', productName: product.productName, model: product.model ?? null, unit: product.unit ?? '', suggested: '0.00', source: 'UNPRICED', lowerQty: null, upperQty: null, manual: true });
+        return;
+      }
       price.current = current;
       const s = suggestedPrice(current.standardPrice, current.tiers, '1');
-      setLine({ id: crypto.randomUUID(), productId: id, priceId: current.id, quantity: '1', unitPrice: s.price, discount: '0', delivery: '', remark: '', productName: product.productName, model: product.model ?? null, unit: product.unit ?? '', suggested: s.price, source: s.source, lowerQty: s.from, upperQty: s.to, manual: false });
+      setLine({ id: crypto.randomUUID(), productId: id, priceId: current.id, quantity: '1', unitPrice: s.price, discount: '1', delivery: '', remark: '', productName: product.productName, model: product.model ?? null, unit: product.unit ?? '', suggested: s.price, source: s.source, lowerQty: s.from, upperQty: s.to, manual: false });
     } catch (e) { if (requestVersion === request.current) setError(e instanceof Error ? e.message : '产品取价失败'); }
     finally { if (requestVersion === request.current) setLoading(false); }
   };
@@ -55,6 +58,7 @@ export function QuotationLineDialog({ initial, products, systemCode, businessDat
     setError('');
     setLine((old) => old && ({ ...old, [key]: value, ...(key === 'unitPrice' ? { manual: true } : {}) }));
     if (key !== 'quantity') return;
+    if (line.priceId === null) return;
     const requestVersion = ++request.current;
     setPricingPending(true); setPricingError('');
     try {
@@ -74,10 +78,10 @@ export function QuotationLineDialog({ initial, products, systemCode, businessDat
   try { if (line) amount = quotationLineAmount(line.quantity, line.unitPrice, line.discount); } catch { /* Validation stays in this dialog. */ }
   const commit = () => {
     if (loading || pricingPending) return;
-    if (!line) { setError('请选择已配置销售定价的产品'); return; }
+    if (!line) { setError('请选择产品'); return; }
     const { id, productId, priceId, quantity, unitPrice, discount, delivery, remark } = line;
     const parsed = quotationLineWriteSchema.safeParse({ id, productId, priceId, quantity, unitPrice, discount, delivery, remark });
-    if (!parsed.success || amount === '—') { setError('请检查数量、单价、折扣和文本长度：数量须大于 0，单价不得小于 0，折扣范围为 0–100%。'); return; }
+    if (!parsed.success || amount === '—') { setError('请检查数量、单价、折扣和文本长度：数量须大于 0，单价不得小于 0，折扣范围为 0–1（1 表示不打折，0.9 表示九折）。'); return; }
     if (pricingError) { setError(pricingError); return; }
     onConfirm({ ...line, ...parsed.data });
   };
@@ -96,12 +100,12 @@ export function QuotationLineDialog({ initial, products, systemCode, businessDat
         {!initial && <><div className="quote-lookup"><input aria-label="查找报价产品" placeholder="产品编码/名称/型号" value={keyword} onChange={(e) => setKeyword(e.target.value)} /><button type="button" onClick={() => void search(false)}>查询产品</button><button type="button" onClick={() => void search(true)}>加载更多</button></div><label>产品<select aria-label="选择报价产品" value={selected} onChange={(e) => void choose(e.target.value)}><option value="">请选择产品</option>{options.filter((p) => p.status === 'ACTIVE').map((p) => <option key={p.id} value={p.id}>{p.productCode} · {p.productName}</option>)}</select></label></>}
         {line && <><div className="quote-line-product"><strong>{line.productName}</strong><span>型号：{line.model || '—'} · 单位：{line.unit}</span></div><div className="form-grid">
           <label>数量<input inputMode="decimal" value={line.quantity} onChange={(e) => void update('quantity', e.target.value)} /></label>
-          <label>成交单价<input inputMode="decimal" value={line.unitPrice} onChange={(e) => void update('unitPrice', e.target.value)} /></label>
-          <label>折扣 %<input inputMode="decimal" value={line.discount} onChange={(e) => void update('discount', e.target.value)} /></label>
+          <label>单价<input inputMode="decimal" value={line.unitPrice} onChange={(e) => void update('unitPrice', e.target.value)} /></label>
+          <label>折扣<input inputMode="decimal" value={line.discount} onChange={(e) => void update('discount', e.target.value)} /></label>
           <label>含税小计<input readOnly value={amount} /></label>
           <label className="span-2">交付说明<input maxLength={200} value={line.delivery} onChange={(e) => void update('delivery', e.target.value)} /></label>
           <label className="span-2">行备注<textarea maxLength={2000} value={line.remark} onChange={(e) => void update('remark', e.target.value)} /></label>
-        </div><p className="quote-hint">建议价：¥ {line.suggested} · {line.source === 'TIER' ? '阶梯价' : '标准价'}{line.manual ? ' · 已手工改价，修改数量不覆盖成交单价' : ''}</p></>}
+        </div><p className="quote-hint">{line.source === 'UNPRICED' ? '未配置销售定价，请填写单价' : <>建议价：¥ {line.suggested} · {line.source === 'TIER' ? '阶梯价' : '标准价'}{line.manual ? ' · 已手工改价，修改数量不覆盖单价' : ''}</>}</p></>}
       </fieldset>
       {(loading || pricingPending) && <p role="status">正在加载…</p>}
     </div><footer><span className="quote-hint">确认后更新明细，整单仍需保存草稿。</span><button type="button" disabled={loading} onClick={onClose}>取消</button><button className="is-primary" disabled={loading || pricingPending} type="submit">确认</button></footer>

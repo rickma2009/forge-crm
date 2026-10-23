@@ -12,3 +12,7 @@
 
 ### 2026-09-24 工作区菜单字体修正
 REQ-TAB-FONT-01 → UI-TAB-01 → AC-TAB-FONT-01 / TC-TAB-FONT-01：右键菜单字体族/字号与路由 Tab 标题一致，当前为全局12px，Portal 不得退回 body 默认字号。浏览器比较菜单各项（含禁用/焦点）与Tab的 computed fontFamily/fontSize；原有六项动作不变。来源 `.specify/sources/2026-09-24-tab-menu-font/original.md`；当前态需求见 global-page-style/requirement.md。用户直接授权本样式修正，无 Architecture 数据/安全变更。
+
+## TC-DEFAULT-AGENT
+
+有Agent页面权限账号登录后地址为/showcase/agent，显示Agent工作台；数字员工根及子分类初始收起，手动点击展开可进入场景。无Agent权限账号登录后仍在我的工作台，不出现Agent入口。已有会话从根入口默认Agent，刷新明确业务详情地址保留原页。切换系统按目标系统权限选择默认页。

@@ -59,12 +59,12 @@ describe('customer directory list workspace', () => {
     expect(screen.getByRole('combobox', { name: '当前列表视图' })).toHaveValue('system:default');
     expect(screen.getByRole('button', { name: '修改客户 C2026090001' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /更多（3）/ })).toHaveAttribute('aria-expanded', 'false');
-    const headers = within(container.querySelector('thead')!).getAllByRole('columnheader');
-    expect(headers.slice(0, 3).map((header) => header.textContent)).toEqual(['序号', '操作', '客户编码']);
+    const headers = within(container.querySelector('.ag-header')!).getAllByRole('columnheader');
+    expect(headers[0]).toHaveTextContent('序号'); expect(headers[1]).toHaveTextContent('操作'); expect(headers[2]).toHaveTextContent('客户编码');
     await user.click(screen.getByRole('button', { name: /更多（3）/ }));
     expect(screen.getByRole('combobox', { name: '所属行业' })).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: '设置' }));
-    expect(screen.getByRole('dialog', { name: '列与视图设置' })).toBeInTheDocument();
+    expect(screen.getByRole('dialog', { name: '网格列与视图设置' })).toBeInTheDocument();
   });
 
   it('removes the update operation when the role has view permission only', async () => {

@@ -44,13 +44,13 @@ const scenario = (overrides: Partial<DocumentScenario<Header, Line>> = {}): Docu
 });
 
 describe('TASK-1008 MasterDetailDocument', () => {
-  it('composes header, line grid, integer summary, related entries, and a reachable save action', () => {
+  it('composes header, line grid, integer summary, related entries, and a reachable save action', async () => {
     render(<MasterDetailDocument scenario={scenario()} />);
 
     expect(screen.getByRole('heading', { name: '单据模板' })).toBeInTheDocument();
     expect(screen.getByText('业务状态：草稿')).toBeInTheDocument();
     expect(screen.getByRole('textbox', { name: '单据标题' })).toHaveValue('九月模拟单据');
-    expect(screen.getByRole('table', { name: '单据模板行项目' })).toBeInTheDocument();
+    expect(await screen.findByRole('grid', { name: '单据模板行项目' })).toBeInTheDocument();
     expect(screen.getByText('金额合计：¥25')).toBeInTheDocument();
     expect(screen.getByText('相关记录：模拟数据，不会写入业务系统。')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '保存模拟单据' })).toHaveAttribute('data-fixed-document-actions', 'true');
@@ -118,7 +118,7 @@ describe('TASK-1008 MasterDetailDocument', () => {
 
     expect(screen.getByRole('status', { name: '行项目操作说明' })).toHaveTextContent('当前场景已达到行预算；新增和复制不可用。');
     const append = screen.getByRole('button', { name: '新增空行' });
-    const copy = screen.getByRole('button', { name: '复制示例行' });
+    const copy = await screen.findByRole('button', { name: '复制示例行' });
     expect(append).toBeDisabled();
     expect(copy).toBeDisabled();
     await user.click(append);

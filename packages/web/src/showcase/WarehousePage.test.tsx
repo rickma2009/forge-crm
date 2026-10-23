@@ -39,6 +39,6 @@ describe('warehouse dictionary fields', () => {
   });
   it('prevents creation when dictionaries have no active options and hides writes for readers', async () => {
     const { api, gateway } = setup(); api.dictionaries.mockResolvedValue([]); render(<WarehousePage systemCode="demo-portal" allowedActions={[]} gateway={gateway} />);
-    expect(await screen.findByRole('status')).toHaveTextContent('暂无可用字典值'); expect(screen.queryByRole('button', { name: '新增' })).not.toBeInTheDocument(); expect(screen.queryByRole('button', { name: '修改仓库 W01' })).not.toBeInTheDocument();
+    expect(await screen.findByText('仓库类型或仓库性质暂无可用字典值，请先维护数据字典。')).toHaveAttribute('role', 'status'); expect(screen.queryByRole('button', { name: '新增' })).not.toBeInTheDocument(); expect(screen.queryByRole('button', { name: '修改仓库 W01' })).not.toBeInTheDocument();
   });
 });

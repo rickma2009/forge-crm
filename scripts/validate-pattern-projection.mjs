@@ -8,8 +8,8 @@ const actual = fs.readFileSync(projectionPath, 'utf8');
 assert.equal(actual, expected, 'Lab 资产投影必须由方法论登记册与 validation-slices manifest 确定性生成');
 
 const projection = JSON.parse(actual);
-assert.equal(projection.patterns.length, 103, 'Lab 必须投影全部 103 个分类项');
-assert.equal(new Set(projection.patterns.map((pattern) => pattern.id)).size, 103, '投影编号必须唯一');
+assert.equal(projection.patterns.length, 113, 'Lab 必须投影全部 113 个分类项');
+assert.equal(new Set(projection.patterns.map((pattern) => pattern.id)).size, 113, '投影编号必须唯一');
 
 const assetIds = new Set(projection.patterns.map((pattern) => pattern.id));
 const validationIds = new Set();

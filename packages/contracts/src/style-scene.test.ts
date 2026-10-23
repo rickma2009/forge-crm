@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { styleSceneDetailSchema, styleSceneSummarySchema, styleSceneTaxonomySchema } from './index';
+import { interactionTemplateSchema, styleSceneDetailSchema, styleSceneSummarySchema, styleSceneTaxonomySchema } from './index';
 
 const summary = {
   id: '00000000-0000-4000-8000-000000000026',
@@ -39,6 +39,18 @@ describe('style scene catalog contracts', () => {
     };
     expect(styleSceneDetailSchema.parse(detail)).toEqual(detail);
     expect(styleSceneDetailSchema.safeParse({ ...detail, extra: true }).success).toBe(false);
+  });
+
+  it('supports optional legacy metadata and validates all six feedback states', () => {
+    const template = { availability: 'pending', suitableFor: [], regions: [], steps: [], config: [], components: [], tags: [], thumbnail: null, previewKind: null, demoPath: null, applications: [], referencePrompt: '参考模板', version: '2026-09-28', relatedTemplates: [] };
+    expect(interactionTemplateSchema.safeParse(template).success).toBe(true);
+    const screenshot = { ...template, previewSource: { name: '客户管理', path: '/showcase/customers', capturedAt: '2026-09-28', scope: '查询与网格' }, applications: [{ name: '客户管理', path: '/showcase/customers', pageType: '列表页面' }] };
+    expect(interactionTemplateSchema.safeParse(screenshot).success).toBe(true);
+    expect(interactionTemplateSchema.parse({ ...screenshot, sourcePaths: ['packages/web/src/common/BusinessDirectory.tsx'], usageSnippet: '<BusinessDirectory />' })).toMatchObject({ sourcePaths: ['packages/web/src/common/BusinessDirectory.tsx'], usageSnippet: '<BusinessDirectory />' });
+    expect(interactionTemplateSchema.safeParse({ ...screenshot, previewSource: { ...screenshot.previewSource, path: 'https://example.com' } }).success).toBe(false);
+    const rules = { viewEdit: ['默认查看'], saving: ['手动保存'], feedback: { loading: '加载', processing: '处理', success: '成功', failure: '失败', empty: '空', forbidden: '权限不足' } };
+    expect(interactionTemplateSchema.parse({ ...template, aliases: ['旧名称'], behaviorRules: rules })).toMatchObject({ aliases: ['旧名称'], behaviorRules: rules });
+    expect(interactionTemplateSchema.safeParse({ ...template, behaviorRules: { ...rules, feedback: { loading: '加载' } } }).success).toBe(false);
   });
 
   it('parses taxonomy with an ungrouped type', () => {

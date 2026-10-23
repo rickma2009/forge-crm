@@ -11,9 +11,11 @@
 ## 开始工作前
 
 1. 检查并保留已有改动。
-2. 阅读 `.specify/project-state.json` 和 `.specify/memory/constitution.md`。
+2. 阅读 `.specify/project-state.json`、`.specify/memory/project-charter.md` 和 `.specify/memory/constitution.md`，按本项目目标评估方案。
 3. 新输入先追加归档到 `.specify/sources/`，再转换为业务需求。
 4. 未通过对应 Gate 时只允许研究、澄清和获授权的原型，不得实现或发布。
+
+若项目章程明确追求跨项目复用或团队培训，每个切片完成时记录来源、可复用与不可复用部分、验证证据和候选回流位置；培训材料提供可复现任务与已知限制。未声明该目标的项目不被强制抽象，也不得把单项目测试通过称为通用最佳实践。
 
 ## 执行边界
 

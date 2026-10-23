@@ -19,6 +19,7 @@ export interface RuntimeConfig {
   secureCookies: boolean;
   attachmentStorageRoot: string;
   attachmentMaxBytes: number;
+  digitalEmployeeEncryptionKey?: string;
 }
 
 export const RUNTIME_CONFIG = Symbol('RUNTIME_CONFIG');
@@ -31,6 +32,8 @@ export const loadRuntimeConfig = (): RuntimeConfig => {
   if (sessionSecret.length < 32) throw new Error('SESSION_SIGNING_KEY_TOO_SHORT');
   const previousSessionSecret = process.env.PREVIOUS_SESSION_SIGNING_KEY?.trim() || undefined;
   if (previousSessionSecret && previousSessionSecret.length < 32) throw new Error('PREVIOUS_SESSION_SIGNING_KEY_TOO_SHORT');
+  const digitalEmployeeEncryptionKey = process.env.DIGITAL_EMPLOYEE_ENCRYPTION_KEY?.trim() || undefined;
+  if (digitalEmployeeEncryptionKey && Buffer.from(digitalEmployeeEncryptionKey, 'base64').length !== 32) throw new Error('DIGITAL_EMPLOYEE_ENCRYPTION_KEY_MUST_BE_32_BYTES_BASE64');
   return {
     databaseUrl: required('DATABASE_URL'),
     systemCodes: new Set(codes),
@@ -40,5 +43,6 @@ export const loadRuntimeConfig = (): RuntimeConfig => {
     secureCookies: process.env.NODE_ENV === 'production',
     attachmentStorageRoot: resolve(process.env.ATTACHMENT_STORAGE_ROOT?.trim() || '../../var/attachments'),
     attachmentMaxBytes: Number(process.env.ATTACHMENT_MAX_BYTES || 20 * 1024 * 1024),
+    digitalEmployeeEncryptionKey,
   };
 };

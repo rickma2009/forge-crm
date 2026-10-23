@@ -1,9 +1,15 @@
+import { SalesGuidancePanel } from './SalesGuidancePanel';
+import { RecordCollaborationPanel } from './RecordCollaborationPanel';
+import { DeclarativeDataGrid } from '../common/data-grid/DeclarativeDataGrid';
 import { DetailWorkspace, DetailHeader, DetailTabs, DetailPanel } from '../common/DetailWorkspace';
 import { RowActionButton } from '../common/RowActionButton';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { customerAddressWriteSchema, customerContactWriteSchema, customerUpdateSchema, type Customer, type CustomerAddress, type CustomerContact, type CustomerDetail, type CustomerWrite, type Dictionary, type SalesOption } from '@forge-crm/contracts';
 import { GatewayError, type EnterpriseGateway } from './gateway';
 import './customer-detail.css';
+import type { CustomerRelatedKind } from '@forge-crm/contracts';
+import { ActivityPanel } from './ActivityPanel';
+import { CustomerOverviewPanel, CustomerRelatedPanel, relatedLabels } from './CustomerRelatedPanel';
 
 export type CustomerMode = 'view' | 'edit';
 export type LeaveGuard = () => boolean;
@@ -11,9 +17,10 @@ const message = (error: unknown) => error instanceof GatewayError ? error.messag
 const addressTypes: Record<string, string> = { BILLING: '开票地址', SHIPPING: '收货地址', OFFICE: '办公地址', CONTRACT: '合同地址' };
 const toWrite = (customer: Customer): CustomerWrite => ({ customerName: customer.customerName, shortName: customer.shortName, categoryValue: customer.categoryValue, statusValue: customer.statusValue, address: customer.address ?? '', industryValue: customer.industryValue ?? '', levelValue: customer.levelValue ?? '', salesOwnerKey: customer.salesOwnerKey ?? '', remark: customer.remark ?? '' });
 
-export function CustomerDetailPage({ systemCode, customerId, allowedActions, gateway, onBack, initialMode = 'view', onIdentity, onChanged, registerGuard }: {
+export function CustomerDetailPage({ systemCode, customerId, allowedActions, gateway, onBack, initialMode = 'view', onIdentity, onChanged, registerGuard, onOpenAgent, relatedKinds = [], onOpenRelated }: {
   systemCode: string; customerId: string; allowedActions: string[]; gateway: EnterpriseGateway; onBack: () => void;
-  initialMode?: CustomerMode; onIdentity?: (customer: Customer) => void; onChanged?: () => void; registerGuard?: (guard: LeaveGuard | null) => void;
+  relatedKinds?: CustomerRelatedKind[]; onOpenRelated?: (path: string) => void;
+  initialMode?: CustomerMode; onOpenAgent?: () => void; onIdentity?: (customer: Customer) => void; onChanged?: () => void; registerGuard?: (guard: LeaveGuard | null) => void;
 }) {
   const [detail, setDetail] = useState<CustomerDetail | null>(null);
   const [form, setForm] = useState<CustomerWrite | null>(null);
@@ -25,8 +32,10 @@ export function CustomerDetailPage({ systemCode, customerId, allowedActions, gat
   const [editing, setEditing] = useState(initialMode === 'edit');
   const [saving, setSaving] = useState(false);
   const [childSaving, setChildSaving] = useState(false);
-  const [activeTab, setActiveTab] = useState<'basic' | 'contacts' | 'addresses'>('basic');
+  const [activeTab, setActiveTab] = useState<'basic' | 'overview' | 'activity' | 'suggestions' | 'collaboration' | 'contacts' | 'addresses' | CustomerRelatedKind>('basic');
   const [childEditor, setChildEditor] = useState<{ kind: 'contact'; record?: CustomerContact } | { kind: 'address'; record?: CustomerAddress } | null>(null);
+  useEffect(() => { setActiveTab('basic'); setChildEditor(null); setEditing(initialMode === 'edit'); }, [customerId, initialMode]);
+  const [activityDirty,setActivityDirty]=useState(false);
   const canEdit = allowedActions.includes('update');
   const dirty = Boolean(detail && form && JSON.stringify(form) !== JSON.stringify(toWrite(detail.customer)));
   const identityRef = useRef(onIdentity);
@@ -47,7 +56,7 @@ export function CustomerDetailPage({ systemCode, customerId, allowedActions, gat
 
   const leave = (): boolean => {
     if (saving || childSaving) { window.alert('正在保存，请稍候。'); return false; }
-    if ((dirty || childEditor) && !window.confirm('有未保存的内容，确定放弃修改并离开吗？')) return false;
+    if ((dirty || childEditor || activityDirty) && !window.confirm('有未保存的内容，确定放弃修改并离开吗？')) return false;
     if (detail) setForm(toWrite(detail.customer));
     setChildEditor(null); setEditing(false); setError('');
     return true;
@@ -96,10 +105,15 @@ export function CustomerDetailPage({ systemCode, customerId, allowedActions, gat
   return <DetailWorkspace className="customer-detail-page">
     <DetailHeader title={customer.shortName} status={<span className="status-pill">{dictLabel('customer_status', customer.statusValue)}</span>} backLabel="返回客户列表" onBack={() => { if (leave()) onBack(); }} fields={[
       { label: '客户编码', value: customer.customerCode }, { label: '客户名称', value: customer.customerName }, { label: '负责人', value: customer.salesOwnerName || '—' },
-    ]} actions={canEdit && <>{editing ? <><button disabled={saving} onClick={() => { if (leave()) setEditing(false); }}>取消编辑</button><button className="is-primary" form={formId} type="submit" disabled={saving}>{saving ? '保存中…' : '保存客户'}</button></> : <button className="is-primary" onClick={() => { setActiveTab('basic'); setEditing(true); }}>编辑客户</button>}</>} />
-    <DetailTabs id={customerId} label="客户详情分区" active={activeTab} onChange={setActiveTab} tabs={[{ id: 'basic', label: '客户基本信息' }, { id: 'contacts', label: `联系人 (${contacts.length})` }, { id: 'addresses', label: `地址 (${addresses.length})` }]} />
+    ]} actions={<>{onOpenAgent && <button type="button" onClick={onOpenAgent}>Agent 工作台</button>}{canEdit && <>{editing ? <><button disabled={saving} onClick={() => { if (leave()) setEditing(false); }}>取消编辑</button><button className="is-primary" form={formId} type="submit" disabled={saving}>{saving ? '保存中…' : '保存客户'}</button></> : <button className="is-primary" onClick={() => { setActiveTab('basic'); setEditing(true); }}>编辑客户</button>}</>}</>} />
+    <DetailTabs id={customerId} label="客户详情分区" active={activeTab} onChange={next=>{if(!activityDirty||window.confirm('放弃未保存的内容并切换页签吗？'))setActiveTab(next);}} tabs={[{ id: 'basic', label: '客户基本信息' }, { id: 'overview', label: '概览' }, { id: 'activity', label: '活动时间轴' }, ...(allowedActions.includes('suggestion-view') ? [{ id: 'suggestions' as const, label: '销售建议' }] : []), ...(allowedActions.includes('comment-view') ? [{ id: 'collaboration' as const, label: '协作' }] : []), ...relatedKinds.map(id => ({ id, label: relatedLabels[id] })), { id: 'contacts', label: `联系人 (${contacts.length})` }, { id: 'addresses', label: `地址 (${addresses.length})` }]} />
     {error && <div className="enterprise-alert" role="alert">{error}</div>}
     <DetailPanel className="customer-detail-panel" id={customerId} active={activeTab}>
+      {activeTab === 'suggestions' && allowedActions.includes('suggestion-view') && <SalesGuidancePanel key={customerId} systemCode={systemCode} kind="customer" recordId={customerId} onDirtyChange={setActivityDirty}/>}
+      {activeTab === 'collaboration' && allowedActions.includes('comment-view') && <RecordCollaborationPanel key={customerId} systemCode={systemCode} kind="customer" recordId={customerId} gateway={gateway} onDirtyChange={setActivityDirty}/>}
+      {activeTab === 'activity' && <ActivityPanel key={customerId} systemCode={systemCode} kind="customer" recordId={customerId} gateway={gateway} onDirtyChange={setActivityDirty} />}
+      {activeTab === 'overview' && <CustomerOverviewPanel key={customerId} systemCode={systemCode} customerId={customerId} onSelect={kind => { if (relatedKinds.includes(kind)) setActiveTab(kind); }} />}
+      {relatedKinds.includes(activeTab as CustomerRelatedKind) && <CustomerRelatedPanel key={`${customerId}:${activeTab}`} systemCode={systemCode} customerId={customerId} kind={activeTab as CustomerRelatedKind} onOpen={onOpenRelated} />}
       {/* Keep the form mounted: header save works even while a child tab is selected. */}
       <form id={formId} hidden={activeTab !== 'basic'} noValidate onSubmit={save} className="customer-basic-form">
         <div className="form-grid">
@@ -116,15 +130,15 @@ export function CustomerDetailPage({ systemCode, customerId, allowedActions, gat
         </div>
       </form>
       {activeTab === 'contacts' && <><div className="customer-child-toolbar"><span>当前客户的联系人 · {contacts.length} 人</span>{canEdit && <button className="is-primary" onClick={() => setChildEditor({ kind: 'contact' })}>新增联系人</button>}</div>
-        <div className="enterprise-table-wrap"><table aria-label="客户联系人"><thead><tr>{['序号', '联系人姓名', '所在部门', '职位', '项目角色', '手机', '电话', '邮件', '状态', '备注', '操作'].map((label) => <th key={label}>{label}</th>)}</tr></thead><tbody>
+        <div className="enterprise-table-wrap"><DeclarativeDataGrid aria-label="客户联系人"><thead><tr>{['序号', '联系人姓名', '所在部门', '职位', '项目角色', '手机', '电话', '邮件', '状态', '备注', '操作'].map((label) => <th key={label}>{label}</th>)}</tr></thead><tbody>
           {!contacts.length && <tr><td colSpan={11} className="empty-cell">暂无联系人，可新增当前客户的联系人</td></tr>}
           {contacts.map((contact, index) => <tr key={contact.id}><td>{index + 1}</td><td>{contact.name}</td><td>{contact.department || '—'}</td><td>{contact.position || '—'}</td><td>{contact.decisionRole ? dictLabel('contact_project_role', contact.decisionRole) : '—'}</td><td>{contact.mobile || '—'}</td><td>{contact.phone || '—'}</td><td>{contact.email || '—'}</td><td>{contact.status === 'ACTIVE' ? '在职' : contact.status === 'INACTIVE' ? '离职' : contact.status}</td><td>{contact.remark || '—'}</td><td>{canEdit ? <RowActionButton onClick={() => setChildEditor({ kind: 'contact', record: contact })} aria-label={`修改联系人 ${contact.name}`} label="修改" /> : '—'}</td></tr>)}
-        </tbody></table></div></>}
+        </tbody></DeclarativeDataGrid></div></>}
       {activeTab === 'addresses' && <><div className="customer-child-toolbar"><span>开票、收货与办公地址 · {addresses.length} 条</span>{canEdit && <button className="is-primary" onClick={() => setChildEditor({ kind: 'address' })}>新增地址</button>}</div>
-        <div className="enterprise-table-wrap"><table aria-label="客户地址"><thead><tr>{['类型', '收件人', '联系电话', '地址', '默认', '状态', '备注', '操作'].map((label) => <th key={label}>{label}</th>)}</tr></thead><tbody>
+        <div className="enterprise-table-wrap"><DeclarativeDataGrid aria-label="客户地址"><thead><tr>{['类型', '收件人', '联系电话', '地址', '默认', '状态', '备注', '操作'].map((label) => <th key={label}>{label}</th>)}</tr></thead><tbody>
           {!addresses.length && <tr><td colSpan={8} className="empty-cell">暂无地址，可新增当前客户的地址</td></tr>}
           {addresses.map((address) => <tr key={address.id}><td>{addressTypes[address.addressType] ?? address.addressType}</td><td>{address.recipient || '—'}</td><td>{address.phone || '—'}</td><td>{[address.province, address.city, address.district, address.detail].filter(Boolean).join(' ')}</td><td>{address.isDefault ? '默认' : '—'}</td><td>{address.status === 'ACTIVE' ? '启用' : address.status === 'INACTIVE' ? '停用' : address.status}</td><td>{address.remark || '—'}</td><td>{canEdit ? <RowActionButton onClick={() => setChildEditor({ kind: 'address', record: address })} aria-label={`修改地址 ${address.detail}`} label="修改" /> : '—'}</td></tr>)}
-        </tbody></table></div></>}
+        </tbody></DeclarativeDataGrid></div></>}
     </DetailPanel>
     {childEditor && canEdit && <ChildEditor key={`${childEditor.kind}:${childEditor.record?.id ?? 'new'}`} editor={childEditor} customerId={customerId} customerName={customer.customerName} systemCode={systemCode} gateway={gateway} projectRoles={projectRoles} onSaving={setChildSaving} onClose={() => setChildEditor(null)} onSaved={async () => {
       setChildEditor(null); onChanged?.();
@@ -153,7 +167,7 @@ function ChildEditor({ editor, customerId, customerName, systemCode, gateway, pr
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
-  const close = () => { if (!saving && (JSON.stringify(initial) === JSON.stringify(form) || window.confirm('放弃此记录未保存的修改吗？'))) onClose(); };
+  const close = () => { if (!saving) onClose(); };
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
     formRef.current?.querySelector<HTMLInputElement>('input:not(:disabled)')?.focus();

@@ -46,7 +46,7 @@ function gateway(): EnterpriseGateway {
 describe('opportunity pages', () => {
   it('renders product directory actions', async () => {
     render(<ProductDirectoryPage systemCode="demo-portal" canManage gateway={gateway()} />);
-    expect(await screen.findByRole('link', { name: 'P001' })).toHaveAttribute('href', '#/showcase/products/' + product.id);
+    expect(await screen.findByRole('link', { name: 'P001' })).toHaveAttribute('href', '/#/showcase/products/' + product.id);
     expect(screen.getByRole('button', { name: /新增产品/ })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: '查看产品 P001' })).not.toBeInTheDocument();
     const edit = screen.getByRole('button', { name: '修改产品 P001' });
@@ -54,10 +54,26 @@ describe('opportunity pages', () => {
   });
 
   it('renders opportunity list with customer-style search actions', async () => {
-    render(<OpportunityDirectoryPage systemCode="demo-portal" allowedActions={['create']} gateway={gateway()} onOpen={() => undefined} />);
+    const api = gateway(); const user = userEvent.setup();
+    render(<OpportunityDirectoryPage systemCode="demo-portal" allowedActions={['create']} gateway={api} onOpen={() => undefined} />);
     expect(await screen.findByText('TV 项目')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '查询' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /新增商机/ })).toBeInTheDocument();
+    expect(screen.getByRole('columnheader', { name: '商机状态' })).toBeInTheDocument();
+    expect(screen.getByRole('columnheader', { name: '预签日期' })).toBeInTheDocument();
+    await user.selectOptions(screen.getByRole('combobox', { name: '商机状态' }), 'SIGNED');
+    await user.click(screen.getByRole('button', { name: '查询' }));
+    await waitFor(() => { const params = vi.mocked(api.opportunities).mock.calls.at(-1)?.[1]; expect(params?.get('businessStatus')).toBe('SIGNED'); expect(params?.has('status')).toBe(false); });
+  });
+
+  it('uses the configured template when opening a new opportunity without a template selector', async () => {
+    const api = gateway(), user = userEvent.setup();
+    vi.mocked(api.opportunityTemplates).mockResolvedValue([{ id: opportunity.templateId, templateCode: 'public', templateName: '公共', isDefault: true, status: 'ACTIVE', stages: [{ id: opportunity.stageId, templateId: opportunity.templateId, stageCode: 'lead', stageName: '初始线索', probability: 10, isDefault: true, sortNo: 10, status: 'ACTIVE' }] }] as Awaited<ReturnType<EnterpriseGateway['opportunityTemplates']>>);
+    render(<OpportunityDirectoryPage systemCode="demo-portal" allowedActions={['create']} gateway={api} onOpen={() => undefined} />);
+    await user.click(await screen.findByRole('button', { name: /新增商机/ }));
+    expect(await screen.findByRole('heading', { name: '新增商机' })).toBeInTheDocument();
+    expect(screen.queryByRole('combobox', { name: '商机模板' })).not.toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: '商机阶段' })).toHaveValue(opportunity.stageId);
   });
 
   it('renders the three required detail tabs', async () => {

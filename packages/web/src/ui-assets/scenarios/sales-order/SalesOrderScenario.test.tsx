@@ -11,7 +11,7 @@ describe('TASK-1009 sales-order scenario', () => {
 
     expect(screen.getByRole('heading', { name: '新建销售订单' })).toBeInTheDocument();
     expect(screen.getByRole('textbox', { name: '客户' })).toHaveValue('广州精工设备有限公司');
-    expect(screen.getByRole('table', { name: '新建销售订单行项目' })).toBeInTheDocument();
+    expect(await screen.findByRole('grid', { name: '新建销售订单行项目' })).toBeInTheDocument();
     expect(screen.getByText('含税合计：¥127,803')).toBeInTheDocument();
     expect(salesOrderTraceability).toEqual({
       directSourceRefs: ['REQSRC-029', 'REQSRC-030'],
@@ -35,7 +35,7 @@ describe('TASK-1009 sales-order scenario', () => {
     const user = userEvent.setup();
     render(<SalesOrderScenario />);
 
-    await user.click(screen.getByRole('button', { name: '复制精密主轴组件' }));
+    await user.click(await screen.findByRole('button', { name: '复制精密主轴组件' }));
     expect(screen.getByRole('row', { name: /精密主轴组件 草稿/ })).toBeInTheDocument();
 
     await user.click(screen.getAllByRole('button', { name: '编辑精密主轴组件的数量' })[0]!);
@@ -55,7 +55,7 @@ describe('TASK-1009 sales-order scenario', () => {
     const user = userEvent.setup();
     render(<SalesOrderScenario />);
 
-    await user.click(screen.getByRole('button', { name: '编辑精密主轴组件的数量' }));
+    await user.click(await screen.findByRole('button', { name: '编辑精密主轴组件的数量' }));
     let input = screen.getByRole('spinbutton', { name: '精密主轴组件 数量' });
     await user.clear(input);
     await user.type(input, '3');

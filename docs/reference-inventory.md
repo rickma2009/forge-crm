@@ -17,6 +17,8 @@
 | `REF-011` | `_ref/gf_scm/` 的 Layout、TabBar、ListPage、ResourceViewConfig、客户、字典源码与 Prisma Schema | 存在常驻工具栏、URL 多页签、系统/个人视图、角色视图分配、客户 CRUD 和外部字典管理边界 | 可萃取为统一工作区、可配置列表、本地字典与小型客户验证切片 | 职责分离、默认解析、收窄规则、分页查询和失败行为 | 固定底部区、全局搜索、外部平台、来源客户字段全集、硬编码枚举 | `candidate-evidence-collected` |
 | `REF-012` | `_ref/gf_scm/packages/scs-web/src/pages/settings/dict/`、`packages/scs-server/src/modules/system/dict/` 与 2026-09-04 登录态页面核对 | 页面采用可搜索树、字典详情、字典项表和弹窗维护；来源服务还包含外部平台代理、缓存、同步、导出与删除 | 两栏树形字典管理适合表达初始化类别与可维护值的职责分离 | 搜索树、只读元数据、值表、弹窗维护、状态和排序 | 固定来源根节点、外部平台客户端、缓存清理、同步、SQL 导出、物理删除 | `implemented-in-slice-006-increment` |
 | `REF-013` | `REQSRC-030`、验证门户 27 个登记页面、销售订单视觉基线与工作台实现 | 左侧菜单覆盖规范、组件、页面、模式、业务演示和系统管理；用户要求抽象工作台、主从工作区、提醒和待办 | 可用“发现工作—保留队列—处理对象—反馈/提醒”组合跨模块工作，但各业务语义必须保持独立 | 页面族映射、三域布局、工作项语义、选择同步、可解释指标和验收清单 | 演示业务字段、SLA、角色、真实审批、提醒渠道和技术栈 | `interaction-verified-in-validation-lab` |
+| `REF-014` | Forge CRM `REQSRC-089`、库存查询与事务实现及测试 | 当前库存汇总、选择后联动明细、事务来源行号均有源码和针对性测试 | “汇总—维度明细—事务追溯”可作为其他余额核对场景的候选交互，但须重定粒度与口径 | 查询条件继承、币别隔离、延迟加载明细、来源行追溯和验收方法 | 库存字段、当前客户端导出和全分组后分页的规模假设 | `candidate`；见 `_methodology/reference-cases/forge-crm-inventory-summary-drilldown-candidate.md` |
+| `REF-015` | [GitHub 官方复用工作流](https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows)、[组织工作流模板](https://docs.github.com/en/actions/how-tos/reuse-automations/create-workflow-templates)与 Forge CRM `.github/workflows/forge-crm.yml` | 官方提供 `workflow_call`、job 级调用及组织模板机制；本项目当前仅一条验证工作流 | 多仓库出现稳定重复后再评审共享，比单仓提前抽取更合适（本项目判断） | 输入/权限/版本边界、组织模板与运行时复用的区分 | 将官方机制当成现有团队部署，或把单仓 CI 误称跨项目实践 | `candidate`；见 `_methodology/reference-cases/github-actions-workflow-reuse-candidate.md` |
 
 ## 后续导入规则
 

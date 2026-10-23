@@ -6,15 +6,26 @@ import test from 'node:test';
 const root = path.resolve(import.meta.dirname, '../..');
 const indexPath = path.join(root, '_methodology/patterns/index.json');
 
-test('TC-301: 企业交互资产登记册包含六类 103 个唯一分类项', () => {
+test('TC-301: 企业交互资产登记册包含七类 113 个唯一分类项', () => {
   const registry = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
   assert.equal(registry.version, 1);
-  assert.equal(registry.assets.length, 103);
-  assert.equal(new Set(registry.assets.map((asset) => asset.assetId)).size, 103);
+  assert.equal(registry.assets.length, 113);
+  assert.equal(new Set(registry.assets.map((asset) => asset.assetId)).size, 113);
   assert.deepEqual(
     Object.fromEntries(Object.entries(Object.groupBy(registry.assets, (asset) => asset.kind)).map(([kind, assets]) => [kind, assets.length])),
-    { PAGE: 25, ACT: 33, VIEW: 16, STATE: 12, SPECIAL: 10, SCENE: 7 },
+    { PAGE: 25, ACT: 33, VIEW: 16, STATE: 12, SPECIAL: 10, COMPONENT: 10, SCENE: 7 },
   );
+});
+
+test('TC-306: 公共组件和已验证页面登记真实演示地址', () => {
+  const registry = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+  const byId = new Map(registry.assets.map((asset) => [asset.assetId, asset]));
+  assert.equal(byId.get('EPM-COMPONENT-001').name, '统一查询栏');
+  assert.equal(byId.get('EPM-COMPONENT-001').demoPath, '/showcase/items');
+  assert.equal(byId.get('EPM-COMPONENT-003').name, '树形工作区');
+  assert.equal(byId.get('EPM-COMPONENT-003').demoPath, '/showcase/items');
+  assert.equal(byId.get('EPM-PAGE-014').demoPath, '/showcase/items');
+  assert.equal(byId.get('EPM-SCENE-001').demoPath, '/showcase/customers');
 });
 
 test('TC-305: 两个既有证据资产保持各自成熟度，本任务不得提升或夹带 P002', () => {

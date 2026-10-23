@@ -1,3 +1,4 @@
+import { DeclarativeDataGrid } from '../common/data-grid/DeclarativeDataGrid';
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type FormEvent } from 'react';
 import { IconPlus } from '@tabler/icons-react';
 import { inboundOrderWriteSchema, type InboundOrder, type InboundOrderWrite, type Item, type LegalEntity, type Warehouse } from '@forge-crm/contracts';
@@ -6,13 +7,13 @@ import { DetailSection } from '../common/DetailWorkspace';
 import { RowActionButton } from '../common/RowActionButton';
 import type { EnterpriseGateway } from './gateway';
 
-type Props = { systemCode: string; orderId: string; allowedActions: string[]; gateway: EnterpriseGateway; registerGuard?: (guard: (() => boolean) | null) => void };
+type Props = { systemCode: string; orderId: string; allowedActions: string[]; gateway: EnterpriseGateway; initialMode?: 'view' | 'edit'; registerGuard?: (guard: (() => boolean) | null) => void };
 const statusName = (status: InboundOrder['status']) => ({ DRAFT: '草稿', POSTED: '已过账', REVERSED: '已冲销', VOIDED: '已作废' })[status];
 const typeNames = { PRODUCTION: '生产入库', FINISHED_GOODS: '成品入库', STOCK_GAIN: '盘盈入库', TRANSFER: '调拨入库（暂未启用）' };
 const errorText = (error: unknown) => error instanceof Error ? error.message : '操作失败，请稍后重试';
 const toForm = (order: InboundOrder): InboundOrderWrite => ({ legalEntityId: order.legalEntityId, warehouseId: order.warehouseId, documentDate: order.documentDate, inboundType: order.inboundType, reasonCode: order.reasonCode, factoryCode: order.factoryCode, currencyCode: order.currencyCode, remark: order.remark, version: order.version, lines: order.lines.map(({ lineNo, itemCode, batchNo, originalQty, actualQty, amount, remark }) => ({ lineNo, itemCode, batchNo, originalQty, actualQty, amount, remark })) });
 
-export function InboundOrderDetailPage({ systemCode, orderId, allowedActions, gateway, registerGuard }: Props) {
+export function InboundOrderDetailPage({ systemCode, orderId, allowedActions, gateway, initialMode = 'view', registerGuard }: Props) {
   const [detail, setDetail] = useState<InboundOrder | null>(null), [form, setForm] = useState<InboundOrderWrite | null>(null);
   const [editing, setEditing] = useState(false), [busy, setBusy] = useState(false), [loading, setLoading] = useState(true), [error, setError] = useState(''), [notice, setNotice] = useState('');
   const [entities, setEntities] = useState<LegalEntity[]>([]), [warehouses, setWarehouses] = useState<Warehouse[]>([]), [items, setItems] = useState<Item[]>([]);
@@ -21,7 +22,16 @@ export function InboundOrderDetailPage({ systemCode, orderId, allowedActions, ga
   const dirty = useMemo(() => editing && detail !== null && JSON.stringify(form) !== JSON.stringify(toForm(detail)), [editing, detail, form]);
   dirtyRef.current = dirty;
   const accept = useCallback((order: InboundOrder) => { setDetail(order); setForm(toForm(order)); setEditing(false); }, []);
-  const load = useCallback(async () => { setLoading(true); setError(''); try { accept(await gateway.inboundOrder(systemCode, orderId)); } catch (reason) { setError(errorText(reason)); } finally { setLoading(false); } }, [gateway, systemCode, orderId, accept]);
+  const loadOptions = useCallback(async () => {
+    const query = new URLSearchParams({ page: '1', pageSize: '100', status: 'ACTIVE' });
+    const [e, w, i] = await Promise.all([gateway.legalEntities(systemCode, query), gateway.warehouses(systemCode, query), gateway.items(systemCode, query)]);
+    setEntities(e.items); setWarehouses(w.items); setItems(i.items);
+  }, [gateway, systemCode]);
+  const mayEdit = allowedActions.includes('update');
+  const load = useCallback(async () => { setLoading(true); setError(''); try {
+    const order = await gateway.inboundOrder(systemCode, orderId); accept(order);
+    if (initialMode === 'edit' && mayEdit && order.status === 'DRAFT') { await loadOptions(); setEditing(true); }
+  } catch (reason) { setError(errorText(reason)); } finally { setLoading(false); } }, [gateway, systemCode, orderId, accept, initialMode, mayEdit, loadOptions]);
   useEffect(() => { void load(); }, [load]);
   const leave = useCallback(() => { if (busyRef.current || (dirtyRef.current && !window.confirm('入库单尚未保存，确定放弃修改吗？'))) return false; dirtyRef.current = false; if (detail) setForm(toForm(detail)); setEditing(false); return true; }, [detail]);
   useEffect(() => { registerGuard?.(leave); return () => registerGuard?.(null); }, [registerGuard, leave]);
@@ -31,9 +41,7 @@ export function InboundOrderDetailPage({ systemCode, orderId, allowedActions, ga
     if (!canEdit || busyRef.current) return;
     busyRef.current = true; setBusy(true); setError(''); setNotice('');
     try {
-      const query = new URLSearchParams({ page: '1', pageSize: '100', status: 'ACTIVE' });
-      const [e, w, i] = await Promise.all([gateway.legalEntities(systemCode, query), gateway.warehouses(systemCode, query), gateway.items(systemCode, query)]);
-      setEntities(e.items); setWarehouses(w.items); setItems(i.items); setEditing(true);
+      await loadOptions(); setEditing(true);
     } catch (reason) { setError(errorText(reason)); } finally { busyRef.current = false; setBusy(false); }
   };
   // Write responses may omit joined names; retain the current or selected reference labels.
@@ -45,7 +53,7 @@ export function InboundOrderDetailPage({ systemCode, orderId, allowedActions, ga
     const parsed = inboundOrderWriteSchema.safeParse(form);
     if (!parsed.success) { setError(`请检查单据信息：${parsed.error.issues.map((issue) => issue.message).join('；')}`); return; }
     busyRef.current = true; setBusy(true);
-    try { accept(withNames(await gateway.updateInboundOrder(systemCode, detail.id, parsed.data))); setNotice('入库单已保存'); }
+    try { accept(withNames(await gateway.updateInboundOrder(systemCode, detail.id, parsed.data))); setNotice('入库单已保存'); window.location.hash = `#/showcase/inbound-orders/${detail.id}`; }
     catch (reason) { setError(errorText(reason)); }
     finally { busyRef.current = false; setBusy(false); }
   };
@@ -61,8 +69,8 @@ export function InboundOrderDetailPage({ systemCode, orderId, allowedActions, ga
   const warehouseOptions = warehouses.filter((w) => w.legalEntityId === form.legalEntityId);
   return <DocumentWorkspace title={detail.orderNo} status={<span className="status-pill">{statusName(detail.status)}</span>} backLabel="返回入库单列表" onBack={back} fields={[
     { label: '法人', value: detail.legalEntityName || '—' }, { label: '仓库', value: detail.warehouseName || '—' }, { label: '创建日期', value: new Date(detail.createdAt).toLocaleString('zh-CN') },
-  ]} actions={editable ? <><button type="button" disabled={busy} onClick={() => { if (leave()) { setForm(toForm(detail)); setEditing(false); setError(''); } }}>取消编辑</button><button type="submit" form={formId} className="is-primary" disabled={busy}>{busy ? '保存中…' : '保存'}</button></> : <>
-    {canEdit && <button type="button" className="is-primary" disabled={busy} onClick={() => void startEdit()}>{busy ? '处理中…' : '编辑'}</button>}
+  ]} actions={editable ? <><button type="button" disabled={busy} onClick={() => { if (leave()) { setForm(toForm(detail)); setEditing(false); setError(''); window.location.hash = `#/showcase/inbound-orders/${detail.id}`; } }}>取消编辑</button><button type="submit" form={formId} className="is-primary" disabled={busy}>{busy ? '保存中…' : '保存'}</button></> : <>
+    {mayEdit && <button type="button" className="is-primary" disabled={!canEdit || initialMode !== 'edit' || busy} title={initialMode === 'view' ? '请从列表的修改操作进入' : undefined} onClick={() => void startEdit()}>{busy ? '处理中…' : '编辑'}</button>}
     {!editing && detail.status === 'DRAFT' && allowedActions.includes('post') && <button type="button" disabled={busy} onClick={() => void command('post')}>审核过账</button>}
     {!editing && detail.status === 'DRAFT' && allowedActions.includes('void') && <button type="button" disabled={busy} onClick={() => void command('void')}>作废</button>}
     {!editing && detail.status === 'POSTED' && allowedActions.includes('reverse') && <button type="button" disabled={busy} onClick={() => void command('reverse')}>冲销</button>}
@@ -80,7 +88,7 @@ export function InboundOrderDetailPage({ systemCode, orderId, allowedActions, ga
         <label>币别<input value={detail.currencyCode} readOnly /></label><label className="span-2">备注<textarea aria-label="备注" rows={3} maxLength={1000} value={form.remark ?? ''} disabled={!editable} onChange={(e) => set('remark', e.target.value || null)} /></label>
       </fieldset></DetailSection>
       <DetailSection title={`入库明细（${form.lines.length}）`} actions={editable && <button type="button" disabled={busy || !items.length || form.lines.length >= 500} onClick={() => set('lines', [...form.lines, { lineNo: Math.max(0, ...form.lines.map((line) => line.lineNo)) + 10, itemCode: items[0]?.itemCode ?? '', batchNo: null, originalQty: null, actualQty: '1', amount: '0', remark: null }])}><IconPlus size={16} />添加行</button>}>
-        <div className="enterprise-table-wrap"><table className="document-grid" aria-label="入库明细"><thead><tr><th>行号</th><th>物料编码</th><th>物料名称</th><th>批次</th><th>原单数量</th><th>实际数量</th><th>单位</th><th>金额</th><th>行备注</th>{editable && <th className="document-line-actions">操作</th>}</tr></thead><tbody>
+        <div className="enterprise-table-wrap"><DeclarativeDataGrid className="document-grid" aria-label="入库明细"><thead><tr><th>行号</th><th>物料编码</th><th>物料名称</th><th>批次</th><th>原单数量</th><th>实际数量</th><th>单位</th><th>金额</th><th>行备注</th>{editable && <th className="document-line-actions">操作</th>}</tr></thead><tbody>
           {form.lines.map((line, index) => { const item = items.find((i) => i.itemCode === line.itemCode), original = detail.lines.find((l) => l.itemCode === line.itemCode); return <tr key={line.lineNo}>
             <td>{line.lineNo}</td><td>{editable ? <select aria-label={`第${index + 1}行物料`} disabled={busy} value={line.itemCode} onChange={(e) => changeLine(index, { itemCode: e.target.value })}>{!items.some((i) => i.itemCode === line.itemCode) && <option value={line.itemCode}>{line.itemCode}</option>}{items.map((i) => <option key={i.id} value={i.itemCode}>{i.itemCode} · {i.itemName}</option>)}</select> : line.itemCode}</td>
             <td>{item?.itemName ?? original?.itemName ?? '—'}</td><td>{editable ? <input aria-label={`第${index + 1}行批次`} maxLength={64} disabled={busy} value={line.batchNo ?? ''} onChange={(e) => changeLine(index, { batchNo: e.target.value || null })} /> : line.batchNo || '—'}</td>
@@ -91,7 +99,7 @@ export function InboundOrderDetailPage({ systemCode, orderId, allowedActions, ga
             {editable && <td className="document-line-actions"><RowActionButton type="button" label="删除" aria-label={`删除第${index + 1}行`} disabled={busy} onClick={() => set('lines', form.lines.filter((_, i) => i !== index))} /></td>}
           </tr>; })}
           {!form.lines.length && <tr><td className="empty-cell" colSpan={editable ? 10 : 9}>{editable ? '暂无明细，请添加行' : '暂无入库明细'}</td></tr>}
-        </tbody></table></div>
+        </tbody></DeclarativeDataGrid></div>
       </DetailSection>
     </form>
   </DocumentWorkspace>;

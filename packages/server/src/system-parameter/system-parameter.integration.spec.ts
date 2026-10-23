@@ -47,8 +47,8 @@ run('system parameters — real PostgreSQL', () => {
   const set = async (parameterCode: string, value: string | null, status: 'ACTIVE' | 'DISABLED' = 'ACTIVE') => { const r = await row(parameterCode); return service.update(code, r.id, actor, { value, status, version: r.version }); };
   const configure = async () => { await set('DEFAULT_LEGAL_ENTITY', '法人甲'); await set('DEFAULT_WAREHOUSE', 'WH01'); };
 
-  it('initializes two empty presets and preserves existing text/status on repeated initialization', async () => {
-    expect(parameterListSchema.parse(await service.list(code, {})).items).toHaveLength(2);
+  it('initializes three presets and preserves existing text/status on repeated initialization', async () => {
+    expect(parameterListSchema.parse(await service.list(code, {})).items).toHaveLength(3);
     expect(await defaults.getDefaults(code)).toEqual({ legalEntityId: null, warehouseId: null });
     await set('DEFAULT_LEGAL_ENTITY', 'any value', 'DISABLED');
     const before = await row('DEFAULT_LEGAL_ENTITY');

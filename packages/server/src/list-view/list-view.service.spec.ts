@@ -12,7 +12,7 @@ const personal = { id: userId, baseViewId: id, viewName: '我的视图', isDefau
 function fixture() {
   const db = {
     sysApplication: { findFirst: jest.fn(async () => ({ id: 'app' })) },
-    uiSystemListView: { findMany: jest.fn().mockResolvedValue([system]) },
+    uiSystemListView: { findMany: jest.fn().mockResolvedValue([system]), upsert: jest.fn() },
     uiUserListView: { findMany: jest.fn().mockResolvedValue([]), count: jest.fn().mockResolvedValue(0), updateMany: jest.fn(), create: jest.fn().mockResolvedValue(personal) },
     uiUserListViewPreference: { findUnique: jest.fn().mockResolvedValue(null), upsert: jest.fn() },
     $transaction: jest.fn(),
@@ -43,11 +43,27 @@ describe('object-scoped list views', () => {
     const { db, service } = fixture(); await expect(service.resolve(userId, 'demo', 'product-directory', 'view')).rejects.toThrow('有效角色');
     expect(db.uiSystemListView.findMany).not.toHaveBeenCalled();
   });
+  it('creates the inbound default view on first access without replacing existing settings', async () => {
+    const { db, service } = fixture();
+    db.uiSystemListView.findMany.mockResolvedValue([{ ...system, config: businessListDefaultConfig('inbound-order-directory') }]);
+    await service.resolve(userId, 'demo', 'inbound-order-directory', 'view');
+    expect(db.uiSystemListView.upsert).toHaveBeenCalledWith(expect.objectContaining({
+      where: { systemCode_pageCode_actionCode_viewCode: { systemCode: 'demo', pageCode: 'inbound-order-directory', actionCode: 'view', viewCode: 'object-default' } },
+      update: {},
+    }));
+  });
   it('saves the personal default and selected reference in one transaction', async () => {
     const { db, service } = fixture();
     await service.createPersonal(userId, 'demo', 'product-directory', 'view', { baseViewId: id, viewName: '个人', isDefault: true, config });
     expect(db.$transaction).toHaveBeenCalledTimes(1);
     expect(db.uiUserListViewPreference.upsert).toHaveBeenCalledWith(expect.objectContaining({ update: { applicationId: 'app', selectedViewKey: `user:${userId}` } }));
+  });
+  it('persists item grid alignment, pinning, sorting, filters and arbitrary page size', async () => {
+    const { db, service } = fixture(), base = businessListDefaultConfig('item-directory');
+    db.uiSystemListView.findMany.mockResolvedValue([{ ...system, config: base }]);
+    const next = { ...base, pageSize: 25, sort: { field: 'itemCode', direction: 'asc' }, columnFilters: { itemType: 'PRODUCT' }, columns: base.columns.map((column) => ({ ...column, fixed: column.key === 'itemCode' ? 'left' : null, align: 'center' })) };
+    await service.createPersonal(userId, 'demo', 'item-directory', 'view', { baseViewId: id, viewName: '网格', isDefault: true, config: next });
+    expect(db.uiUserListView.create).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ pageCode: 'item-directory', config: next }) }));
   });
   it('rejects foreign object fields and removal of the detail entry', async () => {
     const { db, service } = fixture();

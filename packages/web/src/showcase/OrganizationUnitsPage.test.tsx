@@ -5,11 +5,11 @@ import { OrganizationUnitsPage } from './OrganizationUnitsPage';
 import type { EnterpriseGateway } from './gateway';
 
 const items = [
-  { id: '11111111-1111-4111-8111-111111111111', parentId: null, unitCode: 'component-bg', unitName: '部件BG', unitType: 'COMPANY' as const, sortNo: 10, status: 'ACTIVE' as const, effectiveAt: '2026-01-01T00:00:00.000Z', expiresAt: null, remark: null, depth: 0, version: 1, updatedAt: '2026-09-22T00:00:00.000Z' },
-  { id: '22222222-2222-4222-8222-222222222222', parentId: '11111111-1111-4111-8111-111111111111', unitCode: 'tv-division', unitName: 'TV事业部', unitType: 'DIVISION' as const, sortNo: 10, status: 'ACTIVE' as const, effectiveAt: '2026-01-01T00:00:00.000Z', expiresAt: null, remark: null, depth: 1, version: 1, updatedAt: '2026-09-22T00:00:00.000Z' },
+  { id: '11111111-1111-4111-8111-111111111111', parentId: null, unitCode: 'component-bg', unitName: '部件BG', unitType: 'COMPANY' as const, isSalesOrg: false, isRdOrg: false, isPlatformOrg: true, managerEmployeeId: null, managerEmployeeName: null, sortNo: 10, status: 'ACTIVE' as const, effectiveAt: '2026-01-01T00:00:00.000Z', expiresAt: null, remark: null, depth: 0, version: 1, updatedAt: '2026-09-22T00:00:00.000Z' },
+  { id: '22222222-2222-4222-8222-222222222222', parentId: '11111111-1111-4111-8111-111111111111', unitCode: 'tv-division', unitName: 'TV事业部', unitType: 'DIVISION' as const, isSalesOrg: true, isRdOrg: false, isPlatformOrg: false, managerEmployeeId: null, managerEmployeeName: null, sortNo: 10, status: 'ACTIVE' as const, effectiveAt: '2026-01-01T00:00:00.000Z', expiresAt: null, remark: null, depth: 1, version: 1, updatedAt: '2026-09-22T00:00:00.000Z' },
 ];
 
-const gateway = { organizationUnits: vi.fn(async () => ({ items })), createOrganizationUnit: vi.fn(), updateOrganizationUnit: vi.fn() } as unknown as EnterpriseGateway;
+const gateway = { organizationUnits: vi.fn(async () => ({ items })), createOrganizationUnit: vi.fn(), updateOrganizationUnit: vi.fn(), organizationManagerOptions: vi.fn(async () => ({ items: [{ id: '33333333-3333-4333-8333-333333333333', employeeName: '部门经理', employeeNo: 'E1001' }] })) } as unknown as EnterpriseGateway;
 
 describe('OrganizationUnitsPage', () => {
   it('uses a valid modern HTML pattern for organization codes', async () => {
@@ -31,6 +31,7 @@ describe('OrganizationUnitsPage', () => {
     const dialog = screen.getByRole('dialog');
     fireEvent.change(within(dialog).getByLabelText('组织编码'), { target: { value: 'sales.team' } });
     fireEvent.change(within(dialog).getByLabelText('组织名称'), { target: { value: '销售团队' } });
+    fireEvent.change(within(dialog).getByLabelText('部门负责人'), { target: { value: '33333333-3333-4333-8333-333333333333' } });
     fireEvent.change(within(dialog).getByLabelText('生效日期'), { target: { value: '2026-01-01' } });
     fireEvent.change(within(dialog).getByLabelText(field), { target: { value } });
     fireEvent.submit(dialog);
@@ -46,6 +47,7 @@ describe('OrganizationUnitsPage', () => {
     const dialog = screen.getByRole('dialog');
     fireEvent.change(within(dialog).getByLabelText('组织编码'), { target: { value: 'sales.team' } });
     fireEvent.change(within(dialog).getByLabelText('组织名称'), { target: { value: '销售团队' } });
+    fireEvent.change(within(dialog).getByLabelText('部门负责人'), { target: { value: '33333333-3333-4333-8333-333333333333' } });
     fireEvent.submit(dialog);
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
     expect(create).toHaveBeenCalledOnce();
@@ -59,6 +61,7 @@ describe('OrganizationUnitsPage', () => {
     const dialog = screen.getByRole('dialog', { name: '新增组织' });
     fireEvent.change(within(dialog).getByLabelText('组织编码'), { target: { value: 'sales.team' } });
     fireEvent.change(within(dialog).getByLabelText('组织名称'), { target: { value: '销售团队' } });
+    fireEvent.change(within(dialog).getByLabelText('部门负责人'), { target: { value: '33333333-3333-4333-8333-333333333333' } });
     fireEvent.submit(dialog);
     expect(await within(dialog).findByRole('alert')).toHaveTextContent('请求参数无效');
     expect(within(dialog).getByLabelText('组织名称')).toHaveValue('销售团队');
@@ -74,5 +77,11 @@ describe('OrganizationUnitsPage', () => {
     fireEvent.click(screen.getByRole('button', { name: '＋ 新建下级' }));
     expect(screen.getByRole('dialog', { name: '新增组织' })).toBeInTheDocument();
     expect(screen.getByLabelText('上级组织')).toHaveValue('11111111-1111-4111-8111-111111111111');
+    expect(screen.getByLabelText('组织层级')).toHaveValue('第 2 级（由上级组织自动计算）');
+    expect(screen.getByLabelText('部门负责人')).toBeRequired();
+    fireEvent.click(screen.getByLabelText('销售组织'));
+    fireEvent.click(screen.getByLabelText('研发组织'));
+    expect(screen.getByLabelText('销售组织')).toBeChecked();
+    expect(screen.getByLabelText('研发组织')).toBeChecked();
   });
 });

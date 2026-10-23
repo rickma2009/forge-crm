@@ -1,0 +1,1 @@
+{ "fixture": "detail-workspace-adoption", "symbol": "DetailWorkspace", "exports": ["DetailWorkspace", "DetailHeader", "DetailTabs", "DetailPanel", "DetailSection"], "title": "详情容器接入演练" }

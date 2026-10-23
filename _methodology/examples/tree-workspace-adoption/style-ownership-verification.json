@@ -1,0 +1,678 @@
+{
+  "createdAt": "2026-10-03T03:39:44.797Z",
+  "component": "CMP-07",
+  "cleanInstall": false,
+  "nodeVersion": "v24.16.0",
+  "architecture": "x64",
+  "platform": "darwin",
+  "installedVersions": {
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "@tabler/icons-react": "3.46.0",
+    "typescript": "5.7.3",
+    "vite": "5.4.20",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9"
+  },
+  "lockSha256": null,
+  "sources": [
+    {
+      "source": "packages/web/src/common/TreeWorkspace.md",
+      "sha256": "79adafacf6b2b2c39fa39ef947cc4135fbd25e9c798207968d9fc9f5f976b083"
+    },
+    {
+      "source": "packages/web/src/common/TreeWorkspace.tsx",
+      "sha256": "9c687878d8b669553380d6b9c7d2942deb0db2299458e4b243d1922dd335f9d1"
+    },
+    {
+      "source": "packages/web/src/common/tree-node-menu.css",
+      "sha256": "6d31dda76d17a99ba1c5dd1d92a3ef9d4746adc5569fc3cee69e75381017553e"
+    },
+    {
+      "source": "packages/web/src/common/tree-workspace.css",
+      "sha256": "9709edec3dbda76c6e729785828030b02a9e130bcbf2a8a966d14af962b395ff"
+    },
+    {
+      "source": "packages/web/src/common/useTreeNodeMenu.tsx",
+      "sha256": "ab92a22512c544f3e09ddc64a9ddabd08788ccb8847804b7d07f0f5a97e51e55"
+    },
+    {
+      "source": "_methodology/examples/tree-workspace-adoption/main.tsx",
+      "sha256": "bd22e12473a7eb8a03d12f5af17f214821848b094fec1bee7e87c8b7aff5cdf3"
+    },
+    {
+      "source": "_methodology/examples/tree-workspace-adoption/host.css",
+      "sha256": "0c924d645a0d717970567f4717d12df9e1119de9cfa167715fe91391f70e040d"
+    },
+    {
+      "source": "_methodology/scripts/rehearse-query-bar.mjs",
+      "sha256": "32fdf7d7caa49baf3eec51151fa21d33e3ad285da423589de11086edd441d44e"
+    },
+    {
+      "source": "_methodology/scripts/verify-tree-workspace-adoption.mjs",
+      "sha256": "b51eafd44e9740de23971ab9892b37cce3a02b1e285afbb0994c2ad0f7621630"
+    },
+    {
+      "source": "packages/web/src/showcase/showcase.css",
+      "sha256": "899b4a41efe8e5e60919125069bfbae8e69875bc5d117624a579cbe8e28f9baf"
+    },
+    {
+      "source": "packages/web/src/showcase/resource-menu.css",
+      "sha256": "68ea4998889f0c678a772210bbf72a1a48af67c13ecbaccc3c95be888b3f3632"
+    },
+    {
+      "source": "packages/web/src/showcase/organization-workspace.css",
+      "sha256": "225cc0247243c81273f4d0895b702d8095589909340cf21bae3a16c09b25da62"
+    }
+  ],
+  "exportManifest": "component-source/manifest.json",
+  "adapterSha256": "bfbca37c122eac023e5270184b5d15e05896df9be24df580abb7ee50d5b831b7",
+  "results": [
+    {
+      "command": "tsc --noEmit",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 1849,
+      "timeoutMs": 60000,
+      "errorCode": null
+    },
+    {
+      "command": "vite build",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 3640,
+      "timeoutMs": 180000,
+      "errorCode": null
+    }
+  ],
+  "limitations": [
+    "Existing workspace node_modules is linked; clean installation and dependency closure are not verified.",
+    "The component source comes from the source exporter; unresolved external contracts and CSS assets remain subject to its manifest limits. Host styles are supplied by this fixture.",
+    "Separate browserVerification covers the synthetic fixture; hostPageComparison covers selected properties only. No backend integration or independent business adoption is claimed."
+  ],
+  "browserVerification": {
+    "createdAt": "2026-10-03T03:41:22.896Z",
+    "browser": "154.0.8037.95",
+    "url": "http://127.0.0.1:4191/",
+    "results": [
+      {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "touch": false,
+        "selection": true,
+        "searchAncestors": true,
+        "expandCollapse": true,
+        "menuAndCallbacks": true,
+        "keyboard": true,
+        "width": 440,
+        "readOnly": true,
+        "loadingAndEmpty": true,
+        "responsiveLayout": true,
+        "screenshot": "desktop.png"
+      },
+      {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "touch": true,
+        "selection": true,
+        "searchAncestors": true,
+        "expandCollapse": true,
+        "menuAndCallbacks": true,
+        "keyboard": true,
+        "width": "hidden-by-design",
+        "readOnly": true,
+        "loadingAndEmpty": true,
+        "responsiveLayout": true,
+        "screenshot": "touch.png"
+      }
+    ],
+    "errors": [],
+    "artifactDirectory": "/var/folders/hn/nhcrrs617l72_8rt97l8xgt00000gn/T/tree-workspace-adoption-browser-Qi5EmX"
+  },
+  "hostPageComparison": {
+    "before": {
+      "results": [
+        {
+          "route": "organization",
+          "width": 1440,
+          "styles": {
+            ".tw-panel button": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "19px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".tw-panel input": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".resource-info-grid": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "438.5px 438.5px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "1px"
+            },
+            ".resource-info-grid>div": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "130px 272.5px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "12px"
+            },
+            ".resource-info-grid>div>span": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".organization-detail-panel>header": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "12px"
+            },
+            ".organization-detail-actions": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "8px"
+            },
+            ".organization-detail-actions button": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            }
+          }
+        },
+        {
+          "route": "organization",
+          "width": 390,
+          "styles": {
+            ".tw-panel button": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "19px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".tw-panel input": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".resource-info-grid": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "357.781px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "1px"
+            },
+            ".resource-info-grid>div": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "90px 235.781px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "8px"
+            },
+            ".resource-info-grid>div>span": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "anywhere",
+              "gap": "normal"
+            },
+            ".organization-detail-panel>header": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "wrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "12px"
+            },
+            ".organization-detail-actions": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "wrap",
+              "flexBasis": "100%",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "8px"
+            },
+            ".organization-detail-actions button": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "nowrap",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            }
+          }
+        },
+        {
+          "route": "menus",
+          "width": 1440,
+          "styles": {
+            ".tw-panel button": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "19px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".tw-panel input": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".resource-info-grid": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "432.5px 432.5px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "1px"
+            },
+            ".resource-info-grid>div": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "130px 266.5px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "12px"
+            },
+            ".resource-info-grid>div>span": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".organization-detail-panel>header": null,
+            ".organization-detail-actions": null,
+            ".organization-detail-actions button": null
+          }
+        },
+        {
+          "route": "menus",
+          "width": 390,
+          "styles": {
+            ".tw-panel button": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "19px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".tw-panel input": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".resource-info-grid": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "361.781px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "1px"
+            },
+            ".resource-info-grid>div": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "90px 239.781px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "8px"
+            },
+            ".resource-info-grid>div>span": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "anywhere",
+              "gap": "normal"
+            },
+            ".organization-detail-panel>header": null,
+            ".organization-detail-actions": null,
+            ".organization-detail-actions button": null
+          }
+        }
+      ],
+      "errors": []
+    },
+    "after": {
+      "results": [
+        {
+          "route": "organization",
+          "width": 1440,
+          "styles": {
+            ".tw-panel button": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "19px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".tw-panel input": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".resource-info-grid": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "438.5px 438.5px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "1px"
+            },
+            ".resource-info-grid>div": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "130px 272.5px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "12px"
+            },
+            ".resource-info-grid>div>span": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".organization-detail-panel>header": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "12px"
+            },
+            ".organization-detail-actions": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "8px"
+            },
+            ".organization-detail-actions button": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            }
+          }
+        },
+        {
+          "route": "organization",
+          "width": 390,
+          "styles": {
+            ".tw-panel button": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "19px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".tw-panel input": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".resource-info-grid": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "357.781px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "1px"
+            },
+            ".resource-info-grid>div": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "90px 235.781px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "8px"
+            },
+            ".resource-info-grid>div>span": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "anywhere",
+              "gap": "normal"
+            },
+            ".organization-detail-panel>header": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "wrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "12px"
+            },
+            ".organization-detail-actions": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "wrap",
+              "flexBasis": "100%",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "8px"
+            },
+            ".organization-detail-actions button": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "nowrap",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            }
+          }
+        },
+        {
+          "route": "menus",
+          "width": 1440,
+          "styles": {
+            ".tw-panel button": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "19px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".tw-panel input": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".resource-info-grid": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "432.5px 432.5px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "1px"
+            },
+            ".resource-info-grid>div": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "130px 266.5px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "12px"
+            },
+            ".resource-info-grid>div>span": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".organization-detail-panel>header": null,
+            ".organization-detail-actions": null,
+            ".organization-detail-actions button": null
+          }
+        },
+        {
+          "route": "menus",
+          "width": 390,
+          "styles": {
+            ".tw-panel button": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "19px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".tw-panel input": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "normal"
+            },
+            ".resource-info-grid": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "361.781px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "1px"
+            },
+            ".resource-info-grid>div": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "90px 239.781px",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "normal",
+              "gap": "8px"
+            },
+            ".resource-info-grid>div>span": {
+              "fontSize": "12px",
+              "gridTemplateColumns": "none",
+              "flexWrap": "nowrap",
+              "flexBasis": "auto",
+              "whiteSpace": "normal",
+              "overflowWrap": "anywhere",
+              "gap": "normal"
+            },
+            ".organization-detail-panel>header": null,
+            ".organization-detail-actions": null,
+            ".organization-detail-actions button": null
+          }
+        }
+      ],
+      "errors": []
+    },
+    "animationPolicy": "CSS transitions and animations disabled equally in both captures",
+    "scope": "Selected computed properties on organization and resource pages at 1440 and 390 widths; read-only synthetic/demo system; not a pixel audit of all pages"
+  }
+}

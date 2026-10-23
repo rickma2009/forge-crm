@@ -6,21 +6,21 @@ import { quotationApi } from './quotation-api';
 import type { QuotationRecord } from '@forge-crm/contracts';
 
 afterEach(() => vi.restoreAllMocks());
-const fixture = { id: '00000000-0000-4000-8000-000000000001', quoteCode: 'Q20260923001', title: '测试报价', customerId: '00000000-0000-4000-8000-000000000002', customerName: '测试客户', contactId: null, contactName: null, opportunityId: null, quoteDate: '2026-09-23', validUntil: '2099-01-01', status: 'DRAFT', total: '5.00', terms: '', remark: '', version: 1, sourceQuoteId: null, lines: [{ id: '00000000-0000-4000-8000-000000000003', productId: '00000000-0000-4000-8000-000000000004', priceId: '00000000-0000-4000-8000-000000000005', productName: '测试产品', model: null, unit: '件', productCode: 'P1', quantity: '1', unitPrice: '5.00', suggestedPrice: '10.00', discount: '0', priceSource: 'STANDARD', lowerQty: null, upperQty: null, delivery: '', remark: '', amount: '5.00' }], ownerUserId: 'owner' } as QuotationRecord;
+const fixture = { id: '00000000-0000-4000-8000-000000000001', quoteCode: 'Q20260923001', title: '测试报价', customerId: '00000000-0000-4000-8000-000000000002', customerName: '测试客户', contactId: null, contactName: null, opportunityId: null, quoteDate: '2026-09-23', validUntil: '2099-01-01', status: 'DRAFT', total: '5.00', terms: '', remark: '', version: 1, sourceQuoteId: null, lines: [{ id: '00000000-0000-4000-8000-000000000003', productId: '00000000-0000-4000-8000-000000000004', priceId: '00000000-0000-4000-8000-000000000005', productName: '测试产品', model: null, unit: '件', productCode: 'P1', quantity: '1', unitPrice: '5.00', suggestedPrice: '10.00', discount: '1', priceSource: 'STANDARD', lowerQty: null, upperQty: null, delivery: '', remark: '', amount: '5.00' }], ownerUserId: 'owner' } as QuotationRecord;
 const gateway = () => ({ listViews: vi.fn(async () => ({ pageCode: 'quotation-directory', actionCode: 'view', selectedViewKey: 'system:default', views: [{ viewKey: 'system:default', scope: 'SYSTEM', viewName: '默认视图', allowPersonalOverride: true, config: businessListDefaultConfig('quotation-directory') }] })), customers: vi.fn().mockResolvedValue({ items: [] }), products: vi.fn().mockResolvedValue({ items: [] }), customerDetail: vi.fn().mockResolvedValue({ contacts: [] }) }) as never;
 
 describe('quotation page behavior', () => {
   it('retains manual price when quantity changes and keeps a leave guard', async () => {
     vi.spyOn(quotationApi, 'detail').mockResolvedValue(fixture);
-    vi.spyOn(quotationApi, 'prices').mockResolvedValue({ product: {} as never, current: null, history: [{ id: fixture.lines[0].priceId, productId: fixture.lines[0].productId, version: 1, standardPrice: '10.00', tiers: [], createdAt: '' }] });
+    vi.spyOn(quotationApi, 'prices').mockResolvedValue({ product: {} as never, current: null, history: [{ id: fixture.lines[0].priceId!, productId: fixture.lines[0].productId, version: 1, standardPrice: '10.00', tiers: [], createdAt: '' }] });
     const register = vi.fn(); vi.spyOn(window, 'confirm').mockReturnValue(false);
     render(<QuotationDetailPage systemCode="demo-portal" id={fixture.id} gateway={gateway()} allowedActions={['edit']} registerGuard={register} />);
     await waitFor(() => expect(screen.getByLabelText('报价标题')).toHaveValue('测试报价'));
-    fireEvent.click(screen.getByRole('button', { name: '编辑第1行' }));
+    fireEvent.click(await screen.findByRole('button', { name: '编辑第1行' }));
     const dialog = screen.getByRole('dialog', { name: '编辑报价明细' });
     fireEvent.change(within(dialog).getByLabelText('数量'), { target: { value: '2' } });
     await waitFor(() => expect(within(dialog).getByRole('button', { name: '确认' })).toBeEnabled());
-    expect(within(dialog).getByLabelText('成交单价')).toHaveValue('5.00');
+    expect(within(dialog).getByLabelText('单价')).toHaveValue('5.00');
     fireEvent.click(within(dialog).getByRole('button', { name: '确认' }));
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     expect(screen.getByText('¥ 10.00')).toBeInTheDocument();
@@ -67,15 +67,15 @@ describe('quotation page behavior', () => {
     render(<QuotationDetailPage systemCode="demo-portal" id={fixture.id} gateway={gateway()} allowedActions={['edit']} />);
     fireEvent.click(await screen.findByRole('button', { name: '编辑第1行' }));
     let dialog = screen.getByRole('dialog');
-    fireEvent.change(within(dialog).getByLabelText('折扣 %'), { target: { value: '101' } });
+    fireEvent.change(within(dialog).getByLabelText('折扣'), { target: { value: '1.01' } });
     fireEvent.click(within(dialog).getByRole('button', { name: '确认' }));
     expect(within(dialog).getByRole('alert')).toBeInTheDocument();
-    expect(within(dialog).getByLabelText('折扣 %')).toHaveValue('101');
+    expect(within(dialog).getByLabelText('折扣')).toHaveValue('1.01');
     fireEvent.click(within(dialog).getByRole('button', { name: '取消' }));
     expect(screen.getByText('¥ 5.00')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: '编辑第1行' }));
     dialog = screen.getByRole('dialog');
-    expect(within(dialog).getByLabelText('折扣 %')).toHaveValue('0');
+    expect(within(dialog).getByLabelText('折扣')).toHaveValue('1');
   });
   it('keeps quantity editable while pricing loads and prevents confirming stale pricing after failure', async () => {
     vi.spyOn(quotationApi, 'detail').mockResolvedValue(fixture);
@@ -90,31 +90,67 @@ describe('quotation page behavior', () => {
     expect(within(dialog).getByRole('button', { name: '确认' })).toBeDisabled();
     rejectPrice(new Error('原价格版本暂时不可用'));
     expect(await within(dialog).findByRole('alert')).toHaveTextContent('原价格版本暂时不可用');
-    fireEvent.change(within(dialog).getByLabelText('成交单价'), { target: { value: '8' } });
+    fireEvent.change(within(dialog).getByLabelText('单价'), { target: { value: '8' } });
     fireEvent.click(within(dialog).getByRole('button', { name: '确认' }));
     expect(within(dialog).getByRole('alert')).toHaveTextContent('原价格版本暂时不可用');
     expect(within(dialog).getByLabelText('数量')).toHaveValue('2');
     expect(screen.getByText('¥ 5.00')).toBeInTheDocument();
   });
-  it('adds a product through the dialog and commits quantity price discount together', async () => {
+  it('batch-adds selected products with quantity one and keeps unpriced products editable', async () => {
     vi.spyOn(quotationApi, 'detail').mockResolvedValue({ ...fixture, lines: [] });
-    const current = { id: fixture.lines[0].priceId, productId: fixture.lines[0].productId, version: 1, standardPrice: '10.00', tiers: [], createdAt: '' };
-    vi.spyOn(quotationApi, 'prices').mockResolvedValue({ product: {} as never, current, history: [current] });
-    const g = { customers: vi.fn().mockResolvedValue({ items: [] }), products: vi.fn().mockResolvedValue({ items: [{ id: fixture.lines[0].productId, productName: '测试产品', productCode: 'P1', status: 'ACTIVE', unit: '件', productLine: null }] }), customerDetail: vi.fn().mockResolvedValue({ contacts: [] }) };
+    const current = { id: fixture.lines[0].priceId!, productId: fixture.lines[0].productId, version: 1, standardPrice: '10.00', tiers: [], createdAt: '' };
+    const unpricedId = '00000000-0000-4000-8000-000000000006';
+    vi.spyOn(quotationApi, 'prices').mockImplementation(async (_system, productId) => productId === unpricedId ? { product: {} as never, current: null, history: [] } : { product: {} as never, current, history: [current] });
+    const products = [{ id: fixture.lines[0].productId, productName: '测试产品', productCode: 'P1', status: 'ACTIVE', unit: '件', productLine: null, middleCategoryName: '电子类', minorCategoryName: '控制板类' }, { id: unpricedId, productName: '未定价产品', productCode: 'P2', status: 'ACTIVE', unit: '件', productLine: null, middleCategoryName: '显示类', minorCategoryName: '模组类' }];
+    const g = { customers: vi.fn().mockResolvedValue({ items: [] }), products: vi.fn().mockResolvedValue({ items: products, pagination: { page: 1, pageSize: 20, total: 2, totalPages: 1 } }), customerDetail: vi.fn().mockResolvedValue({ contacts: [] }) };
     render(<QuotationDetailPage systemCode="demo-portal" id={fixture.id} gateway={g as never} allowedActions={['edit']} />);
     await waitFor(() => expect(screen.getByLabelText('报价标题')).toHaveValue('测试报价'));
     fireEvent.click(screen.getByRole('button', { name: '＋ 添加行' }));
-    const dialog = screen.getByRole('dialog', { name: '添加报价明细' });
-    fireEvent.change(within(dialog).getByLabelText('选择报价产品'), { target: { value: fixture.lines[0].productId } });
-    await waitFor(() => expect(within(dialog).getByLabelText('成交单价')).toHaveValue('10.00'));
-    fireEvent.change(within(dialog).getByLabelText('成交单价'), { target: { value: '8.00' } });
-    fireEvent.change(within(dialog).getByLabelText('数量'), { target: { value: '3' } });
-    fireEvent.change(within(dialog).getByLabelText('折扣 %'), { target: { value: '10' } });
+    const dialog = screen.getByRole('dialog', { name: '选择产品' });
+    fireEvent.click(await within(dialog).findByRole('checkbox', { name: '选择产品 P1' }));
+    fireEvent.click(within(dialog).getByRole('checkbox', { name: '选择产品 P2' }));
     fireEvent.click(within(dialog).getByRole('button', { name: '确认' }));
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    expect(screen.getByText('¥ 21.60')).toBeInTheDocument();
-    expect(screen.getByLabelText('报价合计')).toHaveValue('21.60');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(screen.getByLabelText('报价合计')).toHaveValue('10.00');
+    expect(screen.getByText('未配置定价')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '编辑第1行' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '编辑第2行' })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '编辑第2行' }));
+    expect(screen.getByLabelText('折扣')).toHaveValue('1');
+  });
+  it('lets the user enter the unit price after an unpriced product is selected', async () => {
+    vi.spyOn(quotationApi, 'detail').mockResolvedValue({ ...fixture, lines: [] });
+    vi.spyOn(quotationApi, 'prices').mockResolvedValue({ product: {} as never, current: null, history: [] });
+    const g = { customers: vi.fn().mockResolvedValue({ items: [] }), products: vi.fn().mockResolvedValue({ items: [{ id: fixture.lines[0].productId, productName: '未定价产品', productCode: 'P2', status: 'ACTIVE', unit: '件', productLine: null }], pagination: { page: 1, pageSize: 20, total: 1, totalPages: 1 } }), customerDetail: vi.fn().mockResolvedValue({ contacts: [] }) };
+    render(<QuotationDetailPage systemCode="demo-portal" id={fixture.id} gateway={g as never} allowedActions={['edit']} />);
+    await waitFor(() => expect(screen.getByLabelText('报价标题')).toHaveValue('测试报价'));
+    fireEvent.click(screen.getByRole('button', { name: '＋ 添加行' }));
+    let dialog = screen.getByRole('dialog', { name: '选择产品' });
+    fireEvent.click(await within(dialog).findByRole('checkbox', { name: '选择产品 P2' }));
+    fireEvent.click(within(dialog).getByRole('button', { name: '确认' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: '编辑第1行' }));
+    dialog = screen.getByRole('dialog', { name: '编辑报价明细' });
+    fireEvent.change(within(dialog).getByLabelText('单价'), { target: { value: '12.50' } });
+    fireEvent.click(within(dialog).getByRole('button', { name: '确认' }));
+    expect(screen.getByText('¥ 12.50')).toBeInTheDocument();
+    expect(screen.getByText('未配置定价')).toBeInTheDocument();
+  });
+  it('keeps the picker open and adds no partial rows when batch pricing fails', async () => {
+    vi.spyOn(quotationApi, 'detail').mockResolvedValue({ ...fixture, lines: [] });
+    const failedId = '00000000-0000-4000-8000-000000000006';
+    vi.spyOn(quotationApi, 'prices').mockImplementation(async (_system, productId) => {
+      if (productId === failedId) throw new Error('取价服务暂时不可用');
+      return { product: {} as never, current: null, history: [] };
+    });
+    const g = { customers: vi.fn().mockResolvedValue({ items: [] }), products: vi.fn().mockResolvedValue({ items: [{ id: fixture.lines[0].productId, productName: '产品一', productCode: 'P1', status: 'ACTIVE', unit: '件' }, { id: failedId, productName: '产品二', productCode: 'P2', status: 'ACTIVE', unit: '件' }], pagination: { page: 1, pageSize: 20, total: 2, totalPages: 1 } }), customerDetail: vi.fn().mockResolvedValue({ contacts: [] }) };
+    render(<QuotationDetailPage systemCode="demo-portal" id={fixture.id} gateway={g as never} allowedActions={['edit']} />);
+    fireEvent.click(await screen.findByRole('button', { name: '＋ 添加行' }));
+    const dialog = screen.getByRole('dialog', { name: '选择产品' });
+    fireEvent.click(await within(dialog).findByRole('checkbox', { name: '选择当前页全部产品' }));
+    fireEvent.click(within(dialog).getByRole('button', { name: '确认' }));
+    expect(await within(dialog).findByRole('alert')).toHaveTextContent('取价服务暂时不可用');
+    expect(screen.queryByRole('button', { name: '编辑第1行' })).not.toBeInTheDocument();
   });
 });
 
@@ -138,7 +174,7 @@ describe('quotation creation and immutable summary', () => {
     vi.spyOn(quotationApi, 'detail').mockResolvedValue({ ...fixture, createdAt: '2026-09-24T02:00:00.000Z', creatorName: '张三', ownerName: '李四', opportunityId: 'opp', opportunity: { id: 'opp', opportunityName: '设备采购', version: 1, expectedAmount: null, amountSource: '人工维护' } });
     render(<QuotationDetailPage systemCode="demo-portal" id={fixture.id} gateway={gateway()} allowedActions={['edit']} />);
     expect(await screen.findByRole('heading', { name: fixture.quoteCode })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: '设备采购' })).toHaveAttribute('href', '#/showcase/opportunities/opp');
+    expect(screen.getByRole('link', { name: '设备采购' })).toHaveAttribute('href', '/#/showcase/opportunities/opp');
     expect(screen.getByText('客户名称：测试客户')).toBeInTheDocument();
     expect(screen.queryByRole('combobox', { name: '客户' })).not.toBeInTheDocument();
     expect(screen.queryByLabelText('报价方式')).not.toBeInTheDocument();

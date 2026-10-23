@@ -1,0 +1,60 @@
+{
+  "createdAt": "2026-10-03T03:01:01.476Z",
+  "cleanInstall": false,
+  "nodeVersion": "v24.16.0",
+  "architecture": "x64",
+  "platform": "darwin",
+  "installedVersions": {
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "@tabler/icons-react": "3.46.0",
+    "typescript": "5.7.3",
+    "vite": "5.4.20",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9"
+  },
+  "lockSha256": null,
+  "sources": [
+    {
+      "source": "packages/web/src/common/RecordQueryBar.tsx",
+      "sha256": "7675e5e8abb44ddc7bee2447e2afc04488d1b4ab97347840d384bb5e291022c8"
+    },
+    {
+      "source": "packages/web/src/common/record-query-bar.css",
+      "sha256": "78b56d218b5778d4171d22be75a85c6092e1e561053e9a58192721dc204f1566"
+    },
+    {
+      "source": "_methodology/examples/query-bar-adoption/main.tsx",
+      "sha256": "0736f38fd28721d2746fff26864e3eeacaaa4a1d0e3648434a3a133ca108056e"
+    },
+    {
+      "source": "_methodology/examples/query-bar-adoption/host.css",
+      "sha256": "bd770aa563f1c9ab6f1f1a9bf3a980fa3f79a3e4c74ec69323c12eb261b2f728"
+    }
+  ],
+  "exportManifest": "component-source/manifest.json",
+  "adapterSha256": "2752d0060e7a55e5951266ebb3254a3d8da6c63ad5f84a7a8a5d2740e57fe26b",
+  "results": [
+    {
+      "command": "tsc --noEmit",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 1434,
+      "timeoutMs": 60000,
+      "errorCode": null
+    },
+    {
+      "command": "vite build",
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 3400,
+      "timeoutMs": 180000,
+      "errorCode": null
+    }
+  ],
+  "limitations": [
+    "Existing workspace node_modules is linked; clean installation and dependency closure are not verified.",
+    "The component source comes from the source exporter; unresolved external contracts and CSS assets remain subject to its manifest limits. Host styles are supplied by this fixture.",
+    "No browser layout, backend integration, or independent business adoption is claimed."
+  ]
+}

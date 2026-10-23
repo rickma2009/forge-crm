@@ -27,9 +27,10 @@ describe('TASK-1007 EditableLineGrid', () => {
   it('keeps table actions controlled while adding, selecting, copying, deleting a draft, and undoing a persisted deletion', async () => {
     const user = userEvent.setup();
     render(<ControlledGrid />);
+    await screen.findByRole('grid', { name: '单据行' });
 
-    expect(screen.getByRole('table', { name: '单据行' })).toBeInTheDocument();
-    expect(screen.getByRole('cell', { name: /已保存行 操作/ })).toHaveAttribute('data-fixed-actions', 'true');
+    expect(await screen.findByRole('grid', { name: '单据行' })).toBeInTheDocument();
+    expect(screen.getByRole('gridcell', { name: /已保存行 操作/ })).toHaveAttribute('data-fixed-actions', 'true');
 
     await user.click(screen.getByRole('checkbox', { name: '选择已保存行' }));
     expect(screen.getByRole('checkbox', { name: '选择已保存行' })).toBeChecked();
@@ -57,6 +58,7 @@ describe('TASK-1007 EditableLineGrid', () => {
   it('supports row entry, logical Tab movement, Escape cancellation, injected money formatting, and error-summary focus', async () => {
     const user = userEvent.setup();
     render(<ControlledGrid />);
+    await screen.findByRole('grid', { name: '单据行' });
 
     expect(screen.getByText('¥12.5')).toBeInTheDocument();
     const row = screen.getByRole('row', { name: /已保存行/ });
@@ -87,6 +89,7 @@ describe('TASK-1007 EditableLineGrid', () => {
   it('focuses a stable explanation when a non-editable field error is activated from the keyboard summary', async () => {
     const user = userEvent.setup();
     render(<ErrorGrid errors={[{ id: 'amount-error', rowId: 'persisted-a', fieldId: 'amountMinorUnits', message: '金额由价格策略计算。' }]} />);
+    await screen.findByRole('grid', { name: '错误行表' });
 
     const summary = screen.getByRole('button', { name: '已保存行：金额由价格策略计算。' });
     act(() => summary.focus());
@@ -100,6 +103,7 @@ describe('TASK-1007 EditableLineGrid', () => {
   it('focuses a stable explanation for a view-mode error instead of an unavailable edit control', async () => {
     const user = userEvent.setup();
     render(<ErrorGrid mode="view" errors={[{ id: 'view-error', rowId: 'persisted-a', fieldId: 'description', message: '查看模式仍需说明错误位置。' }]} />);
+    await screen.findByRole('grid', { name: '错误行表' });
 
     const summary = screen.getByRole('button', { name: '已保存行：查看模式仍需说明错误位置。' });
     act(() => summary.focus());
@@ -112,6 +116,7 @@ describe('TASK-1007 EditableLineGrid', () => {
     const user = userEvent.setup();
     const deleted = { ...initialRows[0], rowId: 'deleted-a', persistedState: 'marked-for-deletion' as const, description: '待删除行' };
     render(<ErrorGrid rows={[deleted]} errors={[{ id: 'deleted-error', rowId: 'deleted-a', fieldId: 'description', message: '删除前仍需核对。' }]} />);
+    await screen.findByRole('grid', { name: '错误行表' });
 
     const summary = screen.getByRole('button', { name: '待删除行：删除前仍需核对。' });
     act(() => summary.focus());
@@ -123,6 +128,7 @@ describe('TASK-1007 EditableLineGrid', () => {
   it('moves Tab from the final editable cell to the row action instead of swallowing focus', async () => {
     const user = userEvent.setup();
     render(<ControlledGrid />);
+    await screen.findByRole('grid', { name: '单据行' });
 
     const row = screen.getByRole('row', { name: '已保存行 已保存' });
     act(() => row.focus());

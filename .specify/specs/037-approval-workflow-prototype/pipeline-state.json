@@ -1,0 +1,16 @@
+{
+  "feature": "037-approval-workflow-prototype",
+  "gates": {
+    "business": "approved-user-next-stage-prototype",
+    "specification": "approved-user-next-stage-prototype",
+    "architecture": "approved-isolated-prototype-only",
+    "release": "not-production"
+  },
+  "evidence": [
+    "REQSRC-101"
+  ],
+  "implementation": "complete-prototype-only",
+  "verification": "passed-targeted-L2",
+  "completedAt": "2026-10-05",
+  "delivery": "prototypes/approval-workflow/README.md"
+}

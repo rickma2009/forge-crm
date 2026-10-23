@@ -4,11 +4,11 @@ import { describe, expect, it } from 'vitest';
 import { BomScenario } from './BomScenario';
 
 describe('TASK-1010 BOM scenario', () => {
-  it('mounts the same master-detail template with visible hierarchy, difference cues, and a bounded demo', () => {
+  it('mounts the same master-detail template with visible hierarchy, difference cues, and a bounded demo', async () => {
     render(<BomScenario />);
 
     expect(screen.getByRole('heading', { name: '装配清单复核' })).toBeInTheDocument();
-    expect(screen.getByRole('table', { name: '装配清单复核行项目' })).toBeInTheDocument();
+    expect(await screen.findByRole('grid', { name: '装配清单复核行项目' })).toBeInTheDocument();
     expect(screen.getByRole('tree', { name: '层级预览' })).toBeInTheDocument();
     expect(screen.getByRole('treeitem', { name: /传动子装配/ })).toHaveAttribute('aria-level', '2');
     expect(screen.getAllByText('差异：替代候选待复核').length).toBeGreaterThan(0);

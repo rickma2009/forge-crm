@@ -1,0 +1,29 @@
+name: forge-workflow
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: workflow
+      POSTGRES_USER: workflow
+      POSTGRES_PASSWORD: ${WORKFLOW_DATABASE_PASSWORD:?required}
+    volumes:
+      - workflow_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U workflow -d workflow"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  engine:
+    build: ../../services/workflow-engine
+    ports: ["127.0.0.1:8091:8091"]
+    environment:
+      WORKFLOW_DATABASE_URL: jdbc:postgresql://postgres:5432/workflow
+      WORKFLOW_DATABASE_USER: workflow
+      WORKFLOW_DATABASE_PASSWORD: ${WORKFLOW_DATABASE_PASSWORD:?required}
+      WORKFLOW_SERVICE_TOKEN: ${WORKFLOW_SERVICE_TOKEN:?required}
+      WORKFLOW_SCHEMA_UPDATE: "true"
+    depends_on:
+      postgres: { condition: service_healthy }
+    restart: unless-stopped
+volumes:
+  workflow_data:

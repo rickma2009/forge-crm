@@ -1,0 +1,14 @@
+{
+  "repository": "https://github.com/flowable/flowable-engine",
+  "tag": "flowable-7.2.0",
+  "commit": "11a1cf83a8c03e343040b4d8edc751f9534d7323",
+  "artifact": "org.flowable:flowable-spring-boot-starter-process:7.2.0",
+  "springBoot": "3.5.4",
+  "javaRuntime": 21,
+  "postgresql": 16,
+  "license": "Apache-2.0",
+  "mavenImageDigest": "sha256:3a4ab3276a087bf276f79cae96b1af04f53731bec53fb2e651aca79e4b10211e",
+  "verifiedAt": "2026-10-05",
+  "status": "development baseline; not production security certification",
+  "runtimeImageDigest": "sha256:cff19e6215689161eb6162c11b86b0c60ddf802164f2eaf48d570f8fb79a36c5"
+}

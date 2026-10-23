@@ -7,6 +7,7 @@ export const indexRelativePath = '_methodology/patterns/index.json';
 const maturityOverrides = new Map([
   ['EPM-PAGE-001', 'interaction-verified'],
   ['EPM-SCENE-001', 'implementation-verified'],
+  ...Array.from({ length: 10 }, (_, index) => [`EPM-COMPONENT-${String(index + 1).padStart(3, '0')}`, 'implementation-verified']),
 ]);
 
 const masterDetailArtifacts = [
@@ -30,11 +31,50 @@ const artifactOverrides = new Map([
     '_methodology/templates/ui/record-management-workspace/README.md',
     '_methodology/examples/003-golden-interaction-record-management-workspace/README.md',
   ]],
+  ['EPM-COMPONENT-001', ['packages/web/src/common/RecordQueryBar.tsx']],
+  ['EPM-COMPONENT-002', ['packages/web/src/common/ListViewSelector.tsx']],
+  ['EPM-COMPONENT-003', ['packages/web/src/common/TreeWorkspace.tsx']],
+  ['EPM-COMPONENT-004', ['packages/web/src/common/DetailWorkspace.tsx']],
+  ['EPM-COMPONENT-005', ['packages/web/src/common/route-tabs/RouteTabs.tsx', 'packages/web/src/common/route-tabs/useRouteTabs.ts']],
+  ['EPM-COMPONENT-006', ['packages/web/src/ui-assets/components/schema-form/SchemaForm.tsx']],
+  ['EPM-COMPONENT-007', ['packages/web/src/ui-assets/components/editable-line-grid/EditableLineGrid.tsx']],
+  ['EPM-COMPONENT-008', ['packages/web/src/common/ProductPickerDialog.tsx']],
+  ['EPM-COMPONENT-009', ['packages/web/src/ui-assets/components/validation-summary/ValidationSummary.tsx']],
+  ['EPM-COMPONENT-010', ['packages/web/src/ui-assets/components/async-state/AsyncOutcome.tsx']],
 ]);
 
 const evidenceOverrides = new Map([
   ['EPM-PAGE-001', ['interaction-pattern-lab:001-pattern-catalog-preview', 'mcrm:003-enterprise-navigation-shell']],
   ['EPM-SCENE-001', ['interaction-pattern-lab:001-pattern-catalog-preview', 'mcrm:004-customer-record-workspace']],
+  ...Array.from({ length: 10 }, (_, index) => [`EPM-COMPONENT-${String(index + 1).padStart(3, '0')}`, ['forge-crm:implemented-and-automated']]),
+]);
+
+const demoPathOverrides = new Map([
+  ['EPM-PAGE-010', '/showcase/items'],
+  ['EPM-PAGE-011', '/showcase/products'],
+  ['EPM-PAGE-013', '/showcase/inbound-orders'],
+  ['EPM-PAGE-014', '/showcase/items'],
+  ['EPM-PAGE-030', '/showcase/system/parameters'],
+  ['EPM-PAGE-032', '/showcase/system/roles'],
+  ['EPM-ACT-001', '/showcase/items'],
+  ['EPM-ACT-002', '/showcase/items'],
+  ['EPM-ACT-004', '/showcase/customers'],
+  ['EPM-ACT-043', '/showcase/quotations'],
+  ['EPM-VIEW-002', '/showcase/customers'],
+  ['EPM-VIEW-005', '/showcase/quotations'],
+  ['EPM-VIEW-010', '/showcase/customers'],
+  ['EPM-VIEW-013', '/showcase/items'],
+  ['EPM-SCENE-001', '/showcase/customers'],
+  ['EPM-COMPONENT-001', '/showcase/items'],
+  ['EPM-COMPONENT-002', '/showcase/customers'],
+  ['EPM-COMPONENT-003', '/showcase/items'],
+  ['EPM-COMPONENT-004', '/showcase/products'],
+  ['EPM-COMPONENT-005', '/showcase/customers'],
+  ['EPM-COMPONENT-006', '/showcase/inbound-orders'],
+  ['EPM-COMPONENT-007', '/showcase/inbound-orders'],
+  ['EPM-COMPONENT-008', '/showcase/quotations'],
+  ['EPM-COMPONENT-009', '/showcase/inbound-orders'],
+  ['EPM-COMPONENT-010', '/showcase/inbound-orders'],
 ]);
 
 const evidenceCardOverrides = new Map([
@@ -80,10 +120,10 @@ export function buildEnterpriseInteractionIndex(root) {
     if (!inCatalog) continue;
     if (/^## 7\./.test(line)) group = '特殊操作';
     if (/^## 9\./.test(line)) group = '组合场景';
-    if (/^### /.test(line)) group = line.replace(/^###\s+\d+(?:\.\d+)?\s*/, '').trim();
+    if (/^### /.test(line)) group = line.replace(/^###\s+(?:\d+(?:\.\d+)?\s+)?/, '').trim();
 
     const cells = line.split('|').slice(1, -1).map(cleanCell);
-    const match = cells[0]?.match(/^(EPM-(PAGE|ACT|VIEW|STATE|SPECIAL|SCENE)-\d{3})$/);
+    const match = cells[0]?.match(/^(EPM-(PAGE|ACT|VIEW|STATE|SPECIAL|COMPONENT|SCENE)-\d{3})$/);
     if (!match) continue;
 
     const assetId = match[1];
@@ -104,6 +144,7 @@ export function buildEnterpriseInteractionIndex(root) {
         : maturity === 'implementation-verified'
           ? '补真实浏览器关键路径证据并复核交互边界'
           : '形成候选卡，明确适用边界、失败行为与验收草案',
+      demoPath: demoPathOverrides.get(assetId) ?? null,
     });
   }
 

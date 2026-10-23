@@ -30,7 +30,7 @@ run('quotation real database/API flow', () => {
     const current = await agent.get(`${root}/pricing/${p.id}`); expect(current.status).toBe(200);
     const price = await post(`${root}/pricing/${p.id}`, { version: current.body.history[0]?.version ?? 0, pricingType: 'STANDARD', currencyCode: 'CNY', unitPrice: '0.05', effectiveDate: '2026-09-23', expiresDate: null, remark: '集成测试', tiers: [] }); expect(price.status).toBe(201);
     const badPrice = await post(`${root}/pricing/${p.id}`, { version: price.body.version, pricingType: 'TIERED', currencyCode: 'CNY', unitPrice: null, effectiveDate: '2099-01-01', expiresDate: null, remark: null, tiers: [{ from: '1', to: null, price: '1' }] }); expect(badPrice.status).toBe(400);
-    const line = () => ({ id: randomUUID(), productId: p.id, priceId: price.body.id, quantity: '3', unitPrice: '0.05', discount: '10', delivery: '月底', remark: '' });
+    const line = () => ({ id: randomUUID(), productId: p.id, priceId: price.body.id, quantity: '3', unitPrice: '0.05', discount: '0.9', delivery: '月底', remark: '' });
     const input = { title: '报价真实集成测试', customerId: opp.customerId, contactId: null, opportunityId: opp.id, quoteDate: '2026-09-23', validUntil: '2099-01-01', terms: '测试条款', remark: 'INTERNAL_TEST_SECRET', version: 0, requestKey: randomUUID(), lines: [line(), line()] };
     await db.sdOpp.update({ where: { id: opp.id }, data: { status: 'ACTIVE' } });
     await db.sdOppProduct.deleteMany({ where: { opportunityId: opp.id } });
@@ -80,7 +80,7 @@ run('quotation real database/API flow', () => {
     const historical = await agent.get(url); expect(historical.body.lines[0].productName).toBe(name);
     await db.mdItem.update({ where: { id: p.id }, data: { itemName: name } });
     const pdf = await agent.get(`${url}/pdf`); expect(pdf.status).toBe(200); expect(pdf.headers['content-type']).toContain('application/pdf'); expect(Buffer.isBuffer(pdf.body)).toBe(true); expect(pdf.body.subarray(0, 5).toString()).toBe('%PDF-');
-    await expect(db.sdQuotationLine.update({ where: { id: saved.body.lines[0].id }, data: { discount: '101' } })).rejects.toThrow();
+    await expect(db.sdQuotationLine.update({ where: { id: saved.body.lines[0].id }, data: { discount: '1.01' } })).rejects.toThrow();
     await expect(db.sdQuotationLine.update({ where: { id: saved.body.lines[0].id }, data: { tenantId: randomUUID() } })).rejects.toThrow();
     const editable = await createDraft({ ...input, requestKey: randomUUID(), lines: [line()] });
     const edits = await Promise.all(['并发A', '并发B'].map((title) => patch(`${root}/quotations/${editable.body.id}`, { ...input, title, opportunityId: null, version: editable.body.version, requestKey: randomUUID(), lines: [{ ...line(), id: editable.body.lines[0].id }] })));

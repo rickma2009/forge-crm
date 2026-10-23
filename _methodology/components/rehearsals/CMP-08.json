@@ -1,0 +1,1 @@
+{ "fixture": "route-tabs-adoption", "symbol": "RouteTabs", "entry": "route-tabs/index", "exports": ["RouteTabs", "useRouteTabs"], "dependencies": ["react", "react-dom"], "title": "工作区页签接入演练" }

@@ -1,7 +1,7 @@
 import { orderOrganizationTree, wouldCreateOrganizationCycle } from './organization.service';
 
 const row = (id: string, parentId: string | null, unitCode: string, sortNo: number) => ({
-  id, parentId, unitCode, unitName: unitCode, unitType: 'DEPARTMENT' as const, sortNo, status: 'ACTIVE' as const,
+  id, parentId, unitCode, unitName: unitCode, unitType: 'DEPARTMENT' as const, isSalesOrg: false, isRdOrg: false, isPlatformOrg: false, managerEmployeeId: null, sortNo, status: 'ACTIVE' as const,
   effectiveAt: new Date('2026-01-01T00:00:00.000Z'), expiresAt: null, remark: null, version: 1, updatedAt: new Date('2026-09-22T00:00:00.000Z'),
 });
 

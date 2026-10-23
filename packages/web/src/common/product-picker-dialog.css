@@ -1,0 +1,8 @@
+.product-picker-dialog{width:min(920px,100%)}
+.product-picker-dialog .modal-body{display:grid;gap:12px;min-height:0;overflow:auto;padding:16px 18px}
+.product-picker-query{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}
+.product-picker-dialog .enterprise-table-wrap{overflow:auto}
+.product-picker-dialog .product-picker-select{width:44px;text-align:center}
+.product-picker-dialog input[type="checkbox"],.product-picker-dialog input[type="radio"]{width:16px;height:16px;min-height:0;margin:0;vertical-align:middle}
+.product-picker-pagination{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.product-picker-pagination>span:first-child{margin-right:auto;color:var(--showcase-muted)}

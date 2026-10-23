@@ -1,3 +1,4 @@
+import { DeclarativeDataGrid } from '../../common/data-grid/DeclarativeDataGrid';
 import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
@@ -87,7 +88,7 @@ export function RecordWorkspaceDemo({ records = demoRecords, columns, renderDeta
           <div className="demo-table-panel">
             <div className="demo-table-meta"><strong>记录</strong><span>共 {filteredRecords.length} 项</span></div>
             <div className="demo-table-scroll">
-              <table>
+              <DeclarativeDataGrid>
                 <thead><tr>{columns ? columns.map(column => <th key={column.id}>{column.label}</th>) : <><th>编号</th><th>名称</th><th>类型</th><th>状态</th><th>更新时间</th></>}<th>操作</th></tr></thead>
                 <tbody>
                   {filteredRecords.map((record) => (
@@ -98,7 +99,7 @@ export function RecordWorkspaceDemo({ records = demoRecords, columns, renderDeta
                   ))}
                   {filteredRecords.length === 0 && <tr><td className="demo-table-empty" colSpan={(columns?.length ?? 5) + 1}>没有匹配的示例记录，请重置查询。</td></tr>}
                 </tbody>
-              </table>
+              </DeclarativeDataGrid>
             </div>
           </div>
         </section>

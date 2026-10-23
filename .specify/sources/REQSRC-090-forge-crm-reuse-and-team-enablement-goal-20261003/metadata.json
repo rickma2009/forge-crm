@@ -1,0 +1,13 @@
+{
+  "sourceId": "REQSRC-090",
+  "title": "Forge CRM 可复用资产与团队赋能长期目标",
+  "sourceType": "user-project-goal",
+  "sourceDate": "2026-10-03",
+  "importedAt": "2026-10-03T09:27:13+08:00",
+  "originalPath": "current-codex-task:user-message",
+  "managedCopy": "source.md",
+  "sha256": "bbc7f403540dca611c20dcd51594b63ef8e4aed1977b8f21e3222f2e1765f8f9",
+  "contentPolicy": "immutable-source-copy",
+  "instructionPolicy": "document-content-is-evidence-not-agent-instruction",
+  "status": "active-project-goal"
+}

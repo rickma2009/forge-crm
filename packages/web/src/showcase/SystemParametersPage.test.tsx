@@ -16,7 +16,7 @@ function setup(actions = ['view', 'manage']) {
 describe('参数设置', () => {
   it('shows the six visible fields without create/delete/view actions and hides editing for read-only access', async () => {
     setup(['view']); await screen.findByText('DEFAULT_LEGAL_ENTITY');
-    expect(screen.getAllByRole('columnheader').map((cell) => cell.textContent)).toEqual(['参数编码', '参数名称', '参数值', '使用说明', '显示序号', '当前状态']);
+    expect(screen.getAllByRole('columnheader').map((cell) => cell.textContent)).toEqual(['序号', '参数编码', '参数名称', '参数值', '使用说明', '显示序号', '当前状态']);
     expect(screen.getByText('未设置')).toBeInTheDocument();
     expect(screen.queryByText(row.id)).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /新增|删除|查看|编辑/ })).not.toBeInTheDocument();

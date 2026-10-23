@@ -3,7 +3,7 @@ import { vi } from 'vitest';
 import { EmployeeDirectoryPage } from './EmployeeDirectoryPage';
 import type { EnterpriseGateway } from './gateway';
 
-const gateway = { employees: vi.fn(async () => ({ items: [], pagination: { page: 1, pageSize: 100, total: 0, totalPages: 0 } })), employeeOptions: vi.fn(async () => ({ organizations: [{ id: '11111111-1111-4111-8111-111111111111', parentId: null, unitName: '部件BG', depth: 0 }], positions: [{ id: '22222222-2222-4222-8222-222222222222', positionCode: 'manager', positionName: '经理' }] })), createEmployee: vi.fn() } as unknown as EnterpriseGateway;
+const gateway = { employees: vi.fn(async () => ({ items: [], pagination: { page: 1, pageSize: 100, total: 0, totalPages: 0 } })), employeeOptions: vi.fn(async () => ({ organizations: [{ id: '11111111-1111-4111-8111-111111111111', parentId: null, unitName: '部件BG', depth: 0 }], positions: [{ id: '22222222-2222-4222-8222-222222222222', positionCode: 'manager', positionName: '经理' }], posts: [{ value: 'manager', name: '经理岗位' }], jobTitles: [{ value: 'MANAGER', name: '经理职位' }] })), createEmployee: vi.fn() } as unknown as EnterpriseGateway;
 
 describe('EmployeeDirectoryPage', () => {
   it('displays rejected employee saves inside the employee dialog', async () => {
@@ -22,5 +22,9 @@ describe('EmployeeDirectoryPage', () => {
     const dialog = screen.getByRole('dialog', { name: '新增员工' });
     expect(dialog).toBeInTheDocument();
     expect(within(dialog).getByLabelText('所属部门')).toBeRequired();
+    expect(within(dialog).getByLabelText('岗位')).toBeRequired();
+    expect(within(dialog).getByLabelText('职位')).toBeRequired();
+    expect(await within(dialog).findByRole('option', { name: '经理岗位' })).toBeInTheDocument();
+    expect(within(dialog).getByRole('option', { name: '经理职位' })).toBeInTheDocument();
   });
 });

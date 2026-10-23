@@ -1,0 +1,14 @@
+{
+  "feature": "ai-scenario-enhancement",
+  "scope": "WP-01/WP-02/private WP-03 and demo WP-04/WP-05/WP-06",
+  "status": "implemented-awaiting-business-pilot",
+  "validation": "L3",
+  "gates": {
+    "business": "approved-user-recommended-plan",
+    "specification": "approved-user-delegated-plan-implementation",
+    "architecture": "approved-user-delegated-existing-plan-constraints",
+    "release": "not-approved-real-business-pilot-pending"
+  },
+  "approvalEvidence": "用户按推荐按顺序实施；本轮明确：后面的不用等，将接口作为配置项先做功能页面，各10–20条测试数据。",
+  "conditionalScenarios": "demo-pages-complete-api-configurable-live-adapters-pending"
+}

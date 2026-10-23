@@ -13,7 +13,7 @@ describe('CRM is the only application root', () => {
     expect(await screen.findByRole('heading', { name: '登录演示门户' })).toBeInTheDocument();
     expect(screen.queryByRole('navigation', { name: '分类项目录' })).not.toBeInTheDocument();
     expect(window.location.search).not.toContain('pattern=');
-    expect(window.location.hash).toBe('#/showcase/customers');
+    expect(window.location.hash).toBe('#/showcase/workbench');
   });
   it('preserves the actual CRM role route while stripping an obsolete pattern parameter', async () => {
     window.history.replaceState({}, '', '/?pattern=EPM-PAGE-001#/showcase/system/roles');
@@ -21,6 +21,16 @@ describe('CRM is the only application root', () => {
     expect(await screen.findByRole('heading', { name: '登录演示门户' })).toBeInTheDocument();
     expect(window.location.hash).toBe('#/showcase/system/roles');
     expect(window.location.search).toBe('');
+  });
+  it('removes template-library selection on direct business links but keeps catalog deep links', async () => {
+    window.history.replaceState({}, '', '/?interactionCategory=树形联动&keep=1#/showcase/inbound-orders');
+    const view = render(<RootApp />);
+    expect(await screen.findByRole('heading', { name: '登录演示门户' })).toBeInTheDocument();
+    expect(window.location.search).toBe('?keep=1');
+    view.unmount();
+    window.history.replaceState({}, '', '/?interactionTemplate=TPL-02-01#/showcase/style-scenes');
+    render(<RootApp />);
+    expect(window.location.search).toContain('interactionTemplate=TPL-02-01');
   });
   it('preserves unrelated query and business deep-link parameters', async () => {
     window.history.replaceState({}, '', '/?pattern=EPM-PAGE-001&keep=1#/showcase/system/roles?view=members');

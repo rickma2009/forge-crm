@@ -4,17 +4,50 @@
   "physicalIdentifierConvention": "lower_snake_case",
   "maxIdentifierLength": 32,
   "allowedPrefixes": [
-    { "prefix": "sys_", "classification": "system-platform" },
-    { "prefix": "org_", "classification": "organization-master-data" },
-    { "prefix": "md_", "classification": "enterprise-shared-master-data" },
-    { "prefix": "sd_", "classification": "sales-domain" },
-    { "prefix": "scm_", "classification": "supply-chain-manufacturing-domain" },
-    { "prefix": "rd_", "classification": "research-development-domain" },
-    { "prefix": "fin_", "classification": "finance-domain" },
-    { "prefix": "int_", "classification": "integration" },
-    { "prefix": "stg_", "classification": "staging" },
-    { "prefix": "dim_", "classification": "analytics-dimension" },
-    { "prefix": "fact_", "classification": "analytics-fact" }
+    {
+      "prefix": "sys_",
+      "classification": "system-platform"
+    },
+    {
+      "prefix": "org_",
+      "classification": "organization-master-data"
+    },
+    {
+      "prefix": "md_",
+      "classification": "enterprise-shared-master-data"
+    },
+    {
+      "prefix": "sd_",
+      "classification": "sales-domain"
+    },
+    {
+      "prefix": "scm_",
+      "classification": "supply-chain-manufacturing-domain"
+    },
+    {
+      "prefix": "rd_",
+      "classification": "research-development-domain"
+    },
+    {
+      "prefix": "fin_",
+      "classification": "finance-domain"
+    },
+    {
+      "prefix": "int_",
+      "classification": "integration"
+    },
+    {
+      "prefix": "stg_",
+      "classification": "staging"
+    },
+    {
+      "prefix": "dim_",
+      "classification": "analytics-dimension"
+    },
+    {
+      "prefix": "fact_",
+      "classification": "analytics-fact"
+    }
   ],
   "approvedBusinessTables": [
     "md_item",
@@ -25,25 +58,161 @@
     "scm_inventory_balance",
     "scm_inventory_txn",
     "scm_inventory_event",
-    "scm_document_counter"
+    "scm_document_counter",
+    "scm_bom",
+    "scm_bom_line",
+    "scm_bom_alternative",
+    "sd_sales_order",
+    "sd_sales_order_line",
+    "sd_sales_outbound",
+    "sd_sales_outbound_line",
+    "sd_sales_event",
+    "sd_opp_stage_event",
+    "sd_sales_activity",
+    "sd_sales_suggestion",
+    "sd_score_rule_set",
+    "sd_opp_score",
+    "sd_score_override",
+    "sd_record_comment",
+    "sd_comment_revision",
+    "sd_comment_mention",
+    "sys_event_outbox",
+    "sys_notification",
+    "sys_user_favorite",
+    "sys_code_rule",
+    "sys_code_counter",
+    "sys_code_issue",
+    "sys_de_workspace",
+    "int_de_connection",
+    "int_de_op_topic",
+    "int_de_op_source",
+    "int_de_op_run",
+    "int_de_op_item",
+    "int_de_op_event",
+    "int_de_market_config",
+    "int_de_market_item",
+    "int_de_market_fx",
+    "int_de_market_price",
+    "int_de_market_cursor",
+    "int_de_market_run",
+    "md_supplier",
+    "scm_purchase_order",
+    "scm_purchase_order_line",
+    "scm_purchase_receipt",
+    "scm_purchase_receipt_line",
+    "scm_purchase_event"
   ],
   "approvedAbbreviations": [
-    { "abbreviation": "opp", "meaning": "opportunity", "scope": "sd_" }
+    {
+      "abbreviation": "opp",
+      "meaning": "opportunity",
+      "scope": "sd_"
+    }
   ],
   "legacyExceptions": [
-    { "table": "ui_menu", "classification": "legacy-system-platform", "target": "sys_menu" },
-    { "table": "ui_menu_action", "classification": "legacy-system-platform", "target": "sys_menu_action" },
-    { "table": "iam_user", "classification": "legacy-system-platform", "target": "sys_user" },
-    { "table": "iam_role", "classification": "legacy-system-platform", "target": "sys_role" },
-    { "table": "iam_role_user", "classification": "legacy-system-platform", "target": "sys_role_user" },
-    { "table": "iam_role_permission", "classification": "legacy-system-platform", "target": "sys_role_permission" },
-    { "table": "ui_system_list_view", "classification": "legacy-system-platform", "target": "sys_system_list_view" },
-    { "table": "iam_role_list_view", "classification": "legacy-system-platform", "target": "sys_role_list_view" },
-    { "table": "ui_user_list_view", "classification": "legacy-system-platform", "target": "sys_user_list_view" },
-    { "table": "ui_user_list_view_preference", "classification": "legacy-system-platform", "target": "sys_user_list_view_preference" },
-    { "table": "crm_customer", "classification": "legacy-crm-validation-data", "target": "md_customer" },
-    { "table": "crm_customer_contact", "classification": "legacy-crm-validation-data", "target": "md_customer_contact" },
-    { "table": "crm_customer_address", "classification": "legacy-crm-validation-data", "target": "md_customer_address" },
-    { "table": "style_scene", "classification": "validation-tooling", "target": "remain-tooling-only" }
+    {
+      "table": "ai_analysis_task",
+      "classification": "legacy-sales-ai-task",
+      "target": "sd_opp_ai_task",
+      "owner": "packages/server/src/ai/ai-analysis.service.ts",
+      "status": "migration-pending",
+      "evidence": "docs/database/ai-task-ownership.md",
+      "enforceFieldNaming": true
+    },
+    {
+      "table": "agent_task",
+      "classification": "legacy-agent-runtime",
+      "target": "sys_agent_task",
+      "owner": "packages/server/src/agent/agent.service.ts",
+      "status": "migration-pending",
+      "evidence": "docs/database/ai-task-ownership.md",
+      "enforceFieldNaming": true
+    },
+    {
+      "table": "ui_menu",
+      "classification": "legacy-system-platform",
+      "target": "sys_menu"
+    },
+    {
+      "table": "ui_menu_action",
+      "classification": "legacy-system-platform",
+      "target": "sys_menu_action"
+    },
+    {
+      "table": "iam_user",
+      "classification": "legacy-system-platform",
+      "target": "sys_user"
+    },
+    {
+      "table": "iam_role",
+      "classification": "legacy-system-platform",
+      "target": "sys_role"
+    },
+    {
+      "table": "iam_role_user",
+      "classification": "legacy-system-platform",
+      "target": "sys_role_user"
+    },
+    {
+      "table": "iam_role_permission",
+      "classification": "legacy-system-platform",
+      "target": "sys_role_permission"
+    },
+    {
+      "table": "ui_system_list_view",
+      "classification": "legacy-system-platform",
+      "target": "sys_system_list_view"
+    },
+    {
+      "table": "iam_role_list_view",
+      "classification": "legacy-system-platform",
+      "target": "sys_role_list_view"
+    },
+    {
+      "table": "ui_user_list_view",
+      "classification": "legacy-system-platform",
+      "target": "sys_user_list_view"
+    },
+    {
+      "table": "ui_user_list_view_preference",
+      "classification": "legacy-system-platform",
+      "target": "sys_user_list_view_preference"
+    },
+    {
+      "table": "crm_customer",
+      "classification": "legacy-crm-validation-data",
+      "target": "md_customer"
+    },
+    {
+      "table": "crm_customer_contact",
+      "classification": "legacy-crm-validation-data",
+      "target": "md_customer_contact"
+    },
+    {
+      "table": "crm_customer_address",
+      "classification": "legacy-crm-validation-data",
+      "target": "md_customer_address"
+    },
+    {
+      "table": "style_scene",
+      "classification": "validation-tooling",
+      "target": "remain-tooling-only"
+    }
+  ],
+  "externalDatabases": [
+    {
+      "database": "workflow-engine",
+      "owner": "services/workflow-engine",
+      "thirdPartyTables": "ACT_* (Flowable official schema; independent database exception)",
+      "applicationTables": [
+        "sys_wf_scope_lock",
+        "sys_wf_command",
+        "sys_wf_definition",
+        "sys_wf_instance",
+        "sys_wf_audit"
+      ],
+      "reference": "docs/design/approval-workflow/engine-foundation.md",
+      "status": "development-only"
+    }
   ]
 }

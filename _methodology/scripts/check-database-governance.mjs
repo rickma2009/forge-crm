@@ -3,6 +3,12 @@ import path from 'node:path';
 
 const root = path.resolve(process.argv[2] ?? '.');
 const failures = [];
+// Frozen historical compatibility set. New exceptions cannot opt out of field checks.
+const historicalFieldExceptions = new Set([
+  'ui_menu', 'ui_menu_action', 'iam_user', 'iam_role', 'iam_role_user', 'iam_role_permission',
+  'ui_system_list_view', 'iam_role_list_view', 'ui_user_list_view', 'ui_user_list_view_preference',
+  'crm_customer', 'crm_customer_contact', 'crm_customer_address', 'style_scene',
+]);
 
 const requiredFiles = [
   '_methodology/11-数据库设计与数据分层规范.md',
@@ -39,6 +45,17 @@ requireText('_methodology/templates/plan-template.md', '数据分层与表登记
 requireText('_methodology/examples/000-golden-slice-customer-lead/plan.md', '数据库规范适用性');
 requireText('_methodology/profiles/typescript-enterprise-web/database-conventions.md', '@@map');
 requireText('_methodology/11-数据库设计与数据分层规范.md', '共享使用不等于共享写入');
+requireText('_methodology/11-数据库设计与数据分层规范.md', '保存字典项稳定编码');
+requireText('_methodology/templates/plan-template.md', '引用值与展示解析');
+requireText('_methodology/examples/000-golden-slice-customer-lead/plan.md', '稳定 ID/编码');
+// This checks documentation routing only; it cannot establish seed runtime safety.
+for (const relative of [
+  '_methodology/11-数据库设计与数据分层规范.md',
+  '_methodology/profiles/typescript-enterprise-web/database-conventions.md',
+  '_methodology/templates/plan-template.md',
+  '_methodology/templates/testcases-template.md',
+  '_methodology/examples/000-golden-slice-customer-lead/plan.md',
+]) requireText(relative, 'Seed 字段维护权');
 for (const relative of [
   'AGENTS.md',
   '_methodology/11-数据库设计与数据分层规范.md',
@@ -75,14 +92,28 @@ if (registry) {
   if (registry.maxIdentifierLength !== 32) failures.push('物理表名和字段名长度上限必须为 32');
 
   const legacyTables = (registry.legacyExceptions ?? []).map((entry) => entry.table);
+  const isValidPhysicalIdentifier = (identifier) =>
+    typeof identifier === 'string' && identifier.length <= registry.maxIdentifierLength && /^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$/.test(identifier);
+  // Newly documented exceptions retain field checks and an explicit remediation record.
+  for (const entry of registry.legacyExceptions ?? []) {
+    if (historicalFieldExceptions.has(entry.table) && !entry.enforceFieldNaming) continue;
+    if (entry.enforceFieldNaming !== true) failures.push(`新增遗留登记不得关闭字段命名检查: ${entry.table}`);
+    if (!entry.owner || !entry.evidence || entry.status !== 'migration-pending') {
+      failures.push(`有界遗留登记缺少责任模块、证据或迁移状态: ${entry.table}`);
+    }
+    for (const relative of [entry.owner, entry.evidence].filter(Boolean)) {
+      if (!fs.existsSync(path.join(root, relative))) failures.push(`遗留登记引用不存在: ${relative}`);
+    }
+    if (!isValidPhysicalIdentifier(entry.target) || ![...allowedPrefixes].some((prefix) => entry.target?.startsWith(prefix))) {
+      failures.push(`遗留整改目标必须采用批准前缀: ${entry.table}`);
+    }
+  }
   const approvedBusinessTables = registry.approvedBusinessTables ?? [];
   const duplicateNames = [...legacyTables, ...approvedBusinessTables].filter(
     (name, index, all) => all.indexOf(name) !== index,
   );
   for (const name of new Set(duplicateNames)) failures.push(`数据库表登记重复: ${name}`);
 
-  const isValidPhysicalIdentifier = (identifier) =>
-    identifier.length <= registry.maxIdentifierLength && /^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$/.test(identifier);
   for (const table of approvedBusinessTables) {
     if (!isValidPhysicalIdentifier(table)) {
       failures.push(`登记的新业务表必须为不超过 32 个字符的小写 snake_case: ${table}`);
@@ -107,7 +138,7 @@ if (registry) {
     for (const modelMatch of schema.matchAll(/model\s+\w+\s*\{([\s\S]*?)\n\}/g)) {
       const body = modelMatch[1];
       const table = body.match(/@@map\("([^"]+)"\)/)?.[1];
-      if (!table || legacyTables.includes(table)) continue;
+      if (!table || (historicalFieldExceptions.has(table) && !registry.legacyExceptions.find((entry) => entry.table === table)?.enforceFieldNaming)) continue;
       for (const rawLine of body.split(/\r?\n/)) {
         const line = rawLine.trim();
         if (!line || line.startsWith('//') || line.startsWith('@@')) continue;

@@ -35,6 +35,21 @@ describe('style scene catalog reads', () => {
     }));
   });
 
+  it('restricts the template catalog by asset prefix and selected system while preserving old reads', async () => {
+    const findMany = jest.fn().mockResolvedValue([]), count = jest.fn().mockResolvedValue(0);
+    await serviceWith({ findMany, count }).list('secondary-demo', { catalog: 'templates' });
+    expect(findMany).toHaveBeenCalledWith(expect.objectContaining({ where: { systemCode: 'secondary-demo', assetCode: { startsWith: 'TPL-' } } }));
+    expect(count).toHaveBeenCalledWith({ where: { systemCode: 'secondary-demo', assetCode: { startsWith: 'TPL-' } } });
+  });
+
+  it('lists page templates and reusable components together only for the library catalog', async () => {
+    const findMany = jest.fn().mockResolvedValue([]), count = jest.fn().mockResolvedValue(0);
+    await serviceWith({ findMany, count }).list('demo-portal', { catalog: 'library' });
+    const where = { systemCode: 'demo-portal', OR: [{ assetCode: { startsWith: 'TPL-' } }, { assetCode: { startsWith: 'CMP-' } }] };
+    expect(findMany).toHaveBeenCalledWith(expect.objectContaining({ where }));
+    expect(count).toHaveBeenCalledWith({ where });
+  });
+
   it('aggregates taxonomy independently from list pagination and omits fake children for ungrouped records', async () => {
     const groupBy = jest.fn().mockResolvedValue([
       { category: 'PAGE', subCategory: '目录类', _count: { _all: 2 }, _min: { sortNo: 20 } },

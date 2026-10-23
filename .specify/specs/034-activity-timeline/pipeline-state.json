@@ -1,0 +1,15 @@
+{
+  "feature": "034-activity-timeline",
+  "scope": "P3 only",
+  "gates": {
+    "business": "approved-user-existing-solution",
+    "specification": "approved-user-existing-solution",
+    "architecture": "approved-user-delegated-implementation",
+    "release": "not-production-deployed"
+  },
+  "evidence": [
+    "REQSRC-092",
+    "REQSRC-095"
+  ],
+  "note": "依据用户已确认方案和继续下一包指令实施；无额外人工评审或生产发布批准。"
+}

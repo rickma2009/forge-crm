@@ -1,0 +1,16 @@
+{
+  "feature": "036-numbering-rules",
+  "gates": {
+    "business": "approved-user-direct-request",
+    "specification": "approved-user-direct-request",
+    "architecture": "approved-user-delegated-implementation",
+    "release": "not-production-deployed"
+  },
+  "evidence": [
+    "REQSRC-097"
+  ],
+  "implementation": "complete",
+  "verification": "passed-targeted-L3",
+  "completedAt": "2026-10-04",
+  "delivery": "docs/testing/numbering-rules.md"
+}

@@ -61,6 +61,12 @@ try {
   }
   assert.equal(fs.readlinkSync(path.join(projectDir, 'CLAUDE.md')), 'AGENTS.md');
   assert.equal(fs.existsSync(path.join(projectDir, '_spec')), false);
+  const generatedCharter = fs.readFileSync(path.join(projectDir, '.specify/memory/project-charter.md'), 'utf8');
+  const generatedAgentRules = fs.readFileSync(path.join(projectDir, 'AGENTS.md'), 'utf8');
+  assert.match(generatedCharter, /复用与团队学习目标/);
+  assert.match(generatedCharter, /是否以跨项目复用或团队培训为目标/);
+  assert.match(generatedAgentRules, /项目章程明确追求跨项目复用或团队培训/);
+  assert.match(fs.readFileSync(path.join(scriptDir, '../templates/project-charter-template.md'), 'utf8'), /采用、培训成效与规范迭代的证据/);
   execFileSync('bash', [checkProject, projectDir], { stdio: 'pipe' });
   execFileSync(process.execPath, [checkMattSetup, projectDir, '--require-git'], { stdio: 'pipe' });
   assert.equal(execFileSync('git', ['-C', projectDir, 'branch', '--show-current'], { encoding: 'utf8' }).trim(), 'main');
